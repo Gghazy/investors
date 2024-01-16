@@ -1,0 +1,14 @@
+<nav *ngIf="totalCount">
+    <ul class="pagination">
+      <li class="page-item" [ngClass]="currentPageNumber==1?'disabled':''" >
+        <a class="page-link" (click)="pageChanged(currentPageNumber-1)">السابق</a>
+      </li>
+
+      <li  class="page-item" [ngClass]="currentPageNumber==i+1?'active':''" *ngFor="let page of let item of [].constructor(pageNumber); let i = index">
+        <a class="page-link" (click)="pageChanged(i+1)" >{{i+1}}</a>
+     </li>
+      <li class="page-item">
+        <a class="page-link" [ngClass]="currentPageNumber==pageNumber?'disabled':''" (click)="pageChanged(currentPageNumber+1)">التالي</a>
+      </li>
+    </ul>
+  </nav>

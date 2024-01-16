@@ -1,0 +1,30 @@
+<section class="user-area" >
+    <div class="login d-flex flex-column align-items-center justify-content-center" @fade>
+        <header class="text-center">
+            <a href=""><img src="assets/images/login-logo.png" width="300" height="86" alt="وزارة الصناعة والثروة المعدنية" /></a>
+            <h1>مرحبا بكم فى <br />نظام مسح وجمع بيانات المنشآت الصناعية</h1>
+        </header>
+        <div class="login-form">
+            <form class="needs-validation" novalidate>
+                <h2>تسجيل الدخول</h2>
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="   الهوية الوطنية" required />
+                    <label for="floatingInput"> الهوية الوطنية  </label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="كلمة المرور" required />
+                    <label for="floatingPassword">كلمة المرور</label>
+                </div>
+                <div class="d-grid mb-4">
+                    <button class="btn btn-primary login-btn" routerLink="/factories-list">تسجيل الدخول</button>
+                </div>
+            </form>
+            <div class="separator"></div>
+            <div class="form-footer text-center">
+                <a routerLink="/recover-password" class="center-hover"> نسيت كلمة المرور ؟</a>
+                
+            </div>
+        </div>
+        <footer class="text-center">جميع الحقوق محفوظة لنظام مسح وجمع بيانات المنشآت الصناعية</footer>
+    </div>
+</section>

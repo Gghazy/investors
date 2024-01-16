@@ -1,0 +1,12 @@
+<div class="layout container-fluid p-0">
+    <app-menu></app-menu>
+    <div class="left-block">
+        <app-header></app-header>
+        <main @fade>
+            <router-outlet></router-outlet> 
+        </main>
+        <app-footer></app-footer>
+    </div>
+</div>
+
+<app-terms-modal></app-terms-modal> 
