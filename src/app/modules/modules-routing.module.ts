@@ -8,27 +8,27 @@ const routes: Routes = [
   component: ModulesComponent,
   children:[
     {
-      path: 'actual-production-and-designed-capacity',
+      path: 'actual-production-and-designed-capacity/:id',
       loadChildren: () =>
         import('../modules/actual-production-and-designed-capacity/actual-production-and-designed-capacity.module').then((m) => m.ActualProductionAndDesignedCapacityModule)
     },
     {
-      path: 'actual-raw-materials',
+      path: 'actual-raw-materials/:id',
       loadChildren: () =>
         import('../modules/actual-raw-materials/actual-raw-materials.module').then((m) => m.ActualRawMaterialsModule)
     },
     {
-      path: 'basic-info',
+      path: 'basic-info/:id',
       loadChildren: () =>
         import('../modules/basic-info/basic-info.module').then((m) => m.BasicInfoModule)
     },
     {
-      path: 'customs-items-check',
+      path: 'customs-items-check/:id',
       loadChildren: () =>
         import('../modules/customs-items-check/customs-items-check.module').then((m) => m.CustomsItemsCheckModule)
     },
     {
-      path: 'customs-items-update',
+      path: 'customs-items-update/:id',
       loadChildren: () =>
         import('../modules/customs-items-update/customs-items-update.module').then((m) => m.CustomsItemsUpdateModule)
     },
@@ -40,32 +40,32 @@ const routes: Routes = [
         import('../modules/factory/factory.module').then((m) => m.FactoryModule)
     },
     {
-      path: 'factory-contacts',
+      path: 'factory-contacts/:id',
       loadChildren: () =>
         import('../modules/factory-contacts/factory-contacts.module').then((m) => m.FactoryContactsModule)
     },
     {
-      path: 'factory-landing',
+      path: 'factory-landing/:id',
       loadChildren: () =>
         import('../modules/factory-landing/factory-landing.module').then((m) => m.FactoryLandingModule)
     },
     {
-      path: 'factory-location',
+      path: 'factory-location/:id',
       loadChildren: () =>
         import('../modules/factory-location/factory-location.module').then((m) => m.FactoryLocationModule)
     },
     {
-      path: 'factory-products',
+      path: 'factory-products/:id',
       loadChildren: () =>
         import('../modules/factory-products/factory-products.module').then((m) => m.FactoryProductsModule)
     },
     {
-      path: 'factory-raw-materials',
+      path: 'factory-raw-materials/:id',
       loadChildren: () =>
         import('../modules/factory-raw-materials/factory-raw-materials.module').then((m) => m.FactoryRawMaterialsModule)
     },
     {
-      path: 'financial-details',
+      path: 'financial-details/:id',
       loadChildren: () =>
         import('../modules/financial-details/financial-details.module').then((m) => m.FinancialDetailsModule)
     },

@@ -13,6 +13,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { CoreModule } from '../core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { ListComponent } from './components/list/list.component';
+
 
 const COMPONENTS = [
   ToTopBtnComponent,
@@ -20,7 +22,8 @@ const COMPONENTS = [
   MenuComponent,
   HeaderComponent,
   FooterComponent,
-  PaginationComponent
+  PaginationComponent,
+  ListComponent
 ];
 
 
@@ -47,7 +50,6 @@ const COMPONENTS = [
     NgxSpinnerModule,
     CoreModule,
     HttpClientModule
-
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

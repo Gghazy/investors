@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { fade } from 'src/app/shared/animation/app.animation';
 
@@ -11,6 +12,12 @@ import { fade } from 'src/app/shared/animation/app.animation';
   ]
 })
 export class CustomsItemsUpdateFormComponent {
+
+  factoryId:any;
+
+  constructor(private route: ActivatedRoute){
+    this.factoryId = this.route.snapshot.paramMap.get('id');
+  }
   dropdownList : any []= [];
   selectedItems = [];
   selectedItems1 = [];

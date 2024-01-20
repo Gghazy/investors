@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { FactoryRawMaterialService } from '../../factory-raw-material.service';
@@ -14,8 +15,12 @@ import { FactoryRawMaterialService } from '../../factory-raw-material.service';
 export class FactoryRawMaterialsFormComponent implements OnInit{
 
 rawMaterials:any=[];
-  constructor(private rawMaterialService :FactoryRawMaterialService){
+factoryId:any;
+  constructor(private rawMaterialService :FactoryRawMaterialService,private route: ActivatedRoute){
 
+ 
+
+  this.factoryId = this.route.snapshot.paramMap.get('id');
   }
   handleUploadClick(event: Event) {
     const targetButton = event.target as HTMLButtonElement;

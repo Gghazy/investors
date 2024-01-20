@@ -3,7 +3,7 @@
     <div class="form-header">
         <h2 class="form-title">    البيانات الأساسية   </h2>
         <div>
-            <a routerLink="/pages/factory-landing" class="back-link">
+            <a [routerLink]="'/pages/factory-landing/'+factoryId" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
             </a>
@@ -14,125 +14,42 @@
             
             <div class="col-md-6">
                 <label class="form-label"> السجل التجاري </label>
-                <input type="number" class="form-control" value="0123456789" disabled>
+                <input type="number" class="form-control" [(ngModel)]="request.CommercialRegister" disabled>
                 
             </div>
             <div class="col-md-6">
                 <label class="form-label"> اسم المصنع  </label>
-                <input type="text" class="form-control" value="مصنع المواد الغذائية" disabled>
+                <input type="text" class="form-control" [(ngModel)]="request.NameAr" disabled>
                 
             </div>
             <div class="col-md-6">
                 <label class="form-label">النشاط وفق التصنيف الصناعي الدولي الموحد                                    </label>
-                <input type="text" class="form-control" value=" 5850 - تصنيع المواد الغذائية" disabled="">
+                <input type="text" class="form-control" [(ngModel)]="request.Activity" disabled="">
                 
             </div>
             <div class="col-md-6">
                 <label class="form-label">حالة المصنع </label>
-                <select class="form-select">
-                    <option>تحت التأسيس </option>
-                    <option>تحت الإنشاء</option>
-                    <option selected="">منتج</option>
-                    <option>متوقف</option>
-                    <option>ملغي</option>
+                <select class="form-select" [(ngModel)]="request.Status">
+                    <option [ngValue]="1">تحت التأسيس </option>
+                    <option [ngValue]="2">تحت الإنشاء</option>
+                    <option [ngValue]="0">منتج</option>
+                    <option [ngValue]="3">متوقف</option>
+                    <option [ngValue]="4">ملغي</option>
                 </select>
                 
             </div>
             
         </div>
 
-        <div class="col-md-12 mt-3">
-            <h3> إرفاق المستندات الداعمة  </h3>
-        </div>
-
-        <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
-            <strong><span class="d-block mb-2">الرجاء إرفاق المستندات الداعمة التالية:</span></strong>
-            <ul>
-                <li>
-                    صورة واجهة المصنع، صورة توضح حالة المصنع
-                </li>
-                
-               
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-        
-
-        <div class="row">
-
-        
-        <div class="col-md-6">
-            <label class="form-label"> اسم المستند</label>
-            <select name="" id="" class="form-select">
-                <option value="">صورة واجهة المصنع</option>
-                <option value="">صورة توضح حالة المصنع</option>
-            </select>
-        </div>
-
-        <div class="col-md-6">
-            <label class="form-label">رفع المستند    </label>
-            <div class="input-group">
-                <input type="file" class="form-control" placeholder="" value="">
-                <button class="btn btn-primary" type="button">اضافة </button>
-            </div>
-        </div>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-hover table-small-header">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th> اسم المستند </th>
-                        <th>امتداد المستند</th>                                            
-                        <th style="min-width: 140px">خيارات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>   صورة واجهة المصنع </td>
-                        <td>JPG</td>
-                        <td>
-                            <a href="#" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
-                                عرض
-
-                            </a>
-                            <a href="" class="btn btn-danger">حذف</a>
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
-
-        
-
-
-        
+        <app-basic-info-file  [factoryId]="factoryId"></app-basic-info-file>
     </div>
 
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" type="submit">حفظ</button>
-            <a href="" class="btn btn-danger">الغاء</a>
+            <button (click)="save()" class="btn btn-primary me-1" type="submit">حفظ</button>
+            <a [routerLink]="'/pages/factory-landing/'+factoryId"  class="btn btn-danger">الغاء</a>
         </div>
     </div>
    
 </section>
 
-<!-- Modal photos-->
-<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img src="assets/images/factory.jpg" alt="" class="img-fluid">
-            </div>
-        </div>
-    </div>
-</div>

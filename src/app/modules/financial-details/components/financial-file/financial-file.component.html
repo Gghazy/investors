@@ -1,0 +1,69 @@
+<div class="col-md-12 mt-3">
+    <h3> إرفاق المستندات الداعمة </h3>
+</div>
+
+<div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
+    <strong><span class="d-block mb-2">الرجاء إرفاق المستندات الداعمة التالية:</span></strong>
+    <ul>
+        <li>الإقرار الزكوي <small class="text-danger mx-1">(الزامي)</small></li>
+
+        <li> القوائم المالية <small class="text-danger mx-1">(الزامي)</small></li>
+
+
+
+    </ul>
+    <p>ملاحظة: ّ نؤكد لكم توخي أقصى درجات السرية والتحفظ في التعامل مع جميع البيانات المالية المقدمة، بما يتوافق
+        مع التزامنا باحترام خصوصيتكم وضمان أمن بياناتكم</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="row">
+
+
+    
+    <div class="col-md-6">
+        <label class="form-label"> اسم المستند</label>
+        <input  type="text" name="Name" class="form-control"  [(ngModel)]="request.Name">
+    </div>
+    
+    <div class="col-md-6">
+        <label class="form-label" > اسم المستند</label>
+        <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select">
+            <option [ngValue]="0">الإقرار الزكوي </option>
+            <option [ngValue]="1">القوائم المالية</option>
+        </select>
+    </div>
+    
+    <div class="col-md-6">
+        <label class="form-label">رفع المستند    </label>
+        <div class="input-group">
+            <input type="file" class="form-control" placeholder="" value="" (change)="saveFile($event)">
+            <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+        </div>
+    </div>
+    </div>
+
+<app-list>
+    <ng-template #header>
+        <th>#</th>
+        <th> اسم المستند </th>
+        <th> نوع المستند </th>
+        <th>امتداد المستند</th>                                            
+        <th style="min-width: 140px">خيارات</th>
+    </ng-template>
+    <ng-template #body>
+      <tr *ngFor="let file of files let i=index">
+        <td>{{i+1}}</td>
+        <td>  {{file.Name}}</td>
+        <td>  {{file.Type}}</td>
+        <td>JPG</td>
+        <td>
+            <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                تحميل
+
+            </a>
+            <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
+        </td>
+      </tr>
+    </ng-template>
+  </app-list>

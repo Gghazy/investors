@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { ActualRawMaterialsService } from '../../actual-raw-materials.service';
 
@@ -10,27 +11,30 @@ import { ActualRawMaterialsService } from '../../actual-raw-materials.service';
     fade
   ]
 })
-export class ActualRawMaterialsFormComponent implements OnInit{
+export class ActualRawMaterialsFormComponent implements OnInit {
+  factoryId: any;
+  rawMaterials: any = [];
 
-  rawMaterials:any=[];
-    constructor(private service :ActualRawMaterialsService){
-  
-    }
+  constructor(private route: ActivatedRoute, private service: ActualRawMaterialsService) {
+    this.factoryId = this.route.snapshot.paramMap.get('id');
+  }
+
 
 
   ngOnInit() {
     this.getRawMaterial();
   }
 
-  getRawMaterial() { 
-   
+  getRawMaterial() {
+
     this.service
-        .getRawMaterial(1)
-        .subscribe((res: any) => {
+      .getRawMaterial(1)
+      .subscribe((res: any) => {
         this.rawMaterials = res.Data;
         console.log(this.rawMaterials)
       });
-  
-      
-    }
+
+
+  }
+
 }

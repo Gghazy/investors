@@ -15,7 +15,7 @@ import { ResultResponse } from 'src/app/core/models/result-response';
 })
 export class FactoryListComponent implements OnInit {
 
-  search=new FactorySearch();
+  search=new FactorySearch(); 
 
   factories = new ResultResponse<FactoryModel>();
 
@@ -24,10 +24,10 @@ export class FactoryListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.getServiceTypes();
+   this.getFactories();
   }
 
-  getServiceTypes() { 
+  getFactories() { 
     this.search.PageSize=5
     this.factoryService
       .getAllPagination(this.search)
@@ -37,9 +37,8 @@ export class FactoryListComponent implements OnInit {
   }
 
   pageChanged(data:any){
-    debugger
     this.search.PageNumber=data;
-    this.getServiceTypes();
+    this.getFactories();
 
   }
 
