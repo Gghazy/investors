@@ -35,9 +35,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td > الحبوب </td>
+                    <tr *ngFor="let material of rawMaterials ; let j =index">
+                        <td>{{j+1}}</td>
+                        <td > {{material.Name}} </td>
                         
                         <td>
                             <div class="input-group">
@@ -70,77 +70,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td > لحوم </td>
-                        
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="1000" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option selected>طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                                <span class="mx-1">=</span>
-                                <input type="number" class="form-control" value="1000000" disabled style="max-width: 117px;">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="150" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option selected>طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                                <span class="mx-1">=</span>
-                                <input type="number" class="form-control" value="150000" disabled style="max-width: 117px;">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td > الألبان </td>
-                        
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="1000000" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option >طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option selected> لتر</option>
-                                </select>
-                                <span class="mx-1">=</span>
-                                <input type="number" class="form-control" value="1200000" disabled style="max-width: 117px;">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="1000000" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option selected>طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                                <span class="mx-1">=</span>
-                                <input type="number" class="form-control" value="1200000" disabled style="max-width: 117px;">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
-                            </div>
-                        </td>
-                    </tr>
-                    
+              
                    
                     
                   

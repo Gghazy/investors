@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { fade } from 'src/app/shared/animation/app.animation';
+import { FactoryRawMaterialService } from '../../factory-raw-material.service';
 
 @Component({
   selector: 'app-factory-raw-materials-form',
@@ -12,6 +13,10 @@ import { fade } from 'src/app/shared/animation/app.animation';
 })
 export class FactoryRawMaterialsFormComponent implements OnInit{
 
+rawMaterials:any=[];
+  constructor(private rawMaterialService :FactoryRawMaterialService){
+
+  }
   handleUploadClick(event: Event) {
     const targetButton = event.target as HTMLButtonElement;
     const closestDiv = targetButton.closest('div');
@@ -42,6 +47,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit{
   dropdownSettings!: IDropdownSettings;
   
   ngOnInit() {
+    this.getRawMaterial();
     this.dropdownList  = [
       { item_id: 1, item_text: ' المنتج 1 ' },
       { item_id: 2, item_text: ' المنتج 2 ' },
@@ -66,4 +72,18 @@ export class FactoryRawMaterialsFormComponent implements OnInit{
   onSelectAll(items: any) {
     //console.log(items);
   }
+
+
+  getRawMaterial() { 
+   
+    this.rawMaterialService
+        .getRawMaterial(1)
+        .subscribe((res: any) => {
+        this.rawMaterials = res.Data;
+        console.log(this.rawMaterials)
+      });
+  
+      
+    }
+
 }

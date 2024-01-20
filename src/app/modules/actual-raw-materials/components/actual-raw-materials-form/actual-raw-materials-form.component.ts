@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { fade } from 'src/app/shared/animation/app.animation';
+import { ActualRawMaterialsService } from '../../actual-raw-materials.service';
 
 @Component({
   selector: 'app-actual-raw-materials-form',
@@ -9,6 +10,27 @@ import { fade } from 'src/app/shared/animation/app.animation';
     fade
   ]
 })
-export class ActualRawMaterialsFormComponent {
+export class ActualRawMaterialsFormComponent implements OnInit{
 
+  rawMaterials:any=[];
+    constructor(private service :ActualRawMaterialsService){
+  
+    }
+
+
+  ngOnInit() {
+    this.getRawMaterial();
+  }
+
+  getRawMaterial() { 
+   
+    this.service
+        .getRawMaterial(1)
+        .subscribe((res: any) => {
+        this.rawMaterials = res.Data;
+        console.log(this.rawMaterials)
+      });
+  
+      
+    }
 }
