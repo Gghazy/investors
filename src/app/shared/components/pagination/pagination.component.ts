@@ -13,7 +13,6 @@ export class PaginationComponent {
   currentPageNumber=1;
   numbers:number[]=[];
   pageChanged(data: any) {
-    debugger
     this.currentPageNumber=data;
     this.changePage.emit(data);
 

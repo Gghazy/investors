@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { fade } from 'src/app/shared/animation/app.animation';
 
@@ -12,6 +13,12 @@ import { fade } from 'src/app/shared/animation/app.animation';
   ]
 })
 export class FactoryContactFormComponent {
+
+  factoryId:any;
+
+  constructor(private route: ActivatedRoute){
+    this.factoryId = this.route.snapshot.paramMap.get('id');
+  }
   separateDialCode = false;
 	SearchCountryField = SearchCountryField;
 	CountryISO = CountryISO;

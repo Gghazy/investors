@@ -1,31 +1,19 @@
-<div class="layout container-fluid p-0">
-    <app-menu></app-menu>
-    <div class="left-block">
-      <app-header></app-header>
-      <main @fade>
-        <section class="form-panel">
-          <div class="form-header">
-            <h2 class="form-title">بيانات جهة الإتصال</h2>
-            <div>
-              <a routerLink="/pages/factory-landing" class="back-link">
-                رجوع
-                <svg
-                  height="25"
-                  viewBox="0 0 48 48"
-                  width="25"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M0 0h48v48h-48z" fill="none"></path>
-                  <path
-                    d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
-                    style="fill: #666"
-                  ></path>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div class="form-body">
-            <form #f="ngForm" [formGroup]="phoneForm">
+<section class="form-panel">
+  <div class="form-header">
+    <h2 class="form-title">بيانات جهة الإتصال</h2>
+    <div>
+      <a [routerLink]="'/pages/factory-landing/'+factoryId" class="back-link">
+        رجوع
+        <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h48v48h-48z" fill="none"></path>
+          <path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="form-body">
+    <form #f="ngForm" [formGroup]="phoneForm">
               <div class="row">
                 <div class="col-md-6">
                   <label class="form-label"> رقم الجوال لضابط الإتصال </label>
@@ -139,20 +127,15 @@
                   </div>
                 </div>
               </div>
-            </form>
-          </div>
-  
-          <div class="form-footer">
-            <div class="col-12">
-              <button class="btn btn-primary me-1" type="submit">حفظ</button>
-              <a href="" class="btn btn-danger">الغاء</a>
-            </div>
-          </div>
-        </section>
-      </main>
-      <app-footer></app-footer>
+            </form> 
+  </div>
+
+  <div class="form-footer">
+    <div class="col-12">
+      <button class="btn btn-primary me-1" type="submit">حفظ</button>
+      <a href="" class="btn btn-danger">الغاء</a>
     </div>
   </div>
-  
-  <app-terms-modal></app-terms-modal>
-  
+</section>
+
+<app-terms-modal></app-terms-modal>

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FactoryService } from 'src/app/modules/factory/factory.service';
 import { fade } from 'src/app/shared/animation/app.animation';
 
 @Component({
@@ -9,6 +11,15 @@ import { fade } from 'src/app/shared/animation/app.animation';
     fade
   ]
 })
-export class FactoryLandingFormComponent {
+export class FactoryLandingFormComponent implements OnInit {
+
+  factoryId:any;
+
+  constructor(private route: ActivatedRoute){
+    this.factoryId = this.route.snapshot.paramMap.get('id');
+  }
+
+  ngOnInit(): void {
+  }
 
 }

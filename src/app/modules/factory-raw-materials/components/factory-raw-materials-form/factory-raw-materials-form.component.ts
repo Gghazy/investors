@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { fade } from 'src/app/shared/animation/app.animation';
 
@@ -12,6 +13,11 @@ import { fade } from 'src/app/shared/animation/app.animation';
 })
 export class FactoryRawMaterialsFormComponent implements OnInit{
 
+  factoryId:any;
+
+  constructor(private route: ActivatedRoute){
+    this.factoryId = this.route.snapshot.paramMap.get('id');
+  }
   handleUploadClick(event: Event) {
     const targetButton = event.target as HTMLButtonElement;
     const closestDiv = targetButton.closest('div');

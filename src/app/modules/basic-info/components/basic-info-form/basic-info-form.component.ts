@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fade } from 'src/app/shared/animation/app.animation';
+import { BasicInfoService } from '../../basic-info.service';
+import { FactoryModel } from 'src/app/modules/factory/models/factory-model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-basic-info-form',
@@ -9,6 +13,36 @@ import { fade } from 'src/app/shared/animation/app.animation';
     fade
   ]
 })
-export class BasicInfoFormComponent {
+export class BasicInfoFormComponent implements OnInit {
+  factoryId: any;
+  request = new FactoryModel();
 
+  constructor(
+    private route: ActivatedRoute,
+     private basicInfoService: BasicInfoService,
+     private toastr: ToastrService,
+     private router: Router,
+     ) {
+    this.factoryId = this.route.snapshot.paramMap.get('id');
+  }
+  ngOnInit(): void {
+    this.getBasicInfo();
+  }
+
+  getBasicInfo() {
+    this.basicInfoService
+      .getOne(this.factoryId)
+      .subscribe((res: any) => {
+        this.request = res.Data;
+      });
+  }
+
+  save(){
+    this.basicInfoService
+        .update(this.request)
+        .subscribe((res: any) => {
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId]);
+          this.toastr.success("تم الحفظ");
+        });
+  }
 }
