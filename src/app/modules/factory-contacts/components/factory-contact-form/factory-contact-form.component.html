@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="form-body">
-    <form #f="ngForm" [formGroup]="phoneForm">
+    <form #f="ngForm" [formGroup]="phoneForm" (submit)="save()">
               <div class="row">
                 <div class="col-md-6">
                   <label class="form-label"> رقم الجوال لضابط الإتصال </label>
@@ -33,8 +33,8 @@
                     [phoneValidation]="true"
                     [separateDialCode]="separateDialCode"
                     [numberFormat]="PhoneNumberFormat.National"
-                    name="phone"
-                    formControlName="phone"
+                    name="OfficerPhone"
+                    formControlName="OfficerPhone"
                   >
                   </ngx-intl-tel-input>
                 </div>
@@ -47,6 +47,8 @@
                       type="email"
                       class="form-control"
                       placeholder="example@mail.com"
+                      name="OfficerEmail"
+                      formControlName="OfficerEmail"
                     />
                   </div>
                 </div>
@@ -71,8 +73,8 @@
                     [phoneValidation]="true"
                     [separateDialCode]="separateDialCode"
                     [numberFormat]="PhoneNumberFormat.National"
-                    name="phone"
-                    formControlName="phone"
+                    name="ProductionManagerPhone"
+                    formControlName="ProductionManagerPhone"
                   >
                   </ngx-intl-tel-input>
                 </div>
@@ -85,6 +87,8 @@
                       type="email"
                       class="form-control"
                       placeholder="example@mail.com"
+                      name="ProductionManagerEmail"
+                      formControlName="ProductionManagerEmail"
                     />
                   </div>
                 </div>
@@ -109,8 +113,9 @@
                     [phoneValidation]="true"
                     [separateDialCode]="separateDialCode"
                     [numberFormat]="PhoneNumberFormat.National"
-                    name="phone"
-                    formControlName="phone"
+                    name="FinanceManagerPhone"
+                    formControlName="FinanceManagerPhone"
+
                   >
                   </ngx-intl-tel-input>
                 </div>
@@ -123,19 +128,22 @@
                       type="email"
                       class="form-control"
                       placeholder="example@mail.com"
+                      name="FinanceManagerEmail"
+                      formControlName="FinanceManagerEmail"
                     />
                   </div>
+                </div>
+              </div>
+              <div class="form-footer">
+                <div class="col-12">
+                  <button class="btn btn-primary me-1" type="submit">حفظ</button>
+                  <a href="" class="btn btn-danger">الغاء</a>
                 </div>
               </div>
             </form> 
   </div>
 
-  <div class="form-footer">
-    <div class="col-12">
-      <button class="btn btn-primary me-1" type="submit">حفظ</button>
-      <a href="" class="btn btn-danger">الغاء</a>
-    </div>
-  </div>
+
 </section>
 
 <app-terms-modal></app-terms-modal>

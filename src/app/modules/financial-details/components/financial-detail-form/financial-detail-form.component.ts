@@ -33,7 +33,6 @@ export class FinancialDetailFormComponent {
     this.financialDetailService
       .getOne(this.factoryId)
       .subscribe((res: any) => {
-        debugger
         this.request = res.Data;
       });
   }

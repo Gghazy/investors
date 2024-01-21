@@ -14,6 +14,8 @@ import { CoreModule } from '../core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ListComponent } from './components/list/list.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
 
 
 const COMPONENTS = [
@@ -38,7 +40,8 @@ const COMPONENTS = [
     ToastrModule,
     NgxSpinnerModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,  
+    TooltipModule
   ],
   imports: [
     CommonModule,
@@ -49,7 +52,8 @@ const COMPONENTS = [
     ReactiveFormsModule,
     NgxSpinnerModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
+    TooltipModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

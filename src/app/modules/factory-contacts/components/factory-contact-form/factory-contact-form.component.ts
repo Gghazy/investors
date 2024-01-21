@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { fade } from 'src/app/shared/animation/app.animation';
+import { FactoryContactModel } from '../../models/factory-contact-model';
+import { FactoryContactService } from '../../factory-contact.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-factory-contact-form',
@@ -12,19 +15,70 @@ import { fade } from 'src/app/shared/animation/app.animation';
     fade
   ]
 })
-export class FactoryContactFormComponent {
+export class FactoryContactFormComponent implements OnInit {
 
-  factoryId:any;
-
-  constructor(private route: ActivatedRoute){
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-  }
+  factoryId: any;
+  request : any;
   separateDialCode = false;
-	SearchCountryField = SearchCountryField;
-	CountryISO = CountryISO;
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
-	phoneForm = new FormGroup({
-		phone: new FormControl(undefined, [Validators.required])
-	});
+  preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
+  phoneForm = new FormGroup({
+    OfficerPhone: new FormControl('+201016890777', [Validators.required]),
+    OfficerEmail: new FormControl(undefined, [Validators.required]),
+    ProductionManagerPhone: new FormControl(undefined, [Validators.required]),
+    ProductionManagerEmail: new FormControl(undefined, [Validators.required]),
+    FinanceManagerPhone: new FormControl(undefined, [Validators.required]),
+    FinanceManagerEmail: new FormControl(undefined, [Validators.required]),
+    Id: new FormControl(0, [Validators.required]),
+    FactoryId: new FormControl(undefined, [Validators.required]),
+
+  });
+
+  constructor(
+    private route: ActivatedRoute,
+    private factoryContactService: FactoryContactService,
+    private toastr: ToastrService,
+    private router: Router,
+  ) {
+    this.factoryId = this.route.snapshot.paramMap.get('id');
+
+  }
+  ngOnInit(): void {
+    this.getContact();
+  }
+
+  getContact() {
+    this.factoryContactService
+      .getOne(this.factoryId)
+      .subscribe((res: any) => {
+        debugger
+        this.request = res.Data;
+        this.phoneForm.setValue(res.Data);
+      });
+  }
+
+  save() {
+    this.request= this.phoneForm.value 
+    this.request.FactoryId = this.factoryId;
+    if (this.request.Id == 0) {
+      this.factoryContactService
+        .create(this.request)
+        .subscribe((res: any) => {
+          this.request = res.Data;
+          this.router.navigate(['/pages/factory-landing/' + this.factoryId]);
+          this.toastr.success("تم الحفظ");
+        });
+    }
+    else {
+      this.factoryContactService
+        .update(this.request)
+        .subscribe((res: any) => {
+          this.router.navigate(['/pages/factory-landing/' + this.factoryId]);
+          this.toastr.success("تم الحفظ");
+        });
+    }
+
+  }
 }
