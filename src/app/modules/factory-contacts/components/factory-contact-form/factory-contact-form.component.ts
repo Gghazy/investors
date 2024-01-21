@@ -25,7 +25,7 @@ export class FactoryContactFormComponent implements OnInit {
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
   phoneForm = new FormGroup({
-    OfficerPhone: new FormControl('+201016890777', [Validators.required]),
+    OfficerPhone: new FormControl(undefined, [Validators.required]),
     OfficerEmail: new FormControl(undefined, [Validators.required]),
     ProductionManagerPhone: new FormControl(undefined, [Validators.required]),
     ProductionManagerEmail: new FormControl(undefined, [Validators.required]),
@@ -56,6 +56,9 @@ export class FactoryContactFormComponent implements OnInit {
         debugger
         this.request = res.Data;
         this.phoneForm.setValue(res.Data);
+        this.phoneForm.controls.OfficerPhone.setValue(res.Data.OfficerPhone.InternationalNumber);
+        this.phoneForm.controls.FinanceManagerPhone.setValue(res.Data.FinanceManagerPhone.InternationalNumber);
+        this.phoneForm.controls.ProductionManagerPhone.setValue(res.Data.ProductionManagerPhone.InternationalNumber);
       });
   }
 
