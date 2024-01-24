@@ -1,0 +1,19 @@
+export class ProductModel {
+        Id!:number;
+        ProductName!:string;
+        CustomItemId_12!:number;
+        CommericalName!:string;
+        UnitId!:number;
+        WiegthInKgm!:number;
+        ProductCount!:number;
+        AnyNewProducts!:boolean;
+        ItemNumber!:string;
+        CR!:string;
+        HasCustomLevel!:boolean;
+        Status!:string;
+        UnitName!:string;
+        ParentName!:string;
+        ParentId!:number;
+        Kilograms_Per_Unit!:number;
+        Review!:boolean;
+}

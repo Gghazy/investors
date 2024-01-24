@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CustomsItemsUpdateFormComponent } from './components/customs-items-update-form/customs-items-update-form.component';
+import { CustomerUpdateListComponent } from './components/customer-update-list/customer-update-list.component';
 
 const routes: Routes = [
-  { path: '', component: CustomsItemsUpdateFormComponent , data: { title: 'بيانات تحديث البند الجمركي  ' }},
+  { path: '', component: CustomerUpdateListComponent , data: { title: 'بيانات تحديث البند الجمركي  ' }},
 
 ];
  

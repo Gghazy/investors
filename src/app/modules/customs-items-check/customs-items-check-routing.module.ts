@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CustomsItemsCheckFormComponent } from './components/customs-items-check-form/customs-items-check-form.component';
+import { CustomCheckListComponent } from './components/custom-check-list/custom-check-list.component';
 
 const routes: Routes = [
-  { path: '', component: CustomsItemsCheckFormComponent , data: { title: 'التحقق من صحة البند الجمركي على مستوى 12' }},
+  { path: '', component: CustomCheckListComponent , data: { title: 'التحقق من صحة البند الجمركي على مستوى 12' }},
 
 ];
 

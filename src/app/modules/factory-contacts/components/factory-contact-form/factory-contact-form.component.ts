@@ -53,7 +53,6 @@ export class FactoryContactFormComponent implements OnInit {
     this.factoryContactService
       .getOne(this.factoryId)
       .subscribe((res: any) => {
-        debugger
         this.request = res.Data;
         this.phoneForm.setValue(res.Data);
         this.phoneForm.controls.OfficerPhone.setValue(res.Data.OfficerPhone.InternationalNumber);

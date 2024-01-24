@@ -1,0 +1,359 @@
+<section class="form-panel">
+    <div class="form-header">
+      <h2 class="form-title">بيانات المنتجات</h2>
+      <div>
+        <a [routerLink]="'/pages/factory-landing/'+factoryId" class="back-link">
+          رجوع
+          <svg
+            height="25"
+            viewBox="0 0 48 48"
+            width="25"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M0 0h48v48h-48z" fill="none"></path>
+            <path
+              d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
+              style="fill: #666"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </div> 
+    <div class="form-body">
+      <div class="col-md-6">
+        <label class="form-label">
+          كم عدد المنتجات التي يتم تصنيعها؟​</label
+        >
+        <input type="text" class="form-control" value=" 5 " />
+      </div>
+      <app-list>
+        <ng-template #header>
+          <th>#</th>
+          <th>المنتج</th>
+          <th>
+            <span class="has-des" tooltip="شرح الحقل " placement="left">
+              اسم المنتج التجاري <i>؟</i></span
+            >
+          </th>
+          <th>
+            <span
+              class="has-des"
+              placement="left"
+              title=""
+              tooltip="شرح الحقل"
+            >
+              وحدة القياس <i>؟</i></span
+            >
+          </th>
+          <th>
+            <span
+              class="has-des"
+              placement="left"
+              title=""
+              tooltip="شرح الحقل"
+            >
+              الوزن المقابل​ بالكيلوغرام لكل وحدة​ <i>؟</i></span
+            >
+          </th>
+          <th></th>
+          <th> صورة المنتج</th>
+          <th>
+            <span
+              class="has-des"
+              placement="top"
+              title=""
+              tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
+            >
+               ورقة البيانات <i>؟</i></span
+            >
+          </th>
+        </ng-template>
+        <ng-template #body>
+          <tr *ngFor="let product of products.Items let i=index">
+            <td>{{i+1}}</td>
+            <td>{{product.ProductName}}</td>
+            <td>
+              {{product.CommericalName}}
+            </td>
+            <td>
+                {{product.UnitName}}
+            </td>
+            <td>
+              {{product.Kilograms_Per_Unit}}
+            </td>
+            <td></td>
+            <td>
+              <button
+              class="btn btn-primary px-2 py-1 mx-1"
+              type="button"
+              placement="bottom"
+              title=""
+              tooltip=" تحميل الملف "
+            >
+              <svg
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                    stroke="#ffffff"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  ></path>
+                  <path
+                    d="M12 2L12 15M12 15L9 11.5M12 15L15 11.5"
+                    stroke="#ffffff"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </g>
+              </svg>
+            </button>
+            </td>
+            <td>
+              <button
+              class="btn btn-primary px-2 py-1 mx-1"
+              type="button"
+              placement="bottom"
+              title=""
+              tooltip=" تحميل الملف "
+            >
+              <svg
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                    stroke="#ffffff"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  ></path>
+                  <path
+                    d="M12 2L12 15M12 15L9 11.5M12 15L15 11.5"
+                    stroke="#ffffff"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </g>
+              </svg>
+            </button>
+            </td>
+          </tr>
+        </ng-template>
+      </app-list>
+      <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize"
+        [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
+        <div class="row">
+          <div class="col-md-4">
+            <label class="form-label"
+              >هل لديك منتجات جديدة تريد إضافتها؟</label
+            >
+            <select
+              class="form-select if-yes"
+              (change)="handleSelectChange($event)"
+            >
+              <option value="yes">نعم</option>
+              <option value="no" selected>لا</option>
+            </select>
+          </div>
+          <div
+            class="col-md-4 show-input"
+            [ngClass]="{ 'd-none': !showInput }"
+          >
+            <label class="form-label"> إضافة منتج جديد</label>
+            <div class="form-group">
+              <button
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#addProduct"
+              >
+                إضافة منتج
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  
+<!-- Modal photos-->
+<div
+class="modal fade"
+id="photoModal"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div
+  class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">صورة المنتج</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body text-center">
+      <img src="assets/images/product.png" alt="" class="img-fluid" />
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Modal Add Product-->
+<div
+class="modal fade"
+id="addProduct"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div
+  class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">إضافة منتج</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <label class="form-label"> اسم المنتج </label>
+          <div class="input-group">
+            <input type="text" class="form-control" value="" />
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label"> رقم البند الجمركي على مستوى 12 </label>
+          <div class="input-group">
+            <input type="text" class="form-control" value="" />
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label
+            class="form-label"
+            placement="left"
+            title=""
+            tooltip="شرح الحقل"
+            aria-describedby=""
+          >
+            اسم المنتج التجاري <i>؟</i>
+          </label>
+
+          <div class="input-group">
+            <input type="text" class="form-control" value="" />
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label
+            class="form-label"
+            placement="left"
+            title=""
+            tooltip="شرح الحقل"
+            aria-describedby=""
+          >
+            وحدة القياس <i>؟</i>
+          </label>
+
+          <select>
+            <option>اختر</option>
+            <option>طن</option>
+            <option>كغ</option>
+            <option>جرام</option>
+            <option>لتر</option>
+          </select>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label
+            class="form-label"
+            placement="left"
+            title=""
+            tooltip="شرح الحقل"
+            aria-describedby=""
+          >
+            الوزن المقابل​ بالكيلوغرام لكل وحدة​ <i>؟</i>
+          </label>
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control"
+              value="0"
+              style="max-width: 117px"
+            />
+            <span class="mx-1">=</span>
+            <input
+              type="number"
+              class="form-control"
+              value="0"
+              disabled=""
+              style="max-width: 117px"
+            />
+            <input
+              type="text"
+              class="form-control px-1 text-center"
+              value="كغ"
+              disabled=""
+              style="max-width: 40px"
+            />
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label"> إرفاق صورة المنتج </label>
+          <input type="file" class="form-control" />
+        </div>
+        <div class="col-md-3 mb-3">
+          <label
+            class="form-label"
+            placement="left"
+            title=""
+            tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
+            aria-describedby=""
+          >
+            إرفاق ورقة البيانات <i>؟</i></label
+          >
+          <input type="file" class="form-control" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="col-12 text-end">
+        <button class="btn btn-primary me-1" type="submit">إضافة</button>
+
+        <a href="" class="btn btn-danger">الغاء</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

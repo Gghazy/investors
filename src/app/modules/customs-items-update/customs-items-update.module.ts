@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CustomsItemsUpdateRoutingModule } from './customs-items-update-routing.module';
-import { CustomsItemsUpdateFormComponent } from './components/customs-items-update-form/customs-items-update-form.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CustomerUpdateListComponent } from './components/customer-update-list/customer-update-list.component';
+import { CustomerUpdateFormComponent } from './components/customer-update-form/customer-update-form.component';
 
 
 @NgModule({
   declarations: [
-    CustomsItemsUpdateFormComponent
+    CustomerUpdateListComponent,
+    CustomerUpdateFormComponent
   ],
   imports: [
     CommonModule,

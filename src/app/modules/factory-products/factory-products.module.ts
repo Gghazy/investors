@@ -2,16 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FactoryProductsRoutingModule } from './factory-products-routing.module';
-import { FactoryProductFormComponent } from './components/factory-product-form/factory-product-form.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    FactoryProductFormComponent
+    ProductListComponent,
+    ProductFormComponent
   ],
   imports: [
     CommonModule,
-    FactoryProductsRoutingModule
+    FactoryProductsRoutingModule,
+    SharedModule
   ]
 })
 export class FactoryProductsModule { }
