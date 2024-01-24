@@ -18,4 +18,7 @@ export class LookUpService {
   getAllFactoryEntities(): Observable<any> {
     return this.http.get<any>('FactoryEntities');
   }
+  getAllUnits(): Observable<any> {
+    return this.http.get<any>('Units');
+  }
 }

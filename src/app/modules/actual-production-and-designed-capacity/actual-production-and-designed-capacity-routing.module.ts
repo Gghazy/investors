@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormComponent } from './components/form/form.component';
+import { ActualProductionListComponent } from './components/actual-production-list/actual-production-list.component';
 
 const routes: Routes = [
-  { path: '', component: FormComponent , data: { title: 'بيانات كمية الإنتاج الفعلي والطاقة التصميمية' }},
+  { path: '', component: ActualProductionListComponent , data: { title: 'بيانات كمية الإنتاج الفعلي والطاقة التصميمية' }},
 
 ]; 
 

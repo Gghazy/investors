@@ -55,7 +55,6 @@
               الوزن المقابل​ بالكيلوغرام لكل وحدة​ <i>؟</i></span
             >
           </th>
-          <th></th>
           <th> صورة المنتج</th>
           <th>
             <span
@@ -67,6 +66,7 @@
                ورقة البيانات <i>؟</i></span
             >
           </th>
+          <th> تعديل</th>
         </ng-template>
         <ng-template #body>
           <tr *ngFor="let product of products.Items let i=index">
@@ -81,7 +81,6 @@
             <td>
               {{product.Kilograms_Per_Unit}}
             </td>
-            <td></td>
             <td>
               <button
               class="btn btn-primary px-2 py-1 mx-1"
@@ -89,6 +88,8 @@
               placement="bottom"
               title=""
               tooltip=" تحميل الملف "
+              (click)="getFile(product.PhotoId)"
+
             >
               <svg
                 width="24px"
@@ -128,6 +129,7 @@
               placement="bottom"
               title=""
               tooltip=" تحميل الملف "
+              (click)="getFile(product.PaperId)"
             >
               <svg
                 width="24px"
@@ -159,6 +161,16 @@
                 </g>
               </svg>
             </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#addProduct"
+                (click)="edit(product.Id)"
+              >
+                تعديل
+              </button>
             </td>
           </tr>
         </ng-template>
@@ -188,6 +200,7 @@
                 class="btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#addProduct"
+                (click)="edit(0)"
               >
                 إضافة منتج
               </button>
@@ -245,114 +258,11 @@ aria-hidden="true"
         class="btn-close"
         data-bs-dismiss="modal"
         aria-label="Close"
+        #closeModal 
       ></button>
     </div>
     <div class="modal-body">
-      <div class="row">
-        <div class="col-md-3 mb-3">
-          <label class="form-label"> اسم المنتج </label>
-          <div class="input-group">
-            <input type="text" class="form-control" value="" />
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label class="form-label"> رقم البند الجمركي على مستوى 12 </label>
-          <div class="input-group">
-            <input type="text" class="form-control" value="" />
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label
-            class="form-label"
-            placement="left"
-            title=""
-            tooltip="شرح الحقل"
-            aria-describedby=""
-          >
-            اسم المنتج التجاري <i>؟</i>
-          </label>
-
-          <div class="input-group">
-            <input type="text" class="form-control" value="" />
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label
-            class="form-label"
-            placement="left"
-            title=""
-            tooltip="شرح الحقل"
-            aria-describedby=""
-          >
-            وحدة القياس <i>؟</i>
-          </label>
-
-          <select>
-            <option>اختر</option>
-            <option>طن</option>
-            <option>كغ</option>
-            <option>جرام</option>
-            <option>لتر</option>
-          </select>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label
-            class="form-label"
-            placement="left"
-            title=""
-            tooltip="شرح الحقل"
-            aria-describedby=""
-          >
-            الوزن المقابل​ بالكيلوغرام لكل وحدة​ <i>؟</i>
-          </label>
-          <div class="input-group">
-            <input
-              type="number"
-              class="form-control"
-              value="0"
-              style="max-width: 117px"
-            />
-            <span class="mx-1">=</span>
-            <input
-              type="number"
-              class="form-control"
-              value="0"
-              disabled=""
-              style="max-width: 117px"
-            />
-            <input
-              type="text"
-              class="form-control px-1 text-center"
-              value="كغ"
-              disabled=""
-              style="max-width: 40px"
-            />
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label class="form-label"> إرفاق صورة المنتج </label>
-          <input type="file" class="form-control" />
-        </div>
-        <div class="col-md-3 mb-3">
-          <label
-            class="form-label"
-            placement="left"
-            title=""
-            tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
-            aria-describedby=""
-          >
-            إرفاق ورقة البيانات <i>؟</i></label
-          >
-          <input type="file" class="form-control" />
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <div class="col-12 text-end">
-        <button class="btn btn-primary me-1" type="submit">إضافة</button>
-
-        <a href="" class="btn btn-danger">الغاء</a>
-      </div>
+      <app-product-form *ngIf="productId!=undefined" [productId]="productId" [factoryId]="factoryId" (close)="closePopUp()"></app-product-form>
     </div>
   </div>
 </div>

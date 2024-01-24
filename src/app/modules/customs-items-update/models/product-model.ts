@@ -13,7 +13,11 @@ export class ProductModel {
         Status!:string;
         UnitName!:string;
         ParentName!:string;
+        Level12Number!:string;
         ParentId!:number;
+        PaperId!:number;
+        PhotoId!:number;
         Kilograms_Per_Unit!:number;
         Review!:boolean;
+        FactoryId!:number;
 }

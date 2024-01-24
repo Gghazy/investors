@@ -1,1 +1,45 @@
-<p>product-form works!</p>
+<div class="row">
+    <div class="col-md-6" *ngIf="productId==0">
+        <label class="form-label"> اسم المنتج </label>
+        <input  type="text" name="ProductName" class="form-control"  [(ngModel)]="request.ProductName">
+
+      </div>
+      <div class="col-md-6" *ngIf="productId==0">
+        <label class="form-label"> رقم البند الجمركي على مستوى 12 </label>
+        <input  type="text" name="CommericalName" class="form-control"  [(ngModel)]="request.Level12Number">
+
+      </div>
+
+    
+    <div class="col-md-6">
+        <label class="form-label"> 	اسم المنتج التجاري</label>
+        <input  type="text" name="CommericalName" class="form-control"  [(ngModel)]="request.CommericalName">
+    </div>
+    
+    <div class="col-md-6">
+        <label class="form-label" >وحدة القياس </label>
+        <select name="Type" id="UnitId" [(ngModel)]="request.UnitId" class="form-select">
+            <option *ngFor="let unit of units" [ngValue]="unit.Id">{{unit.Name}}</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">الوزن المقابل​ بالكيلوغرام لكل وحدة​ </label>
+        <input  type="number" name="Kilograms_Per_Unit" class="form-control"  [(ngModel)]="request.Kilograms_Per_Unit">
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">صورة المنتج     </label>
+        <div class="input-group">
+            <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">ورقة البيانات    </label>
+        <div class="input-group">
+            <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" type="button" (click)="save()">حفظ </button>
+
+    </div>
+    </div>
