@@ -22,4 +22,8 @@ export class ActualRawMaterialsService {
   update(material: ActualRawMaterial): Observable<any> {
     return this.http.put<any>('ActualRawMaterials', material);
   }
+
+  create(material: ActualRawMaterial): Observable<any> {
+    return this.http.post<any>('ActualRawMaterials', material);
+  }
 }

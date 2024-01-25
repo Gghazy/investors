@@ -5,8 +5,10 @@ export class RawMaterial {
       MaximumMonthlyConsumption !:number;
       AverageWeightKG !:number;
       Description !:string;
-  
+  ProductId!:number;
       FactoryId !:number;
       AttachmentId !:number
+
+  
 
 }
