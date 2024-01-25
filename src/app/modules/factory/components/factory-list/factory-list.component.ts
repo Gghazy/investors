@@ -25,10 +25,10 @@ export class FactoryListComponent implements OnInit {
 
   ngOnInit(): void {
    this.getFactories();
-  }
+  } 
 
   getFactories() { 
-    this.search.PageSize=5
+    
     this.factoryService
       .getAllPagination(this.search)
       .subscribe((res: any) => {

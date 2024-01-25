@@ -25,7 +25,6 @@ export class LocationFileComponent implements OnInit {
   }
 
   getFiles() {
-    debugger
     this.factoryLocationService
       .getAllFiles(this.factoryLocationId)
       .subscribe((res: any) => {

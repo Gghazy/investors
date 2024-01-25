@@ -1,0 +1,78 @@
+<section class="form-panel">
+    <div class="form-header">
+        <h2 class="form-title">      التحقق من صحة البند الجمركي على مستوى 12</h2>
+        <div>
+            <a [routerLink]="'/pages/factory-landing/'+factoryId" class="back-link">
+                رجوع
+                <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
+            </a>
+        </div>
+    </div>
+    <div class="form-body">
+        
+            <app-list>
+                <ng-template #header>
+                    <th>#</th>
+                    <th> المنتجات المسجلة في الترخيص الصناعي بالتصنيف الجمركي على مستوى 10</th>
+                    <th> المنتجات المسجلة في الترخيص بعد تحويلها الى مستوى 12</th>
+                    <th> صحة التصنيف الجمركي على مستوى 12</th>
+                    <th>خيارات</th>
+                </ng-template>
+                <ng-template #body>
+                  <tr *ngFor="let product of products.Items let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{product.ParentName}}(رقم البند الجمركي على مستوى 10 )</td>
+                    
+                    <td>
+                        {{product.ProductName}} (رقم البند الجمركي على مستوى 12 )
+                       
+                    </td> 
+                    <td>
+
+                        <span *ngIf="product.Review==false" class="badge alert-danger px-3 py-2">
+                            غير صحيح
+                          </span>
+                          <span *ngIf="product.Review==true" class="badge alert-success px-3 py-2">
+                            صحيح
+                         </span>
+                         <span *ngIf="product.Review==null" class="badge alert-success px-3 py-2">
+                            لم يتم المراجعة
+                         </span>
+                        
+                        
+                    </td>
+                    <td>
+                        <a *ngIf="product.Review==false"  (click)="selectLevel(product.Id,product.ParentName,product.ParentId)"  class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#modal">
+                            اختر التصنيف المناسب 
+            
+                          </a>
+                    </td>
+                  </tr>
+                </ng-template>
+              </app-list> 
+              <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize"
+                [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
+
+    </div>
+</section>
+<!-- Modal Update-->
+<div class="modal fade" id="modal" tabindex="-1"  aria-labelledby="exampleModalLabel"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
+                <button type="button" #closeModal class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <app-custom-check-form 
+                (saveChanage)="saveChanage()"
+                 *ngIf="productId!=0&&productId!=undefined"
+                  [factoryId]="factoryId" 
+                  [parentName]="parentName"
+                  [productId]="productId"
+                  [parentId]="parentId"
+                   ></app-custom-check-form>
+            </div>
+        </div>
+    </div>
+  </div>

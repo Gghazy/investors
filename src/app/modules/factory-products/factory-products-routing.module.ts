@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FactoryProductFormComponent } from './components/factory-product-form/factory-product-form.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 
 const routes: Routes = [
-  { path: '', component: FactoryProductFormComponent , data: { title: 'بيانات المنتجات' }},
+  { path: '', component: ProductListComponent , data: { title: 'بيانات المنتجات' }},
 
 ];
 

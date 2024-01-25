@@ -2,16 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CustomsItemsCheckRoutingModule } from './customs-items-check-routing.module';
-import { CustomsItemsCheckFormComponent } from './components/customs-items-check-form/customs-items-check-form.component';
+import { CustomCheckListComponent } from './components/custom-check-list/custom-check-list.component';
+import { CustomCheckFormComponent } from './components/custom-check-form/custom-check-form.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    CustomsItemsCheckFormComponent
+    CustomCheckListComponent,
+    CustomCheckFormComponent
   ],
   imports: [
     CommonModule,
-    CustomsItemsCheckRoutingModule
+    CustomsItemsCheckRoutingModule,
+    SharedModule
   ]
 })
 export class CustomsItemsCheckModule { }

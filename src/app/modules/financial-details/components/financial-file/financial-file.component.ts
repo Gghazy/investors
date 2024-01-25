@@ -25,7 +25,6 @@ export class FinancialFileComponent implements OnInit {
   }
 
   getFiles() { 
-    debugger
     this.financialDetailService
       .getAllFiles(this.financialId)
       .subscribe((res: any) => {

@@ -18,60 +18,69 @@
                 <option value="" >مارس</option>
             </select>
         </div>
-        
+        <app-list>
+            <ng-template #header>
+                <th>#</th> 
+                <th> المنتج</th>
+                <th> الطاقة التصميمة(القصوى)​</th>
+                <th>الإنتاج الفعلي​</th>
+                <th></th>
+                <th> وزن الإنتاج الفعلي​ </th>
+            </ng-template>
+            <ng-template #body>
+              <tr *ngFor="let product of products.Items let i=index">
+                <td>{{i+1}}</td>
+                <td>المنتج  1 (رقم البند الجمركي على مستوى 12 )</td>
+                
+                <td>
+                    <div class="input-group">
+                        <input type="number" class="form-control" value="50" style="max-width: 117px;">
+                        <select>
+                            <option>اختر</option>
+                            <option selected>طن</option>                                                    
+                            <option>كغ</option>
+                            <option>جرام</option>
+                            <option> لتر</option>
+                        </select>
+                       
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input type="number" class="form-control" value="55" style="max-width: 117px;">
+                        <select>
+                            <option>اختر</option>
+                            <option selected>طن</option>                                                    
+                            <option>كغ</option>
+                            <option>جرام</option>
+                            <option> لتر</option>
+                        </select>
+                       
+                    </div>
+                </td>
+                <td> = </td>
+                <td>
+                    <div class="input-group">
+                       
+                        
+                        <input type="number" class="form-control" value="55000" disabled style="max-width: 117px;">
+                        <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
+                    </div>
+                </td>
+              </tr>
+            </ng-template>
+          </app-list>
         <div class="table-responsive">
             <table class="table table-hover table-small-header table-striped">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th> المنتج</th>
-                        <th> الطاقة التصميمة(القصوى)​</th>
-                        <th>الإنتاج الفعلي​</th>
-                        <th></th>
-                        <th> وزن الإنتاج الفعلي​ </th>
+                       
                         
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>المنتج  1 (رقم البند الجمركي على مستوى 12 )</td>
-                        
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="50" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option selected>طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                               
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="55" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option selected>طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                               
-                            </div>
-                        </td>
-                        <td> = </td>
-                        <td>
-                            <div class="input-group">
-                               
-                                
-                                <input type="number" class="form-control" value="55000" disabled style="max-width: 117px;">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                            </div>
-                        </td>
+                    
                     </tr>  
                     <tr>
                         <td>2</td>
