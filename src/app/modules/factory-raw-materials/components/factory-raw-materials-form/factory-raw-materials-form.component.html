@@ -54,12 +54,12 @@
                             <i>؟</i>
                         </label>
                         <div class="input-group">
-                            <input type="number" class="form-control" value="{{material.MaximumMonthlyConsumption}}">
-                            <select class="form-select">
-                                <option selected>طن</option>
-                                <option>كغ</option>
-                                <option>جرام</option>
-                                <option> لتر</option>
+                            <input type="number" class="form-control" value="{{material.UnitId}}">
+                            <select class="form-select" value="{{material.AverageWeightKG}}">
+                                <option selected value="1">طن</option>
+                                <option value="1">كغ</option>
+                                <option value="2">جرام</option>
+                                <option value="3"> لتر</option>
                             </select>
                         </div>
                     </div>
@@ -99,7 +99,10 @@
                             <i>؟</i>
                         </label>
                         <div class="input-group">
-                            <button class="btn btn-primary px-2 py-1 upload-btn" (click)="handleUploadClick($event)"
+                          
+                            <button class="btn btn-primary px-2 py-1 upload-btn" 
+                            (click)="handleUploadClick($event)"
+                           
                                 placement="bottom" title="" tooltip=" رفع صورة للمادة" aria-describedby="tooltip468370">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -117,7 +120,9 @@
                             <input type="file" class="d-none">
                             <span data-bs-toggle="modal" data-bs-target="#photoModal">
                                 <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
-                                    tooltip=" عرض صورة  المادة">
+                                    tooltip=" عرض صورة  المادة"
+                                    (click)="getImage(material.PhotoId)"
+                                    >
 
                                     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -150,8 +155,9 @@
                             tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
                             aria-describedby="tooltip617728"> إرفاق ورقة البيانات <i>؟</i></label>
                         <div class="input-group">
-
-                            <button class="btn btn-primary px-2 py-1 upload-btn" (click)="handleUploadClick($event)"
+                            <!--  -->
+                            <button class="btn btn-primary px-2 py-1 upload-btn" 
+                            (click)="handleUploadClick($event)"
                                 placement="bottom" title="" tooltip=" رفع الملف" aria-describedby="tooltip93704">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -169,7 +175,8 @@
                             <input type="file" class="d-none">
 
                             <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
-                                tooltip=" تحميل الملف ">
+                                tooltip=" تحميل الملف "
+                                (click)="getFile(material.PaperId)">
 
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -235,7 +242,7 @@
     <div class="form-footer">
         <div class="col-12">
             <button class="btn btn-primary me-1" type="submit">حفظ</button>
-            <a href="" class="btn btn-danger">الغاء</a>
+            <a [routerLink]="'/pages/factory-landing/'+factoryId" class="btn btn-danger">الغاء</a>
         </div>
     </div>
 </section>
@@ -251,7 +258,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img src="assets/images/product.png" alt="" class="img-fluid">
+                <!-- <img src="assets/images/product.png" alt="" class="img-fluid"> -->
             </div>
         </div>
     </div>
@@ -292,7 +299,7 @@
                         </label>
                         <div class="input-group">
                             <input type="number" class="form-control"  [(ngModel)]="request.MaximumMonthlyConsumption">
-                            <select class="form-select" (change)="onUnitSelect($event)">
+                            <select class="form-select" (change)="onUnitSelect($event)"  [(ngModel)]="request.UnitId">
                                 <option value="1" selected>طن</option>
                                 <option value="2">كغ</option>
                                 <option value="3">جرام</option>
@@ -335,13 +342,13 @@
                             الأولية
                             <i>؟</i>
                         </label>
-                        <input type="file" class="form-control">
+                        <input type="file" class="form-control"  placeholder="" value="" (change)="savePhoto($event)">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label" placement="left" title=""
                             tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
                             aria-describedby="tooltip617728"> إرفاق ورقة البيانات <i>؟</i></label>
-                        <input type="file" class="form-control">
+                        <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">
                     </div>
 
                     <div class="col-md-12">
@@ -363,7 +370,7 @@
                 <div class="col-12 text-end">
                     <button class="btn btn-primary me-1" type="submit" (click)="save()"> إضافة</button>
 
-                    <a href="" class="btn btn-danger">الغاء</a>
+                    <a data-bs-dismiss="modal" class="btn btn-danger">الغاء</a>
                 </div>
             </div>
         </div>

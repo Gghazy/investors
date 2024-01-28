@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let material of rawMaterials ; let j =index">
+                    <tr *ngFor="let material of x ; let j =index">
                         <td>{{j+1}}</td>
                        
                         <td  hidden> {{material.Id}} </td>
@@ -43,7 +43,7 @@
                         
                         <td>
                             <div class="input-group">
-                                <input type="number" class="form-control" value="1000" style="max-width: 117px;">
+                                <input type="number" class="form-control" style="max-width: 117px;" value="{{material.CurrentStockQuantity_KG}}">
                                 <select>
                                     <option>اختر</option>
                                     <option selected>طن</option>                                                    
@@ -52,13 +52,13 @@
                                     <option> لتر</option>
                                 </select>
                                 <span class="mx-1">=</span>
-                                <input type="number" class="form-control" value="1000000" disabled style="max-width: 117px;" >
+                                <input type="number" class="form-control" value="10" disabled style="max-width: 117px;" >
                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
                             </div>
                         </td>
                         <td>
                             <div class="input-group">
-                                <input type="number" class="form-control" value="150" style="max-width: 117px;">
+                                <input type="number" class="form-control" value="{{material.UsedQuantity_KG}}" style="max-width: 117px;">
                                 <select>
                                     <option>اختر</option>
                                     <option selected>طن</option>                                                    
@@ -67,7 +67,7 @@
                                     <option> لتر</option>
                                 </select>
                                 <span class="mx-1">=</span>
-                                <input type="number" class="form-control" value="150000" disabled style="max-width: 117px;" >
+                                <input type="number" class="form-control" value="{{material.UsedQuantity_KG}}" disabled style="max-width: 117px;" >
                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
                             </div>
                         </td>
@@ -131,8 +131,8 @@
         <div class="col-md-6">
             <label class="form-label">رفع المستند    </label>
             <div class="input-group">
-                <input type="file" class="form-control" placeholder="" value="">
-                <button class="btn btn-primary" type="button">اضافة </button>
+                <input type="file" class="form-control" placeholder="" value=""  (change)="saveFile(files)">
+                <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
             </div>
         </div>
     </div>
@@ -148,15 +148,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="4"> <div class="text-center">لا توجد ملفات </div> </td>
-                        
-                    </tr>
+                    <tr *ngFor="let file of files let i=index">
+                        <td>{{i+1}}</td>
+                        <td>  {{file.Name}}</td>
+                        <td>  {{file.Type}}</td>
+                        <td>JPG</td>
+                        <td>
+                            <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                                عرض
+                
+                            </a>
+                            <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
+                        </td>
+                      </tr>
                     
                 </tbody>
             </table>
         </div>
-
+<!-- Modal photos-->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img [src]="src" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
     </div>
     <div class="form-footer">
         <div class="col-12">

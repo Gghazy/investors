@@ -26,4 +26,17 @@ export class ActualRawMaterialsService {
   create(material: ActualRawMaterial): Observable<any> {
     return this.http.post<any>('ActualRawMaterials', material);
   }
+
+
+  //ActualRawMaterialFiles
+
+  getFiles(itemId:number): Observable<any> {
+    return this.http.get<any>('ActualRawMaterialFile/'+itemId);
+  }
+  AddFile(request: ActualRawMaterial): Observable<any> {
+    return this.http.post<any>('ActualRawMaterialFile', request);
+  }
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>('ActualRawMaterialFile/' + id);
+  }
 }

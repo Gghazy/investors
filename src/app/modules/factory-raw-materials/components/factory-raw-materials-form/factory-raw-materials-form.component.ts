@@ -5,6 +5,7 @@ import { fade } from 'src/app/shared/animation/app.animation';
 import { FactoryRawMaterialService } from '../../factory-raw-material.service';
 import { ToastrService } from 'ngx-toastr';
 import { RawMaterial } from '../../models/raw-material.model';
+import { FileService } from 'src/app/core/service/file.service';
 
 @Component({
   selector: 'app-factory-raw-materials-form',
@@ -21,6 +22,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   materialCount: any;
   request = new RawMaterial();
   constructor(private rawMaterialService: FactoryRawMaterialService,
+    private fileService: FileService,
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute) {
@@ -79,7 +81,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     };
   }
   onItemSelect(item: any) {
-    this.request.ProductId=item.item_id;
+    this.request.ProductId = item.item_id;
     //console.log(item);
   }
   onSelectAll(items: any) {
@@ -87,38 +89,99 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   }
 
   onUnitSelect(event: Event) {
-    let selectedValue:any = (event.target as HTMLSelectElement).value;
-if(selectedValue =="1"){
-  console.log(selectedValue);
-  this.request.AverageWeightKG =selectedValue
-}
-    
+    let selectedValue: any = (event.target as HTMLSelectElement).value;
+    if (selectedValue == "1") {
+      console.log(selectedValue);
+      this.request.AverageWeightKG = selectedValue
+      this.request.AverageWeightKG = selectedValue
+    }
+    console.log(selectedValue)
+    console.log(this.request.UnitId)
   }
   getRawMaterial() {
 
     this.rawMaterialService
       .getRawMaterial(this.factoryId)
       .subscribe((res: any) => {
-       
+
         this.rawMaterials = res.Data;
         console.log(this.rawMaterials.length)
-        this.materialCount =this.rawMaterials.length;
+        this.materialCount = this.rawMaterials.length;
       });
 
 
   }
 
+  savePaper(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.request.PaperId = res.Data.Id
+          console.log( this.request.PaperId)
+        });
+    }
+  }
+  savePhoto(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.request.PhotoId = res.Data.Id
+          console.log(this.request.PhotoId)
+        });
+    }
+  }
+
+  getFile(attachmentId: number) {
+    if (attachmentId == null) {
+      this.toastr.error("لا يوجد ملف");
+    }
+    else {
+      this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
+        this.downloadattachment(res)
+      });
+    }
+
+  }
+
+ 
+
+  getImage(attachmentId: number) {
+    if (attachmentId == null) {
+      this.toastr.error("لا يوجد ملف");
+    }
+    else {
+      this.fileService.getImage(attachmentId).subscribe((res: any) => {
+        this.downloadattachment(res)
+      });
+    }
+
+  }
+
+  downloadattachment(data: any) {
+    const blob = new Blob([data], { type: data.type });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
+  }
 
   save() {
-    this.request.FactoryId=this.factoryId;
-    this.request.AttachmentId=1;
+    this.request.FactoryId = this.factoryId;
+    this.request.AttachmentId = 1;
     this.rawMaterialService
       .create(this.request)
       .subscribe((res: any) => {
-       
+
         this.toastr.success("تم الحفظ");
-       
-      console.log(this.request)
+
+        console.log(this.request)
       });
+      
+      this.request=new RawMaterial();
+
   }
+
+
+
+  
 }

@@ -32,5 +32,4 @@ Upload(attach: RawMaterial): Observable<any> {
   return this.http.post<any>('RawMaterials', attach);
 }
 
-
 }
