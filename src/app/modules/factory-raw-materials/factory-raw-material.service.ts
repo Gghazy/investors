@@ -21,4 +21,15 @@ export class FactoryRawMaterialService {
   update(material: RawMaterial): Observable<any> {
     return this.http.put<any>('RawMaterials', material);
   }
+  create(material: RawMaterial): Observable<any> {
+    return this.http.post<any>('RawMaterials', material);
+  }
+
+
+//AttachmentService
+
+Upload(attach: RawMaterial): Observable<any> {
+  return this.http.post<any>('RawMaterials', attach);
+}
+
 }

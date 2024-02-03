@@ -6,4 +6,8 @@ export class ActualRawMaterial {
     CurrentStockQuantity_KG !:number;
     UsedQuantity_KG !:number;
     IncreasedUsageReason !:number;
+    AttachmentId!:number;
+    Type !: string;
+    Name !: string;
+    Path !: string;
 }
