@@ -1,5 +1,6 @@
 export class ActualProductModel {
     Id!:number;
+    ActualProductionAndCapacityId!:number;
     ProductName!:string;
     ProductId!:number;
     DesignedCapacity!:number;
@@ -9,7 +10,7 @@ export class ActualProductModel {
     ActualProductionUint!:number;
     ActualProductionUintName!:string;
     ActualProductionWeight!:number;
-    Month!: number;
+    MonthId!: number;
     ReasoneForIncreaseCapacity!:number;
     Kilograms_Per_Unit!:number;
 }

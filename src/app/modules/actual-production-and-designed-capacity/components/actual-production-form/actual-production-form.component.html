@@ -1,0 +1,38 @@
+<div class="row p-3">
+    <div class="col-md-12">
+        <label class="form-label">الطاقة التصميمة(القصوى)​</label>
+        <div class="row">
+            <div class="col-md-9 p-0">
+                <input type="number" name="DesignedCapacity" class="form-control"
+                    [(ngModel)]="request.DesignedCapacity">
+            </div>
+            <div class="col-md-3 p-0">
+                <select name="" id="DesignedCapacityUnit" class="form-select"[(ngModel)]="request.DesignedCapacityUnit">
+                    <option *ngFor="let unit of units"  [ngValue]="unit.Id">{{unit.Name}}</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-12">
+        <label class="form-label">الطاقة التصميمة(القصوى)​</label>
+        <div class="row">
+            <div class="col-md-9 p-0">
+                <input type="number" name="ActualProduction" class="form-control"
+                    [(ngModel)]="request.ActualProduction">
+            </div>
+            <div class="col-md-3 p-0">
+                <select name="ActualProductionUint" id="" class="form-select" [(ngModel)]="request.ActualProductionUint">
+                    <option *ngFor="let unit of units"  [ngValue]="unit.Id">{{unit.Name}}</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" type="button" (click)="save()">حفظ </button>
+
+    </div>
+</div>
