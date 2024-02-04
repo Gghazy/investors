@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RawMaterial } from './models/raw-material.model';
+import { RawMaterialSearch } from './models/raw-material-search.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class FactoryRawMaterialService {
 
   
 
-  getRawMaterial(id:number): Observable<any> {
-    return this.http.get<any>('RawMaterials?Factoryid='+id);
+  getRawMaterial(search: RawMaterialSearch,id:number): Observable<any> {
+    return this.http.post<any>('RawMaterials/pagination?Factoryid='+id,search);
   }
   getOne(id:number): Observable<any> {
     return this.http.get<any>('RawMaterials/'+id);

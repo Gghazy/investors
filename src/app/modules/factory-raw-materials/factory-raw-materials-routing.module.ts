@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { FactoryRawMaterialsFormComponent } from './components/factory-raw-materials-form/factory-raw-materials-form.component';
+import {  RouterModule, Routes } from '@angular/router';
+import { FactoryRawMaterialsListsComponent } from './components/factory-raw-materials-lists/factory-raw-materials-lists.component';
 
 const routes: Routes = [
-  { path: '', component: FactoryRawMaterialsFormComponent , data: { title: 'بيانات المواد الأولية' }},
+  { path: '', component: FactoryRawMaterialsListsComponent , data: { title: 'بيانات المواد الأولية' }},
 
 ];
 
@@ -11,4 +11,9 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FactoryRawMaterialsRoutingModule { }
+export class FactoryRawMaterialsRoutingModule {
+ 
+
+
+  
+}

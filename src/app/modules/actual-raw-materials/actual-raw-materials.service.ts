@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActualRawMaterial } from './models/actual-raw-material.model';
+import { RawMaterialSearch } from '../factory-raw-materials/models/raw-material-search.model';
+import { ActualRawMaterialFile } from './models/actual-raw-material-file.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,8 @@ export class ActualRawMaterialsService {
 
   constructor(private http: HttpClient) { }
 
-  getRawMaterial(id:number): Observable<any> {
-    return this.http.get<any>('RawMaterials?Factoryid='+id);
+  getRawMaterial(search: RawMaterialSearch,id:number): Observable<any> {
+    return this.http.post<any>('RawMaterials/pagination?Factoryid='+id,search);
   }
   getAll(): Observable<any> {
     return this.http.get<any>('ActualRawMaterials');
@@ -30,10 +32,10 @@ export class ActualRawMaterialsService {
 
   //ActualRawMaterialFiles
 
-  getFiles(itemId:number): Observable<any> {
-    return this.http.get<any>('ActualRawMaterialFile/'+itemId);
+  getFiles(factoryId:number): Observable<any> {
+    return this.http.get<any>('ActualRawMaterialFile?id='+factoryId);
   }
-  AddFile(request: ActualRawMaterial): Observable<any> {
+  AddFile(request: ActualRawMaterialFile): Observable<any> {
     return this.http.post<any>('ActualRawMaterialFile', request);
   }
   delete(id: number): Observable<any> {

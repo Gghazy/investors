@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ActualRawMaterialsRoutingModule } from './actual-raw-materials-routing.module';
 import { ActualRawMaterialsFormComponent } from './components/actual-raw-materials-form/actual-raw-materials-form.component';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +11,8 @@ import { ActualRawMaterialsFormComponent } from './components/actual-raw-materia
   ],
   imports: [
     CommonModule,
-    ActualRawMaterialsRoutingModule
+    ActualRawMaterialsRoutingModule,
+    SharedModule
   ]
 })
 export class ActualRawMaterialsModule { }

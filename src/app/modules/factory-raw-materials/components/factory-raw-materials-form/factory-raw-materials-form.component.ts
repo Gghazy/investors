@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { FactoryRawMaterialService } from '../../factory-raw-material.service';
 import { ToastrService } from 'ngx-toastr';
 import { RawMaterial } from '../../models/raw-material.model';
 import { FileService } from 'src/app/core/service/file.service';
+import { RawMaterialSearch } from '../../models/raw-material-search.model';
+import { FactoryProductService } from 'src/app/modules/factory-products/factory-product.service';
+import { ProductModel } from 'src/app/modules/customs-items-update/models/product-model';
 
 @Component({
   selector: 'app-factory-raw-materials-form',
@@ -16,20 +18,23 @@ import { FileService } from 'src/app/core/service/file.service';
   ]
 })
 export class FactoryRawMaterialsFormComponent implements OnInit {
+  @Input() factoryId!:number;  
+  @Output()close=new EventEmitter<boolean>();
+ 
+  products  !: ProductModel[];
+ 
 
-  rawMaterials: any = [];
-  factoryId: any;
-  materialCount: any;
   request = new RawMaterial();
+  search=new RawMaterialSearch(); 
+  selectedProducts:any=[];
+  
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private fileService: FileService,
+    private productService: FactoryProductService,
     private toastr: ToastrService,
-    private router: Router,
-    private route: ActivatedRoute) {
+   ) {
 
 
-
-    this.factoryId = this.route.snapshot.paramMap.get('id');
   }
   handleUploadClick(event: Event) {
     const targetButton = event.target as HTMLButtonElement;
@@ -44,35 +49,30 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     }
   }
 
-  showInput = false;
-
-  handleSelectChange(event: Event) {
-    const selectedValue = (event.target as HTMLSelectElement).value;
-
-    this.showInput = selectedValue === 'yes';
-  }
+ 
 
 
   dropdownList: any[] = [];
-  selectedItems = [];
+ 
   selectedItems1 = [];
   selectedItems2 = [];
 
   dropdownSettings!: IDropdownSettings;
 
   ngOnInit() {
-    this.getRawMaterial();
-    this.dropdownList = [
-      { item_id: 4990, item_text: ' المنتج 1 ' },
-      { item_id: 2, item_text: ' المنتج 2 ' },
-      { item_id: 3, item_text: ' المنتج 3 ' },
+   
+    // this.dropdownList = [
+    //   { item_id: 4990, item_text: ' المنتج 1 ' },
+    //   { item_id: 2, item_text: ' المنتج 2 ' },
+    //   { item_id: 3, item_text: ' المنتج 3 ' },
 
-    ];
+    // ];
+this.getProducts();
 
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
+      idField: 'Id',
+      textField: 'ProductName',
       selectAllText: 'تحديد الكل',
       unSelectAllText: 'ازالة التحديد',
       searchPlaceholderText: 'بحث',
@@ -80,9 +80,25 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       allowSearchFilter: true
     };
   }
+
+
+
+  getProducts() { 
+    
+    this.search.FactoryId=this.factoryId;
+    this.productService
+      .getAllPagination(this.search)
+      .subscribe((res: any) => {
+        this.products = res.Data.Items;
+        console.log(this.products)
+      });
+
+  }
   onItemSelect(item: any) {
-    this.request.ProductId = item.item_id;
-    //console.log(item);
+    this.request.ProductId = item.Id;
+    this.selectedProducts.push(item)
+       console.log(this.request.ProductId);
+       console.log(this.selectedProducts);
   }
   onSelectAll(items: any) {
     //console.log(items);
@@ -91,26 +107,13 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   onUnitSelect(event: Event) {
     let selectedValue: any = (event.target as HTMLSelectElement).value;
     if (selectedValue == "1") {
-      console.log(selectedValue);
-      this.request.AverageWeightKG = selectedValue
-      this.request.AverageWeightKG = selectedValue
+      this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption *1000
     }
-    console.log(selectedValue)
-    console.log(this.request.UnitId)
+    if (selectedValue == "3") {
+      this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption /1000
+    }
   }
-  getRawMaterial() {
-
-    this.rawMaterialService
-      .getRawMaterial(this.factoryId)
-      .subscribe((res: any) => {
-
-        this.rawMaterials = res.Data;
-        console.log(this.rawMaterials.length)
-        this.materialCount = this.rawMaterials.length;
-      });
-
-
-  }
+ 
 
   savePaper(file: any) {
     if (file.target.files.length > 0) {
@@ -133,37 +136,9 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     }
   }
 
-  getFile(attachmentId: number) {
-    if (attachmentId == null) {
-      this.toastr.error("لا يوجد ملف");
-    }
-    else {
-      this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
-        this.downloadattachment(res)
-      });
-    }
-
-  }
-
  
 
-  getImage(attachmentId: number) {
-    if (attachmentId == null) {
-      this.toastr.error("لا يوجد ملف");
-    }
-    else {
-      this.fileService.getImage(attachmentId).subscribe((res: any) => {
-        this.downloadattachment(res)
-      });
-    }
-
-  }
-
-  downloadattachment(data: any) {
-    const blob = new Blob([data], { type: data.type });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url);
-  }
+ 
 
   save() {
     this.request.FactoryId = this.factoryId;
@@ -171,9 +146,9 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.rawMaterialService
       .create(this.request)
       .subscribe((res: any) => {
-
+    //  this.router.navigate(['/pages/factory-raw-materials/'+this.factoryId]);
+        this.close.emit(true);
         this.toastr.success("تم الحفظ");
-
         console.log(this.request)
       });
       
@@ -181,7 +156,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   }
 
-
+ 
 
   
 }
