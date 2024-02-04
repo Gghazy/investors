@@ -6,6 +6,7 @@ import { ActualProductionListComponent } from './components/actual-production-li
 import { ActualProductionFormComponent } from './components/actual-production-form/actual-production-form.component';
 import { ActualProductionFileComponent } from './components/actual-production-file/actual-production-file.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ReasonComponent } from './components/reason/reason.component';
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ActualProductionListComponent,
     ActualProductionFormComponent,
     ActualProductionFileComponent,
-    
+    ReasonComponent    
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,13 @@
+<div class="col-md-12 mt-3">
+    <h3> زيادة الإنتاج الفعلي عن الطاقة التصميمية </h3>
+</div>
+
+<div class="row">
+   
+    <div class="col-md-6">
+        <label class="form-label"> ما هو سبب زيادة الإنتاج الفعلي عن الطاقة التصميمية؟</label>
+        <select name="ReasonId" (change)="save()" class="form-select" [(ngModel)]="request.ReasonId">
+            <option *ngFor="let reason of reasonses" [ngValue]="reason.Id">{{reason.Name}}</option>
+        </select>
+    </div>
+</div>

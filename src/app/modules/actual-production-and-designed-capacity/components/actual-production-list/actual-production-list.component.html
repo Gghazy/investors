@@ -12,10 +12,19 @@
         
         <div class="col-md-4 mb-4">
             <label class="form-label">إدخال التفاصيل التالية عن الإنتاج الفعلي ,  والطاقة التصميمة لشهر</label>
-            <select class="form-select">
-                <option value="" selected>يناير</option>
-                <option value="">فبراير</option>
-                <option value="" >مارس</option>
+            <select class="form-select" (change)="changeMonth()" [(ngModel)]="search.MonthId">
+                <option [ngValue]="0" selected>يناير</option>
+                <option [ngValue]="1" selected>فبراير</option>
+                <option [ngValue]="2" selected>مارس</option>
+                <option [ngValue]="3" selected>ابرايل</option>
+                <option [ngValue]="4" selected>مايو</option>
+                <option [ngValue]="5" selected>يونيو</option>
+                <option [ngValue]="6" selected>يوليو</option>
+                <option [ngValue]="7" selected>اغسطس</option>
+                <option [ngValue]="8" selected>سبتمر</option>
+                <option [ngValue]="9" selected>اكتوبر</option>
+                <option [ngValue]="10" selected>نوفمبر</option>
+                <option [ngValue]="11" selected>ديسمبر</option>
             </select>
         </div>
         <app-list>
@@ -26,270 +35,79 @@
                 <th>الإنتاج الفعلي​</th>
                 <th></th>
                 <th> وزن الإنتاج الفعلي​ </th>
+                <th>تعديل</th>
             </ng-template>
             <ng-template #body>
               <tr *ngFor="let product of products.Items let i=index">
                 <td>{{i+1}}</td>
-                <td>المنتج  1 (رقم البند الجمركي على مستوى 12 )</td>
+                <td>{{product.ProductName}}</td>
                 
                 <td>
-                    <div class="input-group">
-                        <input type="number" class="form-control" value="50" style="max-width: 117px;">
-                        <select>
-                            <option>اختر</option>
-                            <option selected>طن</option>                                                    
-                            <option>كغ</option>
-                            <option>جرام</option>
-                            <option> لتر</option>
-                        </select>
-                       
-                    </div>
+                    {{product.DesignedCapacity !=0? product.DesignedCapacity + product.DesignedCapacityUnitName:""}}
                 </td>
                 <td>
-                    <div class="input-group">
-                        <input type="number" class="form-control" value="55" style="max-width: 117px;">
-                        <select>
-                            <option>اختر</option>
-                            <option selected>طن</option>                                                    
-                            <option>كغ</option>
-                            <option>جرام</option>
-                            <option> لتر</option>
-                        </select>
-                       
-                    </div>
+                    {{product.DesignedCapacity !=0?product.ActualProduction + product.ActualProductionUintName:""}}
                 </td>
                 <td> = </td>
                 <td>
-                    <div class="input-group">
-                       
-                        
-                        <input type="number" class="form-control" value="55000" disabled style="max-width: 117px;">
-                        <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                    </div>
+                    {{product.ActualProductionWeight !=0?product.ActualProductionWeight + " كغ ":""}}
                 </td>
+                <td>
+                    <button
+                      class="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addProduct"
+                      (click)="edit(product.ActualProductionAndCapacityId,product.Id)"
+                    >
+                      تعديل
+                    </button>
+                  </td>
               </tr>
             </ng-template>
-          </app-list>
-        <div class="table-responsive">
-            <table class="table table-hover table-small-header table-striped">
-                <thead>
-                    <tr>
-                       
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    
-                    </tr>  
-                    <tr>
-                        <td>2</td>
-                        <td>المنتج  2 (رقم البند الجمركي على مستوى 12 )</td>
-                        
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="40000" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option >طن</option>                                                    
-                                    <option selected>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                               
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="50000" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option>طن</option>                                                    
-                                    <option selected>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                               
-                            </div>
-                        </td>
-                        <td> = </td>
-                        <td>
-                            <div class="input-group">
-                               
-                                
-                                <input type="number" class="form-control" value="50000" disabled style="max-width: 117px;">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                            </div>
-                        </td>
-                    </tr>  
-                    <tr>
-                        <td>3</td>
-                        <td>المنتج  3 (رقم البند الجمركي على مستوى 12 )</td>
-                        
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="1500" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option >طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option selected> لتر</option>
-                                </select>
-                               
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="1500" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option >طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option selected> لتر</option>
-                                </select>
-                               
-                            </div>
-                        </td>
-                        <td> = </td>
-                        <td>
-                            <div class="input-group">
-                               
-                                
-                                <input type="number" class="form-control" value="1383" disabled style="max-width: 117px;">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                            </div>
-                        </td>
-                    </tr>  
-                    <tr>
-                        <td>4</td>
-                        <td>المنتج  4 (رقم البند الجمركي على مستوى 12 )</td>
-                        
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="60" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option selected>طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                               
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="70" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option selected>طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                               
-                            </div>
-                        </td>
-                        <td> = </td>
-                        <td>
-                            <div class="input-group">
-                               
-                                
-                                <input type="number" class="form-control" value="70000" disabled style="max-width: 117px;">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                            </div>
-                        </td>
-                    </tr>  
-                   
-                   
-                </tbody>
-            </table>
-        </div>
-
-        <div class="col-md-12 mt-3">
-            <h3> زيادة الإنتاج الفعلي عن الطاقة التصميمية </h3>
-        </div>
-
-        <div class="row">
-           
-            <div class="col-md-6">
-                <label class="form-label"> ما هو سبب زيادة الإنتاج الفعلي عن الطاقة التصميمية؟</label>
-                <select class="form-select">
-                    <option>شراء معدات جديدة</option>
-                    <option>زيادة خطوط الإنتاج</option>
-                    <option>زيادة  العمالة</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-12 mt-3">
-            <h3> إرفاق المستندات الداعمة  </h3>
-        </div>
-
-        <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
-            <strong><span class="d-block mb-2">الرجاء إرفاق المستندات الداعمة التالية:</span></strong>
-            <ul>
-                <li>البيانات المالية المدققة</li>
-                
-                <li>  سجل الإنتاج </li>
-               
-                <li>   كمية المبيعات</li>
-               
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-        
-
-        <div class="row">
-
-        
-        <div class="col-md-6">
-            <label class="form-label"> اسم المستند</label>
-            <select name="" id="" class="form-select">
-                <option value="">البيانات المالية المدققة</option>
-                <option value="">سجل الإنتاج</option>
-                <option value=""> كمية المبيعات</option>
-                
-            </select>
-        </div>
-
-        <div class="col-md-6">
-            <label class="form-label">رفع المستند    </label>
-            <div class="input-group">
-                <input type="file" class="form-control" placeholder="" value="">
-                <button class="btn btn-primary" type="button">اضافة </button>
-            </div>
-        </div>
-    </div>
-
-        <div class="table-responsive">
-            <table class="table table-hover table-small-header">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th> اسم المستند </th>
-                        <th>امتداد المستند</th>                                            
-                        <th style="min-width: 140px">خيارات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="4"> <div class="text-center">لا توجد ملفات </div> </td>
-                        
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
+        </app-list>
+        <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
+       
+        <app-reason [monthId]="search.MonthId"></app-reason>
+        <app-actual-production-file></app-actual-production-file>
+       
 
     </div>
-    <div class="form-footer">
-        <div class="col-12">
-            <button class="btn btn-primary me-1" type="submit">حفظ</button>
-            <a href="" class="btn btn-danger">الغاء</a>
-        </div>
-    </div>
+
 </section>
+
+<!-- Modal Add Product-->
+<div
+class="modal fade"
+id="addProduct"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div
+  class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">إضافة منتج</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        #closeModal 
+        (click)="closePopUp()"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <app-actual-production-form 
+       *ngIf="productId!=undefined" 
+       [productId]="productId" 
+       [actualCapacityProductId]="actualCapacityProductId"
+       [factoryId]="factoryId" 
+       [monthId]="search.MonthId" 
+       (close)="closePopUp()"
+       ></app-actual-production-form>
+    </div>
+  </div>
+</div>
+</div>

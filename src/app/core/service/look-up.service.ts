@@ -21,4 +21,7 @@ export class LookUpService {
   getAllUnits(): Observable<any> {
     return this.http.get<any>('Units');
   }
+  getAllReasons(): Observable<any> {
+    return this.http.get<any>('Reasons');
+  }
 }

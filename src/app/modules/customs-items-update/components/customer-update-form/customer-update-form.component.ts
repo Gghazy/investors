@@ -60,7 +60,7 @@ dropdownSettings!: IDropdownSettings;
     });
   }
   save(){
-    debugger
+    
      this.request.CustomLevelProductIds= this.selectedItems.map(x=>x.Id);
      this.request.ProductId= this.productId;
 
