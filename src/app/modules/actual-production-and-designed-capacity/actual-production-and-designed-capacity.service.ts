@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActualProductSearch } from './components/models/actual-product-search';
+import { ActualProductSearch } from './models/actual-product-search';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ActualProductModel } from './components/models/actual-product-model';
+import { ActualProductModel } from './models/actual-product-model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class ActualProductionAndDesignedCapacityService {
   getAllPagination(search: ActualProductSearch): Observable<any> {
     return this.http.post<any>('ActualProductionAndCapacities/Pagination', search);
   }
-  getOne(id:number): Observable<any> {
+  getOne(id:number|undefined): Observable<any> {
     return this.http.get<any>('ActualProductionAndCapacities/'+id);
   }
   create(request: ActualProductModel): Observable<any> {

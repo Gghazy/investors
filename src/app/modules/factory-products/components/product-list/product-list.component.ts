@@ -40,7 +40,7 @@ export class ProductListComponent implements OnInit {
   }
 
   getProducts() {
-    debugger
+    
     this.search.FactoryId = this.factoryId;
     this.factoryProductService
       .getAllPagination(this.search)

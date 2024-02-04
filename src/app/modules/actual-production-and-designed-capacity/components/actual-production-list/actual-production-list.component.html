@@ -50,14 +50,14 @@
                 </td>
                 <td> = </td>
                 <td>
-                    {{product.DesignedCapacity !=0?product.ActualProduction + product.ActualProductionUintName:""}}
+                    {{product.ActualProductionWeight !=0?product.ActualProductionWeight + " كغ ":""}}
                 </td>
                 <td>
                     <button
                       class="btn btn-primary"
                       data-bs-toggle="modal"
                       data-bs-target="#addProduct"
-                      (click)="edit(product.ActualProductionAndCapacityId)"
+                      (click)="edit(product.ActualProductionAndCapacityId,product.Id)"
                     >
                       تعديل
                     </button>
@@ -67,7 +67,7 @@
         </app-list>
         <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
        
-        <app-reasonin-creasing-production-form></app-reasonin-creasing-production-form>
+        <app-reason [monthId]="search.MonthId"></app-reason>
         <app-actual-production-file></app-actual-production-file>
        
 
@@ -95,10 +95,18 @@ aria-hidden="true"
         data-bs-dismiss="modal"
         aria-label="Close"
         #closeModal 
+        (click)="closePopUp()"
       ></button>
     </div>
     <div class="modal-body">
-      <app-actual-production-form *ngIf="productId!=undefined" [productId]="productId" [factoryId]="factoryId" (close)="closePopUp()"></app-actual-production-form>
+      <app-actual-production-form 
+       *ngIf="productId!=undefined" 
+       [productId]="productId" 
+       [actualCapacityProductId]="actualCapacityProductId"
+       [factoryId]="factoryId" 
+       [monthId]="search.MonthId" 
+       (close)="closePopUp()"
+       ></app-actual-production-form>
     </div>
   </div>
 </div>

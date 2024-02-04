@@ -7,7 +7,7 @@
                     [(ngModel)]="request.DesignedCapacity">
             </div>
             <div class="col-md-3 p-0">
-                <select name="" id="DesignedCapacityUnit" class="form-select"[(ngModel)]="request.DesignedCapacityUnit">
+                <select name="" id="DesignedCapacityUnit" class="form-select"[(ngModel)]="request.DesignedCapacityUnitId">
                     <option *ngFor="let unit of units"  [ngValue]="unit.Id">{{unit.Name}}</option>
                 </select>
             </div>
@@ -22,7 +22,7 @@
                     [(ngModel)]="request.ActualProduction">
             </div>
             <div class="col-md-3 p-0">
-                <select name="ActualProductionUint" id="" class="form-select" [(ngModel)]="request.ActualProductionUint">
+                <select name="ActualProductionUint" id="" class="form-select" [(ngModel)]="request.ActualProductionUintId">
                     <option *ngFor="let unit of units"  [ngValue]="unit.Id">{{unit.Name}}</option>
                 </select>
             </div>

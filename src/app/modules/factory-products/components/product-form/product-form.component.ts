@@ -46,7 +46,7 @@ constructor(
     this.lookUpService
       .getAllUnits()
       .subscribe((res: any) => {
-        debugger
+        
         this.units = res.Data;
       });
   }

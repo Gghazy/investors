@@ -4,10 +4,10 @@ export class ActualProductModel {
     ProductName!:string;
     ProductId!:number;
     DesignedCapacity!:number;
-    DesignedCapacityUnit!:number;
+    DesignedCapacityUnitId!:number;
     DesignedCapacityUnitName!:string;
     ActualProduction!:number;
-    ActualProductionUint!:number;
+    ActualProductionUintId!:number;
     ActualProductionUintName!:string;
     ActualProductionWeight!:number;
     MonthId!: number;

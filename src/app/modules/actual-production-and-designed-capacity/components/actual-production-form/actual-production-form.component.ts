@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActualProductionAndDesignedCapacityService } from '../../actual-production-and-designed-capacity.service';
-import { ActualProductModel } from '../models/actual-product-model';
+import { ActualProductModel } from '../../models/actual-product-model';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,7 @@ export class ActualProductionFormComponent implements OnInit {
 
 @Input()factoryId!:number;
 @Input()productId!:number;
+@Input()actualCapacityProductId!:number|undefined;
 @Input()monthId!:number;
 request=new ActualProductModel();
 units:LookUpModel[]=[];
@@ -34,9 +35,9 @@ constructor(
   getOne(){
     
     this.actualProductionAndDesignedCapacityService
-    .getOne(this.productId)
+    .getOne(this.actualCapacityProductId)
     .subscribe((res: any) => {
-      debugger
+      
       this.request = res.Data;
     });
   }
@@ -48,10 +49,10 @@ constructor(
     });
   }
   save(){
-    debugger
+    
     this.request.ProductId=this.productId;
     this.request.MonthId=this.monthId;
-    if (this.productId==0){
+    if (this.actualCapacityProductId==0){
       this.actualProductionAndDesignedCapacityService
       .create(this.request)
       .subscribe((res: any) => {

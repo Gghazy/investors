@@ -42,7 +42,7 @@ export class CustomCheckFormComponent implements OnInit {
     });
   }
   save(){
-    debugger
+    
      this.request.ParentId= this.parentId;
      this.request.OldProductId= this.oldProductId;
      this.request.NewProductId= this.productId;

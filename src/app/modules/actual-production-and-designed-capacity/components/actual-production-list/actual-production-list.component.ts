@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActualProductModel } from '../models/actual-product-model';
+import { ActualProductModel } from '../../models/actual-product-model';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { ActualProductionAndDesignedCapacityService } from '../../actual-production-and-designed-capacity.service';
-import { ActualProductSearch } from '../models/actual-product-search';
+import { ActualProductSearch } from '../../models/actual-product-search';
 
 @Component({
   selector: 'app-actual-production-list',
@@ -14,6 +14,7 @@ export class ActualProductionListComponent implements OnInit {
   factoryId:any;
   products = new ResultResponse<ActualProductModel>();
   search=new ActualProductSearch();
+  actualCapacityProductId!:number |undefined;
   productId!:number |undefined;
 
   @ViewChild('closeModal') Modal!: ElementRef;
@@ -47,10 +48,12 @@ export class ActualProductionListComponent implements OnInit {
     this.getLevel12Product();
 
   }
-  edit(id: number) {
-    this.productId = id;
+  edit(id: number,productId:number) {
+    this.actualCapacityProductId = id;
+    this.productId = productId;
   }
   closePopUp(){
+    this.actualCapacityProductId=undefined
     this.productId=undefined
     this.Modal.nativeElement.click()
     this.getLevel12Product();
