@@ -97,9 +97,9 @@ this.getProducts();
   }
   onItemSelect(item: any) {
     this.request.ProductId = item.Id;
-    this.request.ProductRawMaterial.push({'ProductId':item.Id, 'RawMaterialId': this.request.Id})
+ //   this.request.ProductRawMaterial.push({'ProductId':item.Id, 'RawMaterialId': this.request.Id})
        console.log(this.request.ProductId);
-       console.log(this.request.ProductRawMaterial);
+      // console.log(this.request.ProductRawMaterial);
   }
   onSelectAll(items: any) {
     //console.log(items);

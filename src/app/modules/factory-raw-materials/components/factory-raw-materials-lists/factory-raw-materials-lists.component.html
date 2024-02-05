@@ -83,7 +83,7 @@
 
                         <div class="multiselect-parent">
                             <ng-multiselect-dropdown [placeholder]="'أختر'"  [settings]="dropdownSettings" [data]="products"
-                             [(ngModel)]="ProductRawMaterial" (onSelect)="onItemSelect($event)"
+                             [(ngModel)]="material.ProductIds" (onSelect)="onItemSelect($event)"
                                 (onSelectAll)="onSelectAll($event)">
                             </ng-multiselect-dropdown>
                         </div>

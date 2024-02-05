@@ -11,6 +11,6 @@ export class RawMaterial {
       PaperId!:number;
       PhotoId!:number;
       UnitId!:number;
-      ProductRawMaterial:any[]=[];
+      ProductIds:number[]=[];
 
 }
