@@ -22,7 +22,7 @@ export class ReasonComponent implements OnInit, OnChanges {
     private toastr: ToastrService
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
-    debugger
+    
     if (changes["monthId"]) {
       this.getAllReasons();
       this.getOne();
@@ -46,7 +46,7 @@ export class ReasonComponent implements OnInit, OnChanges {
     this.reasonService
       .getOne(this.monthId)
       .subscribe((res: any) => {
-        debugger
+        
         this.request = res.Data;
       });
   }
