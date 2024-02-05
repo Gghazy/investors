@@ -13,6 +13,7 @@ import { FileService } from 'src/app/core/service/file.service';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import * as convert from 'convert-units';
 
 @Component({
   selector: 'app-actual-raw-materials-form',
@@ -39,7 +40,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   selectedItemId: number | null = null;
   selectedX: number =0;
   sign: string | null = null;
-  tst: string | null = null;
+  tst: any;
   Months = [
     { Id: 1, month: 'يناير' },
     { Id: 2, month: 'فبراير' },
@@ -95,6 +96,9 @@ console.log(month)
 this.getRawMaterial()
 
   }
+
+
+  
   onItemSelect(item: ActualRawMaterial) {
   //  this.request. = item.Id;
    // this.selectedProducts.push(item)
@@ -143,6 +147,11 @@ this.getRawMaterial()
   // this.selectedX = selectedItem ? selectedItem.conversionToKG : 1;
     row.CurrentStockQuantity_KG=  row.CurrentStockQuantity 
     
+let s =1
+
+  // const gramsValue = 1000;
+  this.tst=convert(s).from('g').to('kg');
+// console.log(`${gramsValue} grams is equal to ${kilogramsValue} kilograms`);
       console.log('Selected X:', selectedItem);
     console.log(row)
   }

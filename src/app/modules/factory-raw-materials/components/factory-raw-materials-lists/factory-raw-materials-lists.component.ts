@@ -15,46 +15,46 @@ import { FileService } from 'src/app/core/service/file.service';
   templateUrl: './factory-raw-materials-lists.component.html',
   styleUrls: ['./factory-raw-materials-lists.component.scss']
 })
-export class FactoryRawMaterialsListsComponent implements  OnInit{
+export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   factoryId: any;
   materialCount: any;
   materials = new ResultResponse<RawMaterial>();
-  rawMaterials:any=[];
+  rawMaterials: any = [];
   request = new RawMaterial();
-  search=new RawMaterialSearch(); 
-  selectedProducts:any=[];
+  search = new RawMaterialSearch();
+  selectedProducts: any = [];
   products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
- //selectedItems:any=[];
- ProductRawMaterial = [
+  //selectedItems:any=[];
+  ProductRawMaterial = [
     { Id: 4990, ProductName: ' المنتج 1 ' },
-   { Id: 2, ProductName: ' المنتج 2 ' },
+    { Id: 2, ProductName: ' المنتج 2 ' },
   ];
-  constructor( private rawMaterialService: FactoryRawMaterialService,
+  constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
     private fileService: FileService,
     private toastr: ToastrService,
     private route: ActivatedRoute) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
   }
- 
+
   ngOnInit() {
-this.getRawMaterial()
-this.dropdownSettings = {
-  singleSelection: false,
-  idField: 'Id',
-  textField: 'ProductName',
-  selectAllText: 'تحديد الكل',
-  unSelectAllText: 'ازالة التحديد',
-  searchPlaceholderText: 'بحث',
-  itemsShowLimit: 2,
-  allowSearchFilter: true
-};
+    this.getRawMaterial()
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'Id',
+      textField: 'ProductName',
+      selectAllText: 'تحديد الكل',
+      unSelectAllText: 'ازالة التحديد',
+      searchPlaceholderText: 'بحث',
+      itemsShowLimit: 2,
+      allowSearchFilter: true
+    };
 
 
-this.getProducts()
-  } 
+    this.getProducts()
+  }
   showInput = false;
 
   handleSelectChange(event: Event) {
@@ -82,34 +82,34 @@ this.getProducts()
 
   onItemSelect(item: any) {
     this.request.ProductId = item.Id;
-  //  this.selectedProducts.push(item)
-       console.log(this.request.ProductId);
-       console.log(this.selectedProducts);
+    //  this.selectedProducts.push(item)
+    console.log(this.request.ProductId);
+    console.log(this.selectedProducts);
   }
 
   getRawMaterial() {
 
     this.rawMaterialService
-      .getRawMaterial(this.search,this.factoryId)
+      .getRawMaterial(this.search, this.factoryId)
       .subscribe((res: any) => {
-
+        debugger;
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
-      //  this.rawMaterials.forEach((element: any) => {
-      //   this.selectedItems.push({ Id:element.ProductId})
-      //  });
+        //  this.rawMaterials.forEach((element: any) => {
+        //   this.selectedItems.push({ Id:element.ProductId})
+        //  });
 
         console.log(this.rawMaterials.length)
         console.log(this.rawMaterials)
         this.materialCount = this.rawMaterials.length;
-        
+
       });
-    
+
 
   }
-  getProducts() { 
-    
-    this.search.FactoryId=this.factoryId;
+  getProducts() {
+
+    this.search.FactoryId = this.factoryId;
     this.productService
       .getAllPagination(this.search)
       .subscribe((res: any) => {
@@ -119,9 +119,9 @@ this.getProducts()
 
   }
 
-  getRawMaterialProducts(id:number) { 
-    
-    this.search.FactoryId=this.factoryId;
+  getRawMaterialProducts(id: number) {
+
+    this.search.FactoryId = this.factoryId;
     this.productService
       .getOne(id)
       .subscribe((res: any) => {
@@ -143,7 +143,7 @@ this.getProducts()
 
   }
 
- 
+
 
   getImage(attachmentId: number) {
     if (attachmentId == null) {
@@ -159,16 +159,16 @@ this.getProducts()
   }
   downloadattachment(data: any) {
     const blob = new Blob([data], { type: data.type });
-    const url= window.URL.createObjectURL(blob);
+    const url = window.URL.createObjectURL(blob);
     window.open(url);
     console.log(data)
   }
 
-  closePopUp(){
+  closePopUp() {
     this.Modal.nativeElement.click()
   }
-  pageChanged(data:any){
-    this.search.PageNumber=data;
+  pageChanged(data: any) {
+    this.search.PageNumber = data;
     this.getRawMaterial();
 
   }
@@ -178,18 +178,18 @@ this.getProducts()
   save() {
 
 
-    this.rawMaterials.forEach((element:any) => {
-     
-      
+    this.rawMaterials.forEach((element: any) => {
+
+
       this.rawMaterialService
-      .update(element)
-      .subscribe((res: any) => {
-        this.toastr.success("تم الحفظ");
-      });
-});
-       
-    
+        .update(element)
+        .subscribe((res: any) => {
+          this.toastr.success("تم الحفظ");
+        });
+    });
+
+
   }
 
- 
+
 }

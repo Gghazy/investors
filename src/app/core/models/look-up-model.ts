@@ -3,4 +3,6 @@ export class LookUpModel {
     NameEn!:string;
     NameAr!:string;
     Name!:string;
+    conversionToKG!:number;
+    sign!:string;
 }
