@@ -18,6 +18,10 @@ export class ActualRawMaterialsService {
   getAll(): Observable<any> {
     return this.http.get<any>('ActualRawMaterials');
   }
+
+  getByMonth(id:number): Observable<any> {
+    return this.http.get<any>('ActualRawMaterials/Month?month='+id);
+  }
   getOne(id:number): Observable<any> {
     return this.http.get<any>('ActualRawMaterials/'+id);
   }

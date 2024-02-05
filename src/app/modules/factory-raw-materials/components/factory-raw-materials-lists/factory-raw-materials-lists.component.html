@@ -53,8 +53,8 @@
                             <i>؟</i>
                         </label>
                         <div class="input-group">
-                            <input type="number" class="form-control" value="{{material.UnitId}}">
-                            <select class="form-select" value="{{material.AverageWeightKG}}">
+                            <input type="number" class="form-control" value="{{material.MaximumMonthlyConsumption}}">
+                            <select class="form-select" value="{{material.UnitId}}">
                                 <option selected value="1">طن</option>
                                 <option value="1">كغ</option>
                                 <option value="2">جرام</option>
@@ -83,7 +83,7 @@
 
                         <div class="multiselect-parent">
                             <ng-multiselect-dropdown [placeholder]="'أختر'"  [settings]="dropdownSettings" [data]="products"
-                             [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)"
+                             [(ngModel)]="ProductRawMaterial" (onSelect)="onItemSelect($event)"
                                 (onSelectAll)="onSelectAll($event)">
                             </ng-multiselect-dropdown>
                         </div>
@@ -272,7 +272,7 @@
 
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" type="submit">حفظ</button>
+            <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
             <a [routerLink]="'/pages/factory-landing/'+factoryId" class="btn btn-danger">الغاء</a>
         </div>
     </div>

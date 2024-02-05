@@ -36,6 +36,10 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   CurrentStockQuantity_KG: number=0;
   dropdownSettings!: IDropdownSettings;
   selectedUnits:any=[];
+  selectedItemId: number | null = null;
+  selectedX: number =0;
+  sign: string | null = null;
+  tst: string | null = null;
   Months = [
     { Id: 1, month: 'يناير' },
     { Id: 2, month: 'فبراير' },
@@ -76,13 +80,27 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     };
   }
 
+  GetMonthData(month:number){
 
+    this.service
+    .getByMonth(month)
+    .subscribe((res: any) => {
+     this.x = res.Data;
+     console.log(this.x)
+     console.log(res.Data)
+    });
+
+console.log(month)
+
+this.getRawMaterial()
+
+  }
   onItemSelect(item: ActualRawMaterial) {
   //  this.request. = item.Id;
    // this.selectedProducts.push(item)
        console.log(this.selectedUnits);
       
-     console.log(item.UnitId);
+     console.log(item.UsageUnitId);
      item.CurrentStockQuantity_KG = item.CurrentStockQuantity *1000
   }
   onSelectAll(items: any) {
@@ -105,7 +123,11 @@ export class ActualRawMaterialsFormComponent implements OnInit {
             'UsedQuantity_KG': 0,
             'AttachmentId': 1,
             'Month': 0,
-            'IncreasedUsageReason': 0
+            'UsedQuantity': 0,
+            'CurrentStockQuantity': 0,
+            'StockUnitId': 0,
+            'UsageUnitId': 0,
+
           })
         })
         //  console.log(this.x);
@@ -114,6 +136,17 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
 
   }
+
+
+  onSelectionChange(row : ActualRawMaterial) {
+    const selectedItem = this.units.find(item => item.Id == row.StockUnitId);
+  // this.selectedX = selectedItem ? selectedItem.conversionToKG : 1;
+    row.CurrentStockQuantity_KG=  row.CurrentStockQuantity 
+    
+      console.log('Selected X:', selectedItem);
+    console.log(row)
+  }
+
   getUnits(){
     this.lookUpService
       .getAllUnits()

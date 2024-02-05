@@ -27,6 +27,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   request = new RawMaterial();
   search=new RawMaterialSearch(); 
   selectedProducts:any=[];
+  items:any=[];
   
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private fileService: FileService,
@@ -96,9 +97,9 @@ this.getProducts();
   }
   onItemSelect(item: any) {
     this.request.ProductId = item.Id;
-    this.selectedProducts.push(item)
+    this.request.ProductRawMaterial.push({'ProductId':item.Id, 'RawMaterialId': this.request.Id})
        console.log(this.request.ProductId);
-       console.log(this.selectedProducts);
+       console.log(this.request.ProductRawMaterial);
   }
   onSelectAll(items: any) {
     //console.log(items);
@@ -143,6 +144,8 @@ this.getProducts();
   save() {
     this.request.FactoryId = this.factoryId;
     this.request.AttachmentId = 1;
+
+    console.log(this.request)
     this.rawMaterialService
       .create(this.request)
       .subscribe((res: any) => {
@@ -153,6 +156,7 @@ this.getProducts();
       });
       
       this.request=new RawMaterial();
+      this.selectedProducts=[]
 
   }
 

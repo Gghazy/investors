@@ -26,11 +26,11 @@ export class FactoryRawMaterialsListsComponent implements  OnInit{
   selectedProducts:any=[];
   products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
- selectedItems:any=[];
-  // selectedItems = [
-  //   { Id: 4990, ProductName: ' المنتج 1 ' },
-  //  { Id: 2, ProductName: ' المنتج 2 ' },
-  // ];
+ //selectedItems:any=[];
+ ProductRawMaterial = [
+    { Id: 4990, ProductName: ' المنتج 1 ' },
+   { Id: 2, ProductName: ' المنتج 2 ' },
+  ];
   constructor( private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
     private fileService: FileService,
@@ -152,14 +152,16 @@ this.getProducts()
     else {
       this.fileService.getImage(attachmentId).subscribe((res: any) => {
         this.downloadattachment(res)
+        console.log(res)
       });
     }
 
   }
   downloadattachment(data: any) {
     const blob = new Blob([data], { type: data.type });
-    const url = window.URL.createObjectURL(blob);
+    const url= window.URL.createObjectURL(blob);
     window.open(url);
+    console.log(data)
   }
 
   closePopUp(){
@@ -170,4 +172,24 @@ this.getProducts()
     this.getRawMaterial();
 
   }
+
+
+
+  save() {
+
+
+    this.rawMaterials.forEach((element:any) => {
+     
+      
+      this.rawMaterialService
+      .update(element)
+      .subscribe((res: any) => {
+        this.toastr.success("تم الحفظ");
+      });
+});
+       
+    
+  }
+
+ 
 }

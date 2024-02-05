@@ -13,7 +13,7 @@
 
         <div class="col-md-4 mb-4">
             <label class="form-label">إدخال التفاصيل التالية عن المواد الأولية لشهر </label>
-            <select class="form-select"  [(ngModel)]="request.Month">
+            <select class="form-select"  [(ngModel)]="request.Month" (change)="GetMonthData(request.Month)">
                 <option *ngFor="let x of Months" [ngValue]="x.Id" >{{x.month}}</option>
                 
             </select>
@@ -42,29 +42,25 @@
                         
                         <td>
                             <div class="input-group">
-                                <input type="number" class="form-control" style="max-width: 117px;" value="{{material.CurrentStockQuantity_KG}}">
-                                <select>
-                                    <option>اختر</option>
-                                    <option selected>طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
-                                <span class="mx-1">=</span>
-                                <input type="number" class="form-control"  disabled style="max-width: 117px;"  [(ngModel)]="material.CurrentStockQuantity_KG">
+                                <input type="number" class="form-control" style="max-width: 117px;" [(ngModel)]="material.CurrentStockQuantity">
+                                <select [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)">
+                                    <option *ngFor="let item of units" [value]="item.Id">
+                                      {{ item.Name }} 
+                                    </option>
+                                  </select>
+                               
+                                <input type="number" class="form-control"  disabled style="max-width: 117px;"  value="{{material.CurrentStockQuantity_KG}}">
                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
                             </div>
                         </td>
                         <td>
                             <div class="input-group">
                                 <input type="number" class="form-control" [(ngModel)]="material.UsedQuantity" style="max-width: 117px;">
-                                <select>
-                                    <option>اختر</option>
-                                    <option selected>طن</option>                                                    
-                                    <option>كغ</option>
-                                    <option>جرام</option>
-                                    <option> لتر</option>
-                                </select>
+                                <select [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)">
+                                    <option *ngFor="let item of units" [value]="item.Id">
+                                      {{ item.Name }} 
+                                     </option>
+                                  </select>
                                 <span class="mx-1">=</span>
                                 <input type="number" class="form-control" value="{{material.UsedQuantity_KG}}" disabled style="max-width: 117px;" >
                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
