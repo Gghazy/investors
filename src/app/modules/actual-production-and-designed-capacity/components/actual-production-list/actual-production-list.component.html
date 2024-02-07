@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="form-body">
-        
+         
         <div class="col-md-4 mb-4">
             <label class="form-label">إدخال التفاصيل التالية عن الإنتاج الفعلي ,  والطاقة التصميمة لشهر</label>
             <select class="form-select" (change)="changeMonth()" [(ngModel)]="search.MonthId">
@@ -67,9 +67,8 @@
         </app-list>
         <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
        
-        <app-reason [monthId]="search.MonthId"></app-reason>
-        <app-actual-production-file></app-actual-production-file>
-       
+        <app-reason [monthId]="search.MonthId" [factoryId]="factoryId"></app-reason>
+        <app-actual-production-file *ngIf="factoryId"  [factoryId]="factoryId"></app-actual-production-file>      
 
     </div>
 
