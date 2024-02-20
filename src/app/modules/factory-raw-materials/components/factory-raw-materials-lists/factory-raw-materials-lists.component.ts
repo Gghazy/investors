@@ -24,13 +24,13 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   request = new RawMaterial();
   search = new RawMaterialSearch();
   selectedProducts: any = [];
+  ProductName: any ;
+  ss: any = [];
+  ProductNameList: any = [];
   products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
-  //selectedItems:any=[];
-  ProductRawMaterial = [
-    { Id: 4990, ProductName: ' المنتج 1 ' },
-    { Id: 2, ProductName: ' المنتج 2 ' },
-  ];
+  
+
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
     private fileService: FileService,
@@ -75,15 +75,20 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       }
     }
   }
+  fetchProductNames() {
+
+
+
+  }
 
   onSelectAll(items: any) {
     //console.log(items);
   }
 
   onItemSelect(item: any) {
-    this.request.ProductId = item.Id;
-    //  this.selectedProducts.push(item)
-    console.log(this.request.ProductId);
+    this.request.ProductIds = item.Id;
+      this.selectedProducts.push(item)
+    console.log(this.request.ProductIds);
     console.log(this.selectedProducts);
   }
 
@@ -95,15 +100,17 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
         debugger;
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
-        //  this.rawMaterials.forEach((element: any) => {
-        //   this.selectedItems.push({ Id:element.ProductId})
-        //  });
-
+        this.ss = res.Data;
         console.log(this.rawMaterials.length)
         console.log(this.rawMaterials)
         this.materialCount = this.rawMaterials.length;
 
+        this.ss.forEach((element: any) => {
+          this.ProductNameList.push(element)
+          console.log(this.ProductNameList)
+        });
       });
+
 
 
   }
@@ -121,12 +128,12 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   getRawMaterialProducts(id: number) {
 
-    this.search.FactoryId = this.factoryId;
+  
     this.productService
       .getOne(id)
       .subscribe((res: any) => {
-        // this.selectedItems = res.Data.Items;
-        // console.log(this.selectedItems)
+        this.ProductName = res.Data.Items.ProductName;
+        console.log(this.ProductName)
       });
 
   }
