@@ -9,6 +9,8 @@ import { ProductModel } from 'src/app/modules/customs-items-update/models/produc
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from 'src/app/core/service/file.service';
+import { LookUpModel } from 'src/app/core/models/look-up-model';
+import { LookUpService } from 'src/app/core/service/look-up.service';
 
 @Component({
   selector: 'app-factory-raw-materials-lists',
@@ -29,10 +31,11 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   ProductNameList: any = [];
   products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
-  
+  units!:LookUpModel[];
 
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
+    private lookUpService:LookUpService,
     private fileService: FileService,
     private toastr: ToastrService,
     private route: ActivatedRoute) {
@@ -52,7 +55,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       allowSearchFilter: true
     };
 
-
+    this.getUnits();
     this.getProducts()
   }
   showInput = false;
@@ -75,19 +78,22 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       }
     }
   }
-  fetchProductNames() {
-
-
-
-  }
 
   onSelectAll(items: any) {
     //console.log(items);
   }
-
+  getUnits(){
+    this.lookUpService
+      .getAllUnits()
+      .subscribe((res: any) => {
+      this.units = res.Data;
+      console.log(res)
+      });
+  }
   onItemSelect(item: any) {
-    this.request.ProductIds = item.Id;
-      this.selectedProducts.push(item)
+   // this.request.ProductIds = item.Id;
+     // this.selectedProducts.push(item.Id)
+      this.request.ProductIds.push(item.Id)
     console.log(this.request.ProductIds);
     console.log(this.selectedProducts);
   }
@@ -184,18 +190,18 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   save() {
 
-
+console.log(this.request)
     this.rawMaterials.forEach((element: any) => {
 
 
       this.rawMaterialService
         .update(element)
         .subscribe((res: any) => {
-          this.toastr.success("تم الحفظ");
+        
         });
     });
 
-
+    this.toastr.success("تم الحفظ");
   }
 
 
