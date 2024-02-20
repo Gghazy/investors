@@ -25,7 +25,9 @@ export class BasicInfoFileComponent implements OnInit {
    this.getFiles();
   }
 
-  getFiles() { 
+  getFiles() {
+    this.request.Name ='صورة واجهة المصنع' 
+    this.request.Type ='صورة واجهة المصنع' 
     this.basicInfoService
       .getAll(this.factoryId)
       .subscribe((res: any) => {
@@ -51,6 +53,7 @@ export class BasicInfoFileComponent implements OnInit {
 
   save(){
     this.request.FactoryId=Number(this.factoryId);
+    this.request.Type ='1';
     this.basicInfoService
     .create(this.request)
     .subscribe((res: any) => {

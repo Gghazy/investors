@@ -27,10 +27,11 @@
     </div>
     
     <div class="col-md-6">
-        <label class="form-label" > اسم المستند</label>
+        <label class="form-label" > نوع المستند</label>
         <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select">
-            <option [ngValue]="0">الإقرار الزكوي </option>
-            <option [ngValue]="1">القوائم المالية</option>
+            <option [ngValue]="0">البيانات المالية المدققة</option>
+            <option [ngValue]="1">سجل الإنتاج </option>
+            <option [ngValue]="2">كمية المبيعات</option>
         </select>
     </div>
     
@@ -59,7 +60,7 @@
         <td>JPG</td>
         <td>
             <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
-                تحميل
+                عرض
 
             </a>
             <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>

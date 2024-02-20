@@ -6,7 +6,7 @@
     <strong><span class="d-block mb-2">الرجاء إرفاق المستندات الداعمة التالية:</span></strong>
     <ul>
         <li>
-            صورة واجهة المصنع، صورة توضح حالة المصنع
+            صورة واجهة المصنع
         </li>       
     </ul>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -21,12 +21,13 @@
 <div class="col-md-6">
     <label class="form-label"> اسم المستند</label>
     <input  type="text" name="Name" class="form-control"  [(ngModel)]="request.Name">
+
 </div>
 
 <div class="col-md-6">
-    <label class="form-label" > اسم المستند</label>
-    <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select">
-        <option [ngValue]="0">صورة واجهة المصنع</option>
+    <label class="form-label" > نوع المستند</label>
+    <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select"  >
+        <option [ngValue]="0" selected>صورة واجهة المصنع</option>
         <option [ngValue]="1">صورة توضح حالة المصنع</option>
     </select>
 </div>
