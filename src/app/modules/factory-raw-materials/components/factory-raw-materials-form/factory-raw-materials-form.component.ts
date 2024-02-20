@@ -96,9 +96,9 @@ this.getProducts();
 
   }
   onItemSelect(item: any) {
-    this.request.ProductId = item.Id;
- //   this.request.ProductRawMaterial.push({'ProductId':item.Id, 'RawMaterialId': this.request.Id})
-       console.log(this.request.ProductId);
+    //this.request.ProductId = item.Id;
+   this.request.ProductIds.push(item.Id)
+       console.log(this.request.ProductIds);
       // console.log(this.request.ProductRawMaterial);
   }
   onSelectAll(items: any) {
@@ -155,9 +155,10 @@ this.getProducts();
         console.log(this.request)
       });
       
+      if(this.request.Id !=0 ){
       this.request=new RawMaterial();
       this.selectedProducts=[]
-
+    }
   }
 
  
