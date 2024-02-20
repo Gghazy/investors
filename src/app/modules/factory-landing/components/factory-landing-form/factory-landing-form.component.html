@@ -36,7 +36,7 @@
                 </li>
 
 
-                <li class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li  class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/financial-details/'+factoryId">
                         <svg fill="#000000" height="64px" width="64px" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -155,7 +155,8 @@
                     <span class="completed"  placement="bottom" title=""
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
                 </li>
-                <li class="col-12  col-lg-4 col-md-6 col-sm-12">
+
+                <li *ngIf="sharedService.factoryStatus==2 || sharedService.factoryStatus==0 || sharedService.factoryStatus==3"  class="col-12  col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/customs-items-update/'+factoryId">
                         <svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px"
@@ -180,7 +181,7 @@
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
                 </li>
 
-                <li class="col-12  col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0|| sharedService.factoryStatus==3" class="col-12  col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/customs-items-check/'+factoryId">
                         <svg width="64px" height="64px" viewBox="0 0 1024 1024" class="icon" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" fill="#000000">
@@ -202,7 +203,7 @@
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
                 </li>
 
-                <li class="col-12  col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0|| sharedService.factoryStatus==3" class="col-12  col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/factory-products/'+factoryId">
                         <svg fill="#000000" viewBox="0 0 60 60" id="Capa_1" version="1.1"
                             xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -374,7 +375,7 @@
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
 
                 </li>
-                <li class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0" class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/actual-production-and-designed-capacity/'+factoryId">
                         <svg fill="#000000" width="64px" height="64px" viewBox="0 0 256 256" id="Flat"
                             xmlns="http://www.w3.org/2000/svg">
@@ -411,16 +412,7 @@
                         </svg>
                     </span>
                 </li>
-                <!-- <li class="col-12 col-lg-4 col-md-6 col-sm-12" >
-            <a href="actual-production.html">
-                <svg fill="#000000" width="64px" height="64px" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M220.00488,216.00586a4.0002,4.0002,0,0,1-4,4h-176a4,4,0,1,1,0-8h176A4.00019,4.00019,0,0,1,220.00488,216.00586ZM140,176V80a12.01343,12.01343,0,0,1,12-12h40a12.01343,12.01343,0,0,1,12,12v96a12.01343,12.01343,0,0,1-12,12H152A12.01343,12.01343,0,0,1,140,176Zm8,0a4.00427,4.00427,0,0,0,4,4h40a4.00427,4.00427,0,0,0,4-4V80a4.00427,4.00427,0,0,0-4-4H152a4.00427,4.00427,0,0,0-4,4Zm-96,0V40A12.01343,12.01343,0,0,1,64,28h40a12.01343,12.01343,0,0,1,12,12V176a12.01343,12.01343,0,0,1-12,12H64A12.01343,12.01343,0,0,1,52,176Zm8,0a4.00427,4.00427,0,0,0,4,4h40a4.00427,4.00427,0,0,0,4-4V40a4.00427,4.00427,0,0,0-4-4H64a4.00427,4.00427,0,0,0-4,4Z"></path> </g></svg>
-                <span>    الإنتاج الفعلي </span>
-            </a>
-            <span class="uncompleted-warning"  placement="bottom" title="" tooltip=" لم يتم إدخال البيانات وتحديثها">
-                <svg fill="#ffffff" height="18px" width="18px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489.418 489.418" xml:space="preserve" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M244.709,389.496c18.736,0,34.332-14.355,35.91-33.026l24.359-290.927c1.418-16.873-4.303-33.553-15.756-46.011 C277.783,7.09,261.629,0,244.709,0s-33.074,7.09-44.514,19.532C188.74,31.99,183.022,48.67,184.44,65.543l24.359,290.927 C210.377,375.141,225.973,389.496,244.709,389.496z"></path> <path d="M244.709,410.908c-21.684,0-39.256,17.571-39.256,39.256c0,21.683,17.572,39.254,39.256,39.254 s39.256-17.571,39.256-39.254C283.965,428.479,266.393,410.908,244.709,410.908z"></path> </g> </g></svg>
-            </span>
-        </li> -->
-                <li class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0" class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/factory-raw-materials/'+factoryId">
                         <svg fill="#000000" height="200px" width="200px" version="1.1" id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -503,7 +495,7 @@
                         </svg>
                     </span>
                 </li>
-                <li class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==0" class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/actual-raw-materials/'+factoryId">
                         <svg fill="#000000" height="64px" width="64px" version="1.1" id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

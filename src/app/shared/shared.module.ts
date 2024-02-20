@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ListComponent } from './components/list/list.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { RouterModule } from '@angular/router';
+
 
 
 
@@ -41,7 +43,8 @@ const COMPONENTS = [
     NgxSpinnerModule,
     CoreModule,
     HttpClientModule,  
-    TooltipModule
+    TooltipModule,
+    RouterModule
   ],
   imports: [
     CommonModule,
@@ -53,6 +56,7 @@ const COMPONENTS = [
     NgxSpinnerModule,
     CoreModule,
     HttpClientModule,
+    RouterModule,
     TooltipModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

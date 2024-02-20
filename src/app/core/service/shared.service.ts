@@ -8,6 +8,7 @@ export class SharedService {
   constructor() { }
   private subject = new Subject<void>();
 
+
   sendClickEvent() {
     this.subject.next();
   }

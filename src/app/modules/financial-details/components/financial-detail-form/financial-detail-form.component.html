@@ -13,9 +13,9 @@
         </div>
     </div>
     <div class="form-body">
-
+        <form #myForm="ngForm" (ngSubmit)="save()">
         <div class="row">
-
+           
             <div class="col-md-4">
                 <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
 
@@ -25,9 +25,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control" name="Revenues" [(ngModel)]="request.Revenues">
+                    <input type="number"  #Revenues="ngModel" required class="form-control" name="Revenues" [(ngModel)]="request.Revenues">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="Revenues.invalid && (Revenues.dirty || Revenues.touched)" class="validation-error">
+                    <div *ngIf="Revenues.errors?.['required']">حقل الايرادات مطلوب</div>
                 </div>
 
             </div>
@@ -41,9 +44,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="WaterExpenses" [(ngModel)]="request.WaterExpenses">
+                    <input type="number"   #WaterExpenses="ngModel" required  class="form-control " name="WaterExpenses" [(ngModel)]="request.WaterExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="WaterExpenses.invalid && (WaterExpenses.dirty || WaterExpenses.touched)" class="validation-error">
+                    <div *ngIf="WaterExpenses.errors?.['required']">حقل  نفقات المياه مطلوب</div>
                 </div>
 
             </div>
@@ -57,9 +63,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="ElectricityExpenses" [(ngModel)]="request.ElectricityExpenses">
+                    <input type="number" #ElectricityExpenses="ngModel" required class="form-control " name="ElectricityExpenses" [(ngModel)]="request.ElectricityExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="ElectricityExpenses.invalid && (ElectricityExpenses.dirty || ElectricityExpenses.touched)" class="validation-error">
+                    <div *ngIf="ElectricityExpenses.errors?.['required']">حقل  نفقات الكهرباء مطلوب</div>
                 </div>
 
             </div>
@@ -73,9 +82,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="FuelExpenses" [(ngModel)]="request.FuelExpenses">
+                    <input type="number" #FuelExpenses="ngModel" required class="form-control " name="FuelExpenses" [(ngModel)]="request.FuelExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="FuelExpenses.invalid && (FuelExpenses.dirty || FuelExpenses.touched)" class="validation-error">
+                    <div *ngIf="FuelExpenses.errors?.['required']">حقل  نفقات الوقود​ مطلوب</div>
                 </div>
 
             </div>
@@ -89,9 +101,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="RawMterialExpenses" [(ngModel)]="request.RawMterialExpenses">
+                    <input type="number" #RawMterialExpenses="ngModel" required class="form-control " name="RawMterialExpenses" [(ngModel)]="request.RawMterialExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="RawMterialExpenses.invalid && (RawMterialExpenses.dirty || RawMterialExpenses.touched)" class="validation-error">
+                    <div *ngIf="RawMterialExpenses.errors?.['required']">حقل  نفقات المواد الخام مطلوب</div>
                 </div>
 
             </div>
@@ -105,9 +120,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses">
+                    <input type="number" #EmploymentExpenses="ngModel" required class="form-control " name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="EmploymentExpenses.invalid && (EmploymentExpenses.dirty || EmploymentExpenses.touched)" class="validation-error">
+                    <div *ngIf="EmploymentExpenses.errors?.['required']">حقل  نفقات العمالة مطلوب</div>
                 </div>
 
             </div>
@@ -121,9 +139,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="OtherOperatingExpenses" [(ngModel)]="request.OtherOperatingExpenses">
+                    <input type="number" #OtherOperatingExpenses="ngModel" required class="form-control " name="OtherOperatingExpenses" [(ngModel)]="request.OtherOperatingExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="OtherOperatingExpenses.invalid && (OtherOperatingExpenses.dirty || OtherOperatingExpenses.touched)" class="validation-error">
+                    <div *ngIf="OtherOperatingExpenses.errors?.['required']">حقل  نفقات تشغيلية أخرى مطلوب</div>
                 </div>
 
             </div>
@@ -136,7 +157,7 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="TotalExpenses" [(ngModel)]="request.TotalExpenses" disabled>
+                    <input type="number" class="form-control " name="TotalExpenses" [ngModel]="getTotalExpenses()" disabled>
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -151,9 +172,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="Assets" [(ngModel)]="request.Assets">
+                    <input type="number"  #Assets="ngModel" required  class="form-control " name="Assets" [(ngModel)]="request.Assets">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="Assets.invalid && (Assets.dirty || Assets.touched)" class="validation-error">
+                    <div *ngIf="Assets.errors?.['required']">حقل الأصول المتداولة مطلوب</div>
                 </div>
 
             </div>
@@ -165,9 +189,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="NonCurrentAssets" [(ngModel)]="request.NonCurrentAssets">
+                    <input type="number" #NonCurrentAssets="ngModel" required class="form-control " name="NonCurrentAssets" [(ngModel)]="request.NonCurrentAssets">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="NonCurrentAssets.invalid && (NonCurrentAssets.dirty || NonCurrentAssets.touched)" class="validation-error">
+                    <div *ngIf="NonCurrentAssets.errors?.['required']">حقل الأصول غير المتداولة مطلوب</div>
                 </div>
 
             </div>
@@ -179,9 +206,12 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="CurrentLiabilities" [(ngModel)]="request.CurrentLiabilities">
+                    <input type="number" #CurrentLiabilities="ngModel" required class="form-control " name="CurrentLiabilities" [(ngModel)]="request.CurrentLiabilities">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
+                </div>
+                <div *ngIf="CurrentLiabilities.invalid && (CurrentLiabilities.dirty || CurrentLiabilities.touched)" class="validation-error">
+                    <div *ngIf="CurrentLiabilities.errors?.['required']">حقل الخصوم المتداولة مطلوب</div>
                 </div>
 
             </div>
@@ -193,22 +223,25 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="NonCurrentLiabilities" [(ngModel)]="request.NonCurrentLiabilities">
+                    <input type="number"  #NonCurrentLiabilities="ngModel" required class="form-control " name="NonCurrentLiabilities" [(ngModel)]="request.NonCurrentLiabilities">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
+                <div *ngIf="NonCurrentLiabilities.invalid && (NonCurrentLiabilities.dirty || NonCurrentLiabilities.touched)" class="validation-error">
+                    <div *ngIf="NonCurrentLiabilities.errors?.['required']">حقل الخصوم غير المتداولة مطلوب</div>
+                </div>
 
             </div>
-
         </div>
-
-        <app-financial-file *ngIf="request.Id"  [financialId]="request.Id"></app-financial-file>
-
-    </div>
-    <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" (click)="save()">حفظ</button>
+            <button class="btn btn-primary me-1" [disabled]="myForm.invalid" type="submit">حفظ</button>
             <a href="" class="btn btn-danger">الغاء</a>
         </div>
+    </form>
+           
+    <app-financial-file *ngIf="request.Id"  [financialId]="request.Id"></app-financial-file>
+
     </div>
+
+
 </section>

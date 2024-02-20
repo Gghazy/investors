@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SharedService {
 
+  public factoryStatus!:number;
+
   private pageTitleSource = new BehaviorSubject<string>('');
   routeTitle$ = this.pageTitleSource.asObservable();
 

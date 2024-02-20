@@ -4,6 +4,7 @@ import { fade } from 'src/app/shared/animation/app.animation';
 import { BasicInfoService } from '../../basic-info.service';
 import { FactoryModel } from 'src/app/modules/factory/models/factory-model';
 import { ToastrService } from 'ngx-toastr';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-basic-info-form',
@@ -22,6 +23,7 @@ export class BasicInfoFormComponent implements OnInit {
      private basicInfoService: BasicInfoService,
      private toastr: ToastrService,
      private router: Router,
+     private sharedService: SharedService,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
   }
@@ -38,11 +40,16 @@ export class BasicInfoFormComponent implements OnInit {
   }
 
   save(){
+    debugger
     this.basicInfoService
         .update(this.request)
         .subscribe((res: any) => {
           this.router.navigate(['/pages/factory-landing/'+this.factoryId]);
           this.toastr.success("تم الحفظ");
         });
+  }
+
+  changeStatus(){
+    this.sharedService.factoryStatus=this.request.Status;
   }
 }

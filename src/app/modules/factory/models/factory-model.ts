@@ -12,7 +12,7 @@ export class FactoryModel {
     FactoryNumber!:string;
     LicenseNumber!:string;
     LicenseExpirDate!:string;
-    Status!:string;
+    Status!:number;
 }
 
 

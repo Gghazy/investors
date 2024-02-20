@@ -38,14 +38,14 @@ export class FinancialDetailFormComponent {
   }
 
   save(){
+    debugger
     this.request.FactoryId=this.factoryId;
-    this.request.TotalExpenses=50000;
+    this.request.TotalExpenses=this.getTotalExpenses();
     if (this.request.Id==0){
       this.financialDetailService
       .create(this.request)
       .subscribe((res: any) => {
         this.request=res.Data;
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId]);
         this.toastr.success("تم الحفظ");
       });
     }
@@ -53,10 +53,20 @@ export class FinancialDetailFormComponent {
       this.financialDetailService
       .update(this.request)
       .subscribe((res: any) => {
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId]);
         this.toastr.success("تم الحفظ");
       });
     }
    
+  }
+
+  getTotalExpenses(){
+    let total= this.request.FuelExpenses
+    +this.request.WaterExpenses
+    +this.request.EmploymentExpenses
+    +this.request.RawMterialExpenses
+    +this.request.ElectricityExpenses
+    +this.request.OtherOperatingExpenses
+
+    return total
   }
 }

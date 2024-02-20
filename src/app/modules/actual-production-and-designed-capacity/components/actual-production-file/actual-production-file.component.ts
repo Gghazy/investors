@@ -25,8 +25,9 @@ export class ActualProductionFileComponent {
   }
 
   getFiles() { 
+    debugger
     this.reasonService
-      .getAllFiles(this.factoryId)
+      .getAllFiles(Number(this.factoryId))
       .subscribe((res: any) => {
         this.files = res.Data;
       });

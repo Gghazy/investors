@@ -29,8 +29,9 @@
     <div class="col-md-6">
         <label class="form-label" > اسم المستند</label>
         <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select">
-            <option [ngValue]="0">الإقرار الزكوي </option>
-            <option [ngValue]="1">القوائم المالية</option>
+            <option [ngValue]="0">البيانات المالية المدققة</option>
+            <option [ngValue]="1">سجل الإنتاج</option>
+            <option [ngValue]="2">كمية المبيعات</option>
         </select>
     </div>
     
