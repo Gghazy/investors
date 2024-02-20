@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ActualProductionFileModel } from '../../models/actual-production-file-model';
+import { FileService } from 'src/app/core/service/file.service';
+import { ToastrService } from 'ngx-toastr';
+import { ReasonService } from '../../reason.service';
 
 @Component({
   selector: 'app-actual-production-file',
@@ -6,5 +10,64 @@ import { Component } from '@angular/core';
   styleUrls: ['./actual-production-file.component.scss']
 })
 export class ActualProductionFileComponent {
+  files:ActualProductionFileModel[]=[];
+  request=new ActualProductionFileModel();
+  src!:string;
+  @Input() factoryId!:number;
+  constructor(
+    private fileService:FileService,
+    private reasonService:ReasonService,
+    private toastr: ToastrService
+    ){}
 
+  ngOnInit(): void {
+   this.getFiles();
+  }
+
+  getFiles() { 
+    this.reasonService
+      .getAllFiles(this.factoryId)
+      .subscribe((res: any) => {
+        this.files = res.Data;
+      });
+  }
+
+  saveFile(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.request.AttachmentId = res.Data.Id
+        });
+    }
+  }
+
+  getFile(attachmentId:number){
+    this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
+      this.downloadattachment(res)    });
+  }
+  downloadattachment(data: any) {
+    const blob = new Blob([data], { type: data.type });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
+  }
+  save(){
+    this.request.FactoryId=this.factoryId;
+    this.reasonService
+    .createFile(this.request)
+    .subscribe((res: any) => {
+      this.getFiles();
+      this.toastr.success("تم الحفظ");
+      this.request=new ActualProductionFileModel();
+    });
+
+  }
+
+  deleteFile(id:number){
+    this.reasonService
+    .deleteFile(id)
+    .subscribe((res: any) => {
+      this.getFiles();
+    });
+  }
 }

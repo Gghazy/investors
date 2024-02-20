@@ -1,6 +1,7 @@
 export class ReasonModel {
     Id!: number;
-    Month!: number;
+    MonthId!: number;
+    FactoryId!: number;
     ReasonId!: number;
 }
 
