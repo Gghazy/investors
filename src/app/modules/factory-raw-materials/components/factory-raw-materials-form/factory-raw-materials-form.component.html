@@ -23,10 +23,9 @@
         <div class="input-group">
             <input type="number" class="form-control" [(ngModel)]="request.MaximumMonthlyConsumption">
             <select class="form-select" (change)="onUnitSelect($event)" [(ngModel)]="request.UnitId">
-                <option value="1" selected>طن</option>
-                <option value="2">كغ</option>
-                <option value="3">جرام</option>
-                <option value="4"> لتر</option>
+                <option *ngFor="let item of units" [value]="item.Id">
+                    {{ item.Name }} 
+                  </option>
             </select>
         </div>
     </div>
@@ -37,7 +36,8 @@
             <i>؟</i>
         </label>
         <div class="input-group">
-            <input type="number" class="form-control" value="{{request.AverageWeightKG}}" disabled=""
+            <input type="number" class="form-control" value="{{request.AverageWeightKG}}"
+            
                 [(ngModel)]="request.AverageWeightKG">
             <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
         </div>

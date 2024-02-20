@@ -143,17 +143,17 @@ this.getRawMaterial()
 
 
   onSelectionChange(row : ActualRawMaterial) {
-    const selectedItem = this.units.find(item => item.Id == row.StockUnitId);
-  // this.selectedX = selectedItem ? selectedItem.conversionToKG : 1;
-    row.CurrentStockQuantity_KG=  row.CurrentStockQuantity 
+//     const selectedItem = this.units.find(item => item.Id == row.StockUnitId);
+//   // this.selectedX = selectedItem ? selectedItem.conversionToKG : 1;
+//     row.CurrentStockQuantity_KG=  row.CurrentStockQuantity 
     
-let s =1
+// let s =1
 
-  // const gramsValue = 1000;
-  this.tst=convert(s).from('g').to('kg');
-// console.log(`${gramsValue} grams is equal to ${kilogramsValue} kilograms`);
-      console.log('Selected X:', selectedItem);
-    console.log(row)
+//   // const gramsValue = 1000;
+//   this.tst=convert(s).from('g').to('kg');
+// // console.log(`${gramsValue} grams is equal to ${kilogramsValue} kilograms`);
+//       console.log('Selected X:', selectedItem);
+//     console.log(row)
   }
 
   getUnits(){

@@ -1,11 +1,14 @@
-
 <section class="form-panel">
     <div class="form-header">
         <h2 class="form-title">بيانات المواد الأولية الفعلية <span class="custom-badge">شهري</span> </h2>
         <div>
             <a [routerLink]="'/pages/factory-landing/'+factoryId" class="back-link">
                 رجوع
-                <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
+                <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h48v48h-48z" fill="none"></path>
+                    <path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
+                        style="fill: #666;"></path>
+                </svg>
             </a>
         </div>
     </div>
@@ -13,126 +16,145 @@
 
         <div class="col-md-4 mb-4">
             <label class="form-label">إدخال التفاصيل التالية عن المواد الأولية لشهر </label>
-            <select class="form-select"  [(ngModel)]="request.Month" (change)="GetMonthData(request.Month)">
-                <option *ngFor="let x of Months" [ngValue]="x.Id" >{{x.month}}</option>
-                
+            <select class="form-select" [(ngModel)]="request.Month" (change)="GetMonthData(request.Month)">
+                <option *ngFor="let x of Months" [ngValue]="x.Id">{{x.month}}</option>
+
             </select>
         </div>
-       
-                            
+
+
         <div class="table-responsive">
             <table class="table table-hover table-small-header ">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th> المادة</th>
-                        <th>  كمية المخزون الحالي  بالكيلو جرام</th>
-                        <th>  الكمية  المستخدمة بالكيلو جرام</th>
-                       
-                        
-                        
+                        <th> كمية المخزون الحالي </th>
+                        <th> وحدة القياس</th>
+                        <th> كمية المخزون الحالي بالكيلو جرام</th>
+
+                        <th> الكمية المستخدمة </th>
+                        <th> وحدة القياس</th>
+                        <th> الكمية المستخدمة بالكيلو جرام</th>
+
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let material of x ; let j =index">
                         <td>{{j+1}}</td>
-                       
-                        <td  hidden> {{material.Id}} </td>
-                        <td > {{material.Name}} </td>
-                        
+
+                        <td hidden> {{material.Id}} </td>
+                        <td> {{material.Name}} </td>
+
                         <td>
-                            <div class="input-group">
-                                <input type="number" class="form-control" style="max-width: 117px;" [(ngModel)]="material.CurrentStockQuantity">
-                                <select [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)">
-                                    <option *ngFor="let item of units" [value]="item.Id">
-                                      {{ item.Name }} 
-                                    </option>
-                                  </select>
-                               
-                                <input type="number" class="form-control"  disabled style="max-width: 117px;"  value="{{material.CurrentStockQuantity_KG}}">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
-                            </div>
+
+                            <input type="number" class="form-control" style="max-width: 117px;"
+                                [(ngModel)]="material.CurrentStockQuantity">
+                        </td>
+                        <td>
+                            <select [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)">
+                                <option *ngFor="let item of units" [value]="item.Id">
+                                    {{ item.Name }}
+                                </option>
+                            </select>
                         </td>
                         <td>
                             <div class="input-group">
-                                <input type="number" class="form-control" [(ngModel)]="material.UsedQuantity" style="max-width: 117px;">
-                                <select [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)">
-                                    <option *ngFor="let item of units" [value]="item.Id">
-                                      {{ item.Name }} 
-                                     </option>
-                                  </select>
-                                <span class="mx-1">=</span>
-                                <input type="number" class="form-control" value="{{material.UsedQuantity_KG}}" disabled style="max-width: 117px;" >
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 40px;">
+                                <input type="number" class="form-control" disabled style="max-width: 117px;"
+                                    value="{{material.CurrentStockQuantity_KG}}">
+                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled
+                                    style="max-width: 40px;">
+                            </div>
+                        </td>
+                        <td>
+
+                            <input type="number" class="form-control" [(ngModel)]="material.UsedQuantity"
+                                style="max-width: 117px;">
+                        </td>
+                        <td>
+                            <select [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)">
+                                <option *ngFor="let item of units" [value]="item.Id">
+                                    {{ item.Name }}
+                                </option>
+                            </select>
+                            <!-- <span class="mx-1">=</span> -->
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" class="form-control" value="{{material.UsedQuantity_KG}}" disabled
+                                    style="max-width: 117px;">
+                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled
+                                    style="max-width: 40px;">
                             </div>
                         </td>
                     </tr>
-              
-                   
-                    
-                  
+
+
+
+
                 </tbody>
             </table>
         </div>
         <app-pagination (changePage)="pageChanged($event)" [pageSize]="materials.PageSize"
-        [pageNumber]="materials.PageNumber" [totalCount]="materials.TotalCount"></app-pagination>
+            [pageNumber]="materials.PageNumber" [totalCount]="materials.TotalCount"></app-pagination>
 
-        <div class="col-md-12 mt-3">
-            <h3> زيادة استخدام المواد الأولية عن الإستهلاك الشهري المعتاد     </h3>
+        <!-- <div class="col-md-12 mt-3">
+            <h3> زيادة استخدام المواد الأولية عن الإستهلاك الشهري المعتاد </h3>
         </div>
 
         <div class="row">
-           
+
             <div class="col-md-6">
-                <label class="form-label"> ما هو سبب زيادة  استخدام المواد الأولية عن الاستهلاك الشهري المعتاد؟</label>
+                <label class="form-label"> ما هو سبب زيادة استخدام المواد الأولية عن الاستهلاك الشهري المعتاد؟</label>
                 <select class="form-select" [(ngModel)]="request.IncreasedUsageReason">
                     <option value="1">شراء معدات جديدة</option>
                     <option value="2">زيادة خطوط الإنتاج</option>
-                    <option value="3">زيادة  العمالة</option>
+                    <option value="3">زيادة العمالة</option>
                 </select>
             </div>
-        </div>
+        </div> -->
 
         <div class="col-md-12 mt-3">
-            <h3> إرفاق المستندات الداعمة  </h3>
+            <h3> إرفاق المستندات الداعمة </h3>
         </div>
 
         <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
             <strong><span class="d-block mb-2">الرجاء إرفاق المستندات الداعمة التالية:</span></strong>
             <ul>
                 <li>البيانات المالية المدققة</li>
-                
-                <li>  سجل الإنتاج </li>
-               
-                <li>   كمية المبيعات</li>
-               
+
+                <li> سجل الإنتاج </li>
+
+                <li> كمية المبيعات</li>
+
             </ul>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
-        
+
 
         <div class="row">
 
-        
-        <div class="col-md-6">
-            <label class="form-label"> اسم المستند</label>
-            <select name="" id="" class="form-select" [(ngModel)]="requestFile.Name">
-                <option >البيانات المالية المدققة</option>
-                <option >سجل الإنتاج</option>
-                <option > كمية المبيعات</option>
-                
-            </select>
-        </div>
 
-        <div class="col-md-6">
-            <label class="form-label">رفع المستند    </label>
-            <div class="input-group">
-                <input type="file" class="form-control" placeholder="" value=""  (change)="saveDocs($event)">
-                <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+            <div class="col-md-6">
+                <label class="form-label"> اسم المستند</label>
+                <select name="" id="" class="form-select" [(ngModel)]="requestFile.Name">
+                    <option>البيانات المالية المدققة</option>
+                    <option>سجل الإنتاج</option>
+                    <option> كمية المبيعات</option>
+
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">رفع المستند </label>
+                <div class="input-group">
+                    <input type="file" class="form-control" placeholder="" value="" (change)="saveDocs($event)">
+                    <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+                </div>
             </div>
         </div>
-    </div>
 
         <div class="table-responsive">
             <table class="table table-hover table-small-header">
@@ -140,42 +162,43 @@
                     <tr>
                         <th>#</th>
                         <th> اسم المستند </th>
-                        <th>امتداد المستند</th>                                            
+                        <th>امتداد المستند</th>
                         <th style="min-width: 140px">خيارات</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let file of files let i=index">
                         <td>{{i+1}}</td>
-                        <td>  {{file.Name}}</td>
-                        <td>  {{file.Path}}</td>
-                       
+                        <td> {{file.Name}}</td>
+                        <td> {{file.Path}}</td>
+
                         <td>
-                            <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                            <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal"
+                                data-bs-target="#photoModal">
                                 عرض
-                
+
                             </a>
                             <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
                         </td>
-                      </tr>
-                    
+                    </tr>
+
                 </tbody>
             </table>
         </div>
-<!-- Modal photos-->
-<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img [src]="src" alt="" class="img-fluid">
+        <!-- Modal photos-->
+        <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img [src]="src" alt="" class="img-fluid">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
     </div>
     <div class="form-footer">
         <div class="col-12">

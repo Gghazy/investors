@@ -8,6 +8,8 @@ import { FileService } from 'src/app/core/service/file.service';
 import { RawMaterialSearch } from '../../models/raw-material-search.model';
 import { FactoryProductService } from 'src/app/modules/factory-products/factory-product.service';
 import { ProductModel } from 'src/app/modules/customs-items-update/models/product-model';
+import { LookUpService } from 'src/app/core/service/look-up.service';
+import { LookUpModel } from 'src/app/core/models/look-up-model';
 
 @Component({
   selector: 'app-factory-raw-materials-form',
@@ -23,14 +25,16 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
  
   products  !: ProductModel[];
  
-
+  units!:LookUpModel[];
   request = new RawMaterial();
   search=new RawMaterialSearch(); 
   selectedProducts:any=[];
   items:any=[];
+  saveSuccessful: boolean=false;
   
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private fileService: FileService,
+    private lookUpService:LookUpService,
     private productService: FactoryProductService,
     private toastr: ToastrService,
    ) {
@@ -69,7 +73,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
     // ];
 this.getProducts();
-
+this.getUnits();
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'Id',
@@ -114,7 +118,14 @@ this.getProducts();
       this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption /1000
     }
   }
- 
+  getUnits(){
+    this.lookUpService
+      .getAllUnits()
+      .subscribe((res: any) => {
+      this.units = res.Data;
+      console.log(res)
+      });
+  }
 
   savePaper(file: any) {
     if (file.target.files.length > 0) {
@@ -150,12 +161,13 @@ this.getProducts();
       .create(this.request)
       .subscribe((res: any) => {
     //  this.router.navigate(['/pages/factory-raw-materials/'+this.factoryId]);
+    this.saveSuccessful = true;
         this.close.emit(true);
         this.toastr.success("تم الحفظ");
         console.log(this.request)
       });
       
-      if(this.request.Id !=0 ){
+      if(this.saveSuccessful == true){
       this.request=new RawMaterial();
       this.selectedProducts=[]
     }

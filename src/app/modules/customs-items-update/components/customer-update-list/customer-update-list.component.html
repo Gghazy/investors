@@ -40,7 +40,7 @@
                     (change)="handleCheckboxChange($event)" />
                 </div>
               </td>
-              <td>{{product.ProductName}}(رقم البند الجمركي على مستوى 10 )</td>
+              <td>{{product.ProductName}}({{product.ItemNumber}})</td>
               <td>
                 <div *ngIf="product.HasCustomLevel">
                   <a (click)="selectLevel(product.Id,product.ProductName)"  class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#modal">

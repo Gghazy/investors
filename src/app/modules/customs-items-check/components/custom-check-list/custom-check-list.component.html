@@ -21,10 +21,10 @@
                 <ng-template #body>
                   <tr *ngFor="let product of products.Items let i=index">
                     <td>{{i+1}}</td>
-                    <td>{{product.ParentName}}(رقم البند الجمركي على مستوى 10 )</td>
+                    <td>{{product.ParentName}}({{product.ItemNumber}})</td>
                     
                     <td>
-                        {{product.ProductName}} (رقم البند الجمركي على مستوى 12 )
+                        {{product.ProductName}} ({{product.Level12Number}})
                        
                     </td> 
                     <td>
