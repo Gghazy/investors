@@ -67,7 +67,7 @@
         </app-list>
         <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
        
-        <!-- <app-reason [monthId]="search.MonthId" [factoryId]="factoryId"></app-reason> -->
+        <app-reason [monthId]="search.MonthId" [factoryId]="factoryId"></app-reason>
         <app-actual-production-file *ngIf="factoryId"  [factoryId]="factoryId"></app-actual-production-file>      
 
     </div>
