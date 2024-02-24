@@ -32,7 +32,8 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
   units!:LookUpModel[];
-
+  src!: string;
+  
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
     private lookUpService:LookUpService,
@@ -164,8 +165,9 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     }
     else {
       this.fileService.getImage(attachmentId).subscribe((res: any) => {
-        this.downloadattachment(res)
-        console.log(res)
+
+        this.src='data:image/jpeg;base64,'+res.Image;
+        console.log(res.Image)
       });
     }
 

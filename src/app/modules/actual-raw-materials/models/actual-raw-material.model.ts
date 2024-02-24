@@ -9,5 +9,6 @@ export class ActualRawMaterial {
     UsedQuantity_KG !:number;
     CurrentStockQuantity !:number;
     UsedQuantity !:number;
-    IncreasedUsageReason !:number;
+    IncreasedUsageReason !:string;
+    AverageWeightKG !:number;
 }

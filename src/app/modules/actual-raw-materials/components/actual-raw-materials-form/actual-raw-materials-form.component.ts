@@ -131,10 +131,12 @@ this.getRawMaterial()
             'CurrentStockQuantity': 0,
             'StockUnitId': 0,
             'UsageUnitId': 0,
+            'AverageWeightKG': item.AverageWeightKG,
 
           })
         })
-        //  console.log(this.x);
+         console.log(this.rawMaterials);
+         console.log(this.x);
       });
 
 
@@ -143,6 +145,8 @@ this.getRawMaterial()
 
 
   onSelectionChange(row : ActualRawMaterial) {
+
+
 //     const selectedItem = this.units.find(item => item.Id == row.StockUnitId);
 //   // this.selectedX = selectedItem ? selectedItem.conversionToKG : 1;
 //     row.CurrentStockQuantity_KG=  row.CurrentStockQuantity 
@@ -153,7 +157,9 @@ this.getRawMaterial()
 //   this.tst=convert(s).from('g').to('kg');
 // // console.log(`${gramsValue} grams is equal to ${kilogramsValue} kilograms`);
 //       console.log('Selected X:', selectedItem);
-//     console.log(row)
+row.CurrentStockQuantity_KG=row.CurrentStockQuantity*row.AverageWeightKG ;
+
+    console.log(row)
   }
 
   getUnits(){
@@ -199,7 +205,7 @@ this.getRawMaterial()
   const selectedValue =newValue
     console.log(selectedValue)
    
-       this.CurrentStockQuantity_KG =  1000
+      this.CurrentStockQuantity_KG =  1000
     
   }
 
@@ -220,9 +226,22 @@ this.getRawMaterial()
 
   }
   getFile(attachmentId: number) {
-    this.service.getFiles(attachmentId).subscribe((res: any) => {
-      this.src = 'data:image/jpeg;base64,' + res.Image
-    });
+    if (attachmentId == null) {
+      this.toastr.error("لا يوجد ملف");
+    }
+    else {
+      this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
+        this.downloadattachment(res)
+      });
+    }
+  }
+
+
+  downloadattachment(data: any) {
+    const blob = new Blob([data], { type: data.type });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
+    console.log(data)
   }
 
   deleteFile(id: number) {

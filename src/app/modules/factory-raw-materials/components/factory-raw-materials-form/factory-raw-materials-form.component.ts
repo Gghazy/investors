@@ -101,7 +101,8 @@ this.getUnits();
   }
   onItemSelect(item: any) {
     //this.request.ProductId = item.Id;
-   this.request.ProductIds.push(item.Id)
+    console.log(item)
+   this.request.ProductIds.push({'Id':item.Id,'ProductName': item.ProductName})
        console.log(this.request.ProductIds);
       // console.log(this.request.ProductRawMaterial);
   }

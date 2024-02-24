@@ -14,13 +14,13 @@
     </div>
     <div class="form-body">
 
-        <div class="col-md-4 mb-4">
+        <!-- <div class="col-md-4 mb-4">
             <label class="form-label">إدخال التفاصيل التالية عن المواد الأولية لشهر </label>
             <select class="form-select" [(ngModel)]="request.Month" (change)="GetMonthData(request.Month)">
                 <option *ngFor="let x of Months" [ngValue]="x.Id">{{x.month}}</option>
 
             </select>
-        </div>
+        </div> -->
 
 
         <div class="table-responsive">
@@ -31,10 +31,12 @@
                         <th> المادة</th>
                         <th> كمية المخزون الحالي </th>
                         <th> وحدة القياس</th>
+                        <th> KG </th>
                         <th> كمية المخزون الحالي بالكيلو جرام</th>
 
                         <th> الكمية المستخدمة </th>
                         <th> وحدة القياس</th>
+                        <th>KG</th>
                         <th> الكمية المستخدمة بالكيلو جرام</th>
 
 
@@ -59,6 +61,7 @@
                                 </option>
                             </select>
                         </td>
+                        <td> {{material.AverageWeightKG}} </td>
                         <td>
                             <div class="input-group">
                                 <input type="number" class="form-control" disabled style="max-width: 117px;"
@@ -78,8 +81,9 @@
                                     {{ item.Name }}
                                 </option>
                             </select>
-                            <!-- <span class="mx-1">=</span> -->
+
                         </td>
+                        <td> {{material.AverageWeightKG}} </td>
                         <td>
                             <div class="input-group">
                                 <input type="number" class="form-control" value="{{material.UsedQuantity_KG}}" disabled
@@ -107,6 +111,7 @@
 
             <div class="col-md-6">
                 <label class="form-label"> ما هو سبب زيادة استخدام المواد الأولية عن الاستهلاك الشهري المعتاد؟</label>
+
                 <select class="form-select" [(ngModel)]="request.IncreasedUsageReason">
                     <option value="1">شراء معدات جديدة</option>
                     <option value="2">زيادة خطوط الإنتاج</option>
@@ -119,19 +124,6 @@
             <h3> إرفاق المستندات الداعمة </h3>
         </div>
 
-        <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
-            <strong><span class="d-block mb-2">الرجاء إرفاق المستندات الداعمة التالية:</span></strong>
-            <ul>
-                <li>البيانات المالية المدققة</li>
-
-                <li> سجل الإنتاج </li>
-
-                <li> كمية المبيعات</li>
-
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
 
 
         <div class="row">
@@ -139,12 +131,8 @@
 
             <div class="col-md-6">
                 <label class="form-label"> اسم المستند</label>
-                <select name="" id="" class="form-select" [(ngModel)]="requestFile.Name">
-                    <option>البيانات المالية المدققة</option>
-                    <option>سجل الإنتاج</option>
-                    <option> كمية المبيعات</option>
+                <input type="text" name="Name" class="form-control" [(ngModel)]="requestFile.Name">
 
-                </select>
             </div>
 
             <div class="col-md-6">
@@ -173,11 +161,9 @@
                         <td> {{file.Path}}</td>
 
                         <td>
-                            <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal"
-                                data-bs-target="#photoModal">
-                                عرض
-
-                            </a>
+                          
+                            <a class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
+                                tooltip=" تحميل الملف " (click)="getFile(file.AttachmentId)"> عرض </a>
                             <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
                         </td>
                     </tr>
@@ -185,20 +171,7 @@
                 </tbody>
             </table>
         </div>
-        <!-- Modal photos-->
-        <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img [src]="src" alt="" class="img-fluid">
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
     <div class="form-footer">
         <div class="col-12">
