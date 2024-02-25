@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class LookUpService {
 
   constructor(private http: HttpClient) { } 
+  
 
   getAllCities(): Observable<any> {
     return this.http.get<any>('Cities');

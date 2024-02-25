@@ -4,6 +4,7 @@ import { fade } from 'src/app/shared/animation/app.animation';
 import { FinancialModel } from '../../Models/financial-model';
 import { FinancialDetailService } from '../../financial-detail.service';
 import { ToastrService } from 'ngx-toastr';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-financial-detail-form',
@@ -15,31 +16,45 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FinancialDetailFormComponent {
   factoryId: any;
+  periodId: any;
+  year!:number;
   request = new FinancialModel();
 
   constructor(
     private route: ActivatedRoute,
      private financialDetailService: FinancialDetailService,
+     private periodService: PeriodService,
      private toastr: ToastrService,
      private router: Router,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
-    this.getFinancial();
+    this.getperiod()
   }
 
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      debugger
+      this.year = res.Data.Year;
+      this.getFinancial()
+    });
+  }
   getFinancial() {
     this.financialDetailService
-      .getOne(this.factoryId)
+      .getOne(this.factoryId,this.year)
       .subscribe((res: any) => {
         this.request = res.Data;
       });
   }
 
   save(){
-    debugger
+    
     this.request.FactoryId=this.factoryId;
+    this.request.Year=this.year;
     this.request.TotalExpenses=this.getTotalExpenses();
     if (this.request.Id==0){
       this.financialDetailService

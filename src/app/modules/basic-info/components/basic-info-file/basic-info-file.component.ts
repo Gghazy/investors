@@ -50,7 +50,7 @@ export class BasicInfoFileComponent implements OnInit {
   }
 
   save(){
-    debugger
+    
     this.request.FactoryId=Number(this.factoryId);
     
     this.basicInfoService

@@ -18,7 +18,7 @@ const routes: Routes = [
         import('../modules/actual-raw-materials/actual-raw-materials.module').then((m) => m.ActualRawMaterialsModule)
     },
     {
-      path: 'basic-info/:id',
+      path: 'basic-info/:id/:periodid',
       loadChildren: () =>
         import('../modules/basic-info/basic-info.module').then((m) => m.BasicInfoModule)
     },
@@ -45,7 +45,7 @@ const routes: Routes = [
         import('../modules/factory-contacts/factory-contacts.module').then((m) => m.FactoryContactsModule)
     },
     {
-      path: 'factory-landing/:id',
+      path: 'factory-landing/:id/:periodid',
       loadChildren: () =>
         import('../modules/factory-landing/factory-landing.module').then((m) => m.FactoryLandingModule)
     },
@@ -65,9 +65,15 @@ const routes: Routes = [
         import('../modules/factory-raw-materials/factory-raw-materials.module').then((m) => m.FactoryRawMaterialsModule)
     },
     {
-      path: 'financial-details/:id',
+      path: 'financial-details/:id/:periodid',
       loadChildren: () =>
         import('../modules/financial-details/financial-details.module').then((m) => m.FinancialDetailsModule)
+    },
+
+    {
+      path: 'period/:id',
+      loadChildren: () =>
+        import('../modules/period/period.module').then((m) => m.PeriodModule)
     },
     
   ]

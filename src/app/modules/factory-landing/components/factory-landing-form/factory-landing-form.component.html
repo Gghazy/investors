@@ -2,7 +2,10 @@
     <div class="form-header">
         <h2 class="form-title"> بيانات المصنع </h2>
         <div>
-            <a routerLink="/pages/factories-list" class="back-link">
+            <a  class="back-link"
+            [routerLink]="'/pages/period/'+factoryId"
+            
+            >
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -17,7 +20,7 @@
         <div class="tab-content tab-content-inner shadow-none rounded-0">
             <ul class="p-0 small-icons">
                 <li class="col-12 col-lg-4 col-md-6 col-sm-12">
-                    <a [routerLink]="'/pages/basic-info/'+factoryId" >
+                    <a [routerLink]="'/pages/basic-info/'+factoryId+'/'+periodId" >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                             <title></title>
                             <rect height="2" width="20" x="7" y="11"></rect>
@@ -37,7 +40,7 @@
 
 
                 <li  class="col-12 col-lg-4 col-md-6 col-sm-12">
-                    <a [routerLink]="'/pages/financial-details/'+factoryId">
+                    <a [routerLink]="'/pages/financial-details/'+factoryId+'/'+periodId">
                         <svg fill="#000000" height="64px" width="64px" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 512.125 512.125" xml:space="preserve">

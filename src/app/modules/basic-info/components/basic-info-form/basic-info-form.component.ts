@@ -16,6 +16,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 })
 export class BasicInfoFormComponent implements OnInit {
   factoryId: any;
+  periodId: any;
   request = new FactoryModel();
 
   constructor(
@@ -26,6 +27,7 @@ export class BasicInfoFormComponent implements OnInit {
      private sharedService: SharedService,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
     this.getBasicInfo();
@@ -40,7 +42,6 @@ export class BasicInfoFormComponent implements OnInit {
   }
 
   save(){
-    debugger
     this.basicInfoService
         .update(this.request)
         .subscribe((res: any) => {

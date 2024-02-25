@@ -21,8 +21,9 @@ export class FinancialDetailService {
     return this.http.delete<any>('FactoryFinancialAttachments/' + id);
   }
 
-  getOne(id:number): Observable<any> {
-    return this.http.get<any>('FactoryFinancials/'+id);
+  getOne(id:number,year:number): Observable<any> {
+    debugger
+    return this.http.get<any>(`FactoryFinancials?id=${id}&&year=${year}`);
   }
   create(request: FinancialModel): Observable<any> {
     return this.http.post<any>('FactoryFinancials', request);

@@ -47,13 +47,13 @@ export class ReasonComponent implements OnInit, OnChanges {
     this.reasonService
       .getOne(this.monthId,this.factoryId)
       .subscribe((res: any) => {
-        debugger
+        
         this.request = res.Data;
       });
   }
 
   save() {
-    debugger
+    
     this.request.MonthId=this.monthId;
     this.request.FactoryId=this.factoryId;
     if (this.request.Id == 0 || this.request.Id ==undefined) {

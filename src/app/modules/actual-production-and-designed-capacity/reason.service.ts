@@ -22,7 +22,7 @@ export class ReasonService {
   }
 
   getAllFiles(ActualProductionId:number): Observable<any> {
-    debugger
+    
     return this.http.get<any>('ActualProductionAttachments/'+ActualProductionId);
   }
   createFile(request: ActualProductionFileModel): Observable<any> {

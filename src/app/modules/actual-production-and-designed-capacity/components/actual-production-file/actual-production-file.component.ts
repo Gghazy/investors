@@ -25,7 +25,7 @@ export class ActualProductionFileComponent {
   }
 
   getFiles() { 
-    debugger
+    
     this.reasonService
       .getAllFiles(Number(this.factoryId))
       .subscribe((res: any) => {

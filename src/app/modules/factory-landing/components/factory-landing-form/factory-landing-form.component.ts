@@ -16,12 +16,15 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 export class FactoryLandingFormComponent implements OnInit {
 
   factoryId:any;
+  periodId:any;
 
   constructor(
     private route: ActivatedRoute,
     private basicInfoService: BasicInfoService,
     public sharedService: SharedService){
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
+    
   }
 
   ngOnInit(): void {
@@ -33,7 +36,6 @@ export class FactoryLandingFormComponent implements OnInit {
     this.basicInfoService
       .getOne(this.factoryId)
       .subscribe((res: any) => {
-        debugger
         this.sharedService.factoryStatus = res.Data.Status;
       });
   }

@@ -104,7 +104,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     this.rawMaterialService
       .getRawMaterial(this.search, this.factoryId)
       .subscribe((res: any) => {
-        debugger;
+        ;
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
         this.ss = res.Data;
