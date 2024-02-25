@@ -1,6 +1,6 @@
 export class ActualRawMaterialFile {
     Id !:number;
-    Month !:number;
+    periodId !:number;
     FactoryId!:number;
     AttachmentId!:number;
     Name !: string;

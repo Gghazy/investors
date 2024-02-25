@@ -20,27 +20,29 @@ import { LookUpService } from 'src/app/core/service/look-up.service';
 export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   factoryId: any;
+  periodId: any;
   materialCount: any;
   materials = new ResultResponse<RawMaterial>();
   rawMaterials: any = [];
   request = new RawMaterial();
   search = new RawMaterialSearch();
   selectedProducts: any = [];
-  ProductName: any ;
+  ProductName: any;
   ss: any = [];
   ProductNameList: any = [];
   products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
-  units!:LookUpModel[];
+  units!: LookUpModel[];
   src!: string;
-  
+
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
-    private lookUpService:LookUpService,
+    private lookUpService: LookUpService,
     private fileService: FileService,
     private toastr: ToastrService,
     private route: ActivatedRoute) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodId');
   }
 
   ngOnInit() {
@@ -83,18 +85,18 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   onSelectAll(items: any) {
     //console.log(items);
   }
-  getUnits(){
+  getUnits() {
     this.lookUpService
       .getAllUnits()
       .subscribe((res: any) => {
-      this.units = res.Data;
-      console.log(res)
+        this.units = res.Data;
+        console.log(res)
       });
   }
   onItemSelect(item: any) {
-   // this.request.ProductIds = item.Id;
-     // this.selectedProducts.push(item.Id)
-      this.request.ProductIds.push(item.Id)
+    // this.request.ProductIds = item.Id;
+    // this.selectedProducts.push(item.Id)
+    this.request.ProductIds.push(item.Id)
     console.log(this.request.ProductIds);
     console.log(this.selectedProducts);
   }
@@ -102,21 +104,30 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   getRawMaterial() {
 
     this.rawMaterialService
-      .getRawMaterial(this.search, this.factoryId)
+      .getCustomItemRawMaterial()
       .subscribe((res: any) => {
-        debugger;
-        this.rawMaterials = res.Data.Items;
-        this.materials = res.Data;
-        this.ss = res.Data;
-        console.log(this.rawMaterials.length)
+        this.rawMaterials = res.Data;
         console.log(this.rawMaterials)
-        this.materialCount = this.rawMaterials.length;
+      })
+    //   .getByPeriod(this.factoryId,this.periodId)
+    //   .subscribe((res: any) => {
+    //     debugger;
+    //     this.rawMaterials = res.Data.Items;
+    //     this.materials = res.Data;
+    //     this.ss = res.Data;
+    //     console.log(this.rawMaterials.length)
+    //     console.log(this.rawMaterials)
+    //     this.materialCount = this.rawMaterials.length;
 
-        this.ss.forEach((element: any) => {
-          this.ProductNameList.push(element)
-          console.log(this.ProductNameList)
-        });
-      });
+    //     this.ss.forEach((element: any) => {
+    //       this.ProductNameList.push(element)
+    //       console.log(this.ProductNameList)
+    //     });
+    //   });
+
+
+
+
 
 
 
@@ -135,7 +146,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   getRawMaterialProducts(id: number) {
 
-  
+
     this.productService
       .getOne(id)
       .subscribe((res: any) => {
@@ -166,7 +177,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     else {
       this.fileService.getImage(attachmentId).subscribe((res: any) => {
 
-        this.src='data:image/jpeg;base64,'+res.Image;
+        this.src = 'data:image/jpeg;base64,' + res.Image;
         console.log(res.Image)
       });
     }
@@ -192,19 +203,45 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   save() {
 
-console.log(this.request)
-    this.rawMaterials.forEach((element: any) => {
+    console.log(this.request)
+
+    console.log(this.rawMaterials)
+
+    console.log(this.request)
+    this.request.FactoryId = this.factoryId;
+    this.request.PeriodId = this.periodId;
 
 
-      this.rawMaterialService
-        .update(element)
-        .subscribe((res: any) => {
-        
-        });
+   
+
+    this.rawMaterials.forEach((element: RawMaterial) => {
+      
+   
+    this.rawMaterialService
+      .create(element)
+      .subscribe((res: any) => {
+    //  this.router.navigate(['/pages/factory-raw-materials/'+this.factoryId]);
+
+
+        this.toastr.success("تم الحفظ");
+        console.log(this.request)
+      });
+
     });
-
-    this.toastr.success("تم الحفظ");
   }
+
+  //   this.rawMaterials.forEach((element: any) => {
+
+
+  //     this.rawMaterialService
+  //       .update(element)
+  //       .subscribe((res: any) => {
+
+  //       });
+  //   });
+
+  //   this.toastr.success("تم الحفظ");
+  // }
 
 
 }

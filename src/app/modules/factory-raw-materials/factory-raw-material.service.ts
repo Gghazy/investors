@@ -16,9 +16,20 @@ export class FactoryRawMaterialService {
   getRawMaterial(search: RawMaterialSearch,id:number): Observable<any> {
     return this.http.post<any>('RawMaterials/pagination?Factoryid='+id,search);
   }
+
+  getByPeriod(factoryId:number, periodId:number): Observable<any> {
+    return this.http.get<any>('RawMaterials?Factoryid='+factoryId+'&Periodid='+periodId);
+  }
   getOne(id:number): Observable<any> {
     return this.http.get<any>('RawMaterials/'+id);
   }
+
+
+  getCustomItemRawMaterial(): Observable<any> {
+    return this.http.get<any>('CustomItemRawMaterial');
+  }
+
+
   update(material: RawMaterial): Observable<any> {
     return this.http.put<any>('RawMaterials', material);
   }

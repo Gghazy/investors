@@ -26,19 +26,20 @@ import * as convert from 'convert-units';
 export class ActualRawMaterialsFormComponent implements OnInit {
   files: BasicFileModel[] = [];
   factoryId: any;
+  periodId: any;
   rawMaterials: any = [];
   materials = new ResultResponse<RawMaterial>();
   search = new RawMaterialSearch();
-  units!:LookUpModel[];
+  units!: LookUpModel[];
   x: any = [];
   src!: string;
   request = new ActualRawMaterial();
   requestFile = new ActualRawMaterialFile();
-  CurrentStockQuantity_KG: number=0;
+  CurrentStockQuantity_KG: number = 0;
   dropdownSettings!: IDropdownSettings;
-  selectedUnits:any=[];
+  selectedUnits: any = [];
   selectedItemId: number | null = null;
-  selectedX: number =0;
+  selectedX: number = 0;
   sign: string | null = null;
   tst: any;
   Months = [
@@ -57,8 +58,9 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   ];
   constructor(private route: ActivatedRoute, private service: ActualRawMaterialsService,
     private toastr: ToastrService,
-    private lookUpService:LookUpService, private fileService: FileService) {
+    private lookUpService: LookUpService, private fileService: FileService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodId');
   }
 
 
@@ -73,7 +75,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       singleSelection: true,
       idField: 'Id',
       textField: 'Name',
-    //  selectAllText: 'تحديد الكل',
+      //  selectAllText: 'تحديد الكل',
       //unSelectAllText: 'ازالة التحديد',
       searchPlaceholderText: 'بحث',
       itemsShowLimit: 1,
@@ -81,32 +83,33 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     };
   }
 
-  GetMonthData(month:number){
+  GetMonthData(month: number) {
 
     this.service
-    .getByMonth(month)
-    .subscribe((res: any) => {
-     this.x = res.Data;
-     console.log(this.x)
-     console.log(res.Data)
-    });
+      .getByMonth(month)
+      .subscribe((res: any) => {
+        this.x = res.Data;
+        console.log(this.x)
+        console.log(res.Data)
+      });
 
-console.log(month)
+    console.log(month)
 
-this.getRawMaterial()
+    this.getRawMaterial()
 
   }
 
 
-  
+
   onItemSelect(item: ActualRawMaterial) {
-  //  this.request. = item.Id;
-   // this.selectedProducts.push(item)
-       console.log(this.selectedUnits);
-      
-     console.log(item.UsageUnitId);
-     item.CurrentStockQuantity_KG = item.CurrentStockQuantity *1000
+    //  this.request. = item.Id;
+    // this.selectedProducts.push(item)
+    console.log(this.selectedUnits);
+
+    console.log(item.UsageUnitId);
+    item.CurrentStockQuantity_KG = item.CurrentStockQuantity * 1000
   }
+
   onSelectAll(items: any) {
     //console.log(items);
   }
@@ -115,7 +118,7 @@ this.getRawMaterial()
 
 
     this.service
-      .getRawMaterial(this.search, this.factoryId)
+      .getByPeriod(this.factoryId, this.periodId)
       .subscribe((res: any) => {
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
@@ -126,7 +129,7 @@ this.getRawMaterial()
             'CurrentStockQuantity_KG': 0,
             'UsedQuantity_KG': 0,
             'AttachmentId': 1,
-            'Month': 0,
+            ' PeriodId': this.periodId,
             'UsedQuantity': 0,
             'CurrentStockQuantity': 0,
             'StockUnitId': 0,
@@ -135,8 +138,8 @@ this.getRawMaterial()
 
           })
         })
-         console.log(this.rawMaterials);
-         console.log(this.x);
+        console.log(this.rawMaterials);
+        console.log(this.x);
       });
 
 
@@ -144,30 +147,30 @@ this.getRawMaterial()
   }
 
 
-  onSelectionChange(row : ActualRawMaterial) {
+  onSelectionChange(row: ActualRawMaterial) {
 
 
-//     const selectedItem = this.units.find(item => item.Id == row.StockUnitId);
-//   // this.selectedX = selectedItem ? selectedItem.conversionToKG : 1;
-//     row.CurrentStockQuantity_KG=  row.CurrentStockQuantity 
-    
-// let s =1
+    //     const selectedItem = this.units.find(item => item.Id == row.StockUnitId);
+    //   // this.selectedX = selectedItem ? selectedItem.conversionToKG : 1;
+    //     row.CurrentStockQuantity_KG=  row.CurrentStockQuantity 
 
-//   // const gramsValue = 1000;
-//   this.tst=convert(s).from('g').to('kg');
-// // console.log(`${gramsValue} grams is equal to ${kilogramsValue} kilograms`);
-//       console.log('Selected X:', selectedItem);
-row.CurrentStockQuantity_KG=row.CurrentStockQuantity*row.AverageWeightKG ;
+    // let s =1
+
+    //   // const gramsValue = 1000;
+    //   this.tst=convert(s).from('g').to('kg');
+    // // console.log(`${gramsValue} grams is equal to ${kilogramsValue} kilograms`);
+    //       console.log('Selected X:', selectedItem);
+    row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
 
     console.log(row)
   }
 
-  getUnits(){
+  getUnits() {
     this.lookUpService
       .getAllUnits()
       .subscribe((res: any) => {
-      this.units = res.Data;
-      console.log(res)
+        this.units = res.Data;
+        console.log(res)
       });
   }
   pageChanged(data: any) {
@@ -201,17 +204,17 @@ row.CurrentStockQuantity_KG=row.CurrentStockQuantity*row.AverageWeightKG ;
   }
 
   onUnitSelect(newValue: any) {
-  // const selectedValue = (event.target as HTMLSelectElement).value;
-  const selectedValue =newValue
+    // const selectedValue = (event.target as HTMLSelectElement).value;
+    const selectedValue = newValue
     console.log(selectedValue)
-   
-      this.CurrentStockQuantity_KG =  1000
-    
+
+    this.CurrentStockQuantity_KG = 1000
+
   }
 
 
   save() {
-    this.requestFile.Month = this.request.Month;
+    this.requestFile.periodId = this.request.PeriodId;
     this.requestFile.FactoryId = this.factoryId;
 
     this.service
@@ -256,13 +259,12 @@ row.CurrentStockQuantity_KG=row.CurrentStockQuantity*row.AverageWeightKG ;
   saveItems() {
     this.x.forEach((item: any) => {
       item.IncreasedUsageReason = this.request.IncreasedUsageReason;
-      item.Month = this.request.Month;
+      item.periodId = this.request.PeriodId;
       this.service
         .create(item)
         .subscribe((res: any) => {
 
           console.log(item)
-          console.log(this.request.Month)
         });
     })
     this.toastr.success("تم الحفظ");
