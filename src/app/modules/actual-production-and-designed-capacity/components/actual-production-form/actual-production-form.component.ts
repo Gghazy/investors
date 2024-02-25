@@ -15,7 +15,7 @@ export class ActualProductionFormComponent implements OnInit {
 @Input()factoryId!:number;
 @Input()productId!:number;
 @Input()actualCapacityProductId!:number|undefined;
-@Input()monthId!:number;
+@Input()periodId!:number;
 request=new ActualProductModel();
 units:LookUpModel[]=[];
 @Output()close=new EventEmitter<boolean>();
@@ -51,7 +51,7 @@ constructor(
   save(){
     
     this.request.ProductId=this.productId;
-    this.request.MonthId=this.monthId;
+    this.request.PeriodId=this.periodId;
     if (this.actualCapacityProductId==0){
       this.actualProductionAndDesignedCapacityService
       .create(this.request)

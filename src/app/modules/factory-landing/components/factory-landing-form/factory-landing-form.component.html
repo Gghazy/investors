@@ -62,7 +62,10 @@
                                 </g>
                             </g>
                         </svg>
-                        <span> البيانات المالية</span>
+                        <span> 
+                            البيانات المالية
+                            <span class="custom-badge">سنوى</span>
+                        </span>
                     </a>
                     <span class="completed"  placement="bottom" title=""
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
@@ -379,7 +382,7 @@
 
                 </li>
                 <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0" class="col-12 col-lg-4 col-md-6 col-sm-12">
-                    <a [routerLink]="'/pages/actual-production-and-designed-capacity/'+factoryId">
+                    <a [routerLink]="'/pages/actual-production-and-designed-capacity/'+factoryId+'/'+periodId">
                         <svg fill="#000000" width="64px" height="64px" viewBox="0 0 256 256" id="Flat"
                             xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -391,8 +394,9 @@
                                 </path>
                             </g>
                         </svg>
-                        <span> بيانات كمية الإنتاج الفعلي والطاقة التصميمية <span
-                                class="custom-badge">شهري</span> </span>
+                        <span> بيانات كمية الإنتاج الفعلي والطاقة التصميمية </span>
+
+                        
                     </a>
                     <span class="uncompleted-warning"  placement="bottom"
                         title="" tooltip=" لم يتم إدخال البيانات وتحديثها">
@@ -413,6 +417,7 @@
                                 </g>
                             </g>
                         </svg>
+               
                     </span>
                 </li>
                 <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0" class="col-12 col-lg-4 col-md-6 col-sm-12">
@@ -527,7 +532,7 @@
                                 </g>
                             </g>
                         </svg>
-                        <span> بيانات المواد الأولية الفعلية <span class="custom-badge">شهري</span></span>
+                        <span> بيانات المواد الأولية الفعلية</span>
                     </a>
                     <span class="uncompleted-warning"  placement="bottom"
                         title="" tooltip=" لم يتم إدخال البيانات وتحديثها">

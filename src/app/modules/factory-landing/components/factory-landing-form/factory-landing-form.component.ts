@@ -24,6 +24,7 @@ export class FactoryLandingFormComponent implements OnInit {
     public sharedService: SharedService){
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    debugger
     
   }
 

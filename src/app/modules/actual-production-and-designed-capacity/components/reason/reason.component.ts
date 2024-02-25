@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ReasonComponent implements OnInit, OnChanges {
 
-  @Input() monthId!: number;
+  @Input() periodId!: number;
   @Input() factoryId!: number;
   reasonses: LookUpModel[] = [];
   request = new ReasonModel();
@@ -45,7 +45,7 @@ export class ReasonComponent implements OnInit, OnChanges {
 
   getOne() {
     this.reasonService
-      .getOne(this.monthId,this.factoryId)
+      .getOne(this.periodId,this.factoryId)
       .subscribe((res: any) => {
         
         this.request = res.Data;
@@ -54,7 +54,7 @@ export class ReasonComponent implements OnInit, OnChanges {
 
   save() {
     
-    this.request.MonthId=this.monthId;
+    this.request.PeriodId=this.periodId;
     this.request.FactoryId=this.factoryId;
     if (this.request.Id == 0 || this.request.Id ==undefined) {
       this.reasonService

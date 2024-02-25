@@ -8,7 +8,7 @@ const routes: Routes = [
   component: ModulesComponent,
   children:[
     {
-      path: 'actual-production-and-designed-capacity/:id',
+      path: 'actual-production-and-designed-capacity/:id/:periodid',
       loadChildren: () =>
         import('../modules/actual-production-and-designed-capacity/actual-production-and-designed-capacity.module').then((m) => m.ActualProductionAndDesignedCapacityModule)
     },

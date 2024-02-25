@@ -2,31 +2,13 @@
     <div class="form-header">
         <h2 class="form-title">بيانات كمية الإنتاج الفعلي والطاقة التصميمية  <span class="custom-badge">شهري</span></h2>
         <div>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId" class="back-link">
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
             </a>
         </div>
     </div>
     <div class="form-body">
-         
-        <div class="col-md-4 mb-4">
-            <label class="form-label">إدخال التفاصيل التالية عن الإنتاج الفعلي ,  والطاقة التصميمة لشهر</label>
-            <select class="form-select" (change)="changeMonth()" [(ngModel)]="search.MonthId">
-                <option [ngValue]="0" selected>يناير</option>
-                <option [ngValue]="1" selected>فبراير</option>
-                <option [ngValue]="2" selected>مارس</option>
-                <option [ngValue]="3" selected>ابرايل</option>
-                <option [ngValue]="4" selected>مايو</option>
-                <option [ngValue]="5" selected>يونيو</option>
-                <option [ngValue]="6" selected>يوليو</option>
-                <option [ngValue]="7" selected>اغسطس</option>
-                <option [ngValue]="8" selected>سبتمر</option>
-                <option [ngValue]="9" selected>اكتوبر</option>
-                <option [ngValue]="10" selected>نوفمبر</option>
-                <option [ngValue]="11" selected>ديسمبر</option>
-            </select>
-        </div>
         <app-list>
             <ng-template #header>
                 <th>#</th> 
@@ -67,7 +49,7 @@
         </app-list>
         <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
        
-        <app-reason [monthId]="search.MonthId" [factoryId]="factoryId"></app-reason>
+        <app-reason [periodId]="periodId" [factoryId]="factoryId"></app-reason>
         <app-actual-production-file *ngIf="factoryId"  [factoryId]="factoryId"></app-actual-production-file>      
 
     </div>
@@ -103,7 +85,7 @@ aria-hidden="true"
        [productId]="productId" 
        [actualCapacityProductId]="actualCapacityProductId"
        [factoryId]="factoryId" 
-       [monthId]="search.MonthId" 
+       [periodId]="periodId" 
        (close)="closePopUp()"
        ></app-actual-production-form>
     </div>

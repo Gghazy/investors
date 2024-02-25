@@ -10,7 +10,7 @@ export class ActualProductModel {
     ActualProductionUintId!:number;
     ActualProductionUintName!:string;
     ActualProductionWeight!:number;
-    MonthId!: number;
+    PeriodId!: number;
     ReasoneForIncreaseCapacity!:number;
     Kilograms_Per_Unit!:number;
 }
