@@ -40,7 +40,7 @@ const routes: Routes = [
         import('../modules/factory/factory.module').then((m) => m.FactoryModule)
     },
     {
-      path: 'factory-contacts/:id',
+      path: 'factory-contacts/:id/:periodid',
       loadChildren: () =>
         import('../modules/factory-contacts/factory-contacts.module').then((m) => m.FactoryContactsModule)
     },
@@ -50,7 +50,7 @@ const routes: Routes = [
         import('../modules/factory-landing/factory-landing.module').then((m) => m.FactoryLandingModule)
     },
     {
-      path: 'factory-location/:id',
+      path: 'factory-location/:id/:periodid',
       loadChildren: () =>
         import('../modules/factory-location/factory-location.module').then((m) => m.FactoryLocationModule)
     },

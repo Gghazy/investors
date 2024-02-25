@@ -17,6 +17,7 @@ import { LookUpModel } from 'src/app/core/models/look-up-model';
 })
 export class FactoryLocationFormComponent {
   factoryId: any;
+  periodId: any;
   request = new LocationModel();
   cities:LookUpModel[]=[];
   industrialAreas:LookUpModel[]=[];
@@ -30,6 +31,7 @@ export class FactoryLocationFormComponent {
      private router: Router,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
     this.getLocation();
@@ -40,7 +42,7 @@ export class FactoryLocationFormComponent {
 
   getLocation() {
     this.factoryLocationService
-      .getOne(this.factoryId)
+      .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.request = res.Data;
       });
@@ -73,6 +75,7 @@ export class FactoryLocationFormComponent {
 
   save(){
     this.request.FactoryId=this.factoryId;
+    this.request.PeriodId=this.factoryId;
     if (this.request.Id==0){
       this.factoryLocationService
       .create(this.request)

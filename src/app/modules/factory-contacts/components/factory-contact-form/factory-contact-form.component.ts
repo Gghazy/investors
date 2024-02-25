@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 export class FactoryContactFormComponent implements OnInit {
 
   factoryId: any;
+  periodId: any;
   request : any;
   separateDialCode = false;
   SearchCountryField = SearchCountryField;
@@ -33,6 +34,7 @@ export class FactoryContactFormComponent implements OnInit {
     FinanceManagerEmail: new FormControl(undefined, [Validators.required]),
     Id: new FormControl(0, [Validators.required]),
     FactoryId: new FormControl(undefined, [Validators.required]),
+    PeriodId: new FormControl(undefined, [Validators.required]),
 
   });
 
@@ -43,6 +45,7 @@ export class FactoryContactFormComponent implements OnInit {
     private router: Router,
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
 
   }
   ngOnInit(): void {
@@ -51,7 +54,7 @@ export class FactoryContactFormComponent implements OnInit {
 
   getContact() {
     this.factoryContactService
-      .getOne(this.factoryId)
+      .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.request = res.Data;
         this.phoneForm.setValue(res.Data);
@@ -64,6 +67,7 @@ export class FactoryContactFormComponent implements OnInit {
   save() {
     this.request= this.phoneForm.value 
     this.request.FactoryId = this.factoryId;
+    this.request.PeriodId = this.periodId;
     if (this.request.Id == 0) {
       this.factoryContactService
         .create(this.request)
