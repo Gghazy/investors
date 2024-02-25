@@ -1,7 +1,7 @@
 export class ActualRawMaterial {
 
     Id !:number;
-    Month !:number;
+    PeriodId!:number;
     RawMaterialId !:number;
     StockUnitId !:number;
     UsageUnitId !:number;

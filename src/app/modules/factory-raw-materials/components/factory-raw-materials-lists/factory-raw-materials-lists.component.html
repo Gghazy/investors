@@ -37,7 +37,7 @@
                             <i>؟</i>
                         </label>
 
-                        <input type="text" class="form-control" value="{{material.CustomItemName}}" disabled>
+                        <input type="text" class="form-control"  [(ngModel)]="material.CustomItemName" >
 
                     </div> 
                     <div class="col-md-3">
@@ -68,7 +68,7 @@
                             <i>؟</i>
                         </label>
                         <div class="input-group">
-                            <input type="number" class="form-control" value="{{material.AverageWeightKG}}" disabled="">
+                            <input type="number" class="form-control" [(ngModel)]="material.AverageWeightKG">
                             <input type="text" class="form-control px-1 text-center" value="كغ" disabled=""
                                 style="max-width: 40px;">
                         </div>
@@ -196,7 +196,7 @@
                             <i>؟</i>
                         </label>
 
-                        <textarea class="form-control" rows="2">{{material.Description}}</textarea>
+                        <textarea class="form-control" rows="2" [(ngModel)]="material.Description"></textarea>
 
                     </div>
 

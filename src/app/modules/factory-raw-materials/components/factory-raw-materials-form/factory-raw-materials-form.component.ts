@@ -21,6 +21,7 @@ import { LookUpModel } from 'src/app/core/models/look-up-model';
 })
 export class FactoryRawMaterialsFormComponent implements OnInit {
   @Input() factoryId!:number;  
+  @Input() periodId!:number;  
   @Output()close=new EventEmitter<boolean>();
  
   products  !: ProductModel[];
@@ -111,13 +112,13 @@ this.getUnits();
   }
 
   onUnitSelect(event: Event) {
-    let selectedValue: any = (event.target as HTMLSelectElement).value;
-    if (selectedValue == "1") {
-      this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption *1000
-    }
-    if (selectedValue == "3") {
-      this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption /1000
-    }
+    // let selectedValue: any = (event.target as HTMLSelectElement).value;
+    // if (selectedValue == "1") {
+    //   this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption *1000
+    // }
+    // if (selectedValue == "3") {
+    //   this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption /1000
+    // }
   }
   getUnits(){
     this.lookUpService
@@ -155,7 +156,7 @@ this.getUnits();
 
   save() {
     this.request.FactoryId = this.factoryId;
-    this.request.AttachmentId = 1;
+    this.request.PeriodId = this.periodId;
 
     console.log(this.request)
     this.rawMaterialService
