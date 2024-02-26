@@ -1,0 +1,38 @@
+<div class="form-panel">
+    <div class="form-header">
+        <h2 class="form-title">الفترات</h2>
+    </div>
+    <div class="form-body row">
+        <app-list>
+            <ng-template #header>
+                <th>#</th>
+                <th> اسم الفترة </th>
+                <th>  تاريخ البدء </th>
+                <th> تاريخ الانتهاء</th>                                            
+                <th style="min-width: 140px">خيارات</th>
+            </ng-template>
+            <ng-template #body>
+              <tr *ngFor="let period of periods.Items let i=index">
+                <td>{{i+1}}</td>
+                <td>  {{period.PeriodName}}</td>
+                <td>  {{period.PeriodStartDate}}</td>
+                <td>{{period.PeriodEndDate}}</td>
+                <td>
+                    <a (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                        عرض
+        
+                    </a>
+                </td>
+
+              </tr>
+            </ng-template>
+          </app-list>
+        <app-pagination (changePage)="pageChanged($event)" [pageSize]="periods.PageSize"
+        [pageNumber]="periods.PageNumber" [totalCount]="periods.TotalCount"></app-pagination>
+    </div>
+
+
+</div>
+
+
+

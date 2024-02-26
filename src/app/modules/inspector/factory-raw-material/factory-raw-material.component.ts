@@ -86,7 +86,7 @@ export class FactoryRawMaterialComponent {
     this.rawMaterialService
       .getRawMaterial(this.search, this.factoryId)
       .subscribe((res: any) => {
-        debugger;
+        ;
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
         console.log(this.rawMaterials.length)

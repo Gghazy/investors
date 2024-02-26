@@ -13,6 +13,7 @@ export class FinancialModel {
     CurrentLiabilities !:number;
     NonCurrentLiabilities !:number;
     FactoryId !:number;
+    Year !:number;
 }
 
 

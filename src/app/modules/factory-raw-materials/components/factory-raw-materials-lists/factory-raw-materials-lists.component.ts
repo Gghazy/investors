@@ -106,8 +106,11 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     this.rawMaterialService
       .getCustomItemRawMaterial()
       .subscribe((res: any) => {
+        ;
+        this.rawMaterials = res.Data.Items;
+        this.materials = res.Data;
+        this.ss = res.Data;
         this.rawMaterials = res.Data;
-        console.log(this.rawMaterials)
       })
     //   .getByPeriod(this.factoryId,this.periodId)
     //   .subscribe((res: any) => {
