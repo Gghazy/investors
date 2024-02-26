@@ -20,7 +20,7 @@ import { LookUpService } from 'src/app/core/service/look-up.service';
 export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   factoryId: any;
-  periodId: any;
+  // periodId: any;
   materialCount: any;
   materials = new ResultResponse<RawMaterial>();
   rawMaterials: any = [];
@@ -42,7 +42,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     private toastr: ToastrService,
     private route: ActivatedRoute) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodId');
+   
   }
 
   ngOnInit() {
@@ -104,29 +104,29 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   getRawMaterial() {
 
     this.rawMaterialService
-      .getCustomItemRawMaterial()
+      // .getCustomItemRawMaterial()
+      // .subscribe((res: any) => {
+      //   ;
+      //   this.rawMaterials = res.Data.Items;
+      //   this.materials = res.Data;
+      //   this.ss = res.Data;
+      //   this.rawMaterials = res.Data;
+      // })
+      .getRawMaterial(this.search,this.factoryId)
       .subscribe((res: any) => {
-        ;
+        debugger;
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
         this.ss = res.Data;
-        this.rawMaterials = res.Data;
-      })
-    //   .getByPeriod(this.factoryId,this.periodId)
-    //   .subscribe((res: any) => {
-    //     debugger;
-    //     this.rawMaterials = res.Data.Items;
-    //     this.materials = res.Data;
-    //     this.ss = res.Data;
-    //     console.log(this.rawMaterials.length)
-    //     console.log(this.rawMaterials)
-    //     this.materialCount = this.rawMaterials.length;
+        console.log(this.rawMaterials.length)
+        console.log(this.rawMaterials)
+        this.materialCount = this.rawMaterials.length;
 
-    //     this.ss.forEach((element: any) => {
-    //       this.ProductNameList.push(element)
-    //       console.log(this.ProductNameList)
-    //     });
-    //   });
+        this.ss.forEach((element: any) => {
+          this.ProductNameList.push(element)
+          console.log(this.ProductNameList)
+        });
+      });
 
 
 
@@ -212,7 +212,6 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
     console.log(this.request)
     this.request.FactoryId = this.factoryId;
-    this.request.PeriodId = this.periodId;
 
 
    

@@ -118,7 +118,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
 
     this.service
-      .getByPeriod(this.factoryId, this.periodId)
+    .getRawMaterial(this.search, this.factoryId)
       .subscribe((res: any) => {
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
@@ -129,7 +129,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
             'CurrentStockQuantity_KG': 0,
             'UsedQuantity_KG': 0,
             'AttachmentId': 1,
-            ' PeriodId': this.periodId,
+          
             'UsedQuantity': 0,
             'CurrentStockQuantity': 0,
             'StockUnitId': 0,
