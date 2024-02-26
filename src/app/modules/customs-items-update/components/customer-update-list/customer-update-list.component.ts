@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class CustomerUpdateListComponent implements OnInit {
 
   factoryId:any;
+  periodId:any;
   search=new ProductSearch(); 
   products = new ResultResponse<ProductModel>();
   productName!:string;
@@ -20,6 +21,7 @@ export class CustomerUpdateListComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef
   constructor(private route: ActivatedRoute,private customsItemsUpdateService:CustomsItemsUpdateService){
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
   }  
   ngOnInit() {
     this.getProducts()

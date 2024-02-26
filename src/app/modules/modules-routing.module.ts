@@ -23,12 +23,12 @@ const routes: Routes = [
         import('../modules/basic-info/basic-info.module').then((m) => m.BasicInfoModule)
     },
     {
-      path: 'customs-items-check/:id',
+      path: 'customs-items-check/:id/:periodid',
       loadChildren: () =>
         import('../modules/customs-items-check/customs-items-check.module').then((m) => m.CustomsItemsCheckModule)
     },
     {
-      path: 'customs-items-update/:id',
+      path: 'customs-items-update/:id/:periodid',
       loadChildren: () =>
         import('../modules/customs-items-update/customs-items-update.module').then((m) => m.CustomsItemsUpdateModule)
     },
@@ -55,7 +55,7 @@ const routes: Routes = [
         import('../modules/factory-location/factory-location.module').then((m) => m.FactoryLocationModule)
     },
     {
-      path: 'factory-products/:id',
+      path: 'factory-products/:id/:periodid',
       loadChildren: () =>
         import('../modules/factory-products/factory-products.module').then((m) => m.FactoryProductsModule)
     },

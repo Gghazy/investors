@@ -6,41 +6,47 @@
     <strong><span class="d-block mb-2">الرجاء إرفاق المستندات الداعمة التالية:</span></strong>
     <ul>
         <li>
-            صورة واجهة المصنع
+            صورة واجهة المصنع <small class="text-danger mx-1">(الزامي)</small>
         </li>       
     </ul>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-
+<form #myForm="ngForm" (ngSubmit)="save()">
 
 <div class="row">
 
 
     
 <div class="col-md-6">
-    <label class="form-label"> اسم المستند</label>
-    <input  type="text" name="Name" class="form-control"  [(ngModel)]="request.Name">
+    <label class="form-label"> اسم المستند<span class="required">*</span></label>
+    <input  type="text" name="Name" #Name="ngModel" required class="form-control"  [(ngModel)]="request.Name">
+    <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="validation-error">
+        <div *ngIf="Name.errors?.['required']">حقل اسم المستند مطلوب</div>
+    </div>
 
 </div>
 
+
 <div class="col-md-6">
-    <label class="form-label" > نوع المستند</label>
-    <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select"  >
+    <label class="form-label" > نوع المستند <span class="required">*</span></label>
+    <select name="Type" #Type="ngModel" required  id="Type" [(ngModel)]="request.Type" class="form-select"  >
         <option [ngValue]="0" selected>صورة واجهة المصنع</option>
-        <!-- <option [ngValue]="1">صورة توضح حالة المصنع</option> -->
     </select>
+    <div *ngIf="Type.invalid && (Type.dirty || Type.touched)" class="validation-error">
+        <div *ngIf="Type.errors?.['required']">حقل نوع المستند مطلوب</div>
+    </div>
 </div>
 
 <div class="col-md-6">
-    <label class="form-label">رفع المستند    </label>
+    <label class="form-label">رفع المستند <span class="required">*</span>   </label>
     <div class="input-group">
-        <input type="file" accept="image/*" class="form-control" placeholder="" value="" (change)="saveFile($event)">
-        <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+        <input type="file"   accept="image/*" class="form-control" placeholder="" value="" (change)="saveFile($event)">
+        <button class="btn btn-primary" type="submit">اضافة </button>
     </div>
 </div>
 </div>
-
+</form>
 
 <app-list>
     <ng-template #header>

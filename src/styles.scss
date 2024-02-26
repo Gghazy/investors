@@ -3924,3 +3924,8 @@ border-width: 5px 5px 0 5px !important;
   color: red;
   font-size: 12px;
 }
+
+.required {
+  color: red;
+  margin-left: 5px; /* Add space between label and asterisk */
+}

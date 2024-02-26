@@ -22,12 +22,12 @@
 
     
     <div class="col-md-6">
-        <label class="form-label"> اسم المستند</label>
+        <label class="form-label"> اسم المستند<span class="required">*</span></label>
         <input  type="text" name="Name" class="form-control"  [(ngModel)]="request.Name">
     </div>
     
     <div class="col-md-6">
-        <label class="form-label" > نوع المستند</label>
+        <label class="form-label" > نوع المستند <span class="required">*</span></label>
         <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select">
             <option [ngValue]="0">الإقرار الزكوي </option>
             <option [ngValue]="1">القوائم المالية</option>
@@ -35,7 +35,7 @@
     </div>
     
     <div class="col-md-6">
-        <label class="form-label">رفع المستند    </label>
+        <label class="form-label">رفع المستند <span class="required">*</span>   </label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="saveFile($event)">
             <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>

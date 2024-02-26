@@ -17,6 +17,7 @@ export class ProductFormComponent implements OnInit {
 @Output()close=new EventEmitter<boolean>();
 request=new ProductModel();
 units!:LookUpModel[];
+isDisabled!:boolean;
 
 constructor(
   private factoryProductService:FactoryProductService,
@@ -66,6 +67,23 @@ savePhoto(file:any){
       .subscribe((res: any) => {
         this.request.PhotoId = res.Data.Id
       });
+  }
+}
+unitChange()
+{
+  const selectedOption = this.units.find(option => option.Id === this.request.UnitId);
+  if(selectedOption?.Name=='كيلو غرام')
+  {
+    this.request.Kilograms_Per_Unit=1;
+    this.isDisabled=true;
+  }
+  else if(selectedOption?.Name=='طن بريطاني'){
+    this.request.Kilograms_Per_Unit=1000;
+    this.isDisabled=true;
+  }
+  else{
+    this.isDisabled=false;
+
   }
 }
 save(){

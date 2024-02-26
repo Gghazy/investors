@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
 import { FactoryService } from 'src/app/modules/factory/factory.service';
+import { PeriodService } from 'src/app/modules/period/period.service';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { SharedService } from 'src/app/shared/services/shared.service';
 
@@ -17,11 +18,16 @@ export class FactoryLandingFormComponent implements OnInit {
 
   factoryId:any;
   periodId:any;
+  factoryName!:string;
+  periodStartDate!:string;
+  periodEndDate!:string;
 
   constructor(
     private route: ActivatedRoute,
     private basicInfoService: BasicInfoService,
-    public sharedService: SharedService){
+    private periodService: PeriodService,
+    public sharedService: SharedService,
+    ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
     debugger
@@ -30,14 +36,24 @@ export class FactoryLandingFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBasicInfo()
+    this.getPeriod()
   }
 
 
   getBasicInfo() {
     this.basicInfoService
-      .getOne(this.factoryId)
+      .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.sharedService.factoryStatus = res.Data.Status;
+        this.factoryName=res.Data.NameAr
+      });
+  }
+  getPeriod() {
+    this.periodService
+      .getOne(this.periodId)
+      .subscribe((res: any) => {
+        this.periodStartDate=res.Data.PeriodStartDate
+        this.periodEndDate=res.Data.PeriodEndDate
       });
   }
 }

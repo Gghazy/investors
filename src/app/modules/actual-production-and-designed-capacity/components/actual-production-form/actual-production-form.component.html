@@ -3,12 +3,12 @@
        
         <div class="row">
             <div class="col-md-9 p-0">
-                <label class="form-label">الطاقة التصميمة(القصوى)​</label>
+                <label class="form-label">الطاقة التصميمة(القصوى)​<span class="required">*</span></label>
                 <input type="number" name="DesignedCapacity" class="form-control"
                     [(ngModel)]="request.DesignedCapacity">
             </div>
             <div class="col-md-3 p-0">
-                <label class="form-label">وحدة القياس </label>
+                <label class="form-label">وحدة القياس <span class="required">*</span></label>
                 <select name="" id="DesignedCapacityUnit" class="form-select"[(ngModel)]="request.DesignedCapacityUnitId">
                     <option *ngFor="let unit of units"  [ngValue]="unit.Id">{{unit.Name}}</option>
                 </select>
@@ -20,13 +20,13 @@
      
         <div class="row">
             <div class="col-md-9 p-0">
-                <label class="form-label">الإنتاج الفعلي​</label>
+                <label class="form-label">الإنتاج الفعلي​<span class="required">*</span></label>
                 <input type="number" name="ActualProduction" class="form-control"
                     [(ngModel)]="request.ActualProduction">
             </div>
           
             <div class="col-md-3 p-0">
-                <label class="form-label">وحدة القياس </label>
+                <label class="form-label">وحدة القياس <span class="required">*</span></label>
                 <select name="ActualProductionUint" id="" class="form-select" [(ngModel)]="request.ActualProductionUintId">
                     <option *ngFor="let unit of units"  [ngValue]="unit.Id">{{unit.Name}}</option>
                 </select>

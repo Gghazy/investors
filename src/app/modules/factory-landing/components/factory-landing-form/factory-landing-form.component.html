@@ -1,6 +1,13 @@
 <section class="form-panel">
     <div class="form-header">
-        <h2 class="form-title"> بيانات المصنع </h2>
+        <h2 class="form-title"> 
+            بيانات المصنع 
+
+           ({{factoryName}})
+        </h2>
+        <h6>
+            ({{periodStartDate}}) - ({{periodEndDate}})
+        </h6>
         <div>
             <a  class="back-link"
             [routerLink]="'/pages/period/'+factoryId"
@@ -163,7 +170,7 @@
                 </li>
 
                 <li *ngIf="sharedService.factoryStatus==2 || sharedService.factoryStatus==0 || sharedService.factoryStatus==3"  class="col-12  col-lg-4 col-md-6 col-sm-12">
-                    <a [routerLink]="'/pages/customs-items-update/'+factoryId">
+                    <a  [routerLink]="'/pages/customs-items-update/'+factoryId+'/'+periodId">
                         <svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px"
                             viewBox="0 0 32 32" xml:space="preserve" fill="#000000">
@@ -188,7 +195,7 @@
                 </li>
 
                 <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0|| sharedService.factoryStatus==3" class="col-12  col-lg-4 col-md-6 col-sm-12">
-                    <a [routerLink]="'/pages/customs-items-check/'+factoryId">
+                    <a  [routerLink]="'/pages/customs-items-check/'+factoryId+'/'+periodId">
                         <svg width="64px" height="64px" viewBox="0 0 1024 1024" class="icon" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" fill="#000000">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -210,7 +217,7 @@
                 </li>
 
                 <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0|| sharedService.factoryStatus==3" class="col-12  col-lg-4 col-md-6 col-sm-12">
-                    <a [routerLink]="'/pages/factory-products/'+factoryId">
+                    <a [routerLink]="'/pages/factory-products/'+factoryId+'/'+periodId">
                         <svg fill="#000000" viewBox="0 0 60 60" id="Capa_1" version="1.1"
                             xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">

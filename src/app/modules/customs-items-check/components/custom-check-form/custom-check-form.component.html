@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-md-6">
-        <label for="" class="form-label"> التصنيف الجمركي على مستوى 10  لمنتجك</label>
+        <label for="" class="form-label"> التصنيف الجمركي على مستوى 10  لمنتجك <span class="required">*</span></label>
         <input type="text" class="form-control" disabled [value]="parentName+'(رقم البند الجمركي على مستوى 10 )'">
     </div>
     <div class="col-md-6">
-        <label for="" class="form-label">اختر التصنيف الجمركي على مستوى 12 المناسب لمنتجك</label>
+        <label for="" class="form-label">اختر التصنيف الجمركي على مستوى 12 المناسب لمنتجك <span class="required">*</span></label>
         <select class="form-select" [(ngModel)]="productId"
         >
             <option *ngFor="let product of Level12Product" [ngValue]="product.Id">{{product.ProductName}}(رقم البند الجمركي على مستوى 12 )</option>            
