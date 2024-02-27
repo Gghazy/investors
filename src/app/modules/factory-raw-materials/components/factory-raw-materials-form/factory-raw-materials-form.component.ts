@@ -25,7 +25,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   @Output()close=new EventEmitter<boolean>();
  
   products  !: ProductModel[];
- 
+  showInput: boolean=true
   units!:LookUpModel[];
   request = new RawMaterial();
   search=new RawMaterialSearch(); 
@@ -67,6 +67,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   ngOnInit() {
    
+  
     // this.dropdownList = [
     //   { item_id: 4990, item_text: ' المنتج 1 ' },
     //   { item_id: 2, item_text: ' المنتج 2 ' },
@@ -112,13 +113,29 @@ this.getUnits();
   }
 
   onUnitSelect(event: Event) {
-    // let selectedValue: any = (event.target as HTMLSelectElement).value;
-    // if (selectedValue == "1") {
-    //   this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption *1000
-    // }
-    // if (selectedValue == "3") {
-    //   this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption /1000
-    // }
+
+  
+    let selectedValue: any = (event.target as HTMLSelectElement).value;
+    if (selectedValue!="11" || selectedValue!="15")     {      
+      this.showInput= true
+       console.log(this.showInput)
+      }
+     if (selectedValue=="11")     {      
+     this.showInput= false
+      this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption
+      console.log(this.showInput)
+     }
+     if (selectedValue=="15")     {      
+      this.showInput= true
+       this.request.AverageWeightKG =  1000
+       console.log(this.showInput)
+      }
+     
+    // if (selectedValue='15')     {      
+    //   this.showInput= false
+    //     this.request.AverageWeightKG =  1000
+    //   }
+    //  this.showInput=false
   }
   getUnits(){
     this.lookUpService
