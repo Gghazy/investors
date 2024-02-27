@@ -60,7 +60,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     private toastr: ToastrService,
     private lookUpService: LookUpService, private fileService: FileService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodId');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
 
 

@@ -13,7 +13,7 @@ const routes: Routes = [
         import('../modules/actual-production-and-designed-capacity/actual-production-and-designed-capacity.module').then((m) => m.ActualProductionAndDesignedCapacityModule)
     },
     {
-      path: 'actual-raw-materials/:id',
+      path: 'actual-raw-materials/:id/:periodid',
       loadChildren: () =>
         import('../modules/actual-raw-materials/actual-raw-materials.module').then((m) => m.ActualRawMaterialsModule)
     },
@@ -60,7 +60,7 @@ const routes: Routes = [
         import('../modules/factory-products/factory-products.module').then((m) => m.FactoryProductsModule)
     },
     {
-      path: 'factory-raw-materials/:id',
+      path: 'factory-raw-materials/:id/:periodid',
       loadChildren: () =>
         import('../modules/factory-raw-materials/factory-raw-materials.module').then((m) => m.FactoryRawMaterialsModule)
     },

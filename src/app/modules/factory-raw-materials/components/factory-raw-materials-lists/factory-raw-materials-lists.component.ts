@@ -20,6 +20,7 @@ import { LookUpService } from 'src/app/core/service/look-up.service';
 export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   factoryId: any;
+  periodId: any;
   // periodId: any;
   materialCount: any;
   materials = new ResultResponse<RawMaterial>();
@@ -42,6 +43,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     private toastr: ToastrService,
     private route: ActivatedRoute) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
    
   }
 
