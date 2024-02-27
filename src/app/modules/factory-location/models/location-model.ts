@@ -4,6 +4,7 @@ export class LocationModel {
     CityId  !:number;
     IndustrialAreaId  !:number;
     FactoryId  !:number;
+    PeriodId  !:number;
     WebSite!:string;
 }
 

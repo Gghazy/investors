@@ -1,39 +1,39 @@
 <div class="row">
     <div class="col-md-6" *ngIf="productId==0">
-        <label class="form-label"> اسم المنتج </label>
+        <label class="form-label"> اسم المنتج <span class="required">*</span></label>
         <input  type="text" name="ProductName" class="form-control"  [(ngModel)]="request.ProductName">
 
       </div>
       <div class="col-md-6" *ngIf="productId==0">
-        <label class="form-label"> رقم البند الجمركي على مستوى 12 </label>
+        <label class="form-label"> رقم البند الجمركي على مستوى 12 <span class="required">*</span></label>
         <input  type="text" name="CommericalName" class="form-control"  [(ngModel)]="request.Level12Number">
 
       </div>
 
     
     <div class="col-md-6">
-        <label class="form-label"> 	اسم المنتج التجاري</label>
+        <label class="form-label"> 	اسم المنتج التجاري <span class="required">*</span></label>
         <input  type="text" name="CommericalName" class="form-control"  [(ngModel)]="request.CommericalName">
     </div>
     
     <div class="col-md-6">
-        <label class="form-label" >وحدة القياس </label>
-        <select name="Type" id="UnitId" [(ngModel)]="request.UnitId" class="form-select">
+        <label class="form-label" >وحدة القياس <span class="required">*</span></label>
+        <select name="Type" id="UnitId" [(ngModel)]="request.UnitId" (change)="unitChange()" class="form-select">
             <option *ngFor="let unit of units" [ngValue]="unit.Id">{{unit.Name}}</option>
         </select>
     </div>
     <div class="col-md-6">
-        <label class="form-label">الوزن المقابل​ بالكيلوغرام لكل وحدة​ </label>
-        <input  type="number" name="Kilograms_Per_Unit" class="form-control"  [(ngModel)]="request.Kilograms_Per_Unit">
+        <label class="form-label">الوزن المقابل​ بالكيلوغرام لكل وحدة​ <span class="required">*</span></label>
+        <input  type="number" [disabled]="isDisabled" name="Kilograms_Per_Unit" class="form-control"  [(ngModel)]="request.Kilograms_Per_Unit">
     </div>
     <div class="col-md-6">
-        <label class="form-label">صورة المنتج     </label>
+        <label class="form-label">صورة المنتج <span class="required">*</span></label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
         </div>
     </div>
     <div class="col-md-6">
-        <label class="form-label">ورقة البيانات    </label>
+        <label class="form-label">ورقة البيانات <span class="required">*</span></label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">
         </div>

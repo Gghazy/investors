@@ -8,7 +8,7 @@ const routes: Routes = [
   component: ModulesComponent,
   children:[
     {
-      path: 'actual-production-and-designed-capacity/:id',
+      path: 'actual-production-and-designed-capacity/:id/:periodid',
       loadChildren: () =>
         import('../modules/actual-production-and-designed-capacity/actual-production-and-designed-capacity.module').then((m) => m.ActualProductionAndDesignedCapacityModule)
     },
@@ -23,12 +23,12 @@ const routes: Routes = [
         import('../modules/basic-info/basic-info.module').then((m) => m.BasicInfoModule)
     },
     {
-      path: 'customs-items-check/:id',
+      path: 'customs-items-check/:id/:periodid',
       loadChildren: () =>
         import('../modules/customs-items-check/customs-items-check.module').then((m) => m.CustomsItemsCheckModule)
     },
     {
-      path: 'customs-items-update/:id',
+      path: 'customs-items-update/:id/:periodid',
       loadChildren: () =>
         import('../modules/customs-items-update/customs-items-update.module').then((m) => m.CustomsItemsUpdateModule)
     },
@@ -40,7 +40,7 @@ const routes: Routes = [
         import('../modules/factory/factory.module').then((m) => m.FactoryModule)
     },
     {
-      path: 'factory-contacts/:id',
+      path: 'factory-contacts/:id/:periodid',
       loadChildren: () =>
         import('../modules/factory-contacts/factory-contacts.module').then((m) => m.FactoryContactsModule)
     },
@@ -50,12 +50,12 @@ const routes: Routes = [
         import('../modules/factory-landing/factory-landing.module').then((m) => m.FactoryLandingModule)
     },
     {
-      path: 'factory-location/:id',
+      path: 'factory-location/:id/:periodid',
       loadChildren: () =>
         import('../modules/factory-location/factory-location.module').then((m) => m.FactoryLocationModule)
     },
     {
-      path: 'factory-products/:id',
+      path: 'factory-products/:id/:periodid',
       loadChildren: () =>
         import('../modules/factory-products/factory-products.module').then((m) => m.FactoryProductsModule)
     },

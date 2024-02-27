@@ -1,4 +1,3 @@
-
 <div class="col-md-12 mt-3">
     <h3> إرفاق المستندات الداعمة </h3>
 </div>
@@ -8,64 +7,71 @@
     <ul>
         <!-- <li>العنوان الوطني للمصنع</li> -->
 
-        <li> صورة مدخل المصنع </li>
+        <li> صورة مدخل المصنع <small class="text-danger mx-1">(الزامي)</small></li>
 
         <!-- <li>   فاتورة الماء أو الكهرباء </li> -->
 
     </ul>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div> 
+</div>
 
-<div class="row">
+<div class="row"> 
 
 
-    
     <div class="col-md-6">
-        <label class="form-label"> اسم المستند</label>
-        <input  type="text" name="Name" class="form-control"  [(ngModel)]="request.Name">
+        <label class="form-label"> اسم المستند<span class="required">*</span></label>
+        <input type="text" name="Name" #Name="ngModel" required class="form-control" [(ngModel)]="request.Name">
+        <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="validation-error">
+            <div *ngIf="Name.errors?.['required']">حقل اسم المستند مطلوب</div>
+        </div>
     </div>
-    
+
     <div class="col-md-6">
-        <label class="form-label" > اسم المستند</label>
-        <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select">
+        <label class="form-label"> نوع المستند <span class="required">*</span></label>
+        <select name="Type" #Type="ngModel" required id="Type" [(ngModel)]="request.Type" class="form-select">
             <option [ngValue]="1">صورة مدخل المصنع </option>
         </select>
+        <div *ngIf="Type.invalid && (Type.dirty || Type.touched)" class="validation-error">
+            <div *ngIf="Type.errors?.['required']">حقل نوع المستند مطلوب</div>
+        </div>
+
     </div>
-    
+
     <div class="col-md-6">
-        <label class="form-label">رفع المستند    </label>
+        <label class="form-label">رفع المستند <span class="required">*</span></label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="saveFile($event)">
             <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
         </div>
     </div>
-    </div>
-    
-    
-    <app-list>
-        <ng-template #header>
-            <th>#</th>
-            <th> اسم المستند </th>
-            <th> نوع المستند </th>
-            <th>امتداد المستند</th>                                            
-            <th style="min-width: 140px">خيارات</th>
-        </ng-template>
-        <ng-template #body>
-          <tr *ngFor="let file of files let i=index">
+</div>
+
+
+<app-list>
+    <ng-template #header>
+        <th>#</th>
+        <th> اسم المستند </th>
+        <th> نوع المستند </th>
+        <th>امتداد المستند</th>
+        <th style="min-width: 140px">خيارات</th>
+    </ng-template>
+    <ng-template #body>
+        <tr *ngFor="let file of files let i=index">
             <td>{{i+1}}</td>
-            <td>  {{file.Name}}</td>
-            <td>  {{file.Type}}</td>
+            <td> {{file.Name}}</td>
+            <td> {{file.Type}}</td>
             <td>JPG</td>
             <td>
-                <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal"
+                    data-bs-target="#photoModal">
                     عرض
-    
+
                 </a>
                 <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
             </td>
-          </tr>
-        </ng-template>
-      </app-list>
+        </tr>
+    </ng-template>
+</app-list>
 
 
 <!-- Modal photos-->

@@ -12,6 +12,7 @@ import { ActualProductSearch } from '../../models/actual-product-search';
 })
 export class ActualProductionListComponent implements OnInit {
   factoryId:any;
+  periodId:any;
   products = new ResultResponse<ActualProductModel>();
   search=new ActualProductSearch();
   actualCapacityProductId!:number |undefined;
@@ -24,6 +25,7 @@ export class ActualProductionListComponent implements OnInit {
     private ActualProductionService: ActualProductionAndDesignedCapacityService,
     ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
     this.getLevel12Product();
@@ -31,6 +33,7 @@ export class ActualProductionListComponent implements OnInit {
 
   getLevel12Product(){
     this.search.FactoryId=this.factoryId;
+    this.search.PeriodId=this.periodId;
     this.ActualProductionService
     .getAllPagination(this.search)
     .subscribe((res: any) => {
@@ -43,11 +46,6 @@ export class ActualProductionListComponent implements OnInit {
 
   }
 
-  changeMonth(){
-    this.search.PageNumber=1;
-    this.getLevel12Product();
-
-  }
   edit(id: number,productId:number) {
     this.actualCapacityProductId = id;
     this.productId = productId;

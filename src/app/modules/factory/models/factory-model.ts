@@ -13,6 +13,8 @@ export class FactoryModel {
     LicenseNumber!:string;
     LicenseExpirDate!:string;
     Status!:number;
+    PeriodId!:number;
+    FactoryId!:number;
 }
 
 

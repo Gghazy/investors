@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProductListComponent implements OnInit {
   factoryId: any;
+  periodId: any;
   search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
   productId!: number |undefined;
@@ -26,6 +27,7 @@ export class ProductListComponent implements OnInit {
      private toastr: ToastrService
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
     this.getProducts();

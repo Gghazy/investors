@@ -11,9 +11,17 @@ export class BasicInfoService {
 
   constructor(private http: HttpClient) { }
 
-  getOne(id:number): Observable<any> {
-    return this.http.get<any>('Factories/'+id);
+  getOne(id:number,periodId:number): Observable<any> {
+    return this.http.get<any>(`Factories?factoryId=${id}&&periodId=${periodId}`);
+
   }
+  createBasicInfo(factory: FactoryModel): Observable<any> {
+    return this.http.post<any>('Factories', factory);
+  }
+  update(factory: FactoryModel): Observable<any> {
+    return this.http.put<any>('Factories', factory);
+  }
+
   getAll(factoryId:string): Observable<any> {
     return this.http.get<any>('FactoryFiles/'+factoryId);
   }
@@ -23,7 +31,5 @@ export class BasicInfoService {
   delete(id: number): Observable<any> {
     return this.http.delete<any>('FactoryFiles/' + id);
   }
-  update(factory: FactoryModel): Observable<any> {
-    return this.http.put<any>('Factories', factory);
-  }
+ 
 }

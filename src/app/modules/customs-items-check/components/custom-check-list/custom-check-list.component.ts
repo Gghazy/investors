@@ -12,6 +12,7 @@ import { CustomsItemsCheckService } from '../../customs-items-check.service';
 })
 export class CustomCheckListComponent {
   factoryId:any;
+  periodId:any;
   search=new ProductSearch(); 
   products = new ResultResponse<ProductModel>();
   parentName!:string;
@@ -21,6 +22,7 @@ export class CustomCheckListComponent {
 
   constructor(private route: ActivatedRoute,private customsItemsCheckService:CustomsItemsCheckService){
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
 
   ngOnInit() {

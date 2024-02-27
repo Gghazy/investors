@@ -28,7 +28,7 @@
                 
             </div>
             <div class="col-md-6">
-                <label class="form-label">حالة المصنع </label>
+                <label class="form-label">حالة المصنع <span class="required">*</span> </label>
                 <select (change)="changeStatus()" class="form-select" [(ngModel)]="request.Status">
                     <option [ngValue]="1">تحت التأسيس </option>
                     <option [ngValue]="2">تحت الإنشاء</option>

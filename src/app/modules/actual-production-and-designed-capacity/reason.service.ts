@@ -11,8 +11,8 @@ export class ReasonService {
 
   constructor(private http:HttpClient) { }
 
-  getOne(monthId:number,factoryId:number): Observable<any> {
-    return this.http.get<any>(`IncreaseActualProductions?id=${monthId}&&factoryId=${factoryId}`);
+  getOne(periodId:number,factoryId:number): Observable<any> {
+    return this.http.get<any>(`IncreaseActualProductions?periodId=${periodId}&&factoryId=${factoryId}`);
   }
   create(request: ReasonModel): Observable<any> {
     return this.http.post<any>('IncreaseActualProductions', request);

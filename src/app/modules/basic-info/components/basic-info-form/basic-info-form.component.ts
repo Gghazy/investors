@@ -35,17 +35,20 @@ export class BasicInfoFormComponent implements OnInit {
 
   getBasicInfo() {
     this.basicInfoService
-      .getOne(this.factoryId)
+      .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.request = res.Data;
       });
   }
 
-  save(){
-    this.basicInfoService
+
+  save() {
+    this.request.FactoryId = this.factoryId;
+    this.request.PeriodId = this.periodId;
+
+      this.basicInfoService
         .update(this.request)
         .subscribe((res: any) => {
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId]);
           this.toastr.success("تم الحفظ");
         });
   }
