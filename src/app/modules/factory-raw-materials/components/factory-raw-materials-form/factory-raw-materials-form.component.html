@@ -38,27 +38,15 @@
         </select>
     </div>
 
-
-    <div class="col-md-6">
-        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> متوسط الوزن بحسب الوحدة لكل
-            كيلوجرام<i>؟</i>
+    <div class="col-md-6" *ngIf="showInput">
+        <label class="form-label" placement="left" title="" tooltip="شرح الحقل">متوسط الوزن بحسب الوحدة لكل
+            كيلوجرام <i>؟</i>
         </label>
         <div class="input-group">
-            <input type="number" class="form-control" value="{{request.AverageWeightKG}}"
-                [(ngModel)]="request.AverageWeightKG">
+            <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG">
+            <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
         </div>
     </div>
-    <div class="col-md-3">
-      
-            <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> وحدة قياس متوسط الوزن
-                <i>؟</i>
-            </label>
-          
-            <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
-        
-    </div>
-
-
     <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">تستخدم في أي منتج ؟
             <i>؟</i>

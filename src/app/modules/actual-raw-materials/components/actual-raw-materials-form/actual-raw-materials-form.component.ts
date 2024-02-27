@@ -149,19 +149,18 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
   onSelectionChange(row: ActualRawMaterial) {
 
-
-    //     const selectedItem = this.units.find(item => item.Id == row.StockUnitId);
-    //   // this.selectedX = selectedItem ? selectedItem.conversionToKG : 1;
-    //     row.CurrentStockQuantity_KG=  row.CurrentStockQuantity 
-
-    // let s =1
-
-    //   // const gramsValue = 1000;
-    //   this.tst=convert(s).from('g').to('kg');
-    // // console.log(`${gramsValue} grams is equal to ${kilogramsValue} kilograms`);
-    //       console.log('Selected X:', selectedItem);
-    row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
-
+    if(row.UsageUnitId==11){
+      row.CurrentStockQuantity_KG = row.CurrentStockQuantity
+    }
+    if(row.StockUnitId==11){
+      row.CurrentStockQuantity_KG = row.CurrentStockQuantity
+    }
+    if (row.StockUnitId !=11 || row.UsageUnitId != 15){
+      row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
+      row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
+  
+    }
+   
     console.log(row)
   }
 
@@ -214,7 +213,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
 
   save() {
-    this.requestFile.periodId = this.request.PeriodId;
+    this.requestFile.month = this.periodId;
     this.requestFile.FactoryId = this.factoryId;
 
     this.service
@@ -259,7 +258,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   saveItems() {
     this.x.forEach((item: any) => {
       item.IncreasedUsageReason = this.request.IncreasedUsageReason;
-      item.periodId = this.request.PeriodId;
+      item.periodId = this.periodId;
       this.service
         .create(item)
         .subscribe((res: any) => {

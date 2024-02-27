@@ -54,7 +54,7 @@
                         </label>
                         <div class="input-group">
                             <input type="number" class="form-control" [(ngModel)]="material.MaximumMonthlyConsumption">
-                            <select class="form-select" [(ngModel)]="material.UnitId">
+                            <select class="form-select" (change)="onUnitSelect($event)" [(ngModel)]="material.UnitId">
                                 <option *ngFor="let item of units" [value]="item.Id">
                                     {{ item.Name }} 
                                   </option>
@@ -62,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="showKG">
                         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">الوزن المقابل​
                             بالكيلوغرام لكل وحدة
                             <i>؟</i>

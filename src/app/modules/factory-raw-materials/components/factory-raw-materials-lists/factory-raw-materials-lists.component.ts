@@ -21,7 +21,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   factoryId: any;
   periodId: any;
-  // periodId: any;
+  showKG: boolean=true
   materialCount: any;
   materials = new ResultResponse<RawMaterial>();
   rawMaterials: any = [];
@@ -103,6 +103,27 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     console.log(this.selectedProducts);
   }
 
+
+  onUnitSelect(event: Event) {
+
+  
+    let selectedValue: any = (event.target as HTMLSelectElement).value;
+    if (selectedValue!="11" || selectedValue!="15")     {      
+      this.showKG= true
+       console.log(this.showInput)
+      }
+     if (selectedValue=="11")     {      
+     this.showKG= false
+      this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption
+      console.log(this.showInput)
+     }
+     if (selectedValue=="15")     {      
+      this.showKG= true
+       this.request.AverageWeightKG =  1000
+       console.log(this.showInput)
+      }
+     
+  }
   getRawMaterial() {
 
     this.rawMaterialService
