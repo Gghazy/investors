@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { ActualRawMaterialsService } from '../../actual-raw-materials.service';
 import { ActualRawMaterial } from '../../models/actual-raw-material.model';
@@ -58,6 +58,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   ];
   constructor(private route: ActivatedRoute, private service: ActualRawMaterialsService,
     private toastr: ToastrService,
+    private router: Router,
     private lookUpService: LookUpService, private fileService: FileService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -262,7 +263,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       this.service
         .create(item)
         .subscribe((res: any) => {
-
+          this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
           console.log(item)
         });
     })

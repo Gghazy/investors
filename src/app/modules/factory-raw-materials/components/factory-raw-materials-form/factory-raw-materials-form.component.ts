@@ -173,7 +173,7 @@ this.getUnits();
 
   save() {
     this.request.FactoryId = this.factoryId;
-    this.request.PeriodId = this.periodId;
+    
 
     console.log(this.request)
     this.rawMaterialService

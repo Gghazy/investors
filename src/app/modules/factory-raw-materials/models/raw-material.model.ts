@@ -1,6 +1,6 @@
 export class RawMaterial {
       Id !:number;
-      PeriodId!:number;
+      CustomItemRawMaterialId!:number;
       CustomItemName !:string;
       Name !:string;
       MaximumMonthlyConsumption !:number;

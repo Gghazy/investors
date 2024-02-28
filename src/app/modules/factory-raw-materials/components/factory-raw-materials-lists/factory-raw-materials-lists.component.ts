@@ -22,7 +22,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   factoryId: any;
   periodId: any;
   showKG: boolean=true
-  materialCount: any;
+  materialCount: number=0;
   materials = new ResultResponse<RawMaterial>();
   rawMaterials: any = [];
   request = new RawMaterial();
@@ -30,6 +30,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   selectedProducts: any = [];
   ProductName: any;
   ss: any = [];
+  data: any = [];
   ProductNameList: any = [];
   products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
@@ -115,7 +116,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
      if (selectedValue=="11")     {      
      this.showKG= false
       this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption
-      console.log(this.showInput)
+      console.log(this.request)
      }
      if (selectedValue=="15")     {      
       this.showKG= true
@@ -127,29 +128,49 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   getRawMaterial() {
 
     this.rawMaterialService
-      // .getCustomItemRawMaterial()
-      // .subscribe((res: any) => {
-      //   ;
-      //   this.rawMaterials = res.Data.Items;
-      //   this.materials = res.Data;
-      //   this.ss = res.Data;
-      //   this.rawMaterials = res.Data;
-      // })
-      .getRawMaterial(this.search,this.factoryId)
+      .getCustomItemRawMaterial()
       .subscribe((res: any) => {
-        debugger;
+        
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
         this.ss = res.Data;
-        console.log(this.rawMaterials.length)
+        this.rawMaterials = res.Data;
         console.log(this.rawMaterials)
-        this.materialCount = this.rawMaterials.length;
+        this.rawMaterials.forEach((item: any) => {
+          this.data.push({
+            'CustomItemRawMaterialId': item.Id,
+            'CustomItemName': item.ItemName,
+            'Name': '',
+            'MaximumMonthlyConsumption': 0,
+            'AverageWeightKG': 0,
+          
+            'Description': '',
+            'FactoryId': this.factoryId,
+            'AttachmentId': 0,
+            'PaperId': 0,
+            'PhotoId':0,
+            
+           ' UnitId':0,
+           ' ProductIds':[{}],
+      
+          })
+        })
+      })
+      // .getRawMaterial(this.search,this.factoryId)
+      // .subscribe((res: any) => {
+      //   debugger;
+      //   this.rawMaterials = res.Data.Items;
+      //   this.materials = res.Data;
+      //   this.ss = res.Data;
+      //   console.log(this.rawMaterials.length)
+      //   console.log(this.rawMaterials)
+      //   this.materialCount = this.rawMaterials.length;
 
-        this.ss.forEach((element: any) => {
-          this.ProductNameList.push(element)
-          console.log(this.ProductNameList)
-        });
-      });
+      //   this.ss.forEach((element: any) => {
+      //     this.ProductNameList.push(element)
+      //     console.log(this.ProductNameList)
+      //   });
+      // });
 
 
 
@@ -158,6 +179,13 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
 
   }
+
+  // onLimitChange(){
+
+
+  // }
+
+
   getProducts() {
 
     this.search.FactoryId = this.factoryId;
@@ -229,19 +257,18 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   save() {
 
-    console.log(this.request)
+    // console.log(this.request)
 
-    console.log(this.rawMaterials)
+    // console.log(this.rawMaterials)
 
-    console.log(this.request)
-    this.request.FactoryId = this.factoryId;
+    // this.request.FactoryId = this.factoryId;
 
 
    
 
-    this.rawMaterials.forEach((element: RawMaterial) => {
+    this.data.forEach((element: RawMaterial) => {
       
-   
+  console.log(element)
     this.rawMaterialService
       .create(element)
       .subscribe((res: any) => {
