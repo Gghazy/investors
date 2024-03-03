@@ -17,7 +17,7 @@ export class ActualRawMaterialsService {
   }
 
   getByFactory(factoryId:number,periodId:number): Observable<any> {
-    return this.http.get<any>('RawMaterials?Factoryid='+factoryId+'&Periodid='+periodId);
+    return this.http.get<any>('ActualRawMaterials/Period?factoryId='+factoryId+'&Periodid='+periodId);
   }
 
   getAll(): Observable<any> {
