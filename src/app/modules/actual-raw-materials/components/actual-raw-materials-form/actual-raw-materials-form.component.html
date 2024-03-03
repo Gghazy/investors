@@ -1,6 +1,6 @@
 <section class="form-panel">
     <div class="form-header">
-        <h2 class="form-title">بيانات المواد الأولية الفعلية <span class="custom-badge">شهري</span> </h2>
+        <h2 class="form-title">بيانات المواد الأولية الفعلية </h2>
         <div>
             <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
                 رجوع
@@ -13,16 +13,6 @@
         </div>
     </div>
     <div class="form-body">
-
-        <!-- <div class="col-md-4 mb-4">
-            <label class="form-label">إدخال التفاصيل التالية عن المواد الأولية لشهر </label>
-            <select class="form-select" [(ngModel)]="request.Month" (change)="GetMonthData(request.Month)">
-                <option *ngFor="let x of Months" [ngValue]="x.Id">{{x.month}}</option>
-
-            </select>
-        </div> -->
-
-
         <div class="table-responsive">
             <table class="table table-hover table-small-header ">
                 <thead>
@@ -52,7 +42,7 @@
                         <td>
 
                             <input type="number" class="form-control" style="max-width: 117px;"
-                                [(ngModel)]="material.CurrentStockQuantity">
+                                [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)">
                         </td>
                         <td>
                             <select [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)">
@@ -73,7 +63,7 @@
                         <td>
 
                             <input type="number" class="form-control" [(ngModel)]="material.UsedQuantity"
-                                style="max-width: 117px;">
+                                style="max-width: 117px;" (change)="onSelectionChange(material)">
                         </td>
                         <td>
                             <select [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)">
@@ -161,7 +151,7 @@
                         <td> {{file.Path}}</td>
 
                         <td>
-                          
+
                             <a class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
                                 tooltip=" تحميل الملف " (click)="getFile(file.AttachmentId)"> عرض </a>
                             <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
@@ -171,7 +161,7 @@
                 </tbody>
             </table>
         </div>
-        
+
     </div>
     <div class="form-footer">
         <div class="col-12">

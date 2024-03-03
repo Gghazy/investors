@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FactoryRawMaterialService } from '../../factory-raw-material.service';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { RawMaterial } from '../../models/raw-material.model';
@@ -21,8 +21,8 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   factoryId: any;
   periodId: any;
-  showKG: boolean=true
-  materialCount: number=0;
+  showKG: boolean = true
+  materialCount: number = 0;
   materials = new ResultResponse<RawMaterial>();
   rawMaterials: any = [];
   request = new RawMaterial();
@@ -36,16 +36,18 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   dropdownSettings!: IDropdownSettings;
   units!: LookUpModel[];
   src!: string;
+  saveSuccessful: boolean = false;
 
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
     private lookUpService: LookUpService,
     private fileService: FileService,
     private toastr: ToastrService,
+    private router: Router,
     private route: ActivatedRoute) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-   
+
   }
 
   ngOnInit() {
@@ -97,40 +99,53 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       });
   }
   onItemSelect(item: any) {
-    // this.request.ProductIds = item.Id;
-    // this.selectedProducts.push(item.Id)
     this.request.ProductIds.push(item.Id)
-    console.log(this.request.ProductIds);
-    console.log(this.selectedProducts);
+  }
+  onItemDeSelect(item: any) {
+    this.request.ProductIds.splice(item.id)
   }
 
 
-  onUnitSelect(event: Event) {
+  deleteFile(id: number) {
+    // this.fileService
+    //   .delete(id)
+    //   .subscribe((res: any) => {
+    //     this.getFiles();
+    //   });
+  }
 
-  
-    let selectedValue: any = (event.target as HTMLSelectElement).value;
-    if (selectedValue!="11" || selectedValue!="15")     {      
-      this.showKG= true
-       console.log(this.showInput)
-      }
-     if (selectedValue=="11")     {      
-     this.showKG= false
-      this.request.AverageWeightKG =  this.request.MaximumMonthlyConsumption
+  onUnitSelect(data: RawMaterial) {
+
+
+    let selectedValue: any = data.UnitId
+
+    console.log(data.MaximumMonthlyConsumption)
+    if (selectedValue != "11" || selectedValue != "15") {
+      this.showKG = true
+      console.log(this.showInput)
+    }
+    if (selectedValue == "11") {
+      this.showKG = false
+      data.AverageWeightKG = data.MaximumMonthlyConsumption
       console.log(this.request)
-     }
-     if (selectedValue=="15")     {      
-      this.showKG= true
-       this.request.AverageWeightKG =  1000
-       console.log(this.showInput)
-      }
-     
+    }
+    if (selectedValue == "15") {
+      this.showKG = true
+      data.AverageWeightKG = 1000
+      console.log(this.showInput)
+    }
+
   }
+
+
+
+
   getRawMaterial() {
 
     this.rawMaterialService
       .getCustomItemRawMaterial()
       .subscribe((res: any) => {
-        
+
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
         this.ss = res.Data;
@@ -143,47 +158,41 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
             'Name': '',
             'MaximumMonthlyConsumption': 0,
             'AverageWeightKG': 0,
-          
+
             'Description': '',
             'FactoryId': this.factoryId,
             'AttachmentId': 0,
             'PaperId': 0,
-            'PhotoId':0,
-            
-           ' UnitId':0,
-           ' ProductIds':[{}],
-      
+            'PhotoId': 0,
+
+            ' UnitId': 0,
+            ' ProductIds': [{}],
+
           })
         })
       })
-      // .getRawMaterial(this.search,this.factoryId)
-      // .subscribe((res: any) => {
-      //   debugger;
-      //   this.rawMaterials = res.Data.Items;
-      //   this.materials = res.Data;
-      //   this.ss = res.Data;
-      //   console.log(this.rawMaterials.length)
-      //   console.log(this.rawMaterials)
-      //   this.materialCount = this.rawMaterials.length;
-
-      //   this.ss.forEach((element: any) => {
-      //     this.ProductNameList.push(element)
-      //     console.log(this.ProductNameList)
-      //   });
-      // });
-
-
-
-
-
-
 
   }
+  savePaper(file: any, i: number) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.data[i].PaperId = res.Data.Id
+        });
+    }
+  }
+  savePhoto(file: any, i: number) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.data[i].PhotoId = res.Data.Id
+        });
+    }
+  }
 
-  // onLimitChange(){
 
-
-  // }
 
 
   getProducts() {
@@ -193,7 +202,6 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       .getAllPagination(this.search)
       .subscribe((res: any) => {
         this.products = res.Data.Items;
-        console.log(this.products)
       });
 
   }
@@ -205,44 +213,14 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       .getOne(id)
       .subscribe((res: any) => {
         this.ProductName = res.Data.Items.ProductName;
-        console.log(this.ProductName)
       });
 
   }
 
-  getFile(attachmentId: number) {
-    if (attachmentId == null) {
-      this.toastr.error("لا يوجد ملف");
-    }
-    else {
-      this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
-        this.downloadattachment(res)
-      });
-    }
-
-  }
 
 
 
-  getImage(attachmentId: number) {
-    if (attachmentId == null) {
-      this.toastr.error("لا يوجد ملف");
-    }
-    else {
-      this.fileService.getImage(attachmentId).subscribe((res: any) => {
 
-        this.src = 'data:image/jpeg;base64,' + res.Image;
-        console.log(res.Image)
-      });
-    }
-
-  }
-  downloadattachment(data: any) {
-    const blob = new Blob([data], { type: data.type });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url);
-    console.log(data)
-  }
 
   closePopUp() {
     this.Modal.nativeElement.click()
@@ -257,43 +235,21 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   save() {
 
-    // console.log(this.request)
-
-    // console.log(this.rawMaterials)
-
-    // this.request.FactoryId = this.factoryId;
-
-
-   
-
     this.data.forEach((element: RawMaterial) => {
-      
-  console.log(element)
-    this.rawMaterialService
-      .create(element)
-      .subscribe((res: any) => {
-    //  this.router.navigate(['/pages/factory-raw-materials/'+this.factoryId]);
+      this.rawMaterialService
+        .create(element)
+        .subscribe((res: any) => {
+          this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
 
-
-        this.toastr.success("تم الحفظ");
-        console.log(this.request)
-      });
+          this.toastr.success("تم الحفظ");
+        });
 
     });
+    if (this.saveSuccessful == true) {
+      this.data = new RawMaterial();
+      this.selectedProducts = []
+    }
   }
-
-  //   this.rawMaterials.forEach((element: any) => {
-
-
-  //     this.rawMaterialService
-  //       .update(element)
-  //       .subscribe((res: any) => {
-
-  //       });
-  //   });
-
-  //   this.toastr.success("تم الحفظ");
-  // }
 
 
 }

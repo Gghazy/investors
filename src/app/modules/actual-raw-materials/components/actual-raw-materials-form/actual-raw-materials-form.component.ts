@@ -33,6 +33,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   units!: LookUpModel[];
   x: any = [];
   src!: string;
+  isNewData: boolean = false;
   request = new ActualRawMaterial();
   requestFile = new ActualRawMaterialFile();
   CurrentStockQuantity_KG: number = 0;
@@ -41,21 +42,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   selectedItemId: number | null = null;
   selectedX: number = 0;
   sign: string | null = null;
-  tst: any;
-  Months = [
-    { Id: 1, month: 'يناير' },
-    { Id: 2, month: 'فبراير' },
-    { Id: 3, month: 'مارس' },
-    { Id: 4, month: 'أبريل' },
-    { Id: 5, month: 'مايو' },
-    { Id: 6, month: 'يونيو' },
-    { Id: 7, month: 'يوليو' },
-    { Id: 8, month: 'أغسطس' },
-    { Id: 9, month: 'سبتمبر' },
-    { Id: 10, month: 'أكتوبر' },
-    { Id: 11, month: 'نوفمبر' },
-    { Id: 12, month: 'ديسمبر' },
-  ];
+
+
   constructor(private route: ActivatedRoute, private service: ActualRawMaterialsService,
     private toastr: ToastrService,
     private router: Router,
@@ -76,93 +64,99 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       singleSelection: true,
       idField: 'Id',
       textField: 'Name',
-      //  selectAllText: 'تحديد الكل',
-      //unSelectAllText: 'ازالة التحديد',
       searchPlaceholderText: 'بحث',
       itemsShowLimit: 1,
       allowSearchFilter: true
     };
   }
 
-  GetMonthData(month: number) {
-
-    this.service
-      .getByMonth(month)
-      .subscribe((res: any) => {
-        this.x = res.Data;
-        console.log(this.x)
-        console.log(res.Data)
-      });
-
-    console.log(month)
-
-    this.getRawMaterial()
-
-  }
 
 
 
-  onItemSelect(item: ActualRawMaterial) {
-    //  this.request. = item.Id;
-    // this.selectedProducts.push(item)
-    console.log(this.selectedUnits);
-
-    console.log(item.UsageUnitId);
-    item.CurrentStockQuantity_KG = item.CurrentStockQuantity * 1000
-  }
-
-  onSelectAll(items: any) {
-    //console.log(items);
-  }
 
   getRawMaterial() {
 
 
+
+
     this.service
-    .getRawMaterial(this.search, this.factoryId)
+      .getByFactory(this.factoryId, this.periodId)
       .subscribe((res: any) => {
-        this.rawMaterials = res.Data.Items;
+        this.rawMaterials = res.Data;
         this.materials = res.Data;
+        
+        
+        console.log(res)
+        if (this.rawMaterials.length == 0) {
+          this.isNewData = true
+          this.service
+            .getRawMaterial(this.search, this.factoryId)
+            .subscribe((res: any) => {
+              this.rawMaterials = res.Data.Items;
+              this.materials = res.Data;
+
+
+
+
+              this.rawMaterials.forEach((item: any) => {
+                this.x.push({
+                  'RawMaterialId': item.Id,
+                  'Name': item.Name,
+                  'CurrentStockQuantity_KG': 0,
+                  'UsedQuantity_KG': 0,
+                  'AttachmentId': 1,
+
+                  'UsedQuantity': 0,
+                  'CurrentStockQuantity': 0,
+                  'StockUnitId': 0,
+                  'UsageUnitId': 0,
+                  'AverageWeightKG': item.AverageWeightKG,
+
+                })
+              })
+            });
+        }
+
+        console.log(this.rawMaterials)
+
         this.rawMaterials.forEach((item: any) => {
+          this.request.IncreasedUsageReason = item.IncreasedUsageReason
+          console.log(item)
           this.x.push({
-            'RawMaterialId': item.Id,
-            'Name': item.Name,
-            'CurrentStockQuantity_KG': 0,
-            'UsedQuantity_KG': 0,
+            'Id':item.Id,
+            'RawMaterialId': item.RawMaterialId.Id,
+           'periodId': item.PeriodId,
+            'Name': item.RawMaterialId.Name,
+            'CurrentStockQuantity_KG': item.CurrentStockQuantity_KG,
+            'UsedQuantity_KG': item.UsedQuantity_KG,
             'AttachmentId': 1,
-          
-            'UsedQuantity': 0,
-            'CurrentStockQuantity': 0,
-            'StockUnitId': 0,
-            'UsageUnitId': 0,
-            'AverageWeightKG': item.AverageWeightKG,
+            'UsedQuantity': item.UsedQuantity,
+            'CurrentStockQuantity': item.CurrentStockQuantity,
+            'StockUnitId': item.StockUnitId,
+            'UsageUnitId': item.UsageUnitId,
+            'AverageWeightKG': item.RawMaterialId.AverageWeightKG,
 
           })
         })
-        console.log(this.rawMaterials);
-        console.log(this.x);
       });
-
-
-
+      console.log(this.isNewData)
   }
 
 
   onSelectionChange(row: ActualRawMaterial) {
-
-    if(row.UsageUnitId==11){
+console.log(row)
+    if (row.UsageUnitId == 11) {
       row.CurrentStockQuantity_KG = row.CurrentStockQuantity
     }
-    if(row.StockUnitId==11){
+    if (row.StockUnitId == 11) {
       row.CurrentStockQuantity_KG = row.CurrentStockQuantity
     }
-    if (row.StockUnitId !=11 || row.UsageUnitId != 15){
+    if (row.StockUnitId != 11 || row.UsageUnitId != 15) {
       row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
       row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
-  
+
     }
-   
-    console.log(row)
+
   }
 
   getUnits() {
@@ -170,7 +164,6 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       .getAllUnits()
       .subscribe((res: any) => {
         this.units = res.Data;
-        console.log(res)
       });
   }
   pageChanged(data: any) {
@@ -184,7 +177,6 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       .getFiles(this.factoryId)
       .subscribe((res: any) => {
         this.files = res.Data;
-        console.log(this.files)
       });
   }
 
@@ -196,22 +188,11 @@ export class ActualRawMaterialsFormComponent implements OnInit {
         .subscribe((res: any) => {
           this.requestFile.AttachmentId = res.Data.Id
           this.requestFile.Path = res.Data.Path
-          console.log(this.requestFile.AttachmentId)
         });
 
     }
 
   }
-
-  onUnitSelect(newValue: any) {
-    // const selectedValue = (event.target as HTMLSelectElement).value;
-    const selectedValue = newValue
-    console.log(selectedValue)
-
-    this.CurrentStockQuantity_KG = 1000
-
-  }
-
 
   save() {
     this.requestFile.month = this.periodId;
@@ -257,19 +238,40 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
 
   saveItems() {
-    this.x.forEach((item: any) => {
-      item.IncreasedUsageReason = this.request.IncreasedUsageReason;
-      item.periodId = this.periodId;
-      this.service
-        .create(item)
-        .subscribe((res: any) => {
-          this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-          console.log(item)
-        });
-    })
-    this.toastr.success("تم الحفظ");
-    this.request = new ActualRawMaterial();
+
+    if (this.isNewData == true) {
+      console.log('new')
+      this.x.forEach((item: any) => {
+        item.periodId = this.periodId;
+        item.IncreasedUsageReason = this.request.IncreasedUsageReason;
+
+        this.service
+          .create(item)
+          .subscribe((res: any) => {
+            this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+            console.log(item)
+          });
+      })
+      this.toastr.success("تم الحفظ");
+      this.request = new ActualRawMaterial();
+    }
+    else {
+      console.log('Nonew')
+      this.x.forEach((item: any) => {
+        item.IncreasedUsageReason = this.request.IncreasedUsageReason;
+
+        this.service
+          .update(item)
+          .subscribe((res: any) => {
+            this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+            console.log(item)
+          });
+      })
+      this.toastr.success("تم الحفظ");
+      this.request = new ActualRawMaterial();
+    }
   }
+
 
 }
 

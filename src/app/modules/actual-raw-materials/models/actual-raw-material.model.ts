@@ -1,3 +1,5 @@
+import { RawMaterial } from "../../factory-raw-materials/models/raw-material.model";
+
 export class ActualRawMaterial {
 
     Id !:number;
