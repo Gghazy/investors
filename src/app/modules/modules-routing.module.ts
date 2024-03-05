@@ -69,6 +69,11 @@ const routes: Routes = [
       loadChildren: () =>
         import('../modules/financial-details/financial-details.module').then((m) => m.FinancialDetailsModule)
     },
+    {
+      path: 'monthlyfinancial/:id/:periodid',
+      loadChildren: () =>
+        import('../modules/monthly-financial/monthly-financial.module').then((m) => m.MonthlyFinancialModule)
+    },
 
     {
       path: 'period/:id',

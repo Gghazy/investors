@@ -1,0 +1,157 @@
+<section class="form-panel">
+    <div class="form-header">
+        <h2 class="form-title"> البيانات المالية </h2>
+        <div>
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
+                رجوع
+                <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h48v48h-48z" fill="none"></path>
+                    <path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
+                        style="fill: #666;"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div class="form-body">
+        <form #myForm="ngForm" (ngSubmit)="save()">
+        <div class="row">
+           
+            <div class="col-md-4">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+
+                    نفقات المياه
+                    <span class="required">*</span>
+
+                    <i>؟</i>
+                </label>
+                <div class="input-group">
+                    <input type="number"   #WaterExpenses="ngModel" required  class="form-control " name="WaterExpenses" [(ngModel)]="request.WaterExpenses">
+                    <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
+                        style="max-width: 117px;">
+                </div>
+                <div *ngIf="WaterExpenses.invalid && (WaterExpenses.dirty || WaterExpenses.touched)" class="validation-error">
+                    <div *ngIf="WaterExpenses.errors?.['required']">حقل  نفقات المياه مطلوب</div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+
+                    نفقات الكهرباء
+                    <span class="required">*</span>
+
+                    <i>؟</i>
+                </label>
+                <div class="input-group">
+                    <input type="number" #ElectricityExpenses="ngModel" required class="form-control " name="ElectricityExpenses" [(ngModel)]="request.ElectricityExpenses">
+                    <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
+                        style="max-width: 117px;">
+                </div>
+                <div *ngIf="ElectricityExpenses.invalid && (ElectricityExpenses.dirty || ElectricityExpenses.touched)" class="validation-error">
+                    <div *ngIf="ElectricityExpenses.errors?.['required']">حقل  نفقات الكهرباء مطلوب</div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+
+                    نفقات الوقود​
+                    <span class="required">*</span>
+
+                    <i>؟</i>
+                </label>
+                <div class="input-group">
+                    <input type="number" #FuelExpenses="ngModel" required class="form-control " name="FuelExpenses" [(ngModel)]="request.FuelExpenses">
+                    <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
+                        style="max-width: 117px;">
+                </div>
+                <div *ngIf="FuelExpenses.invalid && (FuelExpenses.dirty || FuelExpenses.touched)" class="validation-error">
+                    <div *ngIf="FuelExpenses.errors?.['required']">حقل  نفقات الوقود​ مطلوب</div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+
+                    نفقات المواد الخام​​
+                    <span class="required">*</span>
+
+                    <i>؟</i>
+                </label>
+                <div class="input-group">
+                    <input type="number" #RawMterialExpenses="ngModel" required class="form-control " name="RawMterialExpenses" [(ngModel)]="request.RawMterialExpenses">
+                    <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
+                        style="max-width: 117px;">
+                </div>
+                <div *ngIf="RawMterialExpenses.invalid && (RawMterialExpenses.dirty || RawMterialExpenses.touched)" class="validation-error">
+                    <div *ngIf="RawMterialExpenses.errors?.['required']">حقل  نفقات المواد الخام مطلوب</div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+
+                    نفقات العمالة ​​​
+                    <span class="required">*</span>
+
+                    <i>؟</i>
+                </label>
+                <div class="input-group">
+                    <input type="number" #EmploymentExpenses="ngModel" required class="form-control " name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses">
+                    <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
+                        style="max-width: 117px;">
+                </div>
+                <div *ngIf="EmploymentExpenses.invalid && (EmploymentExpenses.dirty || EmploymentExpenses.touched)" class="validation-error">
+                    <div *ngIf="EmploymentExpenses.errors?.['required']">حقل  نفقات العمالة مطلوب</div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+
+                    نفقات تشغيلية أخرى​​​​
+                    <span class="required">*</span>
+
+                    <i>؟</i>
+                </label>
+                <div class="input-group">
+                    <input type="number" #OtherOperatingExpenses="ngModel" required class="form-control " name="OtherOperatingExpenses" [(ngModel)]="request.OtherOperatingExpenses">
+                    <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
+                        style="max-width: 117px;">
+                </div>
+                <div *ngIf="OtherOperatingExpenses.invalid && (OtherOperatingExpenses.dirty || OtherOperatingExpenses.touched)" class="validation-error">
+                    <div *ngIf="OtherOperatingExpenses.errors?.['required']">حقل  نفقات تشغيلية أخرى مطلوب</div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+
+                    إجمالي النفقات التشغيلية​
+                    <span class="required">*</span>
+                    <i>؟</i>
+                </label>
+                <div class="input-group">
+                    <input type="number" class="form-control " name="TotalExpenses" [ngModel]="getTotalExpenses()" disabled>
+                    <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
+                        style="max-width: 117px;">
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary me-1" [disabled]="myForm.invalid" type="submit">حفظ</button>
+            <a href="" class="btn btn-danger">الغاء</a>
+        </div>
+    </form>
+           
+    </div>
+
+
+</section>
