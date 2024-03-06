@@ -4,6 +4,7 @@ import { ActualProductModel } from '../../models/actual-product-model';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { ActualProductionAndDesignedCapacityService } from '../../actual-production-and-designed-capacity.service';
 import { ActualProductSearch } from '../../models/actual-product-search';
+import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
 
 @Component({
   selector: 'app-actual-production-list',
@@ -17,18 +18,21 @@ export class ActualProductionListComponent implements OnInit {
   search=new ActualProductSearch();
   actualCapacityProductId!:number |undefined;
   productId!:number |undefined;
+  factoryStatus!:number;
 
   @ViewChild('closeModal') Modal!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
     private ActualProductionService: ActualProductionAndDesignedCapacityService,
+    private basicInfoService: BasicInfoService,
     ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
     this.getLevel12Product();
+    this.getBasicInfo();
   }
 
   getLevel12Product(){
@@ -46,6 +50,13 @@ export class ActualProductionListComponent implements OnInit {
 
   }
 
+  getBasicInfo() {
+    this.basicInfoService
+      .getOne(this.factoryId,this.periodId)
+      .subscribe((res: any) => {
+        this.factoryStatus = res.Data.Status;
+      });
+  }
   edit(id: number,productId:number) {
     this.actualCapacityProductId = id;
     this.productId = productId;

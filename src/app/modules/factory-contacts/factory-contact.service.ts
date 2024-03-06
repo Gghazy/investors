@@ -10,8 +10,8 @@ export class FactoryContactService {
 
   constructor(private http: HttpClient) { }
 
-  getOne(id: number,periodId:number): Observable<any> {
-    return this.http.get<any>(`FactoryContacts?factoryId=${id}&&periodId=${periodId}`);
+  getOne(id: number): Observable<any> {
+    return this.http.get<any>(`FactoryContacts?factoryId=${id}`);
   }
   create(request: FactoryContactModel): Observable<any> {
     return this.http.post<any>('FactoryContacts', request);

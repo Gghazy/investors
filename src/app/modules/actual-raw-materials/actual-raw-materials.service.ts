@@ -41,8 +41,8 @@ export class ActualRawMaterialsService {
 
   //ActualRawMaterialFiles
 
-  getFiles(factoryId:number): Observable<any> {
-    return this.http.get<any>('ActualRawMaterialFile?id='+factoryId);
+  getFiles(factoryId:number,periodId:number): Observable<any> {
+    return this.http.get<any>(`ActualRawMaterialFile?factoryId=${factoryId}&&periodId=${periodId}`);
   }
   AddFile(request: ActualRawMaterialFile): Observable<any> {
     return this.http.post<any>('ActualRawMaterialFile', request);

@@ -174,7 +174,7 @@ console.log(row)
 
   getFiles() {
     this.service
-      .getFiles(this.factoryId)
+      .getFiles(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
@@ -195,7 +195,7 @@ console.log(row)
   }
 
   save() {
-    this.requestFile.month = this.periodId;
+    this.requestFile.PeriodId = this.periodId;
     this.requestFile.FactoryId = this.factoryId;
 
     this.service

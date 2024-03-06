@@ -109,7 +109,7 @@
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
                 </li>
 
-                <li class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus!=4" class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/factory-location/'+factoryId+'/'+periodId">
                         <svg version="1.1" id="LOCATION" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1800 1800"
@@ -148,7 +148,7 @@
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
 
                 </li>
-                <li class="col-12  col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus!=4" class="col-12  col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/factory-contacts/'+factoryId+'/'+periodId">
                         <svg fill="#000000" viewBox="0 0 64 64" version="1.1" xml:space="preserve"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -200,7 +200,7 @@
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
                 </li>
 
-                <li *ngIf="sharedService.factoryStatus==2 || sharedService.factoryStatus==0 || sharedService.factoryStatus==3"  class="col-12  col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==3 || sharedService.factoryStatus==0 || sharedService.factoryStatus==2"  class="col-12  col-lg-4 col-md-6 col-sm-12">
                     <a  [routerLink]="'/pages/customs-items-update/'+factoryId+'/'+periodId">
                         <svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px"
@@ -225,7 +225,7 @@
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
                 </li>
 
-                <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0|| sharedService.factoryStatus==3" class="col-12  col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12  col-lg-4 col-md-6 col-sm-12">
                     <a  [routerLink]="'/pages/customs-items-check/'+factoryId+'/'+periodId">
                         <svg width="64px" height="64px" viewBox="0 0 1024 1024" class="icon" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" fill="#000000">
@@ -247,7 +247,7 @@
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
                 </li>
 
-                <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0|| sharedService.factoryStatus==3" class="col-12  col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12  col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/factory-products/'+factoryId+'/'+periodId">
                         <svg fill="#000000" viewBox="0 0 60 60" id="Capa_1" version="1.1"
                             xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -419,7 +419,7 @@
                         tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
 
                 </li>
-                <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0" class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/actual-production-and-designed-capacity/'+factoryId+'/'+periodId">
                         <svg fill="#000000" width="64px" height="64px" viewBox="0 0 256 256" id="Flat"
                             xmlns="http://www.w3.org/2000/svg">
@@ -458,7 +458,7 @@
                
                     </span>
                 </li>
-                <li *ngIf="sharedService.factoryStatus==2|| sharedService.factoryStatus==0" class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/factory-raw-materials/'+factoryId+'/'+periodId">
                         <svg fill="#000000" height="200px" width="200px" version="1.1" id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -541,7 +541,7 @@
                         </svg>
                     </span>
                 </li>
-                <li *ngIf="sharedService.factoryStatus==0" class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/actual-raw-materials/'+factoryId+'/'+periodId">
                         <svg fill="#000000" height="64px" width="64px" version="1.1" id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

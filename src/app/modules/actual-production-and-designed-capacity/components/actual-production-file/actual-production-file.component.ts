@@ -14,6 +14,7 @@ export class ActualProductionFileComponent {
   request=new ActualProductionFileModel();
   src!:string;
   @Input() factoryId!:number;
+  @Input() periodId!:number;
   constructor(
     private fileService:FileService,
     private reasonService:ReasonService,
@@ -25,9 +26,9 @@ export class ActualProductionFileComponent {
   }
 
   getFiles() { 
-    
+    debugger
     this.reasonService
-      .getAllFiles(Number(this.factoryId))
+      .getAllFiles(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
@@ -54,6 +55,7 @@ export class ActualProductionFileComponent {
   }
   save(){
     this.request.FactoryId=this.factoryId;
+    this.request.PeriodId=this.periodId;
     this.reasonService
     .createFile(this.request)
     .subscribe((res: any) => {

@@ -14,9 +14,9 @@
                 <th>#</th> 
                 <th> المنتج</th>
                 <th> الطاقة التصميمة(القصوى)​</th>
-                <th>الإنتاج الفعلي​</th>
-                <th></th>
-                <th> وزن الإنتاج الفعلي​ </th>
+                <th *ngIf="factoryStatus!=3">الإنتاج الفعلي​</th>
+                <th *ngIf="factoryStatus!=3"></th>
+                <th *ngIf="factoryStatus!=3"> وزن الإنتاج الفعلي​ </th>
                 <th>تعديل</th>
             </ng-template>
             <ng-template #body>
@@ -27,11 +27,11 @@
                 <td>
                     {{product.DesignedCapacity !=0? product.DesignedCapacity + product.DesignedCapacityUnitName:""}}
                 </td>
-                <td>
+                <td *ngIf="factoryStatus!=3">
                     {{product.DesignedCapacity !=0?product.ActualProduction + product.ActualProductionUintName:""}}
                 </td>
-                <td> = </td>
-                <td>
+                <td *ngIf="factoryStatus!=3"> = </td>
+                <td *ngIf="factoryStatus!=3">
                     {{product.ActualProductionWeight !=0?product.ActualProductionWeight + " كغ ":""}}
                 </td>
                 <td>
@@ -49,8 +49,8 @@
         </app-list>
         <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
        
-        <app-reason [periodId]="periodId" [factoryId]="factoryId"></app-reason>
-        <app-actual-production-file *ngIf="factoryId"  [factoryId]="factoryId"></app-actual-production-file>      
+        <app-reason *ngIf="factoryStatus!=3" [periodId]="periodId" [factoryId]="factoryId"></app-reason>
+        <app-actual-production-file *ngIf="factoryId &&factoryStatus!=3" [periodId]="periodId"  [factoryId]="factoryId"></app-actual-production-file>      
 
     </div>
 
@@ -83,6 +83,7 @@ aria-hidden="true"
       <app-actual-production-form 
        *ngIf="productId!=undefined" 
        [productId]="productId" 
+       [factoryStatus]="factoryStatus" 
        [actualCapacityProductId]="actualCapacityProductId"
        [factoryId]="factoryId" 
        [periodId]="periodId" 

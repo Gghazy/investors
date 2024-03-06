@@ -5,5 +5,6 @@ export class ActualProductionFileModel {
     Path !: string;
     AttachmentId !: number;
     FactoryId!: number;
+    PeriodId!: number;
 }
 

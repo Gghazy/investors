@@ -42,7 +42,7 @@ export class FactoryLocationFormComponent {
 
   getLocation() {
     this.factoryLocationService
-      .getOne(this.factoryId,this.periodId)
+      .getOne(this.factoryId)
       .subscribe((res: any) => {
         this.request = res.Data;
       });
@@ -75,7 +75,6 @@ export class FactoryLocationFormComponent {
 
   save(){
     this.request.FactoryId=this.factoryId;
-    this.request.PeriodId=this.factoryId;
     if (this.request.Id==0){
       this.factoryLocationService
       .create(this.request)

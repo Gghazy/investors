@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ActualProductionFormComponent implements OnInit {
 
 @Input()factoryId!:number;
+@Input()factoryStatus!:number;
 @Input()productId!:number;
 @Input()actualCapacityProductId!:number|undefined;
 @Input()periodId!:number;

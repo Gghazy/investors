@@ -21,9 +21,9 @@ export class ReasonService {
     return this.http.put<any>('IncreaseActualProductions', request);
   }
 
-  getAllFiles(ActualProductionId:number): Observable<any> {
+  getAllFiles(factoryId:number,periodId:number): Observable<any> {
     
-    return this.http.get<any>('ActualProductionAttachments/'+ActualProductionId);
+    return this.http.get<any>(`ActualProductionAttachments?periodId=${periodId}&&factoryId=${factoryId}`);
   }
   createFile(request: ActualProductionFileModel): Observable<any> {
     return this.http.post<any>('ActualProductionAttachments', request);

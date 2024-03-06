@@ -17,8 +17,8 @@
     </div>
     
     <div class="col-md-6">
-        <label class="form-label" >وحدة القياس <span class="required">*</span></label>
-        <select name="Type" id="UnitId" [(ngModel)]="request.UnitId" (change)="unitChange()" class="form-select">
+        <label class="form-label" >وحدة القياس </label>
+        <select name="Type" id="UnitId" disabled [(ngModel)]="request.UnitId" (change)="unitChange()" class="form-select">
             <option *ngFor="let unit of units" [ngValue]="unit.Id">{{unit.Name}}</option>
         </select>
     </div>

@@ -33,8 +33,7 @@ export class FactoryContactFormComponent implements OnInit {
     FinanceManagerPhone: new FormControl(undefined, [Validators.required]),
     FinanceManagerEmail: new FormControl(undefined, [Validators.required]),
     Id: new FormControl(0, [Validators.required]),
-    FactoryId: new FormControl(undefined, [Validators.required]),
-    PeriodId: new FormControl(undefined, [Validators.required]),
+    FactoryId: new FormControl(undefined, [Validators.required])
 
   });
 
@@ -53,8 +52,9 @@ export class FactoryContactFormComponent implements OnInit {
   }
 
   getContact() {
+    debugger
     this.factoryContactService
-      .getOne(this.factoryId,this.periodId)
+      .getOne(this.factoryId)
       .subscribe((res: any) => {
         this.request = res.Data;
         this.phoneForm.setValue(res.Data);
@@ -67,7 +67,6 @@ export class FactoryContactFormComponent implements OnInit {
   save() {
     this.request= this.phoneForm.value 
     this.request.FactoryId = this.factoryId;
-    this.request.PeriodId = this.periodId;
     if (this.request.Id == 0) {
       this.factoryContactService
         .create(this.request)
