@@ -84,9 +84,9 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.rawMaterials = res.Data;
         this.materials = res.Data;
-        
-        
-        console.log(res)
+
+
+       // console.log(res)
         if (this.rawMaterials.length == 0) {
           this.isNewData = true
           this.service
@@ -117,15 +117,15 @@ export class ActualRawMaterialsFormComponent implements OnInit {
             });
         }
 
-        console.log(this.rawMaterials)
+       // console.log(this.rawMaterials)
 
         this.rawMaterials.forEach((item: any) => {
           this.request.IncreasedUsageReason = item.IncreasedUsageReason
-          console.log(item)
+         // console.log(item)
           this.x.push({
-            'Id':item.Id,
+            'Id': item.Id,
             'RawMaterialId': item.RawMaterialId.Id,
-           'periodId': item.PeriodId,
+            'periodId': item.PeriodId,
             'Name': item.RawMaterialId.Name,
             'CurrentStockQuantity_KG': item.CurrentStockQuantity_KG,
             'UsedQuantity_KG': item.UsedQuantity_KG,
@@ -139,12 +139,12 @@ export class ActualRawMaterialsFormComponent implements OnInit {
           })
         })
       });
-      console.log(this.isNewData)
+   // console.log(this.isNewData)
   }
 
 
   onSelectionChange(row: ActualRawMaterial) {
-console.log(row)
+  //  console.log(row)
     if (row.UsageUnitId == 11) {
       row.CurrentStockQuantity_KG = row.CurrentStockQuantity
     }
@@ -240,7 +240,7 @@ console.log(row)
   saveItems() {
 
     if (this.isNewData == true) {
-      console.log('new')
+    
       this.x.forEach((item: any) => {
         item.periodId = this.periodId;
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
@@ -249,14 +249,14 @@ console.log(row)
           .create(item)
           .subscribe((res: any) => {
             this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-            console.log(item)
+          ///  console.log(item)
           });
       })
       this.toastr.success("تم الحفظ");
       this.request = new ActualRawMaterial();
     }
     else {
-      console.log('Nonew')
+     
       this.x.forEach((item: any) => {
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
 
@@ -264,7 +264,7 @@ console.log(row)
           .update(item)
           .subscribe((res: any) => {
             this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-            console.log(item)
+          //  console.log(item)
           });
       })
       this.toastr.success("تم الحفظ");
