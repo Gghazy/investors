@@ -60,7 +60,7 @@ export class FactoryLocationFormComponent {
     this.lookUpService
       .getAllIndustrialAreas()
       .subscribe((res: any) => {
-        debugger
+        
         this.industrialAreas = res.Data;
       });
   }

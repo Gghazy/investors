@@ -36,11 +36,11 @@ constructor(
   }
 
   getOne(){
-    debugger
+    
     this.factoryProductService
     .getOne(this.productId)
     .subscribe((res: any) => {
-      debugger
+      
       this.request = res.Data;
     });
   }
@@ -75,7 +75,7 @@ savePhoto(file:any){
 }
 unitChange()
 {
-  debugger
+  
   const selectedOption = this.units.find(option => option.Id === this.request.UnitId);
   if(selectedOption?.Name=='كيلو غرام')
   {

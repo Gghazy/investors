@@ -1,23 +1,19 @@
 <section class="form-panel">
     <div class="form-header">
-        <h2 class="form-title"> 
-            بيانات المصنع 
+        <h2 class="form-title">
+            بيانات المصنع
 
-           ({{factoryName}})
+            ({{factoryName}})
         </h2>
         <h6>
             ({{periodStartDate}}) - ({{periodEndDate}})
         </h6>
         <div>
-            <a  class="back-link"
-            [routerLink]="'/pages/period/'+factoryId"
-            
-            >
+            <a class="back-link" [routerLink]="'/pages/period/'+factoryId">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h48v48h-48z" fill="none"></path>
-                    <path
-                        d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
+                    <path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
                         style="fill: #666;"></path>
                 </svg>
             </a>
@@ -27,7 +23,7 @@
         <div class="tab-content tab-content-inner shadow-none rounded-0">
             <ul class="p-0 small-icons">
                 <li class="col-12 col-lg-4 col-md-6 col-sm-12">
-                    <a [routerLink]="'/pages/basic-info/'+factoryId+'/'+periodId" >
+                    <a [routerLink]="'/pages/basic-info/'+factoryId+'/'+periodId">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                             <title></title>
                             <rect height="2" width="20" x="7" y="11"></rect>
@@ -41,12 +37,17 @@
                         </svg>
                         <span> البيانات الأساسية </span>
                     </a>
-                    <span class="completed"  placement="bottom" title=""
-                        tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
+
+                    <span class="completed" *ngIf="screenStatuse.BasicFactoryInfo; else elsebasicInfo" placement="bottom"
+                        title="" tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i>
+                    </span>
+
+                    <ng-template #elsebasicInfo>
+                        <app-uncompleted-warning></app-uncompleted-warning>
+                    </ng-template>
+
                 </li>
-
-
-                <li  class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/financial-details/'+factoryId+'/'+periodId">
                         <svg fill="#000000" height="64px" width="64px" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -69,15 +70,20 @@
                                 </g>
                             </g>
                         </svg>
-                        <span> 
+                        <span>
                             البيانات المالية
                             <span class="custom-badge">سنوى</span>
                         </span>
                     </a>
-                    <span class="completed"  placement="bottom" title=""
-                        tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
+                    <span class="completed" *ngIf="screenStatuse.FinancialData; else elsefinanical" placement="bottom"
+                        title="" tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i>
+                    </span>
+
+                    <ng-template #elsefinanical>
+                        <app-uncompleted-warning></app-uncompleted-warning>
+                    </ng-template>
                 </li>
-                <li  class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/monthlyfinancial/'+factoryId+'/'+periodId">
                         <svg fill="#000000" height="64px" width="64px" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -100,15 +106,20 @@
                                 </g>
                             </g>
                         </svg>
-                        <span> 
+                        <span>
                             البيانات المالية
-                            <span class="custom-badge">شهرية</span>
+                            <span class="custom-badge">الشهرية</span>
                         </span>
                     </a>
-                    <span class="completed"  placement="bottom" title=""
-                        tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
-                </li>
+                        <span class="completed" *ngIf="screenStatuse.FinancialData; else elseFinancialMonthly" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
+                            class="icon-ok"></i></span>
 
+                            <ng-template #elseFinancialMonthly>
+                                <app-uncompleted-warning></app-uncompleted-warning>
+                            </ng-template>
+                   
+
+                </li>
                 <li *ngIf="sharedService.factoryStatus!=4" class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/factory-location/'+factoryId+'/'+periodId">
                         <svg version="1.1" id="LOCATION" xmlns="http://www.w3.org/2000/svg"
@@ -144,8 +155,12 @@
                         </svg>
                         <span> موقع المصنع</span>
                     </a>
-                    <span class="completed"  placement="bottom" title=""
-                        tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
+                    <span class="completed" *ngIf="screenStatuse.FactoryLocation; else elseLocation" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
+                        class="icon-ok"></i></span>
+
+                        <ng-template #elseLocation>
+                            <app-uncompleted-warning></app-uncompleted-warning>
+                        </ng-template>
 
                 </li>
                 <li *ngIf="sharedService.factoryStatus!=4" class="col-12  col-lg-4 col-md-6 col-sm-12">
@@ -196,15 +211,20 @@
                         </svg>
                         <span>بيانات جهة الإتصال</span>
                     </a>
-                    <span class="completed"  placement="bottom" title=""
-                        tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
+                    <span class="completed" *ngIf="screenStatuse.FactoryContact; else elseContact" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
+                        class="icon-ok"></i></span>
+
+                        <ng-template #elseContact>
+                            <app-uncompleted-warning></app-uncompleted-warning>
+                        </ng-template>
                 </li>
 
-                <li *ngIf="sharedService.factoryStatus==3 || sharedService.factoryStatus==0 || sharedService.factoryStatus==2"  class="col-12  col-lg-4 col-md-6 col-sm-12">
-                    <a  [routerLink]="'/pages/customs-items-update/'+factoryId+'/'+periodId">
+                <li *ngIf="sharedService.factoryStatus==3 || sharedService.factoryStatus==0 || sharedService.factoryStatus==2"
+                    class="col-12  col-lg-4 col-md-6 col-sm-12">
+                    <a [routerLink]="'/pages/customs-items-update/'+factoryId+'/'+periodId">
                         <svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px"
-                            viewBox="0 0 32 32" xml:space="preserve" fill="#000000">
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px" viewBox="0 0 32 32"
+                            xml:space="preserve" fill="#000000">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
                             </g>
@@ -221,37 +241,15 @@
                         </svg>
                         <span> بيانات تحديث البند الجمركي</span>
                     </a>
-                    <span class="completed"  placement="bottom" title=""
-                        tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
+                    <span class="completed" placement="bottom"><i
+                            class="icon-ok"></i></span>
                 </li>
 
-                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12  col-lg-4 col-md-6 col-sm-12">
-                    <a  [routerLink]="'/pages/customs-items-check/'+factoryId+'/'+periodId">
-                        <svg width="64px" height="64px" viewBox="0 0 1024 1024" class="icon" version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" fill="#000000">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
-                            </g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path
-                                    d="M981.333333 469.333333a21.333333 21.333333 0 0 0-21.333333 21.333334v85.333333a85.333333 85.333333 0 0 1-85.333333 85.333333H149.333333a85.333333 85.333333 0 0 1-85.333333-85.333333V149.333333a85.333333 85.333333 0 0 1 85.333333-85.333333h725.333334a85.333333 85.333333 0 0 1 85.333333 85.333333 21.333333 21.333333 0 0 0 42.666667 0 128 128 0 0 0-128-128H149.333333a128 128 0 0 0-128 128v426.666667a128 128 0 0 0 128 128h725.333334a128 128 0 0 0 128-128v-85.333333a21.333333 21.333333 0 0 0-21.333334-21.333334z"
-                                    fill="#000000"></path>
-                                <path
-                                    d="M981.333333 298.666667a21.333333 21.333333 0 0 0-21.333333 21.333333v85.333333a21.333333 21.333333 0 0 0 42.666667 0v-85.333333a21.333333 21.333333 0 0 0-21.333334-21.333333zM966.186667 219.52a21.333333 21.333333 0 0 0 0 30.293333 21.333333 21.333333 0 0 0 30.293333 0l2.56-3.413333a11.946667 11.946667 0 0 0 1.92-3.626667 13.226667 13.226667 0 0 0 1.706667-3.84 26.88 26.88 0 0 0 0-4.266666 21.333333 21.333333 0 0 0-36.48-15.146667zM896 960H128a21.333333 21.333333 0 0 0 0 42.666667h768a21.333333 21.333333 0 0 0 0-42.666667zM682.666667 853.333333a21.333333 21.333333 0 0 0 0-42.666666H341.333333a21.333333 21.333333 0 0 0 0 42.666666zM256 576a21.333333 21.333333 0 0 0 21.333333 21.333333h258.773334a21.333333 21.333333 0 0 0 13.226666-4.693333l134.4-106.666667 1.92-1.92 1.493334-1.493333a21.333333 21.333333 0 0 0 2.773333-4.693333l109.866667-277.333334A21.333333 21.333333 0 0 0 789.333333 170.666667l-158.506666-64a21.333333 21.333333 0 0 0-27.733334 11.946666l-109.866666 277.333334A21.333333 21.333333 0 0 0 490.666667 405.333333v3.413334L512 554.666667H277.333333a21.333333 21.333333 0 0 0-21.333333 21.333333z m282.24-136.96l90.24 35.84-76.586667 61.013333zM633.813333 155.733333l119.04 47.146667-94.293333 238.08-118.826667-47.146667z"
-                                    fill="#000000"></path>
-                            </g>
-                        </svg>
-                        <span> التحقق من صحة البند الجمركي على مستوى 12</span>
-                    </a>
-                    <span class="completed"  placement="bottom" title=""
-                        tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
-                </li>
-
-                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12  col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2"
+                    class="col-12  col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/factory-products/'+factoryId+'/'+periodId">
-                        <svg fill="#000000" viewBox="0 0 60 60" id="Capa_1" version="1.1"
-                            xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg fill="#000000" viewBox="0 0 60 60" id="Capa_1" version="1.1" xml:space="preserve"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
                             </g>
@@ -415,11 +413,16 @@
                         </svg>
                         <span>بيانات المنتجات </span>
                     </a>
-                    <span class="completed"  placement="bottom" title=""
-                        tooltip=" تم إدخال البيانات وتحديثها"><i class="icon-ok"></i></span>
+                    <span class="completed" *ngIf="screenStatuse.ProductData; else elseproduct" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
+                        class="icon-ok"></i></span>
+
+                        <ng-template #elseproduct>
+                            <app-uncompleted-warning></app-uncompleted-warning>
+                        </ng-template>
 
                 </li>
-                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2"
+                    class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/actual-production-and-designed-capacity/'+factoryId+'/'+periodId">
                         <svg fill="#000000" width="64px" height="64px" viewBox="0 0 256 256" id="Flat"
                             xmlns="http://www.w3.org/2000/svg">
@@ -434,31 +437,17 @@
                         </svg>
                         <span> بيانات كمية الإنتاج الفعلي والطاقة التصميمية </span>
 
-                        
+
                     </a>
-                    <span class="uncompleted-warning"  placement="bottom"
-                        title="" tooltip=" لم يتم إدخال البيانات وتحديثها">
-                        <svg fill="#ffffff" height="18px" width="18px" version="1.1" id="Capa_1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                            viewBox="0 0 489.418 489.418" xml:space="preserve" stroke="#ffffff">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
-                            </g>
-                            <g id="SVGRepo_iconCarrier">
-                                <g>
-                                    <path
-                                        d="M244.709,389.496c18.736,0,34.332-14.355,35.91-33.026l24.359-290.927c1.418-16.873-4.303-33.553-15.756-46.011 C277.783,7.09,261.629,0,244.709,0s-33.074,7.09-44.514,19.532C188.74,31.99,183.022,48.67,184.44,65.543l24.359,290.927 C210.377,375.141,225.973,389.496,244.709,389.496z">
-                                    </path>
-                                    <path
-                                        d="M244.709,410.908c-21.684,0-39.256,17.571-39.256,39.256c0,21.683,17.572,39.254,39.256,39.254 s39.256-17.571,39.256-39.254C283.965,428.479,266.393,410.908,244.709,410.908z">
-                                    </path>
-                                </g>
-                            </g>
-                        </svg>
-               
-                    </span>
+                    <span class="completed" *ngIf="screenStatuse.ActualProduction; else elseproduction" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
+                        class="icon-ok"></i></span>
+
+                        <ng-template #elseproduction>
+                            <app-uncompleted-warning></app-uncompleted-warning>
+                        </ng-template>
                 </li>
-                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2"
+                    class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/factory-raw-materials/'+factoryId+'/'+periodId">
                         <svg fill="#000000" height="200px" width="200px" version="1.1" id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -520,28 +509,15 @@
                         </svg>
                         <span>بيانات المواد الأولية </span>
                     </a>
-                    <span class="uncompleted-warning"  placement="bottom"
-                        title="" tooltip=" لم يتم إدخال البيانات وتحديثها">
-                        <svg fill="#ffffff" height="18px" width="18px" version="1.1" id="Capa_1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                            viewBox="0 0 489.418 489.418" xml:space="preserve" stroke="#ffffff">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
-                            </g>
-                            <g id="SVGRepo_iconCarrier">
-                                <g>
-                                    <path
-                                        d="M244.709,389.496c18.736,0,34.332-14.355,35.91-33.026l24.359-290.927c1.418-16.873-4.303-33.553-15.756-46.011 C277.783,7.09,261.629,0,244.709,0s-33.074,7.09-44.514,19.532C188.74,31.99,183.022,48.67,184.44,65.543l24.359,290.927 C210.377,375.141,225.973,389.496,244.709,389.496z">
-                                    </path>
-                                    <path
-                                        d="M244.709,410.908c-21.684,0-39.256,17.571-39.256,39.256c0,21.683,17.572,39.254,39.256,39.254 s39.256-17.571,39.256-39.254C283.965,428.479,266.393,410.908,244.709,410.908z">
-                                    </path>
-                                </g>
-                            </g>
-                        </svg>
-                    </span>
+                    <span class="completed" *ngIf="screenStatuse.RawMaterial; else elserowMaterial" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
+                        class="icon-ok"></i></span>
+
+                        <ng-template #elserowMaterial>
+                            <app-uncompleted-warning></app-uncompleted-warning>
+                        </ng-template>
                 </li>
-                <li *ngIf="sharedService.factoryStatus==0|| sharedService.factoryStatus==2" class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li *ngIf="sharedService.factoryStatus==0|| sharedService.factoryStatus==2"
+                    class="col-12 col-lg-4 col-md-6 col-sm-12">
                     <a [routerLink]="'/pages/actual-raw-materials/'+factoryId+'/'+periodId">
                         <svg fill="#000000" height="64px" width="64px" version="1.1" id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -572,26 +548,12 @@
                         </svg>
                         <span> بيانات المواد الأولية الفعلية</span>
                     </a>
-                    <span class="uncompleted-warning"  placement="bottom"
-                        title="" tooltip=" لم يتم إدخال البيانات وتحديثها">
-                        <svg fill="#ffffff" height="18px" width="18px" version="1.1" id="Capa_1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                            viewBox="0 0 489.418 489.418" xml:space="preserve" stroke="#ffffff">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
-                            </g>
-                            <g id="SVGRepo_iconCarrier">
-                                <g>
-                                    <path
-                                        d="M244.709,389.496c18.736,0,34.332-14.355,35.91-33.026l24.359-290.927c1.418-16.873-4.303-33.553-15.756-46.011 C277.783,7.09,261.629,0,244.709,0s-33.074,7.09-44.514,19.532C188.74,31.99,183.022,48.67,184.44,65.543l24.359,290.927 C210.377,375.141,225.973,389.496,244.709,389.496z">
-                                    </path>
-                                    <path
-                                        d="M244.709,410.908c-21.684,0-39.256,17.571-39.256,39.256c0,21.683,17.572,39.254,39.256,39.254 s39.256-17.571,39.256-39.254C283.965,428.479,266.393,410.908,244.709,410.908z">
-                                    </path>
-                                </g>
-                            </g>
-                        </svg>
-                    </span>
+                    <span class="completed" *ngIf="screenStatuse.ActualRawMaterila; else elserowAcualMaterial" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
+                        class="icon-ok"></i></span>
+
+                        <ng-template #elserowAcualMaterial>
+                            <app-uncompleted-warning></app-uncompleted-warning>
+                        </ng-template>
                 </li>
             </ul>
 
@@ -609,8 +571,8 @@
 
 <div class="submit-info">
     <button class="btn" disabled>
-        <svg fill="none" height="24" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
-            stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <svg fill="none" height="24" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M22 11.07V12a10 10 0 1 1-5.93-9.14" />
             <polyline points="23 3 12 14 9 11" />
         </svg>

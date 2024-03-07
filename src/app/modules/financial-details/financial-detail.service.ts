@@ -22,7 +22,7 @@ export class FinancialDetailService {
   }
 
   getOne(id:number,year:number): Observable<any> {
-    debugger
+    
     return this.http.get<any>(`FactoryFinancials?id=${id}&&year=${year}`);
   }
   create(request: FinancialModel): Observable<any> {

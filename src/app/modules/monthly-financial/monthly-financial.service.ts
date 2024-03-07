@@ -11,7 +11,7 @@ export class MonthlyFinancialService {
   constructor(private http:HttpClient) { }
 
   getOne(id:number,periodId:number): Observable<any> {
-    debugger
+    
     return this.http.get<any>(`FactoryMonthlyFinancials?id=${id}&&periodId=${periodId}`);
   }
   create(request: MonthlyFinancialModel): Observable<any> {

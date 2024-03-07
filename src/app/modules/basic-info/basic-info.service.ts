@@ -22,8 +22,8 @@ export class BasicInfoService {
     return this.http.put<any>('Factories', factory);
   }
 
-  getAll(factoryId:string): Observable<any> {
-    return this.http.get<any>('FactoryFiles/'+factoryId);
+  getAll(factoryId:string,periodId:string): Observable<any> {
+    return this.http.get<any>(`FactoryFiles?factoryId=${factoryId}&&periodId=${periodId}`);
   }
   create(request: BasicInfoModule): Observable<any> {
     return this.http.post<any>('FactoryFiles', request);

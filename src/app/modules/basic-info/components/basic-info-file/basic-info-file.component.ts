@@ -15,6 +15,7 @@ export class BasicInfoFileComponent implements OnInit {
   request=new BasicFileModel();
   src!:string;
   @Input() factoryId!:string;
+  @Input() periodId!:string;
   constructor(
     private fileService:FileService,
     private basicInfoService:BasicInfoService,
@@ -27,7 +28,7 @@ export class BasicInfoFileComponent implements OnInit {
 
   getFiles() {
     this.basicInfoService
-      .getAll(this.factoryId)
+      .getAll(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
@@ -50,8 +51,8 @@ export class BasicInfoFileComponent implements OnInit {
   }
 
   save(){
-    
     this.request.FactoryId=Number(this.factoryId);
+    this.request.PeriodId=Number(this.periodId);
     
     this.basicInfoService
     .create(this.request)

@@ -38,7 +38,7 @@ export class FinancialDetailFormComponent {
     this.periodService
     .getOne(this.periodId)
     .subscribe((res: any) => {
-      debugger
+      
       this.year = res.Data.Year;
       this.getFinancial()
     });

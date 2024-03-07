@@ -52,7 +52,7 @@ export class FactoryContactFormComponent implements OnInit {
   }
 
   getContact() {
-    debugger
+    
     this.factoryContactService
       .getOne(this.factoryId)
       .subscribe((res: any) => {

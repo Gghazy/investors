@@ -50,7 +50,7 @@ constructor(
     });
   }
   save(){
-    debugger
+    
     this.request.ProductId=this.productId;
     this.request.PeriodId=this.periodId;
     if (this.actualCapacityProductId==0){

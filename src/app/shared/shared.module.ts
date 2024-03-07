@@ -16,6 +16,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { ListComponent } from './components/list/list.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { RouterModule } from '@angular/router';
+import { UncompletedWarningComponent } from './components/uncompleted-warning/uncompleted-warning.component';
 
 
 
@@ -27,12 +28,15 @@ const COMPONENTS = [
   HeaderComponent,
   FooterComponent,
   PaginationComponent,
-  ListComponent
+  ListComponent,
+  UncompletedWarningComponent
 ];
 
 
 @NgModule({
-  declarations: [[...COMPONENTS]],
+  declarations: [[...COMPONENTS
+    
+  ]],
   exports:[
     [...COMPONENTS],
     NgMultiSelectDropDownModule,

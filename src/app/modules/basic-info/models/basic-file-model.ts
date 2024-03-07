@@ -5,6 +5,7 @@ export class BasicFileModel {
     Path !: string;
     AttachmentId !: number;
     FactoryId!: number;
+    PeriodId!: number;
 }
 
 
