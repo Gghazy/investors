@@ -36,8 +36,8 @@
               <td>{{i+1}}</td>
               <td>
                 <div class="form-check">
-                  <input [(ngModel)]="product.HasCustomLevel" class="form-check-input" type="checkbox" value="" id=""
-                    (change)="handleCheckboxChange($event)" />
+                  <input [checked]="product.IsActive"  class="form-check-input" type="checkbox" value="" id=""
+                    (change)="handleCheckboxChange(product.Id)" />
                 </div>
               </td>
               <td> {{product.Id}}{{product.ProductName}}({{product.ItemNumber}})</td>
@@ -49,5 +49,11 @@
           [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
       </div>
     </div>
+    <div class="form-footer">
+      <div class="col-12">
+          <button class="btn btn-primary me-1" (click)="save()">حفظ</button>
+          <a [routerLink]="'/pages/factory-landing/'+factoryId" class="btn btn-danger">الغاء</a>
+      </div>
+  </div>
   </section>
   

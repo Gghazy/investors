@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FileService } from 'src/app/core/service/file.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { LookUpService } from 'src/app/core/service/look-up.service';
+import { ProductSearch } from 'src/app/modules/customs-items-update/models/product-search';
 
 @Component({
   selector: 'app-factory-raw-materials-lists',
@@ -26,7 +27,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   materials = new ResultResponse<RawMaterial>();
   rawMaterials: any = [];
   request = new RawMaterial();
-  search = new RawMaterialSearch();
+  search = new ProductSearch();
   selectedProducts: any = [];
   ProductName: any;
   ss: any = [];

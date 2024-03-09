@@ -9,7 +9,6 @@ export class ProductModel {
         AnyNewProducts!:boolean;
         ItemNumber!:string;
         CR!:string;
-        HasCustomLevel!:boolean;
         Status!:string;
         UnitName!:string;
         ParentName!:string;
@@ -23,6 +22,7 @@ export class ProductModel {
         Hs12Code!:string;
         Hs12NameAr!:string;
         Hs12NameEn!:string;
+        IsActive!:boolean;
 }
 
 

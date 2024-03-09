@@ -11,6 +11,7 @@ import { ProductModel } from 'src/app/modules/customs-items-update/models/produc
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductSearch } from 'src/app/modules/customs-items-update/models/product-search';
 
 @Component({
   selector: 'app-factory-raw-materials-form',
@@ -28,7 +29,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   showInput: boolean = true
   units!: LookUpModel[];
   request = new RawMaterial();
-  search = new RawMaterialSearch();
+  search = new ProductSearch();
   selectedProducts: any = [];
   items: any = [];
   periodId: any;
