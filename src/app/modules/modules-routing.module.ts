@@ -22,11 +22,7 @@ const routes: Routes = [
       loadChildren: () =>
         import('../modules/basic-info/basic-info.module').then((m) => m.BasicInfoModule)
     },
-    {
-      path: 'customs-items-check/:id/:periodid',
-      loadChildren: () =>
-        import('../modules/customs-items-check/customs-items-check.module').then((m) => m.CustomsItemsCheckModule)
-    },
+
     {
       path: 'customs-items-update/:id/:periodid',
       loadChildren: () =>
