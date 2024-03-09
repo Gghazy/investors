@@ -65,6 +65,14 @@ export class FactoryLocationFormComponent {
       });
   }
 
+  onEntitySelect(id:number){
+    this.lookUpService
+    .getCityByEntity(id)
+    .subscribe((res: any) => {
+      
+      this.cities = res.Data;
+    });
+  }
   getFactoryEntities() {
     this.lookUpService
       .getAllFactoryEntities()
@@ -73,6 +81,14 @@ export class FactoryLocationFormComponent {
       });
   }
 
+  onCitySelect(id:number){
+    this.lookUpService
+    .getAreaByCity(id)
+    .subscribe((res: any) => {
+      
+      this.cities = res.Data;
+    });
+  }
   save(){
     this.request.FactoryId=this.factoryId;
     if (this.request.Id==0){

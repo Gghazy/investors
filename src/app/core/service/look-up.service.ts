@@ -25,4 +25,12 @@ export class LookUpService {
   getAllReasons(): Observable<any> {
     return this.http.get<any>('Reasons');
   }
+
+  getCityByEntity(id:number): Observable<any> {
+    return this.http.get<any>('Cities/ByEntity?id='+id);
+  }
+
+  getAreaByCity(id:number): Observable<any> {
+    return this.http.get<any>('IndustrialAreas/ByCity?id='+id);
+  }
 }
