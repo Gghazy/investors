@@ -18,6 +18,7 @@ export class ProductFormComponent implements OnInit {
   request = new ProductModel();
   units!: LookUpModel[];
   isDisabled!: boolean;
+  products!: ProductModel[];
 
   constructor(
     private factoryProductService: FactoryProductService,

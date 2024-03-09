@@ -7,6 +7,12 @@
         <label class="form-label"> اسم المنتج <span class="required">*</span></label>
         <input disabled  type="text" name="ProductName" class="form-control"  [(ngModel)]="request.ProductName">
       </div>
+
+      <div class="col-md-6">
+        <label for="" class="form-label">اختر التصنيف الجمركي على مستوى 12 المناسب لمنتجك <span class="required">*</span></label>
+        <ng-multiselect-dropdown *ngIf="productId==0" [placeholder]="'أختر'" [settings]="dropdownSettings" [data]="products">
+        </ng-multiselect-dropdown>
+    </div>
     
     <div class="col-md-6">
         <label class="form-label"> 	اسم المنتج التجاري <span class="required">*</span></label>
