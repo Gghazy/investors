@@ -44,7 +44,6 @@ export class CustomerUpdateListComponent implements OnInit {
     }
 
     handleCheckboxChange(productId: number) {
-      debugger
     let newObject: ProductPeriodActiveModel = {
       Id:0,
       PeriodId:parseInt(this.periodId),

@@ -12,102 +12,102 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit {
-@Input() productId!:number;  
-@Input() factoryId!:number;  
-@Output()close=new EventEmitter<boolean>();
-request=new ProductModel();
-units!:LookUpModel[];
-isDisabled!:boolean;
+  @Input() productId!: number;
+  @Input() factoryId!: number;
+  @Output() close = new EventEmitter<boolean>();
+  request = new ProductModel();
+  units!: LookUpModel[];
+  isDisabled!: boolean;
 
-constructor(
-  private factoryProductService:FactoryProductService,
-  private lookUpService:LookUpService,
-  private fileService:FileService,
-  private toastr: ToastrService
+  constructor(
+    private factoryProductService: FactoryProductService,
+    private lookUpService: LookUpService,
+    private fileService: FileService,
+    private toastr: ToastrService
 
-  ){}
+  ) { }
   ngOnInit(): void {
-    if(this.productId!=0){
+    if (this.productId != 0) {
       this.getOne()
 
     }
     this.getUnits()
-    
+
   }
 
-  getOne(){
-    
+  getOne() {
+
     this.factoryProductService
-    .getOne(this.productId)
-    .subscribe((res: any) => {
-      
-      this.request = res.Data;
-    });
+      .getOne(this.productId)
+      .subscribe((res: any) => {
+
+        this.request = res.Data;
+      });
   }
 
-  getUnits(){
+  getUnits() {
     this.lookUpService
       .getAllUnits()
       .subscribe((res: any) => {
-        
+
         this.units = res.Data;
         this.unitChange();
 
       });
   }
-savePaper(file:any){
-  if (file.target.files.length > 0) {
-    this.fileService
-      .addFile(file.target.files[0])
-      .subscribe((res: any) => {
-        this.request.PeperId = res.Data.Id
-      });
-  }
-}
-savePhoto(file:any){
-  if (file.target.files.length > 0) {
-    this.fileService
-      .addFile(file.target.files[0])
-      .subscribe((res: any) => {
-        this.request.PhototId = res.Data.Id
-      });
-  }
-}
-unitChange()
-{
   
-  const selectedOption = this.units.find(option => option.Id === this.request.UnitId);
-  if(selectedOption?.Name=='كيلو غرام')
-  {
-    this.request.Kilograms_Per_Unit=1;
-    this.isDisabled=true;
+  savePaper(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.request.PeperId = res.Data.Id
+        });
+    }
   }
-  else if(selectedOption?.Name=='طن بريطاني'){
-    this.request.Kilograms_Per_Unit=1000;
-    this.isDisabled=true;
+  savePhoto(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.request.PhototId = res.Data.Id
+        });
+    }
   }
-  else{
-    this.isDisabled=false;
+  unitChange() {
+    debugger
+    const selectedOption = this.units.find(option => option.Id === this.request.UnitId);
+    if (selectedOption?.Name == 'kilograms') {
+      this.request.Kilograms_Per_Unit = 1;
+      this.isDisabled = true;
+    }
+    else if (selectedOption?.Name == 'طن بريطاني') {
+      this.request.Kilograms_Per_Unit = 1000;
+      this.isDisabled = true;
+    }
+    else {
+      this.isDisabled = false;
 
+    }
   }
-}
-save(){
-  this.request.FactoryId=this.factoryId;
-  if (this.productId==0){
-    this.factoryProductService
-    .create(this.request)
-    .subscribe((res: any) => {
-      this.close.emit(true);
-      this.toastr.success("تم الحفظ");
-    });
+  save() {
+    this.request.FactoryId = this.factoryId;
+    if (this.productId == 0) {
+      this.factoryProductService
+        .create(this.request)
+        .subscribe((res: any) => {
+          this.close.emit(true);
+          this.toastr.success("تم الحفظ");
+        });
+    }
+    else {
+      this.factoryProductService
+        .update(this.request)
+        .subscribe((res: any) => {
+          this.close.emit(true);
+          this.toastr.success("تم الحفظ");
+        });
+    }
   }
-  else{
-    this.factoryProductService
-    .update(this.request)
-    .subscribe((res: any) => {
-      this.close.emit(true);
-      this.toastr.success("تم الحفظ");
-    });
-  }
-}
+
 }
