@@ -44,7 +44,7 @@
             <div class="col-md-6">
                 <label class="form-label"> المنطقة الصناعية<span class="required">*</span></label>
                 <select class="form-select" name="IndustrialAreaId" 
-                [(ngModel)]="request.IndustrialAreaId" (change)="onEntitySelect(request.IndustrialAreaId)">
+                [(ngModel)]="request.IndustrialAreaId" >
                     <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
                 </select>
             </div>
