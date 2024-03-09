@@ -24,7 +24,7 @@ export class FactoryLandingFormComponent implements OnInit {
   factoryName!:string;
   periodStartDate!:string;
   periodEndDate!:string;
-  screenStatuse!:ScreenStatusModel;
+  screenStatuse=new ScreenStatusModel();
 
 
   request = new FactoryStatus();
@@ -53,6 +53,7 @@ export class FactoryLandingFormComponent implements OnInit {
     this.factoryLandingService
       .getScreenStatus(this.factoryId,this.periodId)
       .subscribe((res: any) => {
+        debugger
         this.screenStatuse=res.Data
       });
   }
@@ -80,8 +81,6 @@ export class FactoryLandingFormComponent implements OnInit {
 this.request.FactoryId=this.factoryId
 this.request.PeriodId=this.periodId
 this.request.UpdateStatus=true
-
-    console.log(this.request)
     this.factoryLandingService
           .create(this.request)
           .subscribe((res: any) => {

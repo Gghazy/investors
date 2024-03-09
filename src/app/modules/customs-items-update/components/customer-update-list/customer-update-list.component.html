@@ -29,7 +29,7 @@
               المنتجات المسجلة في الترخيص الصناعي بالتصنيف الجمركي على
               مستوى 10
             </th>
-            <th>اختر التصنيف الجمركي على مستوى 12 المناسب لمنتجك</th>
+            <th> التصنيف الجمركي على مستوى 12</th>
           </ng-template>
           <ng-template #body>
             <tr *ngFor="let product of products.Items let i=index">
@@ -40,15 +40,8 @@
                     (change)="handleCheckboxChange($event)" />
                 </div>
               </td>
-              <td>{{product.ProductName}}({{product.ItemNumber}})</td>
-              <td>
-                <div *ngIf="product.HasCustomLevel">
-                  <a (click)="selectLevel(product.Id,product.ProductName)"  class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#modal">
-                    اختر التصنيف المناسب 
-    
-                  </a>
-                </div>
-              </td>
+              <td> {{product.Id}}{{product.ProductName}}({{product.ItemNumber}})</td>
+              <td>{{product.Hs12NameAr}}({{product.Hs12Code}})</td>
             </tr>
           </ng-template>
         </app-list>
@@ -58,17 +51,3 @@
     </div>
   </section>
   
-  <!-- Modal Update-->
-  <div class="modal fade" id="modal" tabindex="-1"  aria-labelledby="exampleModalLabel"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
-                <button type="button" #closeModal class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <app-customer-update-form (saveChanage)="saveChanage()" *ngIf="productId!=0&&productId!=undefined" [factoryId]="factoryId" [productName]="productName" [productId]="productId"></app-customer-update-form>
-            </div>
-        </div>
-    </div>
-  </div>

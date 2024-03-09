@@ -60,7 +60,7 @@ savePaper(file:any){
     this.fileService
       .addFile(file.target.files[0])
       .subscribe((res: any) => {
-        this.request.PaperId = res.Data.Id
+        this.request.PeperId = res.Data.Id
       });
   }
 }
@@ -69,7 +69,7 @@ savePhoto(file:any){
     this.fileService
       .addFile(file.target.files[0])
       .subscribe((res: any) => {
-        this.request.PhotoId = res.Data.Id
+        this.request.PhototId = res.Data.Id
       });
   }
 }

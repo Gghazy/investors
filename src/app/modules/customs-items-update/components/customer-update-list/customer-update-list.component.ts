@@ -4,6 +4,7 @@ import { ResultResponse } from 'src/app/core/models/result-response';
 import { ProductSearch } from '../../models/product-search';
 import { CustomsItemsUpdateService } from '../../customs-items-update.service';
 import { ActivatedRoute } from '@angular/router';
+import { FactoryProductService } from 'src/app/modules/factory-products/factory-product.service';
 
 @Component({
   selector: 'app-customer-update-list',
@@ -12,21 +13,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CustomerUpdateListComponent implements OnInit {
 
-  factoryId:any;
-  periodId:any;
-  search=new ProductSearch(); 
+  factoryId: any;
+  periodId: any;
+  search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
-  productName!:string;
-  productId!:number;
-  @ViewChild('closeModal') Modal!: ElementRef
-  constructor(private route: ActivatedRoute,private customsItemsUpdateService:CustomsItemsUpdateService){
+  productName!: string;
+  productId!: number;
+  constructor(private route: ActivatedRoute, private factoryProductService: FactoryProductService,
+  ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-  }  
+  }
   ngOnInit() {
     this.getProducts()
   }
- 
+
   handleCheckboxChange(event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
     const closestTr = (event.target as HTMLInputElement).closest('tr');
@@ -44,31 +45,19 @@ export class CustomerUpdateListComponent implements OnInit {
     }
   }
 
-  getProducts() { 
-    
-    this.search.FactoryId=this.factoryId;
-    this.customsItemsUpdateService
+  getProducts() {
+
+    this.search.FactoryId = this.factoryId;
+    this.factoryProductService
       .getAllPagination(this.search)
       .subscribe((res: any) => {
         this.products = res.Data;
       });
   }
-  pageChanged(data:any){
-    this.search.PageNumber=data;
+  pageChanged(data: any) {
+    this.search.PageNumber = data;
     this.getProducts();
 
   }
-  selectLevel(productId:number,productName:string){
-    this.productId=productId;
-    this.productName=productName;
-  }
-
-  saveChanage(){
-    this.productName="";
-    this.productId=0;
-    this.Modal.nativeElement.click()
-    this.getProducts();
-    
-  }
-  
+ 
 }
