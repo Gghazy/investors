@@ -44,8 +44,8 @@
                             <input type="number" class="form-control" style="max-width: 117px;"
                                 [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)">
                         </td>
-                        <td>
-                            <select [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)">
+                        <td disabled>
+                            <select [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)" disabled> 
                                 <option *ngFor="let item of units" [value]="item.Id">
                                     {{ item.Name }}
                                 </option>
@@ -66,7 +66,7 @@
                                 style="max-width: 117px;" (change)="onSelectionChange(material)">
                         </td>
                         <td>
-                            <select [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)">
+                            <select [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)" disabled>
                                 <option *ngFor="let item of units" [value]="item.Id">
                                     {{ item.Name }}
                                 </option>

@@ -108,8 +108,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
                   'UsedQuantity': 0,
                   'CurrentStockQuantity': 0,
-                  'StockUnitId': 0,
-                  'UsageUnitId': 0,
+                  'StockUnitId': item.UnitId,
+                  'UsageUnitId': item.UnitId,
                   'AverageWeightKG': item.AverageWeightKG,
 
                 })
@@ -145,17 +145,17 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
   onSelectionChange(row: ActualRawMaterial) {
   //  console.log(row)
-    if (row.UsageUnitId == 11) {
-      row.CurrentStockQuantity_KG = row.CurrentStockQuantity
-    }
-    if (row.StockUnitId == 11) {
-      row.CurrentStockQuantity_KG = row.CurrentStockQuantity
-    }
-    if (row.StockUnitId != 11 || row.UsageUnitId != 15) {
+    // if (row.UsageUnitId == 11) {
+    //   row.CurrentStockQuantity_KG = row.CurrentStockQuantity
+    // }
+    // if (row.StockUnitId == 11) {
+    //   row.CurrentStockQuantity_KG = row.CurrentStockQuantity
+    // }
+    // if (row.StockUnitId != 11 || row.UsageUnitId != 15) {
       row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
-      row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
+       row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
 
-    }
+    // }
 
   }
 
