@@ -29,6 +29,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   request = new RawMaterial();
   search = new ProductSearch();
   selectedProducts: any = [];
+  selectedItem!: any;
   ProductName: any;
   ss: any = [];
   data: any = [];
@@ -158,23 +159,23 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   onUnitSelect(data: RawMaterial) {
 
 
-    let selectedValue: any = data.UnitId
+  //   let selectedValue: any = data.UnitId
 
-    console.log(data.MaximumMonthlyConsumption)
-    if (selectedValue != "11" || selectedValue != "15") {
-      this.showKG = true
-    //  console.log(this.showInput)
-    }
-    if (selectedValue == "11") {
-      this.showKG = false
-      data.AverageWeightKG = data.MaximumMonthlyConsumption
-   //   console.log(this.request)
-    }
-    if (selectedValue == "15") {
-      this.showKG = true
-      data.AverageWeightKG = 1000
-     // console.log(this.showInput)
-    }
+  //   console.log(data.MaximumMonthlyConsumption)
+  //   if (selectedValue != "11" || selectedValue != "15") {
+  //     this.showKG = true
+  //   //  console.log(this.showInput)
+  //   }
+  //   if (selectedValue == "11") {
+  //     this.showKG = false
+  //     data.AverageWeightKG = data.MaximumMonthlyConsumption
+  //  //   console.log(this.request)
+  //   }
+  //   if (selectedValue == "15") {
+  //     this.showKG = true
+  //     data.AverageWeightKG = 1000
+  //    // console.log(this.showInput)
+  //   }
 
   }
 
@@ -185,10 +186,10 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     this.search.FactoryId = this.factoryId;
     console.log(this.data)
     this.productService
-      .getAllPagination(this.search)
+      .getAll(this.factoryId)
       .subscribe((res: any) => {
 
-        this.rawMaterials = res.Data.Items;
+        this.rawMaterials = res.Data;
         this.materials = res.Data;
         console.log(this.rawMaterials)
         console.log(this.materials)
@@ -198,7 +199,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
         this.rawMaterials.forEach((item: any) => {
           this.data.push({
             'Id':0,
-            'CustomItemRawMaterialId': 1,
+            'CustomItemRawMaterialId': item.Id,
             'CustomItemName':  item.Hs12NameAr+"("+item.Hs12Code+")",
             'Name': '',
             'MaximumMonthlyConsumption': 0,
@@ -209,15 +210,27 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
             'AttachmentId': 0,
             'PaperId': 0,
             'PhotoId': 0,
-
-            ' UnitId': 0,
-            ' ProductIds': [{}],
+            'UnitId':0,
+            'ProductIds':'',
 
           })
         })
       })
 
   }
+
+  onSelectionChange(item:any,i: number) {
+    console.log(item)
+   
+     this.selectedItem = this.products.find(item => item.Id == this.data[i].CustomItemRawMaterialId);
+    // if (selectedItem) {
+      item.UnitId= this.selectedItem.UnitId ;
+      
+    // } 
+    console.log(this.selectedItem)
+  }
+
+
   savePaper(file: any, i: number) {
     if (file.target.files.length > 0) {
       this.fileService
@@ -244,9 +257,9 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
     this.search.FactoryId = this.factoryId;
     this.productService
-      .getAllPagination(this.search)
+      .getAll(this.factoryId)
       .subscribe((res: any) => {
-        this.products = res.Data.Items;
+        this.products = res.Data;
       });
 
   }
@@ -289,7 +302,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
           .subscribe((res: any) => {
             this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
 
-            this.toastr.success("تم الحفظ");
+         
           });
 
 
@@ -310,5 +323,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       }
 
     });
+    this.toastr.success("تم الحفظ");
   }
+
 }

@@ -85,7 +85,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     };
   }
 
-
+  onSelectionChange() {
+    const selectedItem = this.products.find(item => item.Id == this.request.CustomItemRawMaterialId);
+    if (selectedItem) {
+      this.request.UnitId = selectedItem.UnitId;
+      
+    } 
+    console.log(selectedItem)
+  }
 
   getProducts() {
 

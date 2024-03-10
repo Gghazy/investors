@@ -27,7 +27,7 @@
         </div>
         <ul class="list-review factory-lines p-0" *ngFor="let material of data ; let j = index">
         
-        <div *ngIf="j+1 <= materialCount">
+        <!-- <div *ngIf="j+1 <= materialCount"> -->
           
                 <li>
                     <h4> المادة رقم {{j+1}}</h4>
@@ -37,7 +37,13 @@
                             <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اسم البند الجمركي
                                 <i>؟</i>
                             </label>
-                            <input type="text" class="form-control" [(ngModel)]="material.CustomItemName" disabled>
+                            <select class="form-select" (change)="onSelectionChange(material,j+1)" [(ngModel)]="material.CustomItemName">
+                                <option *ngFor="let item of products" [value]="item.Id">
+                                    {{ item.Hs12NameAr }} ({{item. Hs12Code}})
+                                
+                                </option>
+                            </select>
+                            <!-- <input type="text" class="form-control" [(ngModel)]="material.CustomItemName" disabled> -->
 
                         </div>
                         <div class="col-md-3">
@@ -54,9 +60,9 @@
                             </label>
                             <div class="input-group">
                                 <input type="number" class="form-control"
-                                    [(ngModel)]="material.MaximumMonthlyConsumption">
+                                    [(ngModel)]="material.MaximumMonthlyConsumption"> 
                                 <select class="form-select" (change)="onUnitSelect(material)"
-                                    [(ngModel)]="material.UnitId">
+                                    [(ngModel)]="material.UnitId" disabled>
                                     <option *ngFor="let item of units" [value]="item.Id">
                                         {{ item.Name }}
                                     </option>
@@ -138,7 +144,7 @@
                 </li>
 
 
-            </div>
+            <!-- </div> -->
 
         </ul>
    
