@@ -182,21 +182,24 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
 
   getCustomRawMaterial() {
+    this.search.FactoryId = this.factoryId;
     console.log(this.data)
-    this.rawMaterialService
-      .getCustomItemRawMaterial()
+    this.productService
+      .getAllPagination(this.search)
       .subscribe((res: any) => {
 
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
+        console.log(this.rawMaterials)
+        console.log(this.materials)
         this.ss = res.Data;
-        this.rawMaterials = res.Data;
+       
        // console.log(this.rawMaterials)
         this.rawMaterials.forEach((item: any) => {
           this.data.push({
             'Id':0,
-            'CustomItemRawMaterialId': item.Id,
-            'CustomItemName': item.ItemName,
+            'CustomItemRawMaterialId': 1,
+            'CustomItemName':  item.Hs12NameAr+"("+item.Hs12Code+")",
             'Name': '',
             'MaximumMonthlyConsumption': 0,
             'AverageWeightKG': 0,
