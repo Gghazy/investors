@@ -13,6 +13,7 @@
          [settings]="dropdownSettings"
          [data]="products.Items"
          [(ngModel)]="selectProductId"
+         (onSelect)="productChanage()"
          >
         </ng-multiselect-dropdown>
     </div>

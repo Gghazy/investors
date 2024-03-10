@@ -17,6 +17,7 @@ import { ResultResponse } from 'src/app/core/models/result-response';
 export class ProductFormComponent implements OnInit {
   @Input() productId!: number;
   @Input() factoryId!: number;
+  @Input() periodId!: number;
   @Output() close = new EventEmitter<boolean>();
   request = new ProductModel();
   units!: LookUpModel[];
@@ -125,11 +126,19 @@ export class ProductFormComponent implements OnInit {
 
     }
   }
+  productChanage(){
+    debugger
+    this.request.UnitId= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.UnitId;
+    this.unitChange();
+
+  }
   save() {
     this.request.FactoryId = this.factoryId;
+    this.request.PeriodId = this.periodId;
     if(this.productId==0){
 
       this.request.ProductName= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.ProductName
+      this.request.ItemNumber= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.ItemNumber
     }
     if (this.productId == 0) {
       this.factoryProductService

@@ -71,6 +71,7 @@ constructor(
     
     this.request.ProductId=this.productId;
     this.request.PeriodId=this.periodId;
+    this.request.FactoryId=this.factoryId;
     if (this.actualCapacityProductId==0){
       this.actualProductionAndDesignedCapacityService
       .create(this.request)
