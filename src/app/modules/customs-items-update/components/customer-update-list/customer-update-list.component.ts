@@ -37,13 +37,14 @@ export class CustomerUpdateListComponent implements OnInit {
   }
 
     isChecked(item: ProductPeriodActiveModel): boolean {
+      
       debugger
-
-      let x=this.ProductPeriodActives.filter(x=>x.ProductId==item.ProductId);
-      return x==null?false:true;
+      let x=this.ProductPeriodActives.filter(x=>x.ProductId==item.ProductId) as ProductPeriodActiveModel[];
+      return x.length > 0;
     }
 
     handleCheckboxChange(productId: number) {
+      
     let newObject: ProductPeriodActiveModel = {
       Id:0,
       PeriodId:parseInt(this.periodId),
@@ -73,10 +74,7 @@ export class CustomerUpdateListComponent implements OnInit {
             PeriodId:parseInt(this.periodId),
             ProductId:obj.Id
           })
-        });
-
-        console.log(this.ProductPeriodActives)
-        
+        });        
       });
   }
   pageChanged(data: any) {
@@ -86,6 +84,7 @@ export class CustomerUpdateListComponent implements OnInit {
   }
  
   save(){
+    
       this.customsItemsUpdateService
       .create(this.ProductPeriodActives)
       .subscribe((res: any) => {

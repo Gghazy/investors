@@ -5,6 +5,9 @@ import { FactoryProductService } from '../../factory-product.service';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastrService } from 'ngx-toastr';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { ProductsNotInFactorySearch } from '../../models/products-not-in-factory-search';
+import { ResultResponse } from 'src/app/core/models/result-response';
 
 @Component({
   selector: 'app-product-form',
@@ -18,7 +21,12 @@ export class ProductFormComponent implements OnInit {
   request = new ProductModel();
   units!: LookUpModel[];
   isDisabled!: boolean;
-  products!: ProductModel[];
+  products = new ResultResponse<ProductModel>();
+  dropdownSettings!: IDropdownSettings;
+  search = new ProductsNotInFactorySearch();
+  isLoading = false;
+  selectProductId!:any;
+
 
   constructor(
     private factoryProductService: FactoryProductService,
@@ -32,7 +40,21 @@ export class ProductFormComponent implements OnInit {
       this.getOne()
 
     }
+    else {
+      this.getAllProductsNotInFactory();
+    }
     this.getUnits()
+
+    this.dropdownSettings = {
+      singleSelection: true,
+      enableCheckAll: false,
+      idField: 'Id',
+      textField: 'ProductName',
+      unSelectAllText: 'ازالة التحديد',
+      searchPlaceholderText: 'بحث',
+      itemsShowLimit: 2,
+      allowSearchFilter: true
+    };
 
   }
 
@@ -56,7 +78,20 @@ export class ProductFormComponent implements OnInit {
 
       });
   }
-  
+  getAllProductsNotInFactory() {
+    this.isLoading = true;
+    this.search.FactoryId = this.factoryId;
+    this.factoryProductService
+      .getAllProductsNotInFactory(this.search)
+      .subscribe((res: any) => {
+        this.products.PageCount=res.Data.PageCount;
+        this.products.TotalCount=res.Data.TotalCount;
+        this.products.PageNumber=res.Data.PageNumber;
+        this.products.PageSize=res.Data.PageSize;
+        this.products.Items = [...this.products.Items, ...res.Data.Items];
+         this.isLoading = false;
+      });
+  }
   savePaper(file: any) {
     if (file.target.files.length > 0) {
       this.fileService
@@ -76,7 +111,6 @@ export class ProductFormComponent implements OnInit {
     }
   }
   unitChange() {
-    debugger
     const selectedOption = this.units.find(option => option.Id === this.request.UnitId);
     if (selectedOption?.Name == 'kilograms') {
       this.request.Kilograms_Per_Unit = 1;
@@ -93,6 +127,10 @@ export class ProductFormComponent implements OnInit {
   }
   save() {
     this.request.FactoryId = this.factoryId;
+    if(this.productId==0){
+
+      this.request.ProductName= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.ProductName
+    }
     if (this.productId == 0) {
       this.factoryProductService
         .create(this.request)
@@ -110,5 +148,31 @@ export class ProductFormComponent implements OnInit {
         });
     }
   }
+  onSearch(event: Event) {
+    this.search.TxtSearch= (event.target as HTMLInputElement).value;
+    this.search.PageNumber=1;
+    this.products.Items=[];
+    this.isLoading = true;
+    this.factoryProductService
+      .getAllProductsNotInFactory(this.search)
+      .subscribe((res: any) => {
+       this.products=res.Data; 
+        this.isLoading = false;
+      });
 
+  }
+  onDropdownScroll(event: Event) {
+    const target = event.target as HTMLElement;
+
+    // Check if the user is near the bottom of the dropdown
+    const isAtBottom = target.scrollHeight - target.scrollTop === target.clientHeight;
+    if (isAtBottom) {
+      
+      if (!this.isLoading) {
+        this.search.PageNumber++;
+        this.getAllProductsNotInFactory();
+      }
+    }
+   
+  }
 }

@@ -1,6 +1,6 @@
 export class ProductModel {
         Id!:number;
-        ProductName!:string;
+        ProductName!:string |undefined;
         CustomItemId_12!:number;
         CommericalName!:string;
         UnitId!:number;

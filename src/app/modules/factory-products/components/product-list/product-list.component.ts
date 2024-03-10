@@ -47,7 +47,6 @@ export class ProductListComponent implements OnInit {
     this.factoryProductService
       .getAllPagination(this.search)
       .subscribe((res: any) => {
-        debugger
         this.products = res.Data;
       });
   }

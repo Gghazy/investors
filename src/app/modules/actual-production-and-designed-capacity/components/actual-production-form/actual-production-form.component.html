@@ -9,7 +9,7 @@
             </div>
             <div class="col-md-3 p-0">
                 <label class="form-label">وحدة القياس <span class="required">*</span></label>
-                <select name="" id="DesignedCapacityUnit" class="form-select"[(ngModel)]="request.DesignedCapacityUnitId">
+                <select name="" id="DesignedCapacityUnit" disabled class="form-select"[(ngModel)]="request.DesignedCapacityUnitId">
                     <option *ngFor="let unit of units"  [ngValue]="unit.Id">{{unit.Name}}</option>
                 </select>
             </div>  
@@ -27,7 +27,7 @@
           
             <div class="col-md-3 p-0">
                 <label class="form-label">وحدة القياس <span class="required">*</span></label>
-                <select name="ActualProductionUint" id="" class="form-select" [(ngModel)]="request.ActualProductionUintId">
+                <select name="ActualProductionUint" disabled id="" class="form-select" [(ngModel)]="request.ActualProductionUintId">
                     <option *ngFor="let unit of units"  [ngValue]="unit.Id">{{unit.Name}}</option>
                 </select>
             </div>
