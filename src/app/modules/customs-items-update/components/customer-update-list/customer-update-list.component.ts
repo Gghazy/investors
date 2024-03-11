@@ -37,9 +37,7 @@ export class CustomerUpdateListComponent implements OnInit {
   }
 
     isChecked(item: ProductPeriodActiveModel): boolean {
-      
-      debugger
-      let x=this.ProductPeriodActives.filter(x=>x.ProductId==item.ProductId) as ProductPeriodActiveModel[];
+            let x=this.ProductPeriodActives.filter(x=>x.FactoryProductId==item.FactoryProductId) as ProductPeriodActiveModel[];
       return x.length > 0;
     }
 
@@ -48,11 +46,12 @@ export class CustomerUpdateListComponent implements OnInit {
     let newObject: ProductPeriodActiveModel = {
       Id:0,
       PeriodId:parseInt(this.periodId),
-      ProductId:productId
+      FactoryId:parseInt(this.factoryId),
+      FactoryProductId:productId
     };
     if (this.isChecked(newObject)) {
       // Item is checked, remove it from the list
-      this.ProductPeriodActives = this.ProductPeriodActives.filter(i => i.ProductId !== newObject.ProductId);
+      this.ProductPeriodActives = this.ProductPeriodActives.filter(i => i.FactoryProductId !== newObject.FactoryProductId);
     } else {
       // Item is unchecked, add it to the list
       this.ProductPeriodActives.push(newObject);
@@ -72,7 +71,8 @@ export class CustomerUpdateListComponent implements OnInit {
           this.ProductPeriodActives.push({
             Id:0,
             PeriodId:parseInt(this.periodId),
-            ProductId:obj.Id
+            FactoryId:parseInt(this.factoryId),
+            FactoryProductId:obj.Id
           })
         });        
       });

@@ -69,7 +69,7 @@ constructor(
   }
   save(){
     
-    this.request.ProductId=this.productId;
+    this.request.FactoryProductId=this.productId;
     this.request.PeriodId=this.periodId;
     this.request.FactoryId=this.factoryId;
     if (this.actualCapacityProductId==0){

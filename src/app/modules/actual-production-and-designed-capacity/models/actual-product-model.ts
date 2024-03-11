@@ -2,7 +2,7 @@ export class ActualProductModel {
     Id!:number;
     ActualProductionAndCapacityId!:number;
     ProductName!:string;
-    ProductId!:number;
+    FactoryProductId!:number;
     DesignedCapacity!:number;
     DesignedCapacityUnitId!:number|undefined;
     DesignedCapacityUnitName!:string;

@@ -44,6 +44,8 @@ export class ProductListComponent implements OnInit {
   getProducts() {
     
     this.search.FactoryId = this.factoryId;
+    this.search.PeriodId = this.periodId;
+    this.search.IsActive = true;
     this.factoryProductService
       .getAllPagination(this.search)
       .subscribe((res: any) => {

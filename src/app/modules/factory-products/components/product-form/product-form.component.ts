@@ -43,8 +43,8 @@ export class ProductFormComponent implements OnInit {
     }
     else {
       this.getAllProductsNotInFactory();
+      this.getUnits()
     }
-    this.getUnits()
 
     this.dropdownSettings = {
       singleSelection: true,
@@ -64,8 +64,8 @@ export class ProductFormComponent implements OnInit {
     this.factoryProductService
       .getOne(this.productId)
       .subscribe((res: any) => {
-
         this.request = res.Data;
+        this.getUnits()
       });
   }
 
@@ -73,7 +73,6 @@ export class ProductFormComponent implements OnInit {
     this.lookUpService
       .getAllUnits()
       .subscribe((res: any) => {
-
         this.units = res.Data;
         this.unitChange();
 
@@ -127,7 +126,6 @@ export class ProductFormComponent implements OnInit {
     }
   }
   productChanage(){
-    debugger
     this.request.UnitId= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.UnitId;
     this.unitChange();
 
@@ -137,8 +135,8 @@ export class ProductFormComponent implements OnInit {
     this.request.PeriodId = this.periodId;
     if(this.productId==0){
 
-      this.request.ProductName= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.ProductName
-      this.request.ItemNumber= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.ItemNumber
+      this.request.ProductId= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.ProductId;
+
     }
     if (this.productId == 0) {
       this.factoryProductService

@@ -8,6 +8,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 import { FactoryLandingService } from '../../factory-landing.service';
 import { ScreenStatusModel } from '../../models/screen-status-model';
 import { FactoryStatus } from '../../models/factory-status.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-factory-landing-form',
@@ -25,6 +26,7 @@ export class FactoryLandingFormComponent implements OnInit {
   periodStartDate!: string;
   periodEndDate!: string;
   screenStatuse = new ScreenStatusModel();
+  allScreenStatus:Boolean=false;
 
 
   request = new FactoryStatus();
@@ -36,6 +38,7 @@ export class FactoryLandingFormComponent implements OnInit {
     public sharedService: SharedService,
     public factoryLandingService: FactoryLandingService,
     private router: Router,
+    private toastr: ToastrService
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -47,13 +50,16 @@ export class FactoryLandingFormComponent implements OnInit {
     this.getBasicInfo()
     this.getPeriod()
     this.getScreenStatus()
+    this.getFactUpdateStatus()
   }
 
   getScreenStatus() {
     this.factoryLandingService
       .getScreenStatus(this.factoryId, this.periodId)
       .subscribe((res: any) => {
+        
         this.screenStatuse = res.Data
+        this.checkAllScreenStatus();
       });
   }
 
@@ -74,6 +80,13 @@ export class FactoryLandingFormComponent implements OnInit {
       });
   }
 
+  getFactUpdateStatus() {
+    this.factoryLandingService
+      .getOne(this.factoryId,this.periodId)
+      .subscribe((res: any) => {
+        this.isChecked=res.Data.UpdateStatus;
+      });
+  }
 
   save() {
     this.request.FactoryId = this.factoryId
@@ -84,7 +97,26 @@ export class FactoryLandingFormComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(this.request)
         this.router.navigate(['/pages/factories-list']);
-
+        this.toastr.success("تم الحفظ");
       });
+  }
+
+
+  checkAllScreenStatus(){
+
+    
+    this.allScreenStatus=
+    this.screenStatuse.ProductData&&
+    this.screenStatuse.BasicFactoryInfo&&
+    this.screenStatuse.FinancialData&&
+    this.screenStatuse.MonthlyFinancialData&&
+    this.screenStatuse.FactoryLocation&&
+    this.screenStatuse.FactoryContact&&
+    this.screenStatuse.CustomItemsUpdated&&
+    this.screenStatuse.CustomItemValidity&&
+    this.screenStatuse.ActualProduction
+    // this.screenStatuse.RawMaterial&&
+    // this.screenStatuse.ActualRawMaterila&&
+   
   }
 }

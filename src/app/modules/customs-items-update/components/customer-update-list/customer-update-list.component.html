@@ -13,11 +13,7 @@
       </div>
     </div>
     <div class="form-body">
-      <div class="col-md-6 mb-5">
-        <label class="form-label">
-          كم عدد المنتجات النشطة التي يتم إنتاجها؟​</label>
-        <input type="text" class="form-control" value="5" />
-      </div>
+
   
       <div>
   
@@ -52,7 +48,7 @@
     <div class="form-footer">
       <div class="col-12">
           <button class="btn btn-primary me-1" (click)="save()">حفظ</button>
-          <a [routerLink]="'/pages/factory-landing/'+factoryId" class="btn btn-danger">الغاء</a>
+          <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
       </div>
   </div>
   </section>

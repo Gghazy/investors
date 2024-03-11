@@ -18,7 +18,9 @@ export class FactoryLandingService {
   create(data: FactoryStatus): Observable<any> {
     return this.http.post<any>('FactoryUpdateStatuses', data);
   }
-
+  getOne(factoryId:number,periodId:number): Observable<any> {
+    return this.http.get<any>(`FactoryUpdateStatuses?factoryId=${factoryId}&&periodId=${periodId}`);
+  }
 
   update(data: FactoryStatus): Observable<any> {
     return this.http.put<any>('FactoryUpdateStatuses', data);

@@ -1,5 +1,5 @@
 export class ScreenStatusModel {
-   BasicFactoryInfo !:boolean;
+  BasicFactoryInfo !:boolean;
   FinancialData !:boolean;
   MonthlyFinancialData !:boolean;
   FactoryLocation !:boolean;
