@@ -6,6 +6,7 @@ export class LocationModel {
     FactoryId  !:number;
     PeriodId  !:number;
     WebSite!:string;
+    CityCode!:number;
 }
 
 

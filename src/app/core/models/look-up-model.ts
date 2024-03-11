@@ -5,4 +5,5 @@ export class LookUpModel {
     Name!:string;
     conversionToKG!:number;
     sign!:string;
+    CityCode!:number;
 }

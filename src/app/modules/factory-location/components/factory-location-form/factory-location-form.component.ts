@@ -87,6 +87,7 @@ export class FactoryLocationFormComponent {
     .subscribe((res: any) => {
       
       this.industrialAreas = res.Data;
+      console.log(this.industrialAreas)
     });
   }
   save(){
