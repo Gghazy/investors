@@ -30,8 +30,5 @@ export class FactoryProductService {
   update(request: ProductModel): Observable<any> {
     return this.http.put<any>('Products', request);
   }
-  getAll(id:number): Observable<any> {
-    return this.http.get<any>('Products/GetAll?factoryId='+id);
-  }
-  
+ 
 }

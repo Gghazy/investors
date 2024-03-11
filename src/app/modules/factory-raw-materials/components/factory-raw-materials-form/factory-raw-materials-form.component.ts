@@ -34,6 +34,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   items: any = [];
   periodId: any;
   saveSuccessful: boolean = false;
+  productx: any;
 
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private fileService: FileService,
@@ -86,12 +87,20 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   }
 
   onSelectionChange() {
-    const selectedItem = this.products.find(item => item.Id == this.request.CustomItemRawMaterialId);
-    if (selectedItem) {
-      this.request.UnitId = selectedItem.UnitId;
+    this.productService
+    .getOne(this.request.CustomItemRawMaterialId)
+    .subscribe((res: any) => {
+
+      this.productx = res.Data;
+      this.request.UnitId=this.productx.UnitId;
+
+    });
+    // const selectedItem = this.products.find(item => item.Id == this.request.CustomItemRawMaterialId);
+    // if (selectedItem ) {
+    //   this.request.UnitId = selectedItem.UnitId;
       
-    } 
-    console.log(selectedItem)
+    // } 
+   // console.log(selectedItem)
   }
 
   getProducts() {
