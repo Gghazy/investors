@@ -8,6 +8,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 import { FactoryLandingService } from '../../factory-landing.service';
 import { ScreenStatusModel } from '../../models/screen-status-model';
 import { FactoryStatus } from '../../models/factory-status.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-factory-landing-form',
@@ -19,12 +20,13 @@ import { FactoryStatus } from '../../models/factory-status.model';
 })
 export class FactoryLandingFormComponent implements OnInit {
   isChecked: boolean = false;
-  factoryId:any;
-  periodId:any;
-  factoryName!:string;
-  periodStartDate!:string;
-  periodEndDate!:string;
-  screenStatuse=new ScreenStatusModel();
+  factoryId: any;
+  periodId: any;
+  factoryName!: string;
+  periodStartDate!: string;
+  periodEndDate!: string;
+  screenStatuse = new ScreenStatusModel();
+  allScreenStatus:Boolean=false;
 
 
   request = new FactoryStatus();
@@ -36,57 +38,85 @@ export class FactoryLandingFormComponent implements OnInit {
     public sharedService: SharedService,
     public factoryLandingService: FactoryLandingService,
     private router: Router,
-    ){
+    private toastr: ToastrService
+  ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-    
-    
+
+
   }
 
   ngOnInit(): void {
     this.getBasicInfo()
     this.getPeriod()
     this.getScreenStatus()
+    this.getFactUpdateStatus()
   }
 
   getScreenStatus() {
     this.factoryLandingService
-      .getScreenStatus(this.factoryId,this.periodId)
+      .getScreenStatus(this.factoryId, this.periodId)
       .subscribe((res: any) => {
-        debugger
-        this.screenStatuse=res.Data
+        
+        this.screenStatuse = res.Data
+        this.checkAllScreenStatus();
       });
   }
 
   getBasicInfo() {
     this.basicInfoService
-      .getOne(this.factoryId,this.periodId)
+      .getOne(this.factoryId, this.periodId)
       .subscribe((res: any) => {
         this.sharedService.factoryStatus = res.Data.Status;
-        this.factoryName=res.Data.NameAr
+        this.factoryName = res.Data.NameAr
       });
   }
   getPeriod() {
     this.periodService
       .getOne(this.periodId)
       .subscribe((res: any) => {
-        this.periodStartDate=res.Data.PeriodStartDate
-        this.periodEndDate=res.Data.PeriodEndDate
+        this.periodStartDate = res.Data.PeriodStartDate
+        this.periodEndDate = res.Data.PeriodEndDate
+      });
+  }
+
+  getFactUpdateStatus() {
+    this.factoryLandingService
+      .getOne(this.factoryId,this.periodId)
+      .subscribe((res: any) => {
+        this.isChecked=res.Data.UpdateStatus;
+      });
+  }
+
+  save() {
+    this.request.FactoryId = this.factoryId
+    this.request.PeriodId = this.periodId
+    this.request.UpdateStatus = true
+    this.factoryLandingService
+      .create(this.request)
+      .subscribe((res: any) => {
+        console.log(this.request)
+        this.router.navigate(['/pages/factories-list']);
+        this.toastr.success("تم الحفظ");
       });
   }
 
 
-  save(){
-    console.log(this.factoryId,this.periodId,true)
-this.request.FactoryId=this.factoryId
-this.request.PeriodId=this.periodId
-this.request.UpdateStatus=true
-    this.factoryLandingService
-          .create(this.request)
-          .subscribe((res: any) => {
-            console.log(this.request)
-            this.router.navigate(['/pages/factories-list']);
-            
-          });
+  checkAllScreenStatus(){
+
+    
+    this.allScreenStatus=
+    this.screenStatuse.ProductData&&
+    this.screenStatuse.BasicFactoryInfo&&
+    this.screenStatuse.FinancialData&&
+    this.screenStatuse.MonthlyFinancialData&&
+    this.screenStatuse.FactoryLocation&&
+    this.screenStatuse.FactoryContact&&
+    this.screenStatuse.CustomItemsUpdated&&
+    this.screenStatuse.CustomItemValidity&&
+    this.screenStatuse.ActualProduction
+    // this.screenStatuse.RawMaterial&&
+    // this.screenStatuse.ActualRawMaterila&&
+   
   }
 }

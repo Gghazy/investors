@@ -147,7 +147,7 @@
         </div>
         <div class="col-12">
             <button class="btn btn-primary me-1" [disabled]="myForm.invalid" type="submit">حفظ</button>
-            <a href="" class="btn btn-danger">الغاء</a>
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
         </div>
     </form>
            

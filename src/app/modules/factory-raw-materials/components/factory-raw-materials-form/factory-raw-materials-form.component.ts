@@ -75,7 +75,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.getUnits();
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'Id',
+      idField: 'ProductId',
       textField: 'ProductName',
       selectAllText: 'تحديد الكل',
       unSelectAllText: 'ازالة التحديد',
@@ -162,8 +162,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
 
   save() {
+    debugger
     this.request.FactoryId = this.factoryId;
-
     this.request.CustomItemRawMaterialId = 3;
     this.rawMaterialService
       .create(this.request)

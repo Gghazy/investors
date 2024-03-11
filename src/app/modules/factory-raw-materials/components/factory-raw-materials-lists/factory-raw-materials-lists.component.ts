@@ -57,7 +57,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     this.getCustomRawMaterial()
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'Id',
+      idField: 'ProductId',
       textField: 'ProductName',
       selectAllText: 'تحديد الكل',
       unSelectAllText: 'ازالة التحديد',
@@ -293,6 +293,8 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   save() {
 
+
+    debugger
    this.data.forEach((element: RawMaterial) => {
      console.log(element)
       if (element.CustomItemName != '') {

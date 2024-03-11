@@ -1,15 +1,22 @@
 <div class="row">
-    <div class="col-md-6" *ngIf="productId==0">
+    <div class="col-md-6" *ngIf="productId!=0">
         <label class="form-label"> اسم المنتج <span class="required">*</span></label>
-        <input  type="text" name="ProductName" class="form-control"  [(ngModel)]="request.ProductName">
-
+        <input disabled  type="text" name="ProductName" class="form-control"  [(ngModel)]="request.ProductName">
       </div>
+
+
       <div class="col-md-6" *ngIf="productId==0">
-        <label class="form-label"> رقم البند الجمركي على مستوى 12 <span class="required">*</span></label>
-        <input  type="text" name="CommericalName" class="form-control"  [(ngModel)]="request.Level12Number">
-
-      </div>
-
+        <label for="" class="form-label">اسم المنتج <span class="required">*</span></label>
+        <ng-multiselect-dropdown
+         [placeholder]="'أختر'" 
+         (keyup)="onSearch($event)"
+         [settings]="dropdownSettings"
+         [data]="products.Items"
+         [(ngModel)]="selectProductId"
+         (onSelect)="productChanage()"
+         >
+        </ng-multiselect-dropdown>
+    </div>
     
     <div class="col-md-6">
         <label class="form-label"> 	اسم المنتج التجاري <span class="required">*</span></label>
@@ -18,7 +25,7 @@
     
     <div class="col-md-6">
         <label class="form-label" >وحدة القياس </label>
-        <select name="Type" id="UnitId" disabled [(ngModel)]="request.UnitId" (change)="unitChange()" class="form-select">
+        <select name="Type" id="UnitId" disabled [(ngModel)]="request.UnitId"  class="form-select">
             <option *ngFor="let unit of units" [ngValue]="unit.Id">{{unit.Name}}</option>
         </select>
     </div>

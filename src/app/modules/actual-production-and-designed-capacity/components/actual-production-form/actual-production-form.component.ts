@@ -4,6 +4,8 @@ import { ActualProductModel } from '../../models/actual-product-model';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { ToastrService } from 'ngx-toastr';
+import { FactoryProductService } from 'src/app/modules/factory-products/factory-product.service';
+import { ProductModel } from 'src/app/modules/customs-items-update/models/product-model';
 
 @Component({
   selector: 'app-actual-production-form',
@@ -20,17 +22,20 @@ export class ActualProductionFormComponent implements OnInit {
 request=new ActualProductModel();
 units:LookUpModel[]=[];
 @Output()close=new EventEmitter<boolean>();
+product!:ProductModel;
 
 
 constructor(
   private actualProductionAndDesignedCapacityService:ActualProductionAndDesignedCapacityService,
   private lookUpService:LookUpService,
-  private toastr: ToastrService
+  private toastr: ToastrService,
+  private factoryProductService: FactoryProductService,
   ){}
 
   ngOnInit(): void {
    this.getOne();
    this.getunits();
+   this.getProduct();
   }
 
   getOne(){
@@ -40,7 +45,20 @@ constructor(
     .subscribe((res: any) => {
       
       this.request = res.Data;
+
+      
     });
+  }
+  getProduct(){
+    this.factoryProductService
+      .getOne(this.productId)
+      .subscribe((res: any) => {
+
+        this.product = res.Data;
+        this.request.DesignedCapacityUnitId=this.product.UnitId;
+        this.request.ActualProductionUintId=this.product.UnitId;
+
+      });
   }
   getunits(){
     this.lookUpService
@@ -51,8 +69,9 @@ constructor(
   }
   save(){
     
-    this.request.ProductId=this.productId;
+    this.request.FactoryProductId=this.productId;
     this.request.PeriodId=this.periodId;
+    this.request.FactoryId=this.factoryId;
     if (this.actualCapacityProductId==0){
       this.actualProductionAndDesignedCapacityService
       .create(this.request)

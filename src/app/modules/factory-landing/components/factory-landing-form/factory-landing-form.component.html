@@ -111,7 +111,7 @@
                             <span class="custom-badge">الشهرية</span>
                         </span>
                     </a>
-                        <span class="completed" *ngIf="screenStatuse.FinancialData; else elseFinancialMonthly" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
+                        <span class="completed" *ngIf="screenStatuse.MonthlyFinancialData; else elseFinancialMonthly" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
                             class="icon-ok"></i></span>
 
                             <ng-template #elseFinancialMonthly>
@@ -241,8 +241,12 @@
                         </svg>
                         <span> بيانات تحديث البند الجمركي</span>
                     </a>
-                    <span class="completed" placement="bottom"><i
-                            class="icon-ok"></i></span>
+                    <span class="completed" *ngIf="screenStatuse.CustomItemsUpdated; else elseCustomItemsUpdated" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
+                        class="icon-ok"></i></span>
+
+                        <ng-template #elseCustomItemsUpdated>
+                            <app-uncompleted-warning></app-uncompleted-warning>
+                        </ng-template>
                 </li>
 
                 <li *ngIf="sharedService.factoryStatus==3|| sharedService.factoryStatus==0|| sharedService.factoryStatus==2"
@@ -570,7 +574,7 @@
 </section>
 
 <div class="submit-info">
-    <button class="btn" [disabled]="!isChecked" (click)="save()">
+    <button class="btn" [disabled]="!isChecked || !allScreenStatus" (click)="save()">
         <svg fill="none" height="24" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
             stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M22 11.07V12a10 10 0 1 1-5.93-9.14" />

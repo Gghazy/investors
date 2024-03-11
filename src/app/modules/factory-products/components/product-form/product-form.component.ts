@@ -5,6 +5,9 @@ import { FactoryProductService } from '../../factory-product.service';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastrService } from 'ngx-toastr';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { ProductsNotInFactorySearch } from '../../models/products-not-in-factory-search';
+import { ResultResponse } from 'src/app/core/models/result-response';
 
 @Component({
   selector: 'app-product-form',
@@ -12,102 +15,171 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit {
-@Input() productId!:number;  
-@Input() factoryId!:number;  
-@Output()close=new EventEmitter<boolean>();
-request=new ProductModel();
-units!:LookUpModel[];
-isDisabled!:boolean;
+  @Input() productId!: number;
+  @Input() factoryId!: number;
+  @Input() periodId!: number;
+  @Output() close = new EventEmitter<boolean>();
+  request = new ProductModel();
+  units!: LookUpModel[];
+  isDisabled!: boolean;
+  products = new ResultResponse<ProductModel>();
+  dropdownSettings!: IDropdownSettings;
+  search = new ProductsNotInFactorySearch();
+  isLoading = false;
+  selectProductId!:any;
 
-constructor(
-  private factoryProductService:FactoryProductService,
-  private lookUpService:LookUpService,
-  private fileService:FileService,
-  private toastr: ToastrService
 
-  ){}
+  constructor(
+    private factoryProductService: FactoryProductService,
+    private lookUpService: LookUpService,
+    private fileService: FileService,
+    private toastr: ToastrService
+
+  ) { }
   ngOnInit(): void {
-    if(this.productId!=0){
+    if (this.productId != 0) {
       this.getOne()
 
     }
-    this.getUnits()
-    
+    else {
+      this.getAllProductsNotInFactory();
+      this.getUnits()
+    }
+
+    this.dropdownSettings = {
+      singleSelection: true,
+      enableCheckAll: false,
+      idField: 'Id',
+      textField: 'ProductName',
+      unSelectAllText: 'ازالة التحديد',
+      searchPlaceholderText: 'بحث',
+      itemsShowLimit: 2,
+      allowSearchFilter: true
+    };
+
   }
 
-  getOne(){
-    
+  getOne() {
+
     this.factoryProductService
-    .getOne(this.productId)
-    .subscribe((res: any) => {
-      
-      this.request = res.Data;
-    });
+      .getOne(this.productId)
+      .subscribe((res: any) => {
+        this.request = res.Data;
+        this.getUnits()
+      });
   }
 
-  getUnits(){
+  getUnits() {
     this.lookUpService
       .getAllUnits()
       .subscribe((res: any) => {
-        
         this.units = res.Data;
         this.unitChange();
 
       });
   }
-savePaper(file:any){
-  if (file.target.files.length > 0) {
-    this.fileService
-      .addFile(file.target.files[0])
+  getAllProductsNotInFactory() {
+    this.isLoading = true;
+    this.search.FactoryId = this.factoryId;
+    this.factoryProductService
+      .getAllProductsNotInFactory(this.search)
       .subscribe((res: any) => {
-        this.request.PeperId = res.Data.Id
+        this.products.PageCount=res.Data.PageCount;
+        this.products.TotalCount=res.Data.TotalCount;
+        this.products.PageNumber=res.Data.PageNumber;
+        this.products.PageSize=res.Data.PageSize;
+        this.products.Items = [...this.products.Items, ...res.Data.Items];
+         this.isLoading = false;
       });
   }
-}
-savePhoto(file:any){
-  if (file.target.files.length > 0) {
-    this.fileService
-      .addFile(file.target.files[0])
-      .subscribe((res: any) => {
-        this.request.PhototId = res.Data.Id
-      });
+  savePaper(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.request.PeperId = res.Data.Id
+        });
+    }
   }
-}
-unitChange()
-{
-  
-  const selectedOption = this.units.find(option => option.Id === this.request.UnitId);
-  if(selectedOption?.Name=='كيلو غرام')
-  {
-    this.request.Kilograms_Per_Unit=1;
-    this.isDisabled=true;
+  savePhoto(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.request.PhototId = res.Data.Id
+        });
+    }
   }
-  else if(selectedOption?.Name=='طن بريطاني'){
-    this.request.Kilograms_Per_Unit=1000;
-    this.isDisabled=true;
+  unitChange() {
+    const selectedOption = this.units.find(option => option.Id === this.request.UnitId);
+    if (selectedOption?.Name == 'kilograms') {
+      this.request.Kilograms_Per_Unit = 1;
+      this.isDisabled = true;
+    }
+    else if (selectedOption?.Name == 'طن بريطاني') {
+      this.request.Kilograms_Per_Unit = 1000;
+      this.isDisabled = true;
+    }
+    else {
+      this.isDisabled = false;
+
+    }
   }
-  else{
-    this.isDisabled=false;
+  productChanage(){
+    this.request.UnitId= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.UnitId;
+    this.unitChange();
 
   }
-}
-save(){
-  this.request.FactoryId=this.factoryId;
-  if (this.productId==0){
-    this.factoryProductService
-    .create(this.request)
-    .subscribe((res: any) => {
-      this.close.emit(true);
-      this.toastr.success("تم الحفظ");
-    });
+  save() {
+    this.request.FactoryId = this.factoryId;
+    this.request.PeriodId = this.periodId;
+    if(this.productId==0){
+
+      this.request.ProductId= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.ProductId;
+
+    }
+    if (this.productId == 0) {
+      this.factoryProductService
+        .create(this.request)
+        .subscribe((res: any) => {
+          this.close.emit(true);
+          this.toastr.success("تم الحفظ");
+        });
+    }
+    else {
+      this.factoryProductService
+        .update(this.request)
+        .subscribe((res: any) => {
+          this.close.emit(true);
+          this.toastr.success("تم الحفظ");
+        });
+    }
   }
-  else{
+  onSearch(event: Event) {
+    this.search.TxtSearch= (event.target as HTMLInputElement).value;
+    this.search.PageNumber=1;
+    this.products.Items=[];
+    this.isLoading = true;
     this.factoryProductService
-    .update(this.request)
-    .subscribe((res: any) => {
-      this.close.emit(true);
-      this.toastr.success("تم الحفظ");
-    });
+      .getAllProductsNotInFactory(this.search)
+      .subscribe((res: any) => {
+       this.products=res.Data; 
+        this.isLoading = false;
+      });
+
   }
-}
+  onDropdownScroll(event: Event) {
+    const target = event.target as HTMLElement;
+
+    // Check if the user is near the bottom of the dropdown
+    const isAtBottom = target.scrollHeight - target.scrollTop === target.clientHeight;
+    if (isAtBottom) {
+      
+      if (!this.isLoading) {
+        this.search.PageNumber++;
+        this.getAllProductsNotInFactory();
+      }
+    }
+   
+  }
 }
