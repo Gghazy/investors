@@ -86,7 +86,7 @@ export class FactoryLocationFormComponent {
     .getAreaByCity(id)
     .subscribe((res: any) => {
       
-      this.cities = res.Data;
+      this.industrialAreas = res.Data;
     });
   }
   save(){
