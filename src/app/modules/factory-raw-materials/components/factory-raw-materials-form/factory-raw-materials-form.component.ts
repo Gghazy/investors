@@ -87,20 +87,11 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   }
 
   onSelectionChange() {
-    this.productService
-    .getOne(this.request.CustomItemRawMaterialId)
-    .subscribe((res: any) => {
 
-      this.productx = res.Data;
-      this.request.UnitId=this.productx.UnitId;
 
-    });
-    // const selectedItem = this.products.find(item => item.Id == this.request.CustomItemRawMaterialId);
-    // if (selectedItem ) {
-    //   this.request.UnitId = selectedItem.UnitId;
-      
-    // } 
-   // console.log(selectedItem)
+    this.request.UnitId = this.products.find(item => item.Id == this.products[0].Id)?.UnitId;
+ 
+    
   }
 
   getProducts() {
@@ -114,7 +105,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   }
   onItemSelect(item: any) {
-    this.request.ProductIds.push({ 'Id': item.Id, 'ProductName': item.ProductName })
+    this.request.ProductIds.push( item.ProductId)
   }
   onSelectAll(items: any) {
     //console.log(items);
@@ -123,21 +114,21 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   onUnitSelect(event: Event) {
 
 
-    let selectedValue: any = (event.target as HTMLSelectElement).value;
-    if (selectedValue != "11" || selectedValue != "15") {
-      this.showInput = true
-      console.log(this.showInput)
-    }
-    if (selectedValue == "11") {
-      this.showInput = false
-      this.request.AverageWeightKG = this.request.MaximumMonthlyConsumption
-      console.log(this.showInput)
-    }
-    if (selectedValue == "15") {
-      this.showInput = true
-      this.request.AverageWeightKG = 1000
-      console.log(this.showInput)
-    }
+    // let selectedValue: any = (event.target as HTMLSelectElement).value;
+    // if (selectedValue != "11" || selectedValue != "15") {
+    //   this.showInput = true
+    //   console.log(this.showInput)
+    // }
+    // if (selectedValue == "11") {
+    //   this.showInput = false
+    //   this.request.AverageWeightKG = this.request.MaximumMonthlyConsumption
+    //   console.log(this.showInput)
+    // }
+    // if (selectedValue == "15") {
+    //   this.showInput = true
+    //   this.request.AverageWeightKG = 1000
+    //   console.log(this.showInput)
+    // }
   }
   getUnits() {
     this.lookUpService
@@ -172,8 +163,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   save() {
     debugger
-    this.request.FactoryId = this.factoryId;
-    this.request.CustomItemRawMaterialId = 3;
+   this.request.FactoryId= this.factoryId;
     this.rawMaterialService
       .create(this.request)
       .subscribe((res: any) => {

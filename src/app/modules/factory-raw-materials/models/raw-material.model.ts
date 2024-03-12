@@ -1,17 +1,17 @@
 export class RawMaterial {
       Id !:number;
-      CustomItemRawMaterialId!:number;
+      ProductId!:number|undefined;
       CustomItemName !:string;
       Name !:string;
       MaximumMonthlyConsumption !:number;
       AverageWeightKG !:number;
       Description !:string;
-      FactoryId !:number;
+     // FactoryId !:number;
       AttachmentId !:number
       PaperId!:number;
       PhotoId!:number;
-      UnitId!:number;
-      ProductIds:any[]=[];
-      photo:any;
+      UnitId!:number|undefined;
+      ProductIds:number[]=[];
+      FactoryId !:number;
 
 }
