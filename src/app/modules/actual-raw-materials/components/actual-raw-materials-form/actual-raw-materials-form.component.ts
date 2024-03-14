@@ -27,6 +27,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   files: BasicFileModel[] = [];
   factoryId: any;
   periodId: any;
+  showInput: boolean = false
   rawMaterials: any = [];
   materials = new ResultResponse<RawMaterial>();
   search = new RawMaterialSearch();
@@ -154,6 +155,16 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     // if (row.StockUnitId != 11 || row.UsageUnitId != 15) {
       row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
        row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
+       
+       if (row.UsedQuantity_KG > row.CurrentStockQuantity_KG){
+        //console.log( row.UsedQuantity_KG > row.CurrentStockQuantity_KG )
+        this.showInput = true
+       }else{
+        this.showInput = false
+       }
+
+       
+
 
     // }
 

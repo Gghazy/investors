@@ -7,11 +7,11 @@ export class RawMaterial {
       AverageWeightKG !:number;
       Description !:string;
      // FactoryId !:number;
-      AttachmentId !:number
+     // AttachmentId !:number
       PaperId!:number;
       PhotoId!:number;
       UnitId!:number|undefined;
-      ProductIds:number[]=[];
+      FactoryProductId :number[]=[];
       FactoryId !:number;
 
 }

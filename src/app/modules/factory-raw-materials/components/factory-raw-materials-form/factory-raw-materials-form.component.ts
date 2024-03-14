@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { FactoryRawMaterialService } from '../../factory-raw-material.service';
@@ -22,11 +22,13 @@ import { ProductSearch } from 'src/app/modules/customs-items-update/models/produ
   ]
 })
 export class FactoryRawMaterialsFormComponent implements OnInit {
+  @ViewChild('closeModal') Modal!: ElementRef;
   @Input() factoryId!: number;
+  @Input() Id!: number;
   @Output() close = new EventEmitter<boolean>();
 
   products  !: ProductModel[];
-  showInput: boolean = true
+  showInput: boolean = false
   units!: LookUpModel[];
   request = new RawMaterial();
   search = new ProductSearch();
@@ -71,7 +73,15 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   dropdownSettings!: IDropdownSettings;
 
   ngOnInit() {
+  //  // console.log(this.Id)
+  //   if (this.Id != 0) {
+  //     this.getOneRawMaterial(this.Id)
+      
 
+  //   }
+  //   else{
+  //     this.Id=0
+  //   }
     this.getProducts();
     this.getUnits();
     this.dropdownSettings = {
@@ -86,14 +96,31 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     };
   }
 
+  getOneRawMaterial(id:number){
+    this.rawMaterialService
+        .getOne(id)
+        .subscribe((res: any) => {
+         this.request = res.Data;
+   console.log(res)
+        });
+  }
+
   onSelectionChange() {
 
 
     this.request.UnitId = this.products.find(item => item.Id == this.products[0].Id)?.UnitId;
- 
+    let selectedValue: any = this.units.find(option => option.Id == this.request.UnitId);
+    console.log(selectedValue)
+    if (selectedValue?.Name == 'kilograms') {``
+      this.request.AverageWeightKG =1
+  
+      this.showInput = true
+    }
     
   }
-
+  closePopUp() {
+    this.Modal.nativeElement.click()
+  }
   getProducts() {
 
     this.search.FactoryId = this.factoryId;
@@ -105,7 +132,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   }
   onItemSelect(item: any) {
-    this.request.ProductIds.push( item.ProductId)
+    this.request.FactoryProductId .push( item.ProductId)
   }
   onSelectAll(items: any) {
     //console.log(items);
@@ -163,7 +190,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   save() {
     debugger
-   this.request.FactoryId= this.factoryId;
+    this.request.FactoryId = this.factoryId;
     this.rawMaterialService
       .create(this.request)
       .subscribe((res: any) => {
@@ -172,7 +199,38 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
         this.close.emit(true);
         this.toastr.success("تم الحفظ");
       });
-
+      // this.request.FactoryId = this.factoryId;
+      //   this.request.FactoryProductId  = this.request.FactoryProductId ;
+      //   console.log(this.request)
+      //   if (this.request.Id == 0) {
+      //     console.log('new')
+      //     this.rawMaterialService
+      //       .create(this.request)
+      //       .subscribe((res: any) => {
+      //         this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+      //         this.saveSuccessful = true;
+      //         this.close.emit(true);
+      //         this.toastr.success("تم الحفظ");
+  
+      //       });
+  
+  
+      //   }
+      //   else {
+      //     console.log('update')
+      //     this.rawMaterialService
+      //       .update(this.request)
+      //       .subscribe((res: any) => {
+      //         this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+  
+      //         //  this.toastr.success("تم الحفظ");
+      //       });
+      //   }
+  
+        
+  
+   
+      // this.toastr.success("تم الحفظ");
     if (this.saveSuccessful == true) {
       this.request = new RawMaterial();
       this.selectedProducts = []

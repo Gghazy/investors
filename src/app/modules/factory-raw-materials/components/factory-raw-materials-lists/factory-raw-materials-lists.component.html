@@ -14,9 +14,6 @@
     </div>
     <div class="form-body">
 
-
-
-
         <div class="col-md-12 mt-3">
             <h3> إدخال التفاصيل التالية عن المواد الأولية </h3>
         </div>
@@ -25,95 +22,120 @@
             <label class="form-label"> كم عدد المواد الأولية المستخدمة؟​</label>
             <input type="text" class="form-control" [(ngModel)]="materialCount">
         </div>
-        <ul class="list-review factory-lines p-0" *ngFor="let material of data ; let j = index">
-        
-        <div *ngIf="j+1 <= materialCount">
-          
-                <li>
-                    <h4> المادة رقم {{j+1}}</h4>
-                    <div class="row">
 
-                        <div class="col-md-6">
-                            <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اسم البند الجمركي
-                                <i>؟</i>
-                            </label>
-                            <select class="form-select" (change)="onSelectionChange(material,j+1)" [(ngModel)]="material.CustomItemName">
-                                <option *ngFor="let item of products" [value]="item.Id">
-                                    {{ item.Hs12NameAr }} ({{item. Hs12Code}})
-                                
+        <!-- <div class="table-responsive">
+            <table class="table table-hover table-small-header ">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th> اسم البند الجمركي</th>
+                        <th> اسم المادة المادةالأولية </th>
+                        <th> خيارات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let material of data ; let j = index">
+                        <td>{{j+1}}</td>
+
+                        <td hidden> {{material.Id}} </td>
+                        <td> {{material.CustomItemName}} </td>
+                        <td> {{material.Name}} </td>
+                        <td>
+                            <button class="btn btn-primary"  data-bs-toggle="modal"  data-bs-target="#addRawMaterial"
+                            (click)="edit(material.Id)"> تعديل  </button>
+                        </td>
+                        <td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> -->
+
+
+        <ul class="list-review factory-lines p-0" *ngFor="let material of data ; let j = index">
+
+            <div *ngIf="j+1 <= materialCount">
+
+            <li>
+                <h4> المادة رقم {{j+1}}</h4>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اسم البند الجمركي
+                            <i>؟</i>
+                        </label>
+                        <select class="form-select" (change)="onSelectionChange(material,j+1)"
+                            [(ngModel)]="material.CustomItemName">
+                            <option *ngFor="let item of products" [value]="item.Id">
+                                {{ item.Hs12NameAr }} ({{item. Hs12Code}})
+
+                            </option>
+                        </select>
+                        <!-- <input type="text" class="form-control" [(ngModel)]="material.CustomItemName" disabled> -->
+
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اسم المادةالأولية
+                            <i>؟</i>
+                        </label>
+
+                        <input type="text" class="form-control" [(ngModel)]=" material.Name ">
+
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اقصى استهلاك شهريا
+                            <i>؟</i>
+                        </label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" [(ngModel)]="material.MaximumMonthlyConsumption"
+                                min="0">
+                            <select class="form-select" [(ngModel)]="material.UnitId" disabled>
+                                <option *ngFor="let item of units" [value]="item.Id">
+                                    {{ item.Name }}
                                 </option>
                             </select>
-                            <!-- <input type="text" class="form-control" [(ngModel)]="material.CustomItemName" disabled> -->
+
 
                         </div>
-                        <div class="col-md-3">
-                            <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اسم المادةالأولية
-                                <i>؟</i>
-                            </label>
+                    </div>
 
-                            <input type="text" class="form-control" [(ngModel)]=" material.Name ">
-
+                    <div class="col-md-3">
+                        <label class="form-label" placement="left" title="" tooltip="شرح الحقل">الوزن المقابل​
+                            بالكيلوغرام لكل وحدة
+                            <i>؟</i>
+                        </label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" [(ngModel)]="material.AverageWeightKG" min="0"
+                                [disabled]="showKG">
+                            <input type="text" class="form-control px-1 text-center" value="كغ" disabled=""
+                                style="max-width: 40px;">
                         </div>
-                        <div class="col-md-3">
-                            <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اقصى استهلاك شهريا
-                                <i>؟</i>
-                            </label>
-                            <div class="input-group">
-                                <input type="number" class="form-control"
-                                    [(ngModel)]="material.MaximumMonthlyConsumption"> 
-                                <select class="form-select" (change)="onUnitSelect(material)"
-                                    [(ngModel)]="material.UnitId" disabled>
-                                    <option *ngFor="let item of units" [value]="item.Id">
-                                        {{ item.Name }}
-                                    </option>
-                                </select>
+                    </div>
 
-                               
-                            </div>
-                        </div>
 
-                        <div class="col-md-3" *ngIf="showKG">
-                            <label class="form-label" placement="left" title="" tooltip="شرح الحقل">الوزن المقابل​
-                                بالكيلوغرام لكل وحدة
-                                <i>؟</i>
-                            </label>
-                            <div class="input-group">
-                                <input type="number" class="form-control" [(ngModel)]="material.AverageWeightKG">
-                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled=""
-                                    style="max-width: 40px;">
-                            </div>
+                    <div class="col-md-6">
+                        <label class="form-label" placement="left" title="" tooltip="شرح الحقل">تستخدم في أي منتج ؟
+                            <i>؟</i>
+                        </label>
+
+                        <div class="multiselect-parent">
+                            <ng-multiselect-dropdown [placeholder]="'أختر'" [settings]="dropdownSettings"
+                                [data]="products" [(ngModel)]="material.FactoryProductId" (onSelect)="onItemSelect($event)"
+                                (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)">{{products}}
+                            </ng-multiselect-dropdown>
                         </div>
 
-
-                        <div class="col-md-6">
-                            <label class="form-label" placement="left" title="" tooltip="شرح الحقل">تستخدم في أي منتج ؟
-                                <i>؟</i>
-                            </label>
-
-                            <div class="multiselect-parent">
-                                <ng-multiselect-dropdown [placeholder]="'أختر'" [settings]="dropdownSettings"
-                                    [data]="products" [(ngModel)]="material.ProductIds"
-                                    (onSelect)="onItemSelect($event)" 
-                                    (onDeSelect)="onItemDeSelect($event)"
-                                    (onSelectAll)="onSelectAll($event)">
-                                </ng-multiselect-dropdown>
-                            </div>
-
-                        </div>
+                    </div>
 
 
-
-                        <div class="col-md-3">
+                    <div class="col-md-3">
                             <label class="form-label" placement="left" title="" tooltip="شرح الحقل">إرفاق صورة المادة
                                 الأولية
                                 <i>؟</i>
                             </label>
                             <div class="input-group">
-                            <input type="file" class="form-control" placeholder="" [(ngModel)]="material.PhotoId"
+                            <input type="file" class="form-control" placeholder="" 
                                 (change)="savePhoto($event,j)"> 
-                                <!-- <a href="" class="btn btn-danger px-2 py-1" placement="right" title=""
-                                tooltip=" حذف صورة المادة" (click)="deleteFile(material.PhotoId)"><i class="icon-delete"></i></a> -->
-                            </div>
+                              </div>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label" placement="left" title=""
@@ -123,33 +145,142 @@
                                 <div class="input-group">
                             <input type="file" class="form-control" placeholder="" value=""
                                 (change)="savePaper($event,j)">
-                                <!-- <a href="" class="btn btn-danger px-2 py-1" placement="right" title=""
-                                tooltip=" حذف صورة المادة" (click)="deleteFile(material.paper)"><i class="icon-delete"></i></a> -->
-                            </div>
+                               </div>
                         </div>
                     
-                        <div class="col-md-12">
-                            <label class="form-label" placement="left" title="" tooltip="شرح الحقل">وصف للمادة المستخدمة
+                        <!-- <div class="col-md-3">
+                            <label class="form-label" placement="left" title="" tooltip="شرح الحقل">إرفاق صورة المادة
+                                الأولية
                                 <i>؟</i>
                             </label>
-
-                            <textarea class="form-control" rows="2" [(ngModel)]="material.Description"></textarea>
-
+                            <div class="input-group">
+    
+                                <button class="btn btn-primary px-2 py-1 upload-btn" (click)="handleUploadClick($event)"
+                                    [(ngModel)]="material.PhotoId" (change)="savePhoto($event,j)" placement="bottom"
+                                    title="" tooltip=" رفع صورة للمادة" aria-describedby="tooltip468370">
+                                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="#ffffff" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path
+                                                d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                                <input type="file" class="d-none">
+                                <span data-bs-toggle="modal" data-bs-target="#photoModal">
+                                    <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
+                                        tooltip=" عرض صورة  المادة" (click)="getImage(material.PhotoId)">
+    
+                                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M3 8.976C3 4.05476 4.05476 3 8.976 3H15.024C19.9452 3 21 4.05476 21 8.976V15.024C21 19.9452 19.9452 21 15.024 21H8.976C4.05476 21 3 19.9452 3 15.024V8.976Z"
+                                                    stroke="#ffffff" stroke-width="2"></path>
+                                                <path
+                                                    d="M17.0045 16.5022L12.7279 12.2256C9.24808 8.74578 7.75642 8.74578 4.27658 12.2256L3 13.5022"
+                                                    stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                                <path d="M21 13.6702C18.9068 12.0667 17.4778 12.2919 15.198 14.3459"
+                                                    stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                                <path
+                                                    d="M17 8C17 8.55228 16.5523 9 16 9C15.4477 9 15 8.55228 15 8C15 7.44772 15.4477 7 16 7C16.5523 7 17 7.44772 17 8Z"
+                                                    stroke="#ffffff" stroke-width="2"></path>
+                                            </g>
+                                        </svg>
+    
+                                    </button>
+                                </span>
+                                <a href="" class="btn btn-danger px-2 py-1" placement="bottom" title=""
+                                    tooltip=" حذف صورة المادة"><i class="icon-delete"></i></a>
+                            </div>
                         </div>
+                        <div class="col-md-3">
+                            <label class="form-label" placement="left" title=""
+                                tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
+                                aria-describedby="tooltip617728"> إرفاق ورقة البيانات <i>؟</i></label>
+                            <div class="input-group">
+                                
+                                <button class="btn btn-primary px-2 py-1 upload-btn" (click)="handleUploadClick($event)"
+                                    (change)="savePaper($event,j)" placement="bottom" title="" tooltip=" رفع الملف"
+                                    aria-describedby="tooltip93704">
+                                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="#ffffff" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path
+                                                d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                                <input type="file" class="d-none">
+    
+                                <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
+                                    tooltip=" تحميل الملف " (click)="getFile(material.PaperId)">
+    
+                                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                                            <path d="M12 2L12 15M12 15L9 11.5M12 15L15 11.5" stroke="#ffffff"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </g>
+                                    </svg>
+    
+                                </button>
+    
+                                <a href="" class="btn btn-danger px-2 py-1" placement="bottom" title=""
+                                    tooltip=" حذف الملف"><i class="icon-delete"></i></a>
+    
+                            </div>
+                        </div> -->
+    
 
 
 
+                  
+
+
+
+
+                    <div class="col-md-12">
+                        <label class="form-label" placement="left" title="" tooltip="شرح الحقل">وصف للمادة المستخدمة
+                            <i>؟</i>
+                        </label>
+
+                        <textarea class="form-control" rows="2" [(ngModel)]="material.Description"></textarea>
 
                     </div>
-                </li>
+
+  
+
+
+                </div>
+          
+            </li>
 
 
             </div>
 
         </ul>
-   
-        <app-pagination (changePage)="pageChanged($event)" [pageSize]="materials.PageSize"
-            [pageNumber]="materials.PageNumber" [totalCount]="materials.TotalCount"></app-pagination>
+
+        <!-- <app-pagination (changePage)="pageChanged($event)" [pageSize]="materials.PageSize"
+            [pageNumber]="materials.PageNumber" [totalCount]="materials.TotalCount"></app-pagination> -->
 
         <div class="row">
             <div class="col-md-6">
@@ -196,11 +327,7 @@
                         #closeModal></button>
                 </div>
                 <div class="modal-body">
-
-
-
-
-                    <app-factory-raw-materials-form [factoryId]="factoryId"
+                    <app-factory-raw-materials-form  [factoryId]="factoryId" 
                         (close)="closePopUp()"></app-factory-raw-materials-form>
                 </div>
             </div>
@@ -214,3 +341,4 @@
         </div>
     </div>
 </section>
+
