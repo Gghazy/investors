@@ -42,7 +42,7 @@
                         <td>
 
                             <input type="number" class="form-control" style="max-width: 117px;"
-                                [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)">
+                                [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)" min="0">
                         </td>
                         <td disabled>
                             <select [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)" disabled> 
@@ -63,7 +63,7 @@
                         <td>
 
                             <input type="number" class="form-control" [(ngModel)]="material.UsedQuantity"
-                                style="max-width: 117px;" (change)="onSelectionChange(material)">
+                                style="max-width: 117px;" (change)="onSelectionChange(material)" min="0">
                         </td>
                         <td>
                             <select [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)" disabled>
@@ -92,8 +92,8 @@
         </div>
         <app-pagination (changePage)="pageChanged($event)" [pageSize]="materials.PageSize"
             [pageNumber]="materials.PageNumber" [totalCount]="materials.TotalCount"></app-pagination>
-
-        <div class="col-md-12 mt-3">
+<div *ngIf="showInput">
+        <div class="col-md-12 mt-3" >
             <h3> زيادة استخدام المواد الأولية عن الإستهلاك الشهري المعتاد </h3>
         </div>
 
@@ -109,7 +109,7 @@
                 </select>
             </div>
         </div>
-
+    </div>
         <div class="col-md-12 mt-3">
             <h3> إرفاق المستندات الداعمة </h3>
         </div>

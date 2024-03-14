@@ -22,7 +22,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   factoryId: any;
   periodId: any;
-  showKG: boolean = true
+  showKG: boolean = false
   materialCount!: number;
   materials = new ResultResponse<RawMaterial>();
   rawMaterials: any = [];
@@ -39,6 +39,8 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   units!: LookUpModel[];
   src!: string;
   saveSuccessful: boolean = false;
+  numRows: number = 0;
+
 
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
@@ -53,7 +55,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getRawMaterial()
+    this.getRawMaterial()
     this.getCustomRawMaterial()
     this.dropdownSettings = {
       singleSelection: false,
@@ -77,6 +79,8 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     this.showInput = selectedValue === 'yes';
   }
 
+
+ 
   handleUploadClick(event: Event) {
     const targetButton = event.target as HTMLButtonElement;
     const closestDiv = targetButton.closest('div');
@@ -115,38 +119,111 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   getRawMaterial() {
     this.rawMaterialService
-      .getRawMaterial(this.search, this.factoryId)
-      .subscribe((res: any) => {
-        this.rawMaterials = res.Data.Items;
-        this.materials = res.Data;
+        .getRawMaterial(this.search, this.factoryId)
+        .subscribe((res: any) => {
+        if (res) {
+          this.rawMaterials = res.Data.Items;
+          console.log(res.Data)
+          this.materials = res.Data;
+         this.materialCount = this.materials.Items.length;
+
+          console.log(this.materialCount)
 
 
+          this.rawMaterials.forEach((item: RawMaterial) => {
+            item.ProductIds=[5]
+            console.log(item)
+            this.data.push({
+              'Id': item.Id,
+              'CustomItemName': item.CustomItemName,
+              'Name': item.Name,
+              'MaximumMonthlyConsumption': item.MaximumMonthlyConsumption,
+              'AverageWeightKG': item.AverageWeightKG,
+
+              'Description': item.Description,
+              'FactoryId': this.factoryId,
+              //  'AttachmentId': item.AttachmentId,
+              'PaperId': item.PaperId,
+              'PhotoId': item.PhotoId,
+
+              'UnitId': item.UnitId,
+              'ProductIds': item.ProductIds
+            })
+          })
 
 
-        this.rawMaterials.forEach((item: RawMaterial) => {
-          console.log(item)
-          //  this.data.push({
-          //   'Id':item.Id,
-          //   'CustomItemName': item.CustomItemName,
-          //   'Name': item.Name,
-          //   'MaximumMonthlyConsumption': item.MaximumMonthlyConsumption,
-          //   'AverageWeightKG': item.AverageWeightKG,
+        }
+        else {
+          this.search.FactoryId = this.factoryId;
+          console.log(this.data)
+          this.productService
+            .getAll(this.factoryId)
+            .subscribe((res: any) => {
+              this.materialCount = this.materials.Items.length;
 
-          //   'Description': item.Description,
-          //   'FactoryId': this.factoryId,
-          //   'AttachmentId': item.AttachmentId,
-          //   'PaperId': item.PaperId,
-          //   'PhotoId': item.PhotoId,
+              console.log(this.materialCount)
+              this.rawMaterials = res.Data;
+              this.materials = res.Data;
+              console.log(this.rawMaterials)
+              console.log(this.materials)
+              this.ss = res.Data;
 
-          //   'UnitId': item.UnitId,
-          //   'ProductIds': [1882,886]
-          //   // item.ProductIds,
+              // console.log(this.rawMaterials)
+              this.rawMaterials.forEach((item: any) => {
+                this.data.push({
+                  'Id': 0,
+                  'CustomItemName': '',
+                  'Name': '',
+                  'MaximumMonthlyConsumption': 0,
+                  'AverageWeightKG': 0,
+                  'Description': '',
+                  'FactoryId': this.factoryId,
+                  'AttachmentId': 0,
+                  'PaperId': 0,
+                  'PhotoId': 0,
+                  'UnitId': 0,
+                  'ProductIds': item.ProductIds,
 
-          //  })
-        })
+                })
+              })
+            })
+        }
+
       });
 
+  }
+  getFile(attachmentId: number) {
+    if (attachmentId == null) {
+      this.toastr.error("لا يوجد ملف");
+    }
+    else {
+      this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
+        this.downloadattachment(res)
+      });
+    }
 
+  }
+
+
+
+  getImage(attachmentId: number) {
+    if (attachmentId == null) {
+      this.toastr.error("لا يوجد ملف");
+    }
+    else {
+      this.fileService.getImage(attachmentId).subscribe((res: any) => {
+
+        this.src='data:image/jpeg;base64,'+res.Image;
+        console.log(res.Image)
+      });
+    }
+
+  }
+  downloadattachment(data: any) {
+    const blob = new Blob([data], { type: data.type });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
+    console.log(data)
   }
 
   deleteFile(id: number) {
@@ -157,73 +234,27 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     //   });
   }
 
-  onUnitSelect(data: RawMaterial) {
 
-
-    //   let selectedValue: any = data.UnitId
-
-    //   console.log(data.MaximumMonthlyConsumption)
-    //   if (selectedValue != "11" || selectedValue != "15") {
-    //     this.showKG = true
-    //   //  console.log(this.showInput)
-    //   }
-    //   if (selectedValue == "11") {
-    //     this.showKG = false
-    //     data.AverageWeightKG = data.MaximumMonthlyConsumption
-    //  //   console.log(this.request)
-    //   }
-    //   if (selectedValue == "15") {
-    //     this.showKG = true
-    //     data.AverageWeightKG = 1000
-    //    // console.log(this.showInput)
-    //   }
-
-  }
-
-
+ 
 
 
   getCustomRawMaterial() {
-    this.search.FactoryId = this.factoryId;
-    console.log(this.data)
-    this.productService
-      .getAll(this.factoryId)
-      .subscribe((res: any) => {
 
-        this.rawMaterials = res.Data;
-        this.materials = res.Data;
-        console.log(this.rawMaterials)
-        console.log(this.materials)
-        this.ss = res.Data;
-
-        // console.log(this.rawMaterials)
-        this.rawMaterials.forEach((item: any) => {
-          this.data.push({
-            'Id': 0,
-            'CustomItemName': '',
-            'Name': '',
-            'MaximumMonthlyConsumption': 0,
-            'AverageWeightKG': 0,
-            'Description': '',
-            'FactoryId':this.factoryId,
-            'AttachmentId': 0,
-            'PaperId': 0,
-            'PhotoId': 0,
-            'UnitId': 0,
-            'ProductIds': this.request.ProductIds,
-
-          })
-        })
-      })
 
   }
 
   onSelectionChange(item: any, i: number) {
     item.UnitId = this.products.find(item => item.Id == this.products[0].Id)?.UnitId;
- 
+    let selectedValue: any = this.units.find(option => option.Id == item.UnitId);
+    console.log(selectedValue)
+    if (selectedValue?.Name == 'kilograms') {
+      item.AverageWeightKG = 1
+
+      this.showKG = true
+    }
   }
- 
-  
+
+
 
   savePaper(file: any, i: number) {
     if (file.target.files.length > 0) {
@@ -287,15 +318,15 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   save() {
 
-console.log(this.data)
-console.log(this.request)
+    console.log(this.data)
+    console.log(this.request)
     debugger
-    this.data.FactoryId=this.factoryId;
+    this.data.FactoryId = this.factoryId;
     this.data.forEach((element: RawMaterial) => {
-      element.ProductIds= this.request.ProductIds;
+      element.ProductIds = this.request.ProductIds;
       console.log(element)
-      if (element.CustomItemName != '') {
-
+      if (element.Id == 0) {
+        console.log('new')
         this.rawMaterialService
           .create(element)
           .subscribe((res: any) => {
@@ -306,15 +337,16 @@ console.log(this.request)
 
 
       }
-      //   else {
-      //     this.rawMaterialService
-      //       .update(this.request)
-      //       .subscribe((res: any) => {
-      //         this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+      else {
+        console.log('update')
+        this.rawMaterialService
+          .update(element)
+          .subscribe((res: any) => {
+            this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
 
-      //         this.toastr.success("تم الحفظ");
-      //       });
-      //  }
+            //  this.toastr.success("تم الحفظ");
+          });
+      }
 
       if (this.saveSuccessful == true) {
         this.data = new RawMaterial();

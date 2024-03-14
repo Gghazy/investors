@@ -27,7 +27,7 @@
         </label>
         <div class="input-group">
 
-            <input type="number" class="form-control" [(ngModel)]="request.MaximumMonthlyConsumption">
+            <input type="number" class="form-control" [(ngModel)]="request.MaximumMonthlyConsumption" min="0">
         </div>
     </div>
     <div class="col-md-3">
@@ -36,20 +36,20 @@
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">
             وحدة القياس <i>؟</i>
         </label>
-        <select class="form-select" (change)="onUnitSelect($event)" [(ngModel)]="request.UnitId" disabled>
+        <select class="form-select"  [(ngModel)]="request.UnitId" disabled>
             <option *ngFor="let item of units" [value]="item.Id">
                 {{ item.Name }}
             </option>
         </select>
     </div>
 
-    <div class="col-md-3" *ngIf="showInput">
+    <div class="col-md-3" >
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">متوسط الوزن بحسب الوحدة لكل
             كيلوجرام 
             <!-- <i>؟</i> -->
         </label>
         <div class="input-group">
-            <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG">
+            <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG" min="0" [disabled]="showInput">
             <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
         </div>
     </div>

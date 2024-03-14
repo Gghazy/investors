@@ -26,7 +26,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   @Output() close = new EventEmitter<boolean>();
 
   products  !: ProductModel[];
-  showInput: boolean = true
+  showInput: boolean = false
   units!: LookUpModel[];
   request = new RawMaterial();
   search = new ProductSearch();
@@ -90,7 +90,13 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
 
     this.request.UnitId = this.products.find(item => item.Id == this.products[0].Id)?.UnitId;
- 
+    let selectedValue: any = this.units.find(option => option.Id == this.request.UnitId);
+    console.log(selectedValue)
+    if (selectedValue?.Name == 'kilograms') {
+      this.request.AverageWeightKG =1
+  
+      this.showInput = true
+    }
     
   }
 
