@@ -56,8 +56,10 @@
       <tr *ngFor="let file of files let i=index">
         <td>{{i+1}}</td>
         <td>  {{file.Name}}</td>
-        <td>  {{file.Type}}</td>
-        <td>JPG</td>
+        <td *ngIf="file.Type==0">البيانات المالية المدققة</td>
+        <td *ngIf="file.Type==1">سجل الإنتاج </td>
+        <td *ngIf="file.Type==2">كمية المبيعات</td>
+        <td>{{file.Extention}}</td>
         <td>
             <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                 عرض
