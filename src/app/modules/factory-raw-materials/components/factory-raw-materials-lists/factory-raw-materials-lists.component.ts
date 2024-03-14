@@ -22,6 +22,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   factoryId: any;
   periodId: any;
+  Id!: number |undefined;
   showKG: boolean = false
   materialCount!: number;
   materials = new ResultResponse<RawMaterial>();
@@ -56,7 +57,6 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   ngOnInit() {
     this.getRawMaterial()
-    this.getCustomRawMaterial()
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'ProductId',
@@ -93,7 +93,11 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       }
     }
   }
-
+  edit(id: number) {
+    this.Id=id
+    console.log(id)
+   
+  }
   onSelectAll(items: any) {
     //console.log(items);
   }
@@ -108,30 +112,31 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   onItemSelect(item: any) {
     console.log(item)
     console.log(this.request)
-    this.request.ProductIds.push(item.ProductId)
-    console.log(this.request.ProductIds)
+    this.request.FactoryProductId.push(item.ProductId)
+    console.log(this.request.FactoryProductId)
   }
   onItemDeSelect(item: any) {
-    this.request.ProductIds.splice(item.ProductId)
+    this.request.FactoryProductId.splice(item.ProductId)
   }
 
 
 
   getRawMaterial() {
+    
     this.rawMaterialService
         .getRawMaterial(this.search, this.factoryId)
         .subscribe((res: any) => {
-        if (res) {
+        if ( res) {
           this.rawMaterials = res.Data.Items;
           console.log(res.Data)
           this.materials = res.Data;
-         this.materialCount = this.materials.Items.length;
+       //  this.materialCount = this.materials.Items.length;
 
           console.log(this.materialCount)
 
 
           this.rawMaterials.forEach((item: RawMaterial) => {
-            item.ProductIds=[5]
+           
             console.log(item)
             this.data.push({
               'Id': item.Id,
@@ -147,49 +152,51 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
               'PhotoId': item.PhotoId,
 
               'UnitId': item.UnitId,
-              'ProductIds': item.ProductIds
+              'FactoryProductId': item.FactoryProductId 
             })
           })
-
-
         }
         else {
-          this.search.FactoryId = this.factoryId;
-          console.log(this.data)
-          this.productService
-            .getAll(this.factoryId)
-            .subscribe((res: any) => {
-              this.materialCount = this.materials.Items.length;
+         
+      }
 
-              console.log(this.materialCount)
-              this.rawMaterials = res.Data;
-              this.materials = res.Data;
-              console.log(this.rawMaterials)
-              console.log(this.materials)
-              this.ss = res.Data;
+    });
 
-              // console.log(this.rawMaterials)
-              this.rawMaterials.forEach((item: any) => {
-                this.data.push({
-                  'Id': 0,
-                  'CustomItemName': '',
-                  'Name': '',
-                  'MaximumMonthlyConsumption': 0,
-                  'AverageWeightKG': 0,
-                  'Description': '',
-                  'FactoryId': this.factoryId,
-                  'AttachmentId': 0,
-                  'PaperId': 0,
-                  'PhotoId': 0,
-                  'UnitId': 0,
-                  'ProductIds': item.ProductIds,
 
-                })
-              })
-            })
-        }
+      
+    this.search.FactoryId = this.factoryId;
+    console.log(this.data)
+    this.productService
+      .getAll(this.factoryId)
+      .subscribe((res: any) => {
+       // this.materialCount = this.materials.Items.length;
 
-      });
+        console.log(this.materialCount)
+        this.rawMaterials = res.Data;
+        this.materials = res.Data;
+        console.log(this.rawMaterials)
+        console.log(this.materials)
+        this.ss = res.Data;
+
+        // console.log(this.rawMaterials)
+        this.rawMaterials.forEach((item: any) => {
+          this.data.push({
+            'Id': 0,
+            'CustomItemName': '',
+            'Name': '',
+            'MaximumMonthlyConsumption': 0,
+            'AverageWeightKG': 0,
+            'Description': '',
+            'FactoryId': this.factoryId,
+            'AttachmentId': 0,
+            'PaperId': 0,
+            'PhotoId': 0,
+            'UnitId': 0,
+            'FactoryProductId': item.ProductIds,
+
+          })
+        })
+      })
 
   }
   getFile(attachmentId: number) {
@@ -238,11 +245,6 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
  
 
 
-  getCustomRawMaterial() {
-
-
-  }
-
   onSelectionChange(item: any, i: number) {
     item.UnitId = this.products.find(item => item.Id == this.products[0].Id)?.UnitId;
     let selectedValue: any = this.units.find(option => option.Id == item.UnitId);
@@ -262,11 +264,14 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.data[i].PaperId = res.Data.Id
+          console.log(this.data)
         });
     }
   }
   savePhoto(file: any, i: number) {
     if (file.target.files.length > 0) {
+      console.log(i)
+      console.log(file)
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
@@ -323,7 +328,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     debugger
     this.data.FactoryId = this.factoryId;
     this.data.forEach((element: RawMaterial) => {
-      element.ProductIds = this.request.ProductIds;
+      element.FactoryProductId = this.request.FactoryProductId;
       console.log(element)
       if (element.Id == 0) {
         console.log('new')
