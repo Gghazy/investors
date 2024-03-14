@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { fade } from 'src/app/shared/animation/app.animation';
@@ -19,19 +19,19 @@ export class FactoryContactFormComponent implements OnInit {
 
   factoryId: any;
   periodId: any;
-  request : any;
+  request: any;
   separateDialCode = false;
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
   phoneForm = new FormGroup({
-    OfficerPhone: new FormControl(undefined, [Validators.required]),
-    OfficerEmail: new FormControl(undefined, [Validators.required]),
-    ProductionManagerPhone: new FormControl(undefined, [Validators.required]),
-    ProductionManagerEmail: new FormControl(undefined, [Validators.required]),
-    FinanceManagerPhone: new FormControl(undefined, [Validators.required]),
-    FinanceManagerEmail: new FormControl(undefined, [Validators.required]),
+    OfficerPhone: new FormControl(undefined, [Validators.required, this.saPhoneNumberValidator]),
+    OfficerEmail: new FormControl(undefined, [Validators.required,this.isValidEmail]),
+    ProductionManagerPhone: new FormControl(undefined, [Validators.required, this.saPhoneNumberValidator]),
+    ProductionManagerEmail: new FormControl(undefined, [Validators.required,this.isValidEmail]),
+    FinanceManagerPhone: new FormControl(undefined, [Validators.required, this.saPhoneNumberValidator]),
+    FinanceManagerEmail: new FormControl(undefined, [Validators.required,this.isValidEmail]),
     Id: new FormControl(0, [Validators.required]),
     FactoryId: new FormControl(undefined, [Validators.required])
 
@@ -52,20 +52,21 @@ export class FactoryContactFormComponent implements OnInit {
   }
 
   getContact() {
-    
+
     this.factoryContactService
       .getOne(this.factoryId)
       .subscribe((res: any) => {
+        debugger
         this.request = res.Data;
         this.phoneForm.setValue(res.Data);
-        this.phoneForm.controls.OfficerPhone.setValue(res.Data.OfficerPhone.InternationalNumber);
-        this.phoneForm.controls.FinanceManagerPhone.setValue(res.Data.FinanceManagerPhone.InternationalNumber);
-        this.phoneForm.controls.ProductionManagerPhone.setValue(res.Data.ProductionManagerPhone.InternationalNumber);
+        this.phoneForm.controls.OfficerPhone.setValue(res.Data.OfficerPhone.Number);
+        this.phoneForm.controls.FinanceManagerPhone.setValue(res.Data.FinanceManagerPhone.Number);
+        this.phoneForm.controls.ProductionManagerPhone.setValue(res.Data.ProductionManagerPhone.Number);
       });
   }
 
   save() {
-    this.request= this.phoneForm.value 
+    this.request = this.phoneForm.value
     this.request.FactoryId = this.factoryId;
     if (this.request.Id == 0) {
       this.factoryContactService
@@ -84,6 +85,26 @@ export class FactoryContactFormComponent implements OnInit {
           this.toastr.success("تم الحفظ");
         });
     }
+
+  }
+
+  saPhoneNumberValidator(control: FormControl): ValidationErrors | null {
+    const phoneNumber = control.value?.number;
+    if (phoneNumber != null) {
+      const saPhoneNumberPattern = /^(05\d{8})$/; // Saudi Arabian phone number pattern without country code
+      const isValid = saPhoneNumberPattern.test(phoneNumber);
+      return isValid ? null : { saPhoneNumber: true };
+
+    }
+    return null;
+  }
+
+  isValidEmail(control: FormControl): ValidationErrors | null {
+    let email = control.value;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var isvalid= emailPattern.test(email);
+
+    return isvalid ? null : { isValidEmail: true };
 
   }
 }

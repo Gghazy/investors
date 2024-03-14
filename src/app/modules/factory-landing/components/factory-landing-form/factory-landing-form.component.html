@@ -47,7 +47,7 @@
                     </ng-template>
 
                 </li>
-                <li class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <li class="col-12 col-lg-4 col-md-6 col-sm-12" *ngIf="periodMonth==1">
                     <a [routerLink]="'/pages/financial-details/'+factoryId+'/'+periodId">
                         <svg fill="#000000" height="64px" width="64px" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

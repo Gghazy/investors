@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { BasicFileModel } from '../../models/basic-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { BasicInfoService } from '../../basic-info.service';
@@ -16,6 +16,7 @@ export class BasicInfoFileComponent implements OnInit {
   src!:string;
   @Input() factoryId!:string;
   @Input() periodId!:string;
+  @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(
     private fileService:FileService,
     private basicInfoService:BasicInfoService,
@@ -60,6 +61,7 @@ export class BasicInfoFileComponent implements OnInit {
       this.getFiles();
       this.toastr.success("تم الحفظ");
       this.request=new BasicFileModel();
+      this.fileInput.nativeElement.value = '';
     });
 
   }

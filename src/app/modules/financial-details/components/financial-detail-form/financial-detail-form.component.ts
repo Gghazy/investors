@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { FinancialModel } from '../../Models/financial-model';
@@ -84,4 +84,6 @@ export class FinancialDetailFormComponent {
 
     return total
   }
+
+
 }

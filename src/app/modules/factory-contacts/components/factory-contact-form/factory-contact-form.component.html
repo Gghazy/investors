@@ -37,6 +37,10 @@
                     formControlName="OfficerPhone"
                   >
                   </ngx-intl-tel-input>
+                  <div style="color: #F00;" *ngIf="phoneForm.get('OfficerPhone')?.errors && phoneForm.get('OfficerPhone')?.touched">
+                    <div *ngIf="phoneForm.get('OfficerPhone')?.hasError('required')">هذا الحقل مطلوب</div>
+                    <div *ngIf="phoneForm.get('OfficerPhone')?.hasError('saPhoneNumber')">الرجاء إدخال رقم هاتف سعودي صالح</div>
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">
@@ -50,6 +54,10 @@
                       name="OfficerEmail"
                       formControlName="OfficerEmail"
                     />
+                  </div>
+                  <div style="color: #F00;" *ngIf="phoneForm.get('OfficerEmail')?.errors && phoneForm.get('OfficerEmail')?.touched">
+                    <div *ngIf="phoneForm.get('OfficerEmail')?.hasError('required')">هذا الحقل مطلوب</div>
+                    <div *ngIf="phoneForm.get('OfficerEmail')?.hasError('isValidEmail')">عنوان بريد إلكتروني غير صالح</div>
                   </div>
                 </div>
               </div>
@@ -77,6 +85,10 @@
                     formControlName="ProductionManagerPhone"
                   >
                   </ngx-intl-tel-input>
+                  <div style="color: #F00;" *ngIf="phoneForm.get('ProductionManagerPhone')?.errors && phoneForm.get('ProductionManagerPhone')?.touched">
+                    <div *ngIf="phoneForm.get('ProductionManagerPhone')?.hasError('required')">هذا الحقل مطلوب</div>
+                    <div *ngIf="phoneForm.get('ProductionManagerPhone')?.hasError('saPhoneNumber')">الرجاء إدخال رقم هاتف سعودي صالح</div>
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">
@@ -90,6 +102,10 @@
                       name="ProductionManagerEmail"
                       formControlName="ProductionManagerEmail"
                     />
+                  </div>
+                  <div style="color: #F00;" *ngIf="phoneForm.get('ProductionManagerEmail')?.errors && phoneForm.get('ProductionManagerEmail')?.touched">
+                    <div *ngIf="phoneForm.get('ProductionManagerEmail')?.hasError('required')">هذا الحقل مطلوب</div>
+                    <div *ngIf="phoneForm.get('ProductionManagerEmail')?.hasError('isValidEmail')">عنوان بريد إلكتروني غير صالح</div>
                   </div>
                 </div>
               </div>
@@ -118,6 +134,10 @@
 
                   >
                   </ngx-intl-tel-input>
+                  <div style="color: #F00;" *ngIf="phoneForm.get('FinanceManagerPhone')?.errors && phoneForm.get('FinanceManagerPhone')?.touched">
+                    <div *ngIf="phoneForm.get('FinanceManagerPhone')?.hasError('required')">هذا الحقل مطلوب</div>
+                    <div *ngIf="phoneForm.get('FinanceManagerPhone')?.hasError('saPhoneNumber')">الرجاء إدخال رقم هاتف سعودي صالح</div>
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">
@@ -131,6 +151,10 @@
                       name="FinanceManagerEmail"
                       formControlName="FinanceManagerEmail"
                     />
+                  </div>
+                  <div style="color: #F00;" *ngIf="phoneForm.get('FinanceManagerEmail')?.errors && phoneForm.get('FinanceManagerEmail')?.touched">
+                    <div *ngIf="phoneForm.get('FinanceManagerEmail')?.hasError('required')">هذا الحقل مطلوب</div>
+                    <div *ngIf="phoneForm.get('FinanceManagerEmail')?.hasError('isValidEmail')">عنوان بريد إلكتروني غير صالح</div>
                   </div>
                 </div>
               </div>

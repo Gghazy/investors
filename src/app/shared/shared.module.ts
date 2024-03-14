@@ -17,6 +17,7 @@ import { ListComponent } from './components/list/list.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { RouterModule } from '@angular/router';
 import { UncompletedWarningComponent } from './components/uncompleted-warning/uncompleted-warning.component';
+import { NoMinusDirective } from './directives/NoMinusDirective ';
 
 
 
@@ -29,14 +30,13 @@ const COMPONENTS = [
   FooterComponent,
   PaginationComponent,
   ListComponent,
-  UncompletedWarningComponent
+  UncompletedWarningComponent,
+  NoMinusDirective
 ];
 
 
 @NgModule({
-  declarations: [[...COMPONENTS
-    
-  ]],
+  declarations: [[...COMPONENTS]],
   exports:[
     [...COMPONENTS],
     NgMultiSelectDropDownModule,
