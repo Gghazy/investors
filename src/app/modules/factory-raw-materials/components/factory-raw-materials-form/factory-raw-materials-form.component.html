@@ -60,7 +60,8 @@
 
         <div class="multiselect-parent">
             <ng-multiselect-dropdown [placeholder]="'أختر'" [settings]="dropdownSettings" [data]="products"
-                [(ngModel)]="selectedProducts" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                [(ngModel)]="selectedProducts" (onSelect)="onItemSelect($event)"
+                (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)">
             </ng-multiselect-dropdown>
         </div>
 
@@ -99,7 +100,7 @@
 
 <div class="modal-footer">
     <div class="col-12 text-end">
-        <button class="btn btn-primary me-1" type="submit" (click)="save()"> إضافة</button>
+        <button class="btn btn-primary me-1" type="submit" (click)="save()"> حفظ</button>
         <!-- <button class="btn btn-primary me-1" type="submit" (click)="saveProducts()"> Products</button> -->
         <a data-bs-dismiss="modal" class="btn btn-danger">الغاء</a>
     </div>

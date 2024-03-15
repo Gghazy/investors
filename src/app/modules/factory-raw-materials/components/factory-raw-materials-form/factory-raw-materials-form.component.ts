@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { FactoryRawMaterialService } from '../../factory-raw-material.service';
@@ -32,7 +32,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   units!: LookUpModel[];
   request = new RawMaterial();
   search = new ProductSearch();
-  selectedProducts: any = [];
+  selectedProducts: any[] = [];
   items: any = [];
   periodId: any;
   saveSuccessful: boolean = false;
@@ -67,21 +67,32 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   dropdownList: any[] = [];
 
-  selectedItems1 = [];
+  selectedItems1: any[] = [];
   selectedItems2 = [];
 
   dropdownSettings!: IDropdownSettings;
-
+  ngOnChanges(changes: SimpleChanges) {
+    this.request = new RawMaterial();
+    if (changes['Id']) {
+      this.selectedProducts = []
+      this.selectedItems1 = []
+      this.getOneRawMaterial(this.Id)
+      this.getProducts();
+      this.getUnits();
+      this.dropdownSettings = {
+        singleSelection: false,
+        idField: 'ProductId',
+        textField: 'ProductName',
+        selectAllText: 'تحديد الكل',
+        unSelectAllText: 'ازالة التحديد',
+        searchPlaceholderText: 'بحث',
+        itemsShowLimit: 2,
+        allowSearchFilter: true
+      };
+    }
+  }
   ngOnInit() {
-  //  // console.log(this.Id)
-  //   if (this.Id != 0) {
-  //     this.getOneRawMaterial(this.Id)
-      
 
-  //   }
-  //   else{
-  //     this.Id=0
-  //   }
     this.getProducts();
     this.getUnits();
     this.dropdownSettings = {
@@ -96,13 +107,28 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     };
   }
 
-  getOneRawMaterial(id:number){
+  getOneRawMaterial(id: number) {
     this.rawMaterialService
-        .getOne(id)
-        .subscribe((res: any) => {
-         this.request = res.Data;
-   console.log(res)
-        });
+      .getOne(id)
+      .subscribe((res: any) => {
+        this.request = res.Data;
+        this.search.FactoryId = this.factoryId;
+        this.productService
+          .getAllPagination(this.search)
+          .subscribe((res: any) => {
+            this.products = res.Data.Items;
+            this.request.FactoryProductId.forEach(element => {
+              let ProductName = this.products.find(x => x.Id == element)?.ProductName;
+
+              this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductName })
+
+
+              this.selectedProducts = this.selectedItems1
+            });
+          })
+
+
+      });
   }
 
   onSelectionChange() {
@@ -110,13 +136,12 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
     this.request.UnitId = this.products.find(item => item.Id == this.products[0].Id)?.UnitId;
     let selectedValue: any = this.units.find(option => option.Id == this.request.UnitId);
-    console.log(selectedValue)
-    if (selectedValue?.Name == 'kilograms') {``
-      this.request.AverageWeightKG =1
-  
+    if (selectedValue?.Name == 'kilograms') {
+      this.request.AverageWeightKG = 1
+
       this.showInput = true
     }
-    
+
   }
   closePopUp() {
     this.Modal.nativeElement.click()
@@ -132,30 +157,25 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   }
   onItemSelect(item: any) {
-    this.request.FactoryProductId .push( item.ProductId)
+    this.request.FactoryProductId.push(item.ProductId)
   }
+
+
+  onItemDeSelect(item: any) {
+    debugger
+    this.request.FactoryProductId.splice(item,1)
+
+    this.selectedItems1.splice(item,1)
+
+    console.log(this.selectedItems1)
+    console.log(this.request.FactoryProductId)
+  }
+
   onSelectAll(items: any) {
-    //console.log(items);
   }
 
   onUnitSelect(event: Event) {
 
-
-    // let selectedValue: any = (event.target as HTMLSelectElement).value;
-    // if (selectedValue != "11" || selectedValue != "15") {
-    //   this.showInput = true
-    //   console.log(this.showInput)
-    // }
-    // if (selectedValue == "11") {
-    //   this.showInput = false
-    //   this.request.AverageWeightKG = this.request.MaximumMonthlyConsumption
-    //   console.log(this.showInput)
-    // }
-    // if (selectedValue == "15") {
-    //   this.showInput = true
-    //   this.request.AverageWeightKG = 1000
-    //   console.log(this.showInput)
-    // }
   }
   getUnits() {
     this.lookUpService
@@ -189,48 +209,35 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
 
   save() {
-    debugger
     this.request.FactoryId = this.factoryId;
-    this.rawMaterialService
-      .create(this.request)
-      .subscribe((res: any) => {
-        this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-        this.saveSuccessful = true;
-        this.close.emit(true);
-        this.toastr.success("تم الحفظ");
-      });
-      // this.request.FactoryId = this.factoryId;
-      //   this.request.FactoryProductId  = this.request.FactoryProductId ;
-      //   console.log(this.request)
-      //   if (this.request.Id == 0) {
-      //     console.log('new')
-      //     this.rawMaterialService
-      //       .create(this.request)
-      //       .subscribe((res: any) => {
-      //         this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-      //         this.saveSuccessful = true;
-      //         this.close.emit(true);
-      //         this.toastr.success("تم الحفظ");
-  
-      //       });
-  
-  
-      //   }
-      //   else {
-      //     console.log('update')
-      //     this.rawMaterialService
-      //       .update(this.request)
-      //       .subscribe((res: any) => {
-      //         this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-  
-      //         //  this.toastr.success("تم الحفظ");
-      //       });
-      //   }
-  
-        
-  
-   
-      // this.toastr.success("تم الحفظ");
+    if (this.request.Id == undefined) {
+      this.rawMaterialService
+        .create(this.request)
+        .subscribe((res: any) => {
+          this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+          this.saveSuccessful = true;
+          this.close.emit(true);
+          this.toastr.success("تم الحفظ");
+
+        });
+
+
+    }
+    else {
+      this.rawMaterialService
+        .update(this.request)
+        .subscribe((res: any) => {
+          this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+          this.saveSuccessful = true;
+          this.close.emit(true);
+          this.toastr.success("تم الحفظ");
+        });
+    }
+
+
+
+
+    // this.toastr.success("تم الحفظ");
     if (this.saveSuccessful == true) {
       this.request = new RawMaterial();
       this.selectedProducts = []

@@ -86,8 +86,6 @@ export class ActualRawMaterialsFormComponent implements OnInit {
         this.rawMaterials = res.Data;
         this.materials = res.Data;
 
-
-       // console.log(res)
         if (this.rawMaterials.length == 0) {
           this.isNewData = true
           this.service
@@ -118,11 +116,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
             });
         }
 
-       // console.log(this.rawMaterials)
-
         this.rawMaterials.forEach((item: any) => {
           this.request.IncreasedUsageReason = item.IncreasedUsageReason
-         // console.log(item)
           this.x.push({
             'Id': item.Id,
             'RawMaterialId': item.RawMaterialId.Id,
@@ -140,24 +135,14 @@ export class ActualRawMaterialsFormComponent implements OnInit {
           })
         })
       });
-   // console.log(this.isNewData)
   }
 
 
   onSelectionChange(row: ActualRawMaterial) {
-  //  console.log(row)
-    // if (row.UsageUnitId == 11) {
-    //   row.CurrentStockQuantity_KG = row.CurrentStockQuantity
-    // }
-    // if (row.StockUnitId == 11) {
-    //   row.CurrentStockQuantity_KG = row.CurrentStockQuantity
-    // }
-    // if (row.StockUnitId != 11 || row.UsageUnitId != 15) {
       row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
        row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
        
        if (row.UsedQuantity_KG > row.CurrentStockQuantity_KG){
-        //console.log( row.UsedQuantity_KG > row.CurrentStockQuantity_KG )
         this.showInput = true
        }else{
         this.showInput = false
@@ -192,7 +177,6 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   }
 
   saveDocs(file: any) {
-    console.log(file)
     if (file.target.files.length > 0) {
       this.fileService
         .addFile(file.target.files[0])
@@ -236,7 +220,6 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     const blob = new Blob([data], { type: data.type });
     const url = window.URL.createObjectURL(blob);
     window.open(url);
-    console.log(data)
   }
 
   deleteFile(id: number) {
@@ -260,7 +243,6 @@ export class ActualRawMaterialsFormComponent implements OnInit {
           .create(item)
           .subscribe((res: any) => {
             this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-          ///  console.log(item)
           });
       })
       this.toastr.success("تم الحفظ");
@@ -275,7 +257,6 @@ export class ActualRawMaterialsFormComponent implements OnInit {
           .update(item)
           .subscribe((res: any) => {
             this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-          //  console.log(item)
           });
       })
       this.toastr.success("تم الحفظ");
