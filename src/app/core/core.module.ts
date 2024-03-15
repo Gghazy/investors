@@ -7,13 +7,14 @@ import { DateFormat } from './Pipe/dateFormat';
 
 @NgModule({
   declarations: [
-    DateFormat
+    DateFormat,
+    
   ],
   imports: [
     CommonModule,  
   ],
   exports:[
-    DateFormat
+    DateFormat,
   ],
   providers: [AppHttpInterceptorProviders],
 

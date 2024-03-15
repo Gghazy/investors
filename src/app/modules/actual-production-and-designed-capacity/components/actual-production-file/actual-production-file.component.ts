@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ActualProductionFileModel } from '../../models/actual-production-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastrService } from 'ngx-toastr';
@@ -15,6 +15,8 @@ export class ActualProductionFileComponent {
   src!:string;
   @Input() factoryId!:number;
   @Input() periodId!:number;
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   constructor(
     private fileService:FileService,
     private reasonService:ReasonService,
@@ -62,6 +64,8 @@ export class ActualProductionFileComponent {
       this.getFiles();
       this.toastr.success("تم الحفظ");
       this.request=new ActualProductionFileModel();
+      this.fileInput.nativeElement.value = '';
+
     });
 
   }

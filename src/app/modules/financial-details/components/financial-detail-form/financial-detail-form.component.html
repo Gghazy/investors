@@ -17,7 +17,7 @@
         <div class="row">
            
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     الإيرادات
                     <span class="required">*</span>
@@ -25,7 +25,7 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number"  #Revenues="ngModel" required class="form-control" name="Revenues" [(ngModel)]="request.Revenues">
+                    <input type="number" noMinus  #Revenues="ngModel" required class="form-control" name="Revenues" [(ngModel)]="request.Revenues">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -36,7 +36,7 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     نفقات المياه
                     <span class="required">*</span>
@@ -44,7 +44,7 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number"   #WaterExpenses="ngModel" required  class="form-control " name="WaterExpenses" [(ngModel)]="request.WaterExpenses">
+                    <input type="number" noMinus   #WaterExpenses="ngModel" required  class="form-control " name="WaterExpenses" [(ngModel)]="request.WaterExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -55,7 +55,7 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     نفقات الكهرباء
                     <span class="required">*</span>
@@ -63,7 +63,7 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" #ElectricityExpenses="ngModel" required class="form-control " name="ElectricityExpenses" [(ngModel)]="request.ElectricityExpenses">
+                    <input type="number" noMinus #ElectricityExpenses="ngModel" required class="form-control " name="ElectricityExpenses" [(ngModel)]="request.ElectricityExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -74,7 +74,7 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     نفقات الوقود​
                     <span class="required">*</span>
@@ -82,7 +82,7 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" #FuelExpenses="ngModel" required class="form-control " name="FuelExpenses" [(ngModel)]="request.FuelExpenses">
+                    <input type="number" noMinus #FuelExpenses="ngModel" required class="form-control " name="FuelExpenses" [(ngModel)]="request.FuelExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -93,7 +93,7 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     نفقات المواد الخام​​
                     <span class="required">*</span>
@@ -101,7 +101,7 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" #RawMterialExpenses="ngModel" required class="form-control " name="RawMterialExpenses" [(ngModel)]="request.RawMterialExpenses">
+                    <input type="number" noMinus #RawMterialExpenses="ngModel" required class="form-control " name="RawMterialExpenses" [(ngModel)]="request.RawMterialExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -112,7 +112,7 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     نفقات العمالة ​​​
                     <span class="required">*</span>
@@ -120,7 +120,7 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" #EmploymentExpenses="ngModel" required class="form-control " name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses">
+                    <input type="number" noMinus #EmploymentExpenses="ngModel" required class="form-control " name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -131,7 +131,7 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     نفقات تشغيلية أخرى​​​​
                     <span class="required">*</span>
@@ -139,7 +139,7 @@
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" #OtherOperatingExpenses="ngModel" required class="form-control " name="OtherOperatingExpenses" [(ngModel)]="request.OtherOperatingExpenses">
+                    <input type="number" noMinus #OtherOperatingExpenses="ngModel" required class="form-control " name="OtherOperatingExpenses" [(ngModel)]="request.OtherOperatingExpenses">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -150,14 +150,14 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     إجمالي النفقات التشغيلية​
                     <span class="required">*</span>
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" class="form-control " name="TotalExpenses" [ngModel]="getTotalExpenses()" disabled>
+                    <input type="number" noMinus class="form-control " name="TotalExpenses" [ngModel]="getTotalExpenses()" disabled>
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -166,14 +166,14 @@
 
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip="ارقام صحية وعشرية، ليست سلبية  ">
+                <label class="form-label" placement="left" title="" tooltip="ارقام صحيحة وعشرية، ليست سلبية  ">
 
                     الأصول المتداولة
                     <span class="required">*</span>
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number"  #Assets="ngModel" required  class="form-control " name="Assets" [(ngModel)]="request.Assets">
+                    <input type="number" noMinus  #Assets="ngModel" required  class="form-control " name="Assets" [(ngModel)]="request.Assets">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -184,14 +184,14 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     الأصول غير المتداولة
                     <span class="required">*</span>
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" #NonCurrentAssets="ngModel" required class="form-control " name="NonCurrentAssets" [(ngModel)]="request.NonCurrentAssets">
+                    <input type="number" noMinus #NonCurrentAssets="ngModel" required class="form-control " name="NonCurrentAssets" [(ngModel)]="request.NonCurrentAssets">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -202,14 +202,14 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip="ارقام صحية وعشرية، ليست سلبية  ">
+                <label class="form-label" placement="left" title="" tooltip="ارقام صحيحة وعشرية، ليست سلبية  ">
 
                     الخصوم المتداولة
                     <span class="required">*</span>
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number" #CurrentLiabilities="ngModel" required class="form-control " name="CurrentLiabilities" [(ngModel)]="request.CurrentLiabilities">
+                    <input type="number" noMinus #CurrentLiabilities="ngModel" required class="form-control " name="CurrentLiabilities" [(ngModel)]="request.CurrentLiabilities">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>
@@ -220,14 +220,14 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label" placement="left" title="" tooltip=" ارقام صحية وعشرية، ليست سلبية ">
+                <label class="form-label" placement="left" title="" tooltip=" ارقام صحيحة وعشرية، ليست سلبية ">
 
                     الخصوم غير المتداولة
                     <span class="required">*</span>
                     <i>؟</i>
                 </label>
                 <div class="input-group">
-                    <input type="number"  #NonCurrentLiabilities="ngModel" required class="form-control " name="NonCurrentLiabilities" [(ngModel)]="request.NonCurrentLiabilities">
+                    <input type="number" noMinus  #NonCurrentLiabilities="ngModel" required class="form-control " name="NonCurrentLiabilities" [(ngModel)]="request.NonCurrentLiabilities">
                     <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                         style="max-width: 117px;">
                 </div>

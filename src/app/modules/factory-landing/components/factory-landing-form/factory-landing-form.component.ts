@@ -24,6 +24,7 @@ export class FactoryLandingFormComponent implements OnInit {
   periodId: any;
   factoryName!: string;
   periodStartDate!: string;
+  periodMonth!:number;
   periodEndDate!: string;
   screenStatuse = new ScreenStatusModel();
   allScreenStatus:Boolean=false;
@@ -77,6 +78,8 @@ export class FactoryLandingFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.periodStartDate = res.Data.PeriodStartDate
         this.periodEndDate = res.Data.PeriodEndDate
+        debugger
+        this.periodMonth = res.Data.Month
       });
   }
 
@@ -103,17 +106,17 @@ export class FactoryLandingFormComponent implements OnInit {
 
 
   checkAllScreenStatus(){
-
+debugger
     
     this.allScreenStatus=
     this.screenStatuse.ProductData&&
     this.screenStatuse.BasicFactoryInfo&&
     this.screenStatuse.FinancialData&&
     this.screenStatuse.MonthlyFinancialData&&
-    this.screenStatuse.FactoryLocation&&
+    //this.screenStatuse.FactoryLocation&&
     this.screenStatuse.FactoryContact&&
     this.screenStatuse.CustomItemsUpdated&&
-    this.screenStatuse.CustomItemValidity&&
+    //this.screenStatuse.CustomItemValidity&&
     this.screenStatuse.ActualProduction
     // this.screenStatuse.RawMaterial&&
     // this.screenStatuse.ActualRawMaterila&&

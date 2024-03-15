@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FinancialFileModel } from '../../Models/financial-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { FinancialDetailService } from '../../financial-detail.service';
@@ -14,6 +14,8 @@ export class FinancialFileComponent implements OnInit {
   request=new FinancialFileModel();
   src!:string;
   @Input() financialId!:number;
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   constructor(
     private fileService:FileService,
     private financialDetailService:FinancialDetailService,
@@ -59,6 +61,8 @@ export class FinancialFileComponent implements OnInit {
       this.getFiles();
       this.toastr.success("تم الحفظ");
       this.request=new FinancialFileModel();
+      this.fileInput.nativeElement.value = '';
+
     });
 
   }
