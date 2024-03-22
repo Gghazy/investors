@@ -11,6 +11,8 @@ export class FactoryModel {
     OwnerIdentity!:string;
     FactoryNumber!:string;
     LicenseNumber!:string;
+    CityNameAr!:string;
+    CityNameEn!:string;
     LicenseExpirDate!:string;
     Status!:number;
     PeriodId!:number;

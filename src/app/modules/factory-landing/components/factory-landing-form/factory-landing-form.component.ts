@@ -113,7 +113,7 @@ debugger
     this.screenStatuse.BasicFactoryInfo&&
     this.screenStatuse.FinancialData&&
     this.screenStatuse.MonthlyFinancialData&&
-    //this.screenStatuse.FactoryLocation&&
+    this.screenStatuse.FactoryLocation&&
     this.screenStatuse.FactoryContact&&
     this.screenStatuse.CustomItemsUpdated&&
     //this.screenStatuse.CustomItemValidity&&
