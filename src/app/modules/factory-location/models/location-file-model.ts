@@ -3,6 +3,7 @@ export class LocationFileModel {
     Type !: string;
     Name !: string;
     Path !: string;
+    Extension !: string;
     AttachmentId !: number;
     FactoryLocationId!: number;
 }
