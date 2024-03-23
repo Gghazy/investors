@@ -1,0 +1,249 @@
+<section class="form-panel">
+  <div class="form-header">
+    <h2 class="form-title">قائمة المدققين</h2>
+
+    <a href="" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#newModal">
+      إضافة مدقق جديد</a>
+  </div>
+  <div class="form-body">
+    <div class="mt-2">
+      <div class="d-flex justify-content-end">
+        <div class="col col-xl-3 col-lg-4 col-md-4">
+          <div class="input-group mb-3">
+            <span class="input-group-text"><svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
+                    stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </svg></span>
+
+            <input matInput (keyup)="applyFilter($event)" placeholder="بحث" class="form-control" />
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-hover table-small-header ">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th> اسم المدقق
+            </th>
+            <th>
+              حالة المدقق
+            </th>
+            <th>خيارات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of inspectors let i=index">
+            <td>{{i+1}}</td>
+            <td hidden>{{item.Id}}</td>
+            <td>{{item.Name}}</td>
+            <td>{{item.Status}}</td>
+            <td>
+              <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#detailsModal">تفاصيل</a>
+              <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editModal">تعديل</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+     
+    </div>
+  </div>
+</section>
+
+
+<!-- Modal details-->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تفاصيل المدقق</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12">
+          <h3>بيانات المدقق</h3>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="" class="form-label">الاسم</label>
+            <input type="text" class="form-control" value="محمد أحمد محمد" disabled />
+          </div>
+          <div class="col-md-6">
+            <label for="" class="form-label">رقم الهوية</label>
+            <input type="number" class="form-control" value="123456789" disabled />
+          </div>
+          <div class="col-md-6">
+            <label for="" class="form-label"> البريد الإلكتروني</label>
+            <input type="email" class="form-control" value="email@email.com" disabled />
+          </div>
+          <div class="col-md-6">
+            <label for="" class="form-label">رقم الهاتف</label>
+            <input type="number" class="form-control" value="5123456789" disabled />
+          </div>
+          <div class="col-md-6">
+            <label for="" class="form-label"> الجهة التابع لها المدقق</label>
+            <select class="form-select disabled" disabled>
+              <option>الخرج</option>
+              <option>الرياض</option>
+              <option selected>الهيئة الملكية بالجبيل وينبع</option>
+              <option>وزارة الشؤون البلدية والقروية</option>
+              <option>أخرى</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="form-label">حالة المدقق </label>
+            <select class="form-select disabled" disabled>
+              <option selected>نشط</option>
+              <option>غير نشط</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12 mt-3">
+          <h3>المصانع المسندة</h3>
+        </div>
+
+        <table class="table table-hover table-small-header">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>اسم المصنع</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>مصنع 1</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>مصنع 2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          اغلاق
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal edit-->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تعديل المدقق</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12">
+          <h3>بيانات المدقق</h3>
+        </div>
+        <div class="row">
+
+
+          <div class="col-md-6">
+            <label for="" class="form-label"> البريد الإلكتروني</label>
+            <input type="email" class="form-control" value="email@email.com" />
+          </div>
+          <div class="col-md-6">
+            <label for="" class="form-label">رقم الهاتف</label>
+            <input type="number" class="form-control" value="5123456789" />
+          </div>
+          <div class="col-md-6">
+            <label for="" class="form-label"> الجهة التابع لها المدقق</label>
+            <select class="select">
+              <option>الخرج</option>
+              <option>الرياض</option>
+              <option selected>الهيئة الملكية بالجبيل وينبع</option>
+              <option>وزارة الشؤون البلدية والقروية</option>
+              <option>أخرى</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="form-label">حالة المدقق </label>
+            <select class="select">
+              <option selected>نشط</option>
+              <option>غير نشط</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12 mt-3">
+          <h3>المصانع المسندة</h3>
+        </div>
+
+        <table class="table table-hover table-small-header">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>اسم المصنع</th>
+              <th>السجل التجاري</th>
+              <th>خيارات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>مصنع 1</td>
+              <td>123456789</td>
+              <td><button href="" class="btn btn-danger">حذف</button></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>مصنع 2</td>
+              <td>123456789</td>
+              <td><button href="" class="btn btn-danger">حذف</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">حفظ</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          اغلاق
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal add inspector-->
+<div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">إضافة مدقق جديد</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-inspector-form></app-inspector-form>
+    
+   
+  </div>
+</div>
+
+
+<!-- Modal add visit-->
+<div class="modal fade" id="visitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">اسناد مصنع</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-inspector-form></app-inspector-form>
+
+      </div>
+    </div>
+  </div>
+</div>

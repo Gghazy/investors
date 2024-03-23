@@ -4,6 +4,7 @@ import { ProductSearch } from '../customs-items-update/models/product-search';
 import { Observable } from 'rxjs';
 import { ProductModel } from '../customs-items-update/models/product-model';
 import { ProductsNotInFactorySearch } from './models/products-not-in-factory-search';
+import { SearchCriteria } from 'src/app/core/models/search-criteria';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,9 @@ export class FactoryProductService {
 
   getAllPagination(search: ProductSearch): Observable<any> {
     return this.http.post<any>('Products/Pagination', search);
+  }
+  getAllProducts(search: SearchCriteria): Observable<any> {
+    return this.http.post<any>('Products/AllProducts', search);
   }
   getAll(factoryId:number): Observable<any> {
     return this.http.get<any>(`Products/GetAll?factoryId=${factoryId}`);

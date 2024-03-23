@@ -76,7 +76,11 @@ const routes: Routes = [
       loadChildren: () =>
         import('../modules/period/period.module').then((m) => m.PeriodModule)
     },
-    
+    {
+      path: 'Admin/inspectors-list',
+      loadChildren: () =>
+        import('../modules/Admin/admin/inspector-lists/inspector-lists/inspector-lists.module').then((m) => m.InspectorListsModule)
+    },
   ]
   }
 ];
