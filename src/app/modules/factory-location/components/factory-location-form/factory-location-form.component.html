@@ -31,7 +31,7 @@
                 <label class="form-label"> المدينة<span class="required">*</span></label>
                 <select class="form-select" #CityId="ngModel" required  
                 name="CityId" [(ngModel)]="request.CityId" (change)="onCitySelect(request.CityId)">
-                    <option *ngFor="let city of cities" [ngValue]="city.CityCode">{{city.NameAr}} </option>
+                    <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.NameAr}} </option>
 
                 </select>
                 <div *ngIf="CityId.invalid && (CityId.dirty || CityId.touched)" class="validation-error">

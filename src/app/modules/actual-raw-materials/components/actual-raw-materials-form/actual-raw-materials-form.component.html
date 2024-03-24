@@ -86,12 +86,12 @@
 
 
 
-
-                </tbody>
+                     </tbody>
             </table>
+            <app-pagination (changePage)="pageChanged($event)" [pageSize]="x.PageSize" [pageNumber]="x.PageNumber" [totalCount]="x.TotalCount"></app-pagination>
+             
         </div>
-        <app-pagination (changePage)="pageChanged($event)" [pageSize]="materials.PageSize"
-            [pageNumber]="materials.PageNumber" [totalCount]="materials.TotalCount"></app-pagination>
+      
 <div *ngIf="showInput">
         <div class="col-md-12 mt-3" >
             <h3> زيادة استخدام المواد الأولية عن الإستهلاك الشهري المعتاد </h3>

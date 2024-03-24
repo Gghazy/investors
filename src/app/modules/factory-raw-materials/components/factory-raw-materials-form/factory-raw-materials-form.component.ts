@@ -12,6 +12,7 @@ import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductSearch } from 'src/app/modules/customs-items-update/models/product-search';
+import { SearchCriteria } from 'src/app/core/models/search-criteria';
 
 @Component({
   selector: 'app-factory-raw-materials-form',
@@ -27,11 +28,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   @Input() Id!: number;
   @Output() close = new EventEmitter<boolean>();
 
+  searchValue:boolean=false;
+  searchTerm: string = '';
+  filteredData: any[] = [];
   products  !: ProductModel[];
   showInput: boolean = false
   units!: LookUpModel[];
   request = new RawMaterial();
-  search = new ProductSearch();
+  search = new SearchCriteria();
   selectedProducts: any[] = [];
   items: any = [];
   periodId: any;
@@ -112,9 +116,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       .getOne(id)
       .subscribe((res: any) => {
         this.request = res.Data;
-        this.search.FactoryId = this.factoryId;
         this.productService
-          .getAllPagination(this.search)
+          .getAllProducts()
           .subscribe((res: any) => {
             this.products = res.Data.Items;
             this.request.FactoryProductId.forEach(element => {
@@ -130,6 +133,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
       });
   }
+
+  applyFilters() {
+  //  this.getProducts();
+  }
+  onItemChange(value: any) {
+    console.log('Selected Item:', value);
+  }
+
 
   onSelectionChange() {
 
@@ -148,13 +159,25 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   }
   getProducts() {
 
-    this.search.FactoryId = this.factoryId;
     this.productService
-      .getAllPagination(this.search)
+      .getAllProducts()
       .subscribe((res: any) => {
-        this.products = res.Data.Items;
+        this.products = res.Data;
+        this.filteredData =res.Data;
+        console.log(this.products)
       });
 
+  }
+
+  filterData(searchTerm: string): void {
+    this.searchValue=true
+    if (!searchTerm) {
+      this.filteredData = this.products; 
+      return;
+    }
+    this.filteredData = this.products.filter(item => {
+      return item.Hs12NameAr.includes(searchTerm);
+    });
   }
   onItemSelect(item: any) {
     this.request.FactoryProductId.push(item.ProductId)
@@ -163,9 +186,9 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   onItemDeSelect(item: any) {
     debugger
-    this.request.FactoryProductId.splice(item,1)
+    this.request.FactoryProductId.splice(item, 1)
 
-    this.selectedItems1.splice(item,1)
+    this.selectedItems1.splice(item, 1)
 
     console.log(this.selectedItems1)
     console.log(this.request.FactoryProductId)

@@ -18,6 +18,7 @@ import { LookUpModel } from 'src/app/core/models/look-up-model';
 export class FactoryLocationFormComponent {
   factoryId: any;
   periodId: any;
+  cityCode: any;
   request = new LocationModel();
   cities:LookUpModel[]=[];
   industrialAreas:LookUpModel[]=[];
@@ -82,10 +83,11 @@ export class FactoryLocationFormComponent {
   }
 
   onCitySelect(id:number){
+    this.cityCode= this.cities.find(x=>x.Id==id)?.CityCode;
+    
     this.lookUpService
-    .getAreaByCity(id)
+    .getAreaByCity(this.cityCode)
     .subscribe((res: any) => {
-      
       this.industrialAreas = res.Data;
       console.log(this.industrialAreas)
     });

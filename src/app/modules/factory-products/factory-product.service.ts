@@ -16,8 +16,8 @@ export class FactoryProductService {
   getAllPagination(search: ProductSearch): Observable<any> {
     return this.http.post<any>('Products/Pagination', search);
   }
-  getAllProducts(search: SearchCriteria): Observable<any> {
-    return this.http.post<any>('Products/AllProducts', search);
+  getAllProducts(): Observable<any> {
+    return this.http.get<any>('Products/AllProducts');
   }
   getAll(factoryId:number): Observable<any> {
     return this.http.get<any>(`Products/GetAll?factoryId=${factoryId}`);

@@ -92,8 +92,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
             .getRawMaterial(this.search, this.factoryId)
             .subscribe((res: any) => {
               this.rawMaterials = res.Data.Items;
-              this.materials = res.Data;
 
+              this.materials = res.Data;
 
 
 
@@ -164,8 +164,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   }
   pageChanged(data: any) {
     this.search.PageNumber = data;
-    this.getRawMaterial();
-
+    this.getRawMaterial()
   }
 
   getFiles() {

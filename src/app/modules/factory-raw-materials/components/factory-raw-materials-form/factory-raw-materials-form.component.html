@@ -4,14 +4,19 @@
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل" disabled> اسم البند الجمركي
             <i>؟</i>
         </label>
-        <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName">
+
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="filterData(searchTerm)">
+        <select  class="form-select" *ngIf="searchValue" [(ngModel)]="request.CustomItemName" (change)="onSelectionChange()">
+          <option *ngFor="let item of filteredData" [value]="item.Id">
+            <!-- Display your data here -->{{ item.Hs12NameAr }} ({{item. Hs12Code}})
+          </option>
+        </select>
+        <!-- <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName">
             <option *ngFor="let item of products" [value]="item.Id">
                 {{ item.Hs12NameAr }} ({{item. Hs12Code}})
-            
-            </option>
-        </select>
-        <!-- <input type="text" class="form-control" value="  " [(ngModel)]="request.CustomItemName"> -->
 
+            </option>
+        </select> -->
     </div>
     <div class="col-md-3">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اسم المادةالأولية
@@ -27,7 +32,7 @@
         </label>
         <div class="input-group">
 
-            <input type="number" class="form-control" [(ngModel)]="request.MaximumMonthlyConsumption" min="0">
+            <input type="number" class="form-control" [(ngModel)]="request.MaximumMonthlyConsumption" min="0" >
         </div>
     </div>
     <div class="col-md-3">
@@ -36,20 +41,21 @@
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">
             وحدة القياس <i>؟</i>
         </label>
-        <select class="form-select"  [(ngModel)]="request.UnitId" disabled>
+        <select class="form-select" [(ngModel)]="request.UnitId" disabled>
             <option *ngFor="let item of units" [value]="item.Id">
                 {{ item.Name }}
             </option>
         </select>
     </div>
 
-    <div class="col-md-3" >
+    <div class="col-md-3">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">متوسط الوزن بحسب الوحدة لكل
-            كيلوجرام 
+            كيلوجرام
             <!-- <i>؟</i> -->
         </label>
         <div class="input-group">
-            <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG" min="0" [disabled]="showInput">
+            <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG" min="0"
+                [disabled]="showInput" >
             <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
         </div>
     </div>
@@ -60,8 +66,8 @@
 
         <div class="multiselect-parent">
             <ng-multiselect-dropdown [placeholder]="'أختر'" [settings]="dropdownSettings" [data]="products"
-                [(ngModel)]="selectedProducts" (onSelect)="onItemSelect($event)"
-                (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)">
+                [(ngModel)]="selectedProducts" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
+                (onSelectAll)="onSelectAll($event)">
             </ng-multiselect-dropdown>
         </div>
 
