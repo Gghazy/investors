@@ -7,6 +7,9 @@ export class BasicFileModel {
     AttachmentId !: number;
     FactoryId!: number;
     PeriodId!: number;
+    DataEntryIdentity: string="";
+    ReviewerIdentity: string="";
+    ApproverIdentity: string="";
 }
 
 

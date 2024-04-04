@@ -13,7 +13,7 @@ import { FileService } from 'src/app/core/service/file.service';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import * as convert from 'convert-units';
+import { ActualRawMaterialSearch } from '../../models/actualRawMaterialSearch.model';
 
 @Component({
   selector: 'app-actual-raw-materials-form',
@@ -31,6 +31,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   rawMaterials: any = [];
   materials = new ResultResponse<RawMaterial>();
   search = new RawMaterialSearch();
+  ActualRawMaterialsearch = new ActualRawMaterialSearch();
   units!: LookUpModel[];
   x: any = [];
   src!: string;
@@ -77,15 +78,14 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
   getRawMaterial() {
 
-
-
-
+this.ActualRawMaterialsearch.FactoryId= this.factoryId;
+this.ActualRawMaterialsearch.PeriodId= this.periodId;
+this.x=[]
     this.service
-      .getByFactory(this.factoryId, this.periodId)
+      .getAll(this.ActualRawMaterialsearch)
       .subscribe((res: any) => {
-        this.rawMaterials = res.Data;
+        this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
-
         if (this.rawMaterials.length == 0) {
           this.isNewData = true
           this.service
@@ -98,6 +98,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
 
               this.rawMaterials.forEach((item: any) => {
+                
                 this.x.push({
                   'RawMaterialId': item.Id,
                   'Name': item.Name,
@@ -118,6 +119,12 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
         this.rawMaterials.forEach((item: any) => {
           this.request.IncreasedUsageReason = item.IncreasedUsageReason
+          if(item.IncreasedUsageReason>0){
+            this.showInput = true
+          }
+          else{
+            this.showInput = false
+          }
           this.x.push({
             'Id': item.Id,
             'RawMaterialId': item.RawMaterialId.Id,
@@ -133,6 +140,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
             'AverageWeightKG': item.RawMaterialId.AverageWeightKG,
 
           })
+
         })
       });
   }
@@ -163,7 +171,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       });
   }
   pageChanged(data: any) {
-    this.search.PageNumber = data;
+    this.ActualRawMaterialsearch.PageNumber = data;
     this.getRawMaterial()
   }
 

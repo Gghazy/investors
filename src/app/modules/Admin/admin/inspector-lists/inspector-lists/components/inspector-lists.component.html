@@ -45,13 +45,15 @@
             <td>{{item.Name}}</td>
             <td>{{item.Status}}</td>
             <td>
-              <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#detailsModal">تفاصيل</a>
-              <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editModal">تعديل</a>
+              <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#detailsModal"
+                (click)="getData(item.Id)">تفاصيل</a>
+              <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editModal"
+                (click)="getData(item.Id)">تعديل</a>
             </td>
           </tr>
         </tbody>
       </table>
-     
+
     </div>
   </div>
 </section>
@@ -72,28 +74,26 @@
         <div class="row">
           <div class="col-md-6">
             <label for="" class="form-label">الاسم</label>
-            <input type="text" class="form-control" value="محمد أحمد محمد" disabled />
+            <input type="text" class="form-control" [(ngModel)]="inspector.Name" disabled />
           </div>
           <div class="col-md-6">
             <label for="" class="form-label">رقم الهوية</label>
-            <input type="number" class="form-control" value="123456789" disabled />
+            <input type="number" class="form-control" [(ngModel)]="inspector.OwnerIdentity" disabled />
           </div>
           <div class="col-md-6">
             <label for="" class="form-label"> البريد الإلكتروني</label>
-            <input type="email" class="form-control" value="email@email.com" disabled />
+            <input type="email" class="form-control" [(ngModel)]="inspector.Email" disabled />
           </div>
           <div class="col-md-6">
             <label for="" class="form-label">رقم الهاتف</label>
-            <input type="number" class="form-control" value="5123456789" disabled />
+            <input type="number" class="form-control" [(ngModel)]="inspector.Phone" disabled />
           </div>
           <div class="col-md-6">
             <label for="" class="form-label"> الجهة التابع لها المدقق</label>
-            <select class="form-select disabled" disabled>
-              <option>الخرج</option>
-              <option>الرياض</option>
-              <option selected>الهيئة الملكية بالجبيل وينبع</option>
-              <option>وزارة الشؤون البلدية والقروية</option>
-              <option>أخرى</option>
+            <select class="form-select" [(ngModel)]="inspector.FactoryEntityId" disabled>
+              <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id" >
+                {{factoryEntity.NameAr}}
+              </option>
             </select>
           </div>
           <div class="col-md-6">
@@ -149,34 +149,31 @@
           <h3>بيانات المدقق</h3>
         </div>
         <div class="row">
-
-
           <div class="col-md-6">
             <label for="" class="form-label"> البريد الإلكتروني</label>
-            <input type="email" class="form-control" value="email@email.com" />
+            <input type="email" class="form-control" [(ngModel)]="inspector.Email" />
           </div>
           <div class="col-md-6">
             <label for="" class="form-label">رقم الهاتف</label>
-            <input type="number" class="form-control" value="5123456789" />
+            <input type="number" class="form-control" [(ngModel)]="inspector.Phone" />
           </div>
           <div class="col-md-6">
             <label for="" class="form-label"> الجهة التابع لها المدقق</label>
-            <select class="select">
-              <option>الخرج</option>
-              <option>الرياض</option>
-              <option selected>الهيئة الملكية بالجبيل وينبع</option>
-              <option>وزارة الشؤون البلدية والقروية</option>
-              <option>أخرى</option>
+            <select class="form-select" [(ngModel)]="inspector.FactoryEntityId">
+              <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id" >
+                {{factoryEntity.NameAr}}
+              </option>
             </select>
           </div>
           <div class="col-md-6">
             <label for="" class="form-label">حالة المدقق </label>
-            <select class="select">
+            <select class="form-select">
               <option selected>نشط</option>
               <option>غير نشط</option>
             </select>
           </div>
         </div>
+
         <div class="col-md-12 mt-3">
           <h3>المصانع المسندة</h3>
         </div>
@@ -222,28 +219,28 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">إضافة مدقق جديد</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  #closeModal></button>
       </div>
       <div class="modal-body">
-        <app-inspector-form></app-inspector-form>
-    
-   
-  </div>
-</div>
+        <app-inspector-form  (close)="closePopUp()"></app-inspector-form>
 
-
-<!-- Modal add visit-->
-<div class="modal fade" id="visitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">اسناد مصنع</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <app-inspector-form></app-inspector-form>
 
       </div>
     </div>
-  </div>
-</div>
+
+
+    <!-- Modal add visit-->
+    <div class="modal fade" id="visitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">اسناد مصنع</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <app-inspector-form></app-inspector-form>
+
+          </div>
+        </div>
+      </div>
+    </div>

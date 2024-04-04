@@ -17,6 +17,9 @@ export class FactoryService {
   getOne(id:number): Observable<any> {
     return this.http.get<any>('Factories/'+id);
   }
+  getFactoryEntity(factoryEntityId:number): Observable<any> {
+    return this.http.get<any>('Factories/FactoryByEntity?factoryEntityId='+factoryEntityId);
+  }
   update(factory: FactoryModel): Observable<any> {
     return this.http.put<any>('Factories', factory);
   }

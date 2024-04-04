@@ -5,5 +5,7 @@ export class InspectorModel {
     Phone!:string;
     OwnerIdentity!:string;
     Status!:any;
-    IndustiryalZoneTypeId!:number;
+    FactoryEntityId!:number;
+    FactoryId!:number;
+    FactoryIds:number[]=[];
 }

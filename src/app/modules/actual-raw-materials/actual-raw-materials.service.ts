@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ActualRawMaterial } from './models/actual-raw-material.model';
 import { RawMaterialSearch } from '../factory-raw-materials/models/raw-material-search.model';
 import { ActualRawMaterialFile } from './models/actual-raw-material-file.model';
+import { ActualRawMaterialSearch } from './models/actualRawMaterialSearch.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,8 @@ export class ActualRawMaterialsService {
     return this.http.get<any>('ActualRawMaterials/Period?factoryId='+factoryId+'&Periodid='+periodId);
   }
 
-  getAll(): Observable<any> {
-    return this.http.get<any>('ActualRawMaterials');
+  getAll(search: ActualRawMaterialSearch): Observable<any> {
+    return this.http.post<any>('ActualRawMaterials/Pagination', search);
   }
 
   getByMonth(id:number): Observable<any> {

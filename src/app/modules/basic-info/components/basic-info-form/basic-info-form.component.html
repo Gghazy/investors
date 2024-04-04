@@ -38,7 +38,21 @@
                 </select>
                 
             </div>
-            
+            <div class="col-md-6">
+                <label class="form-label"> هوية مدخل البيانات  </label>
+                <input type="text" class="form-control" [(ngModel)]="request.DataEntryIdentity" disabled>
+                
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">  هوية مراجع البيانات  </label>
+                <input type="text" class="form-control" [(ngModel)]="request.ReviewerIdentity" disabled>
+                
+            </div>
+            <div class="col-md-6">
+                <label class="form-label"> هوية معتمد البيانات  </label>
+                <input type="text" class="form-control" [(ngModel)]="request.ApproverIdentity" disabled>
+                
+            </div>
         </div>
         <div class="form-footer">
             <div class="col-12">

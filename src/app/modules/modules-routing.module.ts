@@ -81,6 +81,16 @@ const routes: Routes = [
       loadChildren: () =>
         import('../modules/Admin/admin/inspector-lists/inspector-lists/inspector-lists.module').then((m) => m.InspectorListsModule)
     },
+    {
+      path: 'Inspector/visit-landing',
+      loadChildren: () =>
+        import('../modules/inspector/visit-landing/visit-landing.module').then((m) => m.VisitLandingModule)
+    },
+    {
+      path: 'Inspector/basic-info',
+      loadChildren: () =>
+        import('../modules/inspector/basic-info/basic-info.module').then((m) => m.BasicInfoModule)
+    },
   ]
   }
 ];

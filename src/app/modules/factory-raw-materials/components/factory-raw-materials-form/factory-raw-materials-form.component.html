@@ -30,10 +30,8 @@
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اقصى استهلاك شهري
             <i>؟</i>
         </label>
-        <div class="input-group">
+        <input type="number"  class="form-control" noMinus [(ngModel)]="request.MaximumMonthlyConsumption" >
 
-            <input type="number" class="form-control" [(ngModel)]="request.MaximumMonthlyConsumption" min="0" >
-        </div>
     </div>
     <div class="col-md-3">
 
@@ -54,7 +52,7 @@
             <!-- <i>؟</i> -->
         </label>
         <div class="input-group">
-            <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG" min="0"
+            <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG" noMinus
                 [disabled]="showInput" >
             <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
         </div>

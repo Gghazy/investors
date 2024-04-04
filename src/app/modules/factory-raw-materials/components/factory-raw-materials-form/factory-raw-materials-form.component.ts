@@ -112,6 +112,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   }
 
   getOneRawMaterial(id: number) {
+    this.searchValue=true
     this.rawMaterialService
       .getOne(id)
       .subscribe((res: any) => {
@@ -119,7 +120,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
         this.productService
           .getAllProducts()
           .subscribe((res: any) => {
-            this.products = res.Data.Items;
+            this.products = res.Data;
             this.request.FactoryProductId.forEach(element => {
               let ProductName = this.products.find(x => x.Id == element)?.ProductName;
 

@@ -21,16 +21,16 @@
     </div>
     <div class="col-md-6">
       <label for="" class="form-label"> الجهة التابع لها المدقق</label>
-      <select class="form-select" #IndustiryalZoneTypeId="ngModel" required 
-      name="IndustiryalZoneTypeId" [(ngModel)]="request.IndustiryalZoneTypeId" >
+      <select class="form-select" #FactoryEntityId="ngModel" required 
+      name="FactoryEntityId" [(ngModel)]="request.FactoryEntityId" (change)="getFactory(request.FactoryEntityId)">
           <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">{{factoryEntity.NameAr}} </option>
       </select>
     </div>
     <div class="col-md-6">
       <label for="" class="form-label">حالة المدقق </label>
-      <select class="select" >
-        <option value="0">نشط</option>
-        <option value="1">غير نشط</option>
+      <select class="select" [(ngModel)]="request.Status">
+        <option value="1">نشط</option>
+        <option value="0">غير نشط</option>
       </select>
     </div>
   </div>
@@ -41,14 +41,13 @@
 <div class="row">
     <div class="col-md-10">
         <label for="" class="form-label">اسم المصنع</label>
-        <select class="form-select">
-            <option>مصنع 1</option>
-            <option>مصنع 2</option>
-            <option>مصنع 3</option>
+        <select class="form-select" [(ngModel)]="request.FactoryId">
+          <option *ngFor="let factory of factoriesByEntity" [ngValue]="factory.Id">{{factory.NameAr}} </option>
+   
         </select>
     </div>
     <div class="col-md-2">
-        <button href="" class="btn btn-primary" style="margin-top: 32px">
+        <button href="" class="btn btn-primary" style="margin-top: 32px" (click)="addFactory(request.FactoryId)">
             إضافة
         </button>
     </div>
@@ -68,17 +67,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>مصنع 1</td>
-            <td>123456789</td>
-            <td><button href="" class="btn btn-danger">حذف</button></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>مصنع 2</td>
-            <td>123456789</td>
-            <td><button href="" class="btn btn-danger">حذف</button></td>
+        <tr *ngFor="let factory of factoriesAssigned; let i=index">
+            <td>{{i+1}}</td>
+            <td>{{factory.NameAr}}</td>
+            <td>{{factory.CommercialRegister}}</td>
+            <td><button href="" class="btn btn-danger" (click)="deleteFactory(i,factory)">حذف</button></td>
         </tr>
     </tbody>
 </table> 

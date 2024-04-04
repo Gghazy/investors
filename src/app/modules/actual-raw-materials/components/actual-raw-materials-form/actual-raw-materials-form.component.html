@@ -41,8 +41,8 @@
 
                         <td>
 
-                            <input type="number" class="form-control" style="max-width: 117px;"
-                                [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)" min="0">
+                            <input type="number" noMinus class="form-control" style="max-width: 117px;"
+                                [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)">
                         </td>
                         <td disabled>
                             <select [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)" disabled> 
@@ -54,7 +54,7 @@
                         <!-- <td > {{material.AverageWeightKG}} </td> -->
                         <td>
                             <div class="input-group">
-                                <input type="number" class="form-control" disabled style="max-width: 117px;"
+                                <input type="number"  class="form-control" disabled style="max-width: 117px;"
                                     value="{{material.CurrentStockQuantity_KG}}">
                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled
                                     style="max-width: 40px;">
@@ -62,8 +62,8 @@
                         </td>
                         <td>
 
-                            <input type="number" class="form-control" [(ngModel)]="material.UsedQuantity"
-                                style="max-width: 117px;" (change)="onSelectionChange(material)" min="0">
+                            <input type="number" noMinus class="form-control" [(ngModel)]="material.UsedQuantity"
+                                style="max-width: 117px;" (change)="onSelectionChange(material)">
                         </td>
                         <td>
                             <select [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)" disabled>
@@ -88,7 +88,7 @@
 
                      </tbody>
             </table>
-            <app-pagination (changePage)="pageChanged($event)" [pageSize]="x.PageSize" [pageNumber]="x.PageNumber" [totalCount]="x.TotalCount"></app-pagination>
+            <app-pagination (changePage)="pageChanged($event)" [pageSize]="materials.PageSize" [pageNumber]="materials.PageNumber" [totalCount]="materials.TotalCount"></app-pagination>
              
         </div>
       
