@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SharedService {
 
+  private userRole!: string;
+
   public factoryStatus!:number;
 
   private pageTitleSource = new BehaviorSubject<string>('');
@@ -13,5 +15,14 @@ export class SharedService {
 
   setPageTitle(title: string): void {
     this.pageTitleSource.next(title);
+  }
+
+
+  setUserRole(role: string) {
+    this.userRole = role;
+  }
+
+  getUserRole() {
+    return this.userRole;
   }
 }

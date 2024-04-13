@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FactoryProductsFormComponent } from './components/factory-products-form/factory-products-form.component';
 import { FactoryProductsRoutingModule } from './factory-products-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -11,6 +12,7 @@ import { FactoryProductsRoutingModule } from './factory-products-routing.module'
   ],
   imports: [
     CommonModule,
+    SharedModule,
     FactoryProductsRoutingModule
   ]
 })

@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './visits-records-form.component.html',
   styleUrls: ['./visits-records-form.component.scss']
 })
-export class VisitsRecordsFormComponent {
-
+export class VisitsRecordsFormComponent{
+  
 }

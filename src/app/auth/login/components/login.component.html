@@ -8,15 +8,15 @@
             <form class="needs-validation" novalidate>
                 <h2>تسجيل الدخول</h2>
                 <div class="form-floating mb-4">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="   الهوية الوطنية" required />
+                    <input type="text" class="form-control" id="floatingInput" placeholder="   الهوية الوطنية" name="userId" [(ngModel)]="request.userId" required />
                     <label for="floatingInput"> الهوية الوطنية  </label>
                 </div>
                 <div class="form-floating mb-4">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="كلمة المرور" required />
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="كلمة المرور" name="password" [(ngModel)]="request.password" required />
                     <label for="floatingPassword">كلمة المرور</label>
                 </div>
                 <div class="d-grid mb-4">
-                    <button class="btn btn-primary login-btn" routerLink="/factories-list">تسجيل الدخول</button>
+                    <button class="btn btn-primary login-btn" (click)="login()">تسجيل الدخول</button>
                 </div>
             </form>
             <div class="separator"></div>

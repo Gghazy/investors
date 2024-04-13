@@ -2,7 +2,7 @@ import { Injector, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
+import { LoginComponent } from './auth/login/components/login.component';
 import { RecoverPasswordComponent } from './auth/recover-password/recover-password.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';

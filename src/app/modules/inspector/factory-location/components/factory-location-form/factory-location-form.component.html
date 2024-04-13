@@ -1,1 +1,196 @@
-<p>factory-location-form works!</p>
+<section class="form-panel">
+    <div class="form-header">
+        <h2 class="form-title">    موقع المصنع </h2>
+        <div>
+            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
+                رجوع
+                <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
+            </a>
+        </div>
+    </div>
+    <div class="form-body">
+        <div class="col-md-12">
+            <h3>  التحقق من موقع المصنع</h3>
+        </div>
+
+        <div class="row">
+           
+            <div class="col-md-4">
+                <label class="form-label"> الجهة التي يتبع لها المصنع​</label>
+                <select class="form-select disabled" [(ngModel)]="requestFactory.FactoryEntityId" disabled>
+                    <option> الخرج</option>
+                    <option > الرياض </option>
+                    <option>الهيئة الملكية بالجبيل وينبع</option>
+                    <option >وزارة الشؤون البلدية والقروية</option>
+                    <option >أخرى</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label"> هل الجهة التي يتبع لها المصنع​ صحيحة؟</label>
+                <select class="form-select if-no" [(ngModel)]="request.IsFactoryEntityCorrect" (change)="onInputChange($event)">
+                    <option value="yes" selected>نعم</option>
+                    <option value="no">لا</option>
+                </select>
+            </div>
+            <div class="col-md-5 show-input d-none">
+                <label class="form-label"> أختر  الجهة الصحيحة التي يتبع لها المصنع​ </label>
+                <select class="form-select" [(ngModel)]="request.NewFactoryEntityId">
+                    <option> الخرج</option>
+                    <option > الرياض </option>
+                    <option>الهيئة الملكية بالجبيل وينبع</option>
+                    <option >وزارة الشؤون البلدية والقروية</option>
+                    <option >أخرى</option>                                
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+           
+            <div class="col-md-4">
+                <label class="form-label"> المدينة</label>
+                <select class="form-select disabled" [(ngModel)]="requestFactory.CityId" disabled>
+                    <option value="3"> الخرج</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label"> هل المدينة صحيحة؟</label>
+                <select class="form-select if-no" [(ngModel)]="request.IsCityCorrect" (change)="onInputChange($event)">
+                    <option value="yes" selected>نعم</option>
+                    <option value="no">لا</option>
+                </select>
+            </div>
+            <div class="col-md-5 show-input d-none">
+                <label class="form-label"> أختر  المدينة الصحيحة</label>
+                <select class="form-select" [(ngModel)]="request.NewCityId">
+                    <option > الرياض </option>
+                    <option > مكة</option>
+                    <option >المدينة المنورة</option>
+                    <option >جدة</option>                                        
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-md-4">
+                <label class="form-label"> المنطقة الصناعية</label>
+                <select class="form-select disabled" [(ngModel)]="requestFactory.IndustrialAreaId" disabled>
+                    <option value="3"> المدينة الصناعية بالخرج</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label"> هل المنطقة الصناعية صحيحة؟</label>
+                <select class="form-select if-no" [(ngModel)]="request.IsIndustrialAreaCorrect" (change)="onInputChange($event)">
+                    <option value="yes" selected>نعم</option>
+                    <option value="no">لا</option>
+                </select>
+            </div>
+            <div class="col-md-5 show-input d-none">
+                <label class="form-label"> أختر المنطقة الصناعية الصحيحة</label>
+                <select class="form-select" [(ngModel)]="request.IndustrialAreaId">
+                    <option >المدينة الصناعية بالرياض </option>
+                    <option >المدينة الصناعية بمكة</option>
+                    <option > المدينة الصناعية يالمدينة المنورة</option>
+                    <option > المدينة الصناعية بجدة</option>                                        
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-md-4">
+                <label class="form-label">  رابط موقع المصنع</label>
+                <input type="url" class="form-control " disabled [(ngModel)]="requestFactory.WebSite">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label"> هل  الرابط صحيح؟</label>
+                <select class="form-select if-no" [(ngModel)]="request.IsLocationLinkCorrect" (change)="onInputChange($event)">
+                    <option value="yes" selected>نعم</option>
+                    <option value="no">لا</option>
+                </select>
+            </div>
+            <div class="col-md-5 show-input d-none">
+                <label class="form-label">  أدخل  رابط موقع المصنع الصحيح</label>
+                <input type="url" class="form-control" [(ngModel)]="request.NewLocationLink" value="">
+            </div>
+        </div>
+        
+        <div class="col-md-12">
+            <label class="form-label"> تعليقات </label>
+            <textarea  rows="3" class="form-control" [(ngModel)]="request.Comment"></textarea>
+        </div>
+
+        <div class="col-md-12">
+            <h3> المستندات المتعلقة بموقع المصنع </h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-small-header">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th> اسم المستند </th>
+                        <th>امتداد المستند</th>                                            
+                        <th style="min-width: 140px">خيارات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>صورة مدخل المصنع</td>
+                        <td>JPG</td>
+                        <td>
+                            <a href="#" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">عرض</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-12">
+            <h3> رفع مستندات اخرى  </h3>
+        </div>
+
+        <div class="row">
+
+        
+        <div class="col-md-6">
+            <label class="form-label"> اسم المستند</label>
+            <input type="text" class="form-control" placeholder="" value="">
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">رفع المستند    </label>
+            <div class="input-group">
+                <input type="file" class="form-control" placeholder="" value="">
+                <button class="btn btn-primary" type="button">اضافة </button>
+            </div>
+        </div>
+    </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-small-header">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th> اسم المستند </th>
+                        <th>امتداد المستند</th>                                            
+                        <th style="min-width: 140px">خيارات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4">
+                            <div class="text-center">لا توجد ملفات </div>
+                             </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="form-footer">
+        <div class="col-12">
+            <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
+            <a href="" class="btn btn-danger">الغاء</a>
+        </div>
+    </div>
+</section>

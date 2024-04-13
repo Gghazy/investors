@@ -1,1 +1,142 @@
-<p>factory-contacts-form works!</p>
+<section class="form-panel">
+    <div class="form-header">
+      <h2 class="form-title">بيانات جهة الإتصال</h2>
+      <div>
+        <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
+          رجوع
+          <svg
+            height="25"
+            viewBox="0 0 48 48"
+            width="25"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M0 0h48v48h-48z" fill="none"></path>
+            <path
+              d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
+              style="fill: #666"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="form-body">
+      <div class="col-md-12">
+        <h3>التحقق من صحة معلومات جهة الاتصال​</h3>
+      </div>
+
+     
+        <div class="row">
+          <div class="col-md-5">
+            <label class="form-label">
+              البريد الإلكتروني لضابط الإتصال
+            </label>
+
+              <input
+                type="email"
+                class="form-control"
+                placeholder="example@mail.com"
+                [(ngModel)]="requestContact.OfficerEmail"
+                disabled
+              />
+          </div>
+
+          <div class="col-md-2">
+            <label class="form-label"> هل البريد  صحيح؟ </label>
+            <select
+              class="form-select"
+              (change)="onInputChange($event)"
+              [(ngModel)]="request.IsOfficerMailCorrect"
+            >
+              <option value="1" selected>نعم</option>
+              <option value="0">لا</option>
+            </select>
+          </div>
+
+          <div class="col-md-5 show-input d-none">
+            <label class="form-label">
+              أدخل البريد الإلكتروني الصحيح
+            </label>
+            <input
+                type="email"
+                class="form-control"
+                placeholder="example@mail.com"
+                [(ngModel)]="request.NewOfficerEmail"
+              />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <label class="form-label"> رقم جوال ضابط الإتصال </label>
+            <ngx-intl-tel-input
+              [cssClass]="'form-control'"
+              [preferredCountries]="preferredCountries"
+              [enableAutoCountrySelect]="true"
+              [enablePlaceholder]="true"
+              [searchCountryFlag]="true"
+              [searchCountryField]="[
+                SearchCountryField.Iso2,
+                SearchCountryField.Name
+              ]"
+              [selectFirstCountry]="false"
+              [selectedCountryISO]="CountryISO.SaudiArabia"
+              [maxLength]="15"
+              [phoneValidation]="true"
+              [separateDialCode]="separateDialCode"
+              [numberFormat]="PhoneNumberFormat.National"
+              name="phone"
+              [(ngModel)]="requestContact.OfficerPhone"
+            >
+            </ngx-intl-tel-input>
+          </div>
+
+          <div class="col-md-2">
+            <label class="form-label"> هل الرقم صحيح؟ </label>
+            <select
+              class="form-select"
+              (change)="onInputChange($event)"
+              [(ngModel)]="request.IsOfficerPhoneCorrect"
+            >
+              <option value="1" selected>نعم</option>
+              <option value="0">لا</option>
+            </select>
+          </div>
+
+          <div class="col-md-5 show-input d-none">
+            <label class="form-label"> أدخل رقم الجوال الصحيح </label>
+            <ngx-intl-tel-input
+              [cssClass]="'form-control'"
+              [preferredCountries]="preferredCountries"
+              [enableAutoCountrySelect]="true"
+              [enablePlaceholder]="true"
+              [searchCountryFlag]="true"
+              [searchCountryField]="[
+                SearchCountryField.Iso2,
+                SearchCountryField.Name
+              ]"
+              [selectFirstCountry]="false"
+              [selectedCountryISO]="CountryISO.SaudiArabia"
+              [maxLength]="15"
+              [phoneValidation]="true"
+              [separateDialCode]="separateDialCode"
+              [numberFormat]="PhoneNumberFormat.National"
+              name="phone"
+              [(ngModel)]="request.NewOfficerPhoneId"
+            >
+            </ngx-intl-tel-input>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <label class="form-label"> تعليقات </label>
+          <textarea rows="3" class="form-control"  [(ngModel)]="request.Comments"></textarea>
+      </div>
+    </div>
+
+    <div class="form-footer">
+      <div class="col-12">
+        <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
+        <a href="" class="btn btn-danger">الغاء</a>
+      </div>
+    </div>
+  </section>

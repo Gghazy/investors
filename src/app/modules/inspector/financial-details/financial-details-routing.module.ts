@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { FinancialDetailsFormComponent } from './components/financial-details-form/financial-details-form.component';
 
+const routes: Routes = [
+  { path: '', component: FinancialDetailsFormComponent , data: { title: 'البيانات المالية' }},
 
+];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class FinancialDetailsRoutingModule { }
