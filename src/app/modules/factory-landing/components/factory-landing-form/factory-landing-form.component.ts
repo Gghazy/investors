@@ -28,8 +28,8 @@ export class FactoryLandingFormComponent implements OnInit {
   periodEndDate!: string;
   screenStatuse = new ScreenStatusModel();
   allScreenStatus:Boolean=false;
-
-
+  FactoryStatus: string = 'Default Label';
+  FactoryStatusId!:number
   request = new FactoryStatus();
 
   constructor(
@@ -64,6 +64,7 @@ export class FactoryLandingFormComponent implements OnInit {
       });
   }
 
+
   getBasicInfo() {
     this.basicInfoService
       .getOne(this.factoryId, this.periodId)
@@ -88,6 +89,22 @@ export class FactoryLandingFormComponent implements OnInit {
       .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.isChecked=res.Data.UpdateStatus;
+        this.FactoryStatusId = res.Data.DataStatus;
+        if(this.FactoryStatusId==0){
+          this.FactoryStatus= ' ادخال'
+        }
+        if(this.FactoryStatusId==1 ){
+          this.FactoryStatus=  ' اعتماد البيانات المدخلة'
+        }
+        if(this.FactoryStatusId==2){
+          this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
+        }
+        if(this.FactoryStatusId==3){
+          this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
+        }
+        
+                console.log(this.FactoryStatus)
+            
       });
   }
 
@@ -95,13 +112,25 @@ export class FactoryLandingFormComponent implements OnInit {
     this.request.FactoryId = this.factoryId
     this.request.PeriodId = this.periodId
     this.request.UpdateStatus = true
-    this.factoryLandingService
+    if(this.request.Id==0){
+      this.factoryLandingService
       .create(this.request)
       .subscribe((res: any) => {
         console.log(this.request)
         this.router.navigate(['/pages/factories-list']);
         this.toastr.success("تم الحفظ");
       });
+    }
+    else if(this.request.Id!=0){
+      this.factoryLandingService
+      .update(this.request)
+      .subscribe((res: any) => {
+        console.log(this.request)
+        this.router.navigate(['/pages/factories-list']);
+        this.toastr.success("تم الحفظ");
+      });
+    }
+    
   }
 
 

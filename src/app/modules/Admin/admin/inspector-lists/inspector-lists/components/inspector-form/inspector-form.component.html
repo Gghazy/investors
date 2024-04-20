@@ -22,15 +22,15 @@
     <div class="col-md-6">
       <label for="" class="form-label"> الجهة التابع لها المدقق</label>
       <select class="form-select" #FactoryEntityId="ngModel" required 
-      name="FactoryEntityId" [(ngModel)]="request.FactoryEntityId" (change)="getFactory(request.FactoryEntityId)">
+      name="FactoryEntityId" [(ngModel)]="request.FactoryEntityId" >
           <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">{{factoryEntity.NameAr}} </option>
       </select>
     </div>
     <div class="col-md-6">
       <label for="" class="form-label">حالة المدقق </label>
       <select class="select" [(ngModel)]="request.Status">
-        <option value="1">نشط</option>
-        <option value="0">غير نشط</option>
+        <option [ngValue]="0">نشط</option>
+        <option [ngValue]="1">غير نشط</option>
       </select>
     </div>
   </div>
@@ -41,8 +41,8 @@
 <div class="row">
     <div class="col-md-10">
         <label for="" class="form-label">اسم المصنع</label>
-        <select class="form-select" [(ngModel)]="request.FactoryId">
-          <option *ngFor="let factory of factoriesByEntity" [ngValue]="factory.Id">{{factory.NameAr}} </option>
+        <select class="form-select" [(ngModel)]="request.FactoryId" (scroll)="onScroll($event)">
+          <option *ngFor="let factory of Allfactories" [ngValue]="factory.Id">{{factory.NameAr}} </option>
    
         </select>
     </div>

@@ -5,6 +5,7 @@ import { BasicInfoService } from '../../basic-info.service';
 import { FactoryModel } from 'src/app/modules/factory/models/factory-model';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { FactorySearch } from 'src/app/modules/factory/models/factory-search';
 
 @Component({
   selector: 'app-basic-info-form',
@@ -18,7 +19,7 @@ export class BasicInfoFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
   request = new FactoryModel();
-
+  search = new FactorySearch();
   constructor(
     private route: ActivatedRoute,
      private basicInfoService: BasicInfoService,
@@ -43,6 +44,15 @@ export class BasicInfoFormComponent implements OnInit {
 
 
   save() {
+    if(!this.request.DataEntry){
+      this.request.DataEntry=this.search.OwnerIdentity
+    }
+    if(!this.request.DataReviewer){
+      this.request.DataReviewer=this.search.OwnerIdentity
+    }
+    if(!this.request.DataApprover){
+      this.request.DataApprover=this.search.OwnerIdentity
+    }
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
 

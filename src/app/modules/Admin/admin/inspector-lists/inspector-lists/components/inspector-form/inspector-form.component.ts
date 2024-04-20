@@ -5,6 +5,8 @@ import { InspectorListsService } from '../../inspector-lists.service';
 import { ToastrService } from 'ngx-toastr';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { LookUpService } from 'src/app/core/service/look-up.service';
+import { SearchCriteria } from 'src/app/core/models/search-criteria';
+import { FactorySearch } from 'src/app/modules/factory/models/factory-search';
 
 @Component({
   selector: 'app-inspector-form',
@@ -18,8 +20,9 @@ export class InspectorFormComponent {
   factoryEntities:LookUpModel[]=[];
   factories: number[]=[];
   factoriesAssigned: any[]=[];
-  factoriesByEntity: any[]=[];
-  
+  Allfactories: any[]=[];
+  search=new  FactorySearch()
+  loadingNextPage: boolean = false;
   constructor(
     private factoryService: FactoryService,
     private inspectorService: InspectorListsService,
@@ -29,10 +32,11 @@ export class InspectorFormComponent {
   ngOnInit() {
 
     this.getFactoryEntities()
+    this.getFactory()
   }
   addFactory(FactoryId:number){
     console.log(FactoryId)
-   let factory= this.factoriesByEntity.find(x=>x.Id== FactoryId)
+   let factory= this.Allfactories.find(x=>x.Id== FactoryId)
      this.factories.push(FactoryId)
      
      this.factoriesAssigned.push(factory)
@@ -41,9 +45,9 @@ export class InspectorFormComponent {
   }
 deleteFactory(i: number,Factory: any){
 
-    this.factories.splice(Factory.Id)
-    console.log(Factory.Id)
-    this.factoriesAssigned.splice(Factory)
+    this.factories.splice(i,1)
+    console.log(this.factories)
+    this.factoriesAssigned.splice(i,1)
     console.log(this.factoriesAssigned)
 }
 
@@ -56,16 +60,24 @@ deleteFactory(i: number,Factory: any){
       });
   }
 
-  getFactory(id:number){
-    console.log(id)
+  getFactory(){
+   
     this.factoryService
-    .getFactoryEntity(id)
+    .getAllPagination(this.search)
     .subscribe((res:any)=>{
-      this.factoriesByEntity=res.Data
-      console.log(this.factoriesByEntity)
+      this.Allfactories=res.Data.Items
       console.log(res)
     })
   }
+
+  onScroll(event: Event): void {
+    const element = event.target as HTMLElement;
+    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+   if (atBottom && ! this.loadingNextPage) {
+      this.getFactory();
+    }
+  }
+
   save() {
    this.request.FactoryIds=this.factories
     console.log(this.request)

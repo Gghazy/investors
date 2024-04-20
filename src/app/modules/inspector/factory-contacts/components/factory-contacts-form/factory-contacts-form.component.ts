@@ -33,7 +33,7 @@ export class FactoryContactsFormComponent implements OnInit {
   getContact() {
 
     this.factoryContactService
-      .getOne(this.factoryId)
+      .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         debugger
         this.requestContact = res.Data;
@@ -71,6 +71,13 @@ export class FactoryContactsFormComponent implements OnInit {
     this.request.FactoryId=this.factoryId;
     this.request.PeriodId=this.periodId;
     console.log(this.request)
+
+     // this.FormService
+    // .create(this.request)
+    // .subscribe((res: any) => {
+    //   this.toastr.success("تم الحفظ");
+    // });
+
   }
 
 }

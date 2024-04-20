@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FactoryLocationModel } from '../../models/factory-location.model';
+import { FactoryLocationService } from '../../../../factory-location/factory-location.service';
+import { LookUpModel } from 'src/app/core/models/look-up-model';
+import { LookUpService } from 'src/app/core/service/look-up.service';
 
 @Component({
   selector: 'app-factory-location-form',
@@ -11,16 +14,78 @@ import { FactoryLocationModel } from '../../models/factory-location.model';
 export class FactoryLocationFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
+  cityCode: any;
   request=new FactoryLocationModel()
   requestFactory=new FactoryLocationModel()
+  cities:LookUpModel[]=[];
+  industrialAreas:LookUpModel[]=[];
+  factoryEntities:LookUpModel[]=[];
+
   constructor(
     private route: ActivatedRoute,
      private toastr: ToastrService,
+     private factoryLocationService: FactoryLocationService,
+     private lookUpService: LookUpService,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit() {
+    this.getLocation();
+    this.getCities();
+    this.getIndustrialAreas();
+    this.getFactoryEntities();
+  }
+  getLocation() {
+    this.factoryLocationService
+      .getOne(this.factoryId,this.periodId)
+      .subscribe((res: any) => {
+        this.requestFactory = res.Data;
+      });
+  }
+
+  getCities() {
+    this.lookUpService
+      .getAllCities()
+      .subscribe((res: any) => {
+        this.cities = res.Data;
+      });
+  }
+
+  getIndustrialAreas() {
+    this.lookUpService
+      .getAllIndustrialAreas()
+      .subscribe((res: any) => {
+        
+        this.industrialAreas = res.Data;
+      });
+  }
+
+  onEntitySelect(id:number){
+    this.lookUpService
+    .getCityByEntity(id)
+    .subscribe((res: any) => {
+      
+      this.cities = res.Data;
+    });
+  }
+  getFactoryEntities() {
+    this.lookUpService
+      .getAllFactoryEntities()
+      .subscribe((res: any) => {
+        this.factoryEntities = res.Data;
+      });
+  }
+
+  onCitySelect(id:number){
+    this.cityCode= this.cities.find(x=>x.Id==id)?.CityCode;
+    
+    this.lookUpService
+    .getAreaByCity(this.cityCode)
+    .subscribe((res: any) => {
+      this.industrialAreas = res.Data;
+      console.log(this.industrialAreas)
+    });
   }
   onInputChange(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -29,7 +94,7 @@ export class FactoryLocationFormComponent implements OnInit {
     const showInputElement = closestRow?.querySelector('.show-input');
 
     if (showInputElement) {
-      if (target.value === 'no') {
+      if (target.value =='0') {
         showInputElement.classList.remove('d-none');
       } else {
         showInputElement.classList.add('d-none');
@@ -41,5 +106,11 @@ export class FactoryLocationFormComponent implements OnInit {
     this.request.FactoryId=this.factoryId;
     this.request.PeriodId=this.periodId;
     console.log(this.request)
+     // this.FormService
+    // .create(this.request)
+    // .subscribe((res: any) => {
+    //   this.toastr.success("تم الحفظ");
+    // });
+
   }
 }

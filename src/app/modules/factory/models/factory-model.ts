@@ -17,9 +17,9 @@ export class FactoryModel {
     Status!:number;
     PeriodId!:number;
     FactoryId!:number;
-    DataEntryIdentity: string="";
-    ReviewerIdentity: string="";
-    ApproverIdentity: string="";
+    DataEntry: string="";
+    DataReviewer: string="";
+    DataApprover: string="";
 }
 
 

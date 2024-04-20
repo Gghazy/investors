@@ -5,6 +5,7 @@ import { PeriodService } from '../../period.service';
 import { PeriodSearch } from '../../models/period-search';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-landing.service';
 
 @Component({
   selector: 'app-period-list',
@@ -16,7 +17,6 @@ export class PeriodListComponent implements OnInit {
   search=new PeriodSearch(); 
   factoryId:any;
   userRole!: string;
-
   constructor(
     private periodService:PeriodService,
     private router: Router,
@@ -38,20 +38,14 @@ export class PeriodListComponent implements OnInit {
         this.periods = res.Data;
       });
   }
-
   pageChanged(data:any){
     this.search.PageNumber=data;
     this.getPeriods();
 
   }
   navigateToDetails(periodId: number) {
-    if (this.userRole=='investor'){
       this.router.navigate(['/pages/factory-landing', this.factoryId, periodId]);
-    }
-    else if(this.userRole=='inspector'){
-      this.router.navigate(['/pages/Inspector/visit-landing', this.factoryId, periodId]);
- 
-    }
+    
     }
 
 

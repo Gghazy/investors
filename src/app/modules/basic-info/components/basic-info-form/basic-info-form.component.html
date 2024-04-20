@@ -23,7 +23,7 @@
                 
             </div>
             <div class="col-md-6">
-                <label class="form-label">النشاط وفق التصنيف الصناعي الدولي الموحد                                    </label>
+                <label class="form-label">النشاط وفق التصنيف الصناعي الدولي الموحد     </label>
                 <input type="text" class="form-control" [(ngModel)]="request.Activity" disabled="">
                 
             </div>
@@ -38,19 +38,25 @@
                 </select>
                 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12 mt-3">
+                <h3> بيانات المدخلين والمعتمدين</h3>
+            </div>
+            <div class="col-md-3">
                 <label class="form-label"> هوية مدخل البيانات  </label>
-                <input type="text" class="form-control" [(ngModel)]="request.DataEntryIdentity" disabled>
-                
+                <input type="text" class="form-control" #DataEntry name="DataEntry" [(ngModel)]="request.DataEntry" pattern="^[1-2][0-9]{9}$" required>
+                <!-- <div *ngIf="DataEntry.invalid && (DataEntry.dirty || DataEntry.touched)" class="error-message">
+                    <div *ngIf="DataEntry.errors?.pattern">Phone number must start with 1 or 2 and have 10 digits.</div>
+                    <div *ngIf="DataEntry.errors?.['required']">Phone number is required.</div>
+                </div> -->
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label class="form-label">  هوية مراجع البيانات  </label>
-                <input type="text" class="form-control" [(ngModel)]="request.ReviewerIdentity" disabled>
+                <input type="text" class="form-control" [(ngModel)]="request.DataReviewer" >
                 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label class="form-label"> هوية معتمد البيانات  </label>
-                <input type="text" class="form-control" [(ngModel)]="request.ApproverIdentity" disabled>
+                <input type="text" class="form-control" [(ngModel)]="request.DataApprover" >
                 
             </div>
         </div>

@@ -77,6 +77,9 @@ export class BasicInfoFormComponent implements OnInit {
   getFile(attachmentId:number){
     this.fileService.getImage(attachmentId).subscribe((res: any) => {
       this.src='data:image/jpeg;base64,'+res.Image
+      const blob = new Blob([res], { type: res.type });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
     });
   }
 
@@ -92,5 +95,12 @@ export class BasicInfoFormComponent implements OnInit {
     this.request.FactoryId=this.factoryId;
     this.request.PeriodId=this.periodId;
     console.log(this.request)
+
+     this.basicInfoService
+    .create(this.request)
+    .subscribe((res: any) => {
+      this.toastr.success("تم الحفظ");
+    });
+// 
   }
 }

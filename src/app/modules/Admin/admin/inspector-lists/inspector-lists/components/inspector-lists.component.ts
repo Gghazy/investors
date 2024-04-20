@@ -5,6 +5,8 @@ import { InspectorListsService } from '../inspector-lists.service';
 import { InspectorModel } from '../models/inspector-lists.model';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
+import { ToastrService } from 'ngx-toastr';
+import { FactorySearch } from 'src/app/modules/factory/models/factory-search';
 
 @Component({
   selector: 'app-inspector-lists',
@@ -12,22 +14,33 @@ import { LookUpModel } from 'src/app/core/models/look-up-model';
   styleUrls: ['./inspector-lists.component.scss']
 })
 export class InspectorListsComponent  implements OnInit {
+  
   @Output() close = new EventEmitter<boolean>();
   @ViewChild('closeModal') Modal!: ElementRef;
-  
+  Allfactories: any[]=[];
+  search=new  FactorySearch()
 inspectors!: InspectorModel[];
 inspector=new InspectorModel();
 factoryEntities:LookUpModel[]=[];
   constructor(    private route: ActivatedRoute,
     private factoryService: FactoryService,
     private inspectorService: InspectorListsService,
-    private lookUpService: LookUpService) {}
+    private lookUpService: LookUpService,
+    private toastr: ToastrService) {}
 
   ngOnInit() {
    this.getInspectors()
    
   }
-
+  addFactory(FactoryId:number){
+    console.log(FactoryId)
+  //  let factory= this.Allfactories.find(x=>x.Id== FactoryId)
+  //    this.factories.push(FactoryId)
+     
+  //    this.factoriesAssigned.push(factory)
+  //   console.log(this.factories)
+  //   console.log(this.factoriesAssigned)
+  }
   getInspectors(){
     this.inspectorService
     .getAll()
@@ -42,13 +55,33 @@ factoryEntities:LookUpModel[]=[];
    .getOne(id)
    .subscribe((res: any) => {
      this.inspector = res.Data;
+
+
+
      console.log(this.inspector)
    });
    this.getFactoryEntities()
   }
 
+getFactories(id:number){
+  this.factoryService
+  .getOne(id)
+  .subscribe((res:any)=>{
+   
+  })
+}
+getFactory(){
+   
+  this.factoryService
+  .getAllPagination(this.search)
+  .subscribe((res:any)=>{
+    this.Allfactories=res.Data.Items
+    console.log(res)
+  })
+}
   closePopUp() {
     this.Modal.nativeElement.click()
+    this.getInspectors()
   }
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -56,6 +89,19 @@ factoryEntities:LookUpModel[]=[];
   edit(id: number) {
     console.log(id)
    }
+
+Update (){
+  this.inspectorService
+  .update(this.inspector)
+  .subscribe((res: any) => {
+    console.log(this.inspector)
+    this.closePopUp()
+    this.toastr.success("تم التعديل");
+    
+  });
+}
+
+
    getFactoryEntities() {
     this.lookUpService
       .getAllFactoryEntities()

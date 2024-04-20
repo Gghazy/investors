@@ -28,7 +28,8 @@ const routes: Routes = [
         loadChildren: () =>
           import('../modules/customs-items-update/customs-items-update.module').then((m) => m.CustomsItemsUpdateModule)
       },
-     
+      { path: '', redirectTo: '/pages/factories-list', pathMatch: 'full' },
+
       {
         path: 'factories-list',
         loadChildren: () =>
@@ -95,6 +96,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('../modules/inspector/actual-production-and-designed-capacity/actual-production-and-designed-capacity.module').then((m) => m.ActualProductionAndDesignedCapacityModule)
       },
+      
       {
         path: 'Inspector/factories-list',
         loadChildren: () =>

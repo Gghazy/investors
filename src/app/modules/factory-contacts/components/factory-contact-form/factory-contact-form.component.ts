@@ -54,7 +54,7 @@ export class FactoryContactFormComponent implements OnInit {
   getContact() {
 
     this.factoryContactService
-      .getOne(this.factoryId)
+      .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         debugger
         this.request = res.Data;

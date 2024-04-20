@@ -43,7 +43,8 @@
             <td>{{i+1}}</td>
             <td hidden>{{item.Id}}</td>
             <td>{{item.Name}}</td>
-            <td>{{item.Status}}</td>
+            <td *ngIf="item.Status == 0">نشط</td>
+            <td *ngIf="item.Status == 1">غير نشط</td>
             <td>
               <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#detailsModal"
                 (click)="getData(item.Id)">تفاصيل</a>
@@ -98,9 +99,9 @@
           </div>
           <div class="col-md-6">
             <label for="" class="form-label">حالة المدقق </label>
-            <select class="form-select disabled" disabled>
-              <option selected>نشط</option>
-              <option>غير نشط</option>
+            <select class="form-select disabled" [(ngModel)]="inspector.Status" disabled>
+              <option [ngValue]="0">نشط</option>
+              <option [ngValue]="1">غير نشط</option>
             </select>
           </div>
         </div>
@@ -116,14 +117,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>مصنع 1</td>
+            <tr *ngFor="let item of inspector.FactoryInfo let i=index">
+              <td>{{i+1}}</td>
+              <td hidden>{{item.Id}}</td>
+              <td>{{item.Name}}</td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>مصنع 2</td>
-            </tr>
+            
           </tbody>
         </table>
       </div>
@@ -142,7 +141,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">تعديل المدقق</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+    
       </div>
       <div class="modal-body">
         <div class="col-md-12">
@@ -155,7 +155,7 @@
           </div>
           <div class="col-md-6">
             <label for="" class="form-label">رقم الهاتف</label>
-            <input type="number" class="form-control" [(ngModel)]="inspector.Phone" />
+            <input type="text" class="form-control" [(ngModel)]="inspector.Phone" />
           </div>
           <div class="col-md-6">
             <label for="" class="form-label"> الجهة التابع لها المدقق</label>
@@ -167,13 +167,26 @@
           </div>
           <div class="col-md-6">
             <label for="" class="form-label">حالة المدقق </label>
-            <select class="form-select">
-              <option selected>نشط</option>
-              <option>غير نشط</option>
+            <select class="form-select" [(ngModel)]="inspector.Status">
+              <option [ngValue]="0">نشط</option>
+              <option [ngValue]="1">غير نشط</option>
             </select>
           </div>
         </div>
-
+        <div class="row">
+          <div class="col-md-10">
+              <label for="" class="form-label">اسم المصنع</label>
+              <select class="form-select" [(ngModel)]="inspector.FactoryId" >
+                <option *ngFor="let factory of Allfactories" [ngValue]="factory.Id">{{factory.NameAr}} </option>
+         
+              </select>
+          </div>
+          <div class="col-md-2">
+              <button href="" class="btn btn-primary" style="margin-top: 32px" (click)="addFactory(inspector.FactoryId)">
+                  إضافة
+              </button>
+          </div>
+      </div>
         <div class="col-md-12 mt-3">
           <h3>المصانع المسندة</h3>
         </div>
@@ -183,28 +196,23 @@
             <tr>
               <th>#</th>
               <th>اسم المصنع</th>
-              <th>السجل التجاري</th>
               <th>خيارات</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>مصنع 1</td>
-              <td>123456789</td>
-              <td><button href="" class="btn btn-danger">حذف</button></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>مصنع 2</td>
-              <td>123456789</td>
-              <td><button href="" class="btn btn-danger">حذف</button></td>
-            </tr>
-          </tbody>
+            <tbody>
+              <tr *ngFor="let item of inspector.FactoryInfo let i=index">
+                <td>{{i+1}}</td>
+                <td hidden>{{item.Id}}</td>
+                <td>{{item.Name}}</td>
+                <td><button href="" class="btn btn-danger">حذف</button></td>
+              </tr>
+              
+            </tbody>
+           
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">حفظ</button>
+        <button type="button" class="btn btn-primary" (click)="Update()"  >حفظ</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           اغلاق
         </button>

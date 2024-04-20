@@ -17,9 +17,9 @@
                   
 
                     <ul class="list-review factory-lines p-0">
-                        <li>
+                        <li *ngFor="let product of products.Items let i=index">
                             
-                            <h4>المنتج رقم 1 (رقم البند الجمركي على مستوى 12 )</h4>
+                            <h4>المنتج رقم {{i+1}} ({{product.ProductName}})</h4>
                             
                                 <div class="col-md-12">
                                     <div class="row">
@@ -27,7 +27,7 @@
                                         <div class="col-md-4">
                                             <label class="form-label">   الطاقة التصميمة الشهرية  </label>
                                             <div class="input-group">                                                  
-                                                <input type="number" class="form-control" value="55000" disabled>
+                                                <input type="number" class="form-control" [(ngModel)]="product.DesignedCapacity" disabled>
                                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 50px;">
                                             </div>
                                         </div>
@@ -35,9 +35,9 @@
 
                                             
                                                 <label class="form-label"> هل الطاقة التصميمة الشهرية صحيحة ؟</label>
-                                                <select class="form-select if-no" (change)="onInputChange($event)">
-                                                    <option value="yes" selected>نعم</option>
-                                                    <option value="no">لا</option>
+                                                <select class="form-select" [(ngModel)]="request.IsDesignedCapacityCorrect" (change)="onInputChange($event)">
+                                                    <option value="1" >نعم</option>
+                                                    <option value="0">لا</option>
                                                 </select>
                                             
 
@@ -46,7 +46,7 @@
                                             
                                                 <label class="form-label"> أدخل  الطاقة التصميمة الشهرية الصحيحة </label>
                                                 <div class="input-group">    
-                                                    <input type="text" class="form-control" value="" >
+                                                    <input type="text" class="form-control"  [(ngModel)]="request.CorrectDesignedCapacity">
                                                     <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
                                                 </div>
                                             
@@ -60,7 +60,7 @@
                                         <div class="col-md-4">
                                             <label class="form-label">   الإنتاج الفعلي​ الشهري	</label>
                                             <div class="input-group">                                                  
-                                                <input type="number" class="form-control" value="55000" disabled>
+                                                <input type="number" class="form-control" [(ngModel)]="product.ActualProduction" disabled>
                                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
                                             </div>
                                         </div>
@@ -68,9 +68,9 @@
 
                                             
                                                 <label class="form-label"> هل الإنتاج الفعلي​ الشهري صحيح ؟</label>
-                                                <select class="form-select if-no" (change)="onInputChange($event)">
-                                                    <option value="yes" selected>نعم</option>
-                                                    <option value="no">لا</option>
+                                                <select class="form-select" [(ngModel)]="request.IsActualProductionCorrect" (change)="onInputChange($event)">
+                                                    <option value="1" >نعم</option>
+                                                    <option value="0">لا</option>
                                                 </select>
                                             
 
@@ -79,7 +79,7 @@
                                             
                                                 <label class="form-label">أدخل   الإنتاج الفعلي​ الشهري الصحيح </label>
                                                 <div class="input-group">    
-                                                    <input type="text" class="form-control" value="  " >
+                                                    <input type="text" class="form-control" [(ngModel)]="request.CorrectActualProduction">
                                                     <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
                                                 </div>
                                             
@@ -90,152 +90,8 @@
                             
 
                         </li>
-                        <li>
-                            
-                            <h4>المنتج رقم 2 (رقم البند الجمركي على مستوى 12 )</h4>
-                            
-                                <div class="col-md-12">
-                                    <div class="row">
-
-                                        <div class="col-md-4">
-                                            <label class="form-label">   الطاقة التصميمة الشهرية  </label>
-                                            <div class="input-group">                                                  
-                                                <input type="number" class="form-control" value="55000" disabled>
-                                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 50px;">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-
-                                            
-                                                <label class="form-label"> هل الطاقة التصميمة الشهرية صحيحة ؟</label>
-                                                <select class="form-select if-no" (change)="onInputChange($event)">
-                                                    <option value="yes" selected>نعم</option>
-                                                    <option value="no">لا</option>
-                                                </select>
-                                            
-
-                                        </div>
-                                        <div class="col-md-4 show-input d-none">
-                                            
-                                                <label class="form-label"> أدخل  الطاقة التصميمة الشهرية الصحيحة </label>
-                                                <div class="input-group">    
-                                                    <input type="text" class="form-control" value="" >
-                                                    <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                                                </div>
-                                            
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="row">
-
-                                        <div class="col-md-4">
-                                            <label class="form-label">   الإنتاج الفعلي​ الشهري	</label>
-                                            <div class="input-group">                                                  
-                                                <input type="number" class="form-control" value="55000" disabled>
-                                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-
-                                            
-                                                <label class="form-label"> هل الإنتاج الفعلي​ الشهري صحيح ؟</label>
-                                                <select class="form-select if-no" (change)="onInputChange($event)">
-                                                    <option value="yes" selected>نعم</option>
-                                                    <option value="no">لا</option>
-                                                </select>
-                                            
-
-                                        </div>
-                                        <div class="col-md-4 show-input d-none">
-                                            
-                                                <label class="form-label">أدخل   الإنتاج الفعلي​ الشهري الصحيح </label>
-                                                <div class="input-group">    
-                                                    <input type="text" class="form-control" value="  " >
-                                                    <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                                                </div>
-                                            
-                                        </div>
-
-                                    </div>
-                                </div>
-                            
-
-                        </li>
-                        <li>
-                            
-                            <h4>المنتج رقم 3 (رقم البند الجمركي على مستوى 12 )</h4>
-                            
-                                <div class="col-md-12">
-                                    <div class="row">
-
-                                        <div class="col-md-4">
-                                            <label class="form-label">   الطاقة التصميمة الشهرية  </label>
-                                            <div class="input-group">                                                  
-                                                <input type="number" class="form-control" value="55000" disabled>
-                                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 50px;">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-
-                                            
-                                                <label class="form-label"> هل الطاقة التصميمة الشهرية صحيحة ؟</label>
-                                                <select class="form-select if-no" (change)="onInputChange($event)">
-                                                    <option value="yes" selected>نعم</option>
-                                                    <option value="no">لا</option>
-                                                </select>
-                                            
-
-                                        </div>
-                                        <div class="col-md-4 show-input d-none">
-                                            
-                                                <label class="form-label"> أدخل  الطاقة التصميمة الشهرية الصحيحة </label>
-                                                <div class="input-group">    
-                                                    <input type="text" class="form-control" value="" >
-                                                    <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                                                </div>
-                                            
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="row">
-
-                                        <div class="col-md-4">
-                                            <label class="form-label">   الإنتاج الفعلي​ الشهري	</label>
-                                            <div class="input-group">                                                  
-                                                <input type="number" class="form-control" value="55000" disabled>
-                                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-
-                                            
-                                                <label class="form-label"> هل الإنتاج الفعلي​ الشهري صحيح ؟</label>
-                                                <select class="form-select if-no" (change)="onInputChange($event)">
-                                                    <option value="yes" selected>نعم</option>
-                                                    <option value="no">لا</option>
-                                                </select>
-                                            
-
-                                        </div>
-                                        <div class="col-md-4 show-input d-none">
-                                            
-                                                <label class="form-label">أدخل   الإنتاج الفعلي​ الشهري الصحيح </label>
-                                                <div class="input-group">    
-                                                    <input type="text" class="form-control" value="  " >
-                                                    <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
-                                                </div>
-                                            
-                                        </div>
-
-                                    </div>
-                                </div>
-                            
-
-                        </li>
+                   
+                 
                         
                        
                         
@@ -283,7 +139,7 @@
 
                     <div class="col-md-12">
                         <label class="form-label"> تعليقات </label>
-                        <textarea  rows="3" class="form-control"></textarea>
+                        <textarea  rows="3" class="form-control" [(ngModel)]="request.Comments"></textarea>
                     </div>
 
                     <div class="col-md-12">
@@ -378,7 +234,7 @@
                 </div>
                 <div class="form-footer">
                     <div class="col-12">
-                        <button class="btn btn-primary me-1" type="submit">حفظ</button>
+                        <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
                         <a href="" class="btn btn-danger">الغاء</a>
                     </div>
                 </div>

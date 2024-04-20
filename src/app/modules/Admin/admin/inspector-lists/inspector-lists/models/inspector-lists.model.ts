@@ -4,8 +4,9 @@ export class InspectorModel {
     Email!:string;
     Phone!:string;
     OwnerIdentity!:string;
-    Status!:any;
+    Status!:number;
     FactoryEntityId!:number;
     FactoryId!:number;
     FactoryIds:number[]=[];
+    FactoryInfo:any[]=[];
 }
