@@ -1,9 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FactoriesListService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getFacatories(inspectorId:number): Observable<any> {
+    return this.http.get<any>('Inspectors/GetInspectorFactories?id='+inspectorId);
+  }
 }

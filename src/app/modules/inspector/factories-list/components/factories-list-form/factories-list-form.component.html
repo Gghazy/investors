@@ -32,19 +32,19 @@
         </div>
 
         <ul class="d-flex license p-0 row mt-4">
-            <li class="col-12 col-xl-4 col-lg-6 col-md-6 col-sm-12">
+            <li class="col-12 col-xl-4 col-lg-6 col-md-6 col-sm-12" *ngFor="let factory of factories">
                 <div class="license-container">
                    
                         <div class="license-info">
                             <div>
                                 <p>
                                     <span class="fw-bold m-1">اسم المصنع :</span>
-                                    <span>مصنع المواد الغذائية</span>
+                                    <span>{{factory.FactoryName}}</span>
                                 </p>
                               
                                 <p>
                                     <span class="fw-bold m-1">السجل التجاري:</span>
-                                    <span>123456789</span>
+                                    <span>{{factory.CommerialNumber}}</span>
                                 </p>
                                 
                             </div>
@@ -52,61 +52,12 @@
                         </div>
                         <div class="license-footer justify-content-center">
                             <a href="#" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#detailsModal">تفاصيل</a>
-                            <a routerLink="/visit-landing" class="btn btn-primary">بدء الزيارة</a>
+                            <a [routerLink]="'/pages/period/'+factory.FactoryId" class="btn btn-primary">بدء الزيارة</a>
                         </div>
                    
                 </div>
             </li>
-            <li class="col-12 col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                <div class="license-container">
-                   
-                        <div class="license-info">
-                            <div>
-                                <p>
-                                    <span class="fw-bold m-1">اسم المصنع :</span>
-                                    <span>مصنع  الأعمال الخذفية</span>
-                                </p>
-                              
-                                <p>
-                                    <span class="fw-bold m-1">السجل التجاري:</span>
-                                    <span>123456789</span>
-                                </p>
-                                
-                            </div>
-                            <div><img src="assets/images/logo-min.png" alt="" /></div>
-                        </div>
-                        <div class="license-footer justify-content-center">
-                            <a href="#" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#detailsModal">تفاصيل</a>
-                            <a routerLink="/visit-landing" class="btn btn-primary">بدء الزيارة</a>
-                        </div>
-                   
-                </div>
-            </li>
-            <li class="col-12 col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                <div class="license-container">
-                   
-                        <div class="license-info">
-                            <div>
-                                <p>
-                                    <span class="fw-bold m-1">اسم المصنع :</span>
-                                    <span>مصنع  الصناعات الثقيلة</span>
-                                </p>
-                              
-                                <p>
-                                    <span class="fw-bold m-1">السجل التجاري:</span>
-                                    <span>123456789</span>
-                                </p>
-                                
-                            </div>
-                            <div><img src="assets/images/logo-min.png" alt="" /></div>
-                        </div>
-                        <div class="license-footer justify-content-center">
-                            <a href="#" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#detailsModal">تفاصيل</a>
-                            <a routerLink="/visit-landing" class="btn btn-primary">بدء الزيارة</a>
-                        </div>
-                   
-                </div>
-            </li>
+          
             
             
             

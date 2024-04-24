@@ -1,25 +1,25 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FileService } from 'src/app/core/service/file.service';
-import { BasicInfoFileModel } from '../../models/basic-info-file-model.model';
-import { InspectorBasicInfoService } from '../../basic-info.service';
-import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
-
+import { FactoryRawMaterialsFileModel } from '../../models/factory-raw-materials-file-model.model';
+import { FactoryRawMaterialService } from 'src/app/modules/factory-raw-materials/factory-raw-material.service';
+import { FactoryRawMaterialsService } from '../../factory-raw-materials.service';
 @Component({
-  selector: 'app-basic-info-file-form',
-  templateUrl: './basic-info-file-form.component.html',
-  styleUrls: ['./basic-info-file-form.component.scss']
+  selector: 'app-factory-raw-material-file',
+  templateUrl: './factory-raw-material-file.component.html',
+  styleUrls: ['./factory-raw-material-file.component.scss']
 })
-export class BasicInfoFileFormComponent implements OnInit {
+export class FactoryRawMaterialFileComponent implements OnInit {
   src!:string;
   files:any;
   Inspectorsfiles:any;
   @Input() factoryId!:string;
   @Input() periodId!:string;
-  request =new BasicInfoFileModel()
+  request =new FactoryRawMaterialsFileModel()
   @ViewChild('fileInput') fileInput!: ElementRef;
 constructor(  private fileService:FileService,
-  private basicInfoService:InspectorBasicInfoService,
-  private FactoryService:BasicInfoService,
+  private rawMaterialService: FactoryRawMaterialService,
+  private service:FactoryRawMaterialsService,
+ // private FactoryService:BasicInfoService,
 ){
 
 }ngOnInit(): void {
@@ -27,8 +27,10 @@ constructor(  private fileService:FileService,
   this.getInspectorsFiles()
  }
 getFiles() {
-  this.FactoryService
-    .getAll(this.factoryId,this.periodId)
+  let factoryId= parseInt(this.factoryId)
+  let periodId= parseInt(this.periodId)
+  this.service
+    .getFiles(factoryId,periodId)
     .subscribe((res: any) => {
       this.files = res.Data;
     
@@ -37,7 +39,7 @@ getFiles() {
 getInspectorsFiles() {
   let factoryid= parseInt( this.factoryId)
   let periodId=parseInt( this.periodId)
-  this.basicInfoService
+  this.service
     .getFiles(factoryid,periodId)
     .subscribe((res: any) => {
       this.Inspectorsfiles = res.Data;
@@ -47,13 +49,13 @@ getInspectorsFiles() {
 save(){
   this.request.FactoryId= parseInt( this.factoryId)
   this.request.PeriodId=parseInt( this.periodId)
-  this.basicInfoService
+  this.service
   .CreateFiles(this.request)
   .subscribe((res: any) => {
     this.getInspectorsFiles
   });
   console.log(this.request)
-  this.request= new BasicInfoFileModel()
+  this.request= new FactoryRawMaterialsFileModel()
   this.fileInput.nativeElement.value = '';
 }
   saveFile(file: any) {
@@ -75,10 +77,6 @@ getFile(attachmentId:number){
 
 
 deleteFile(id:number){
-    this.basicInfoService
-    .delete(id)
-    .subscribe((res: any) => {
-      this.getFiles();
-    });
+   
   }
 }

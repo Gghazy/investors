@@ -3,7 +3,7 @@
                     <h2 class="form-title">           بيانات كمية الإنتاج الفعلي والطاقة التصميمية    </h2>
                     
                     <div>
-                        <a routerLink="/pages/Inspector/visit-landing" class="back-link">
+                        <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
                             رجوع
                             <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
                         </a>
@@ -142,94 +142,9 @@
                         <textarea  rows="3" class="form-control" [(ngModel)]="request.Comments"></textarea>
                     </div>
 
-                    <div class="col-md-12">
-                        <h3> المستندات المتعلقة  بالطاقة التصميمية </h3>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-small-header">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th> اسم المستند </th>
-                                    <th>امتداد المستند</th>                                            
-                                    <th style="min-width: 140px">خيارات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>   البيانات المالية المدققة</td>
-                                    <td>PDF</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary mx-1">
-                                            تحميل
-
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>   سجل الإنتاج</td>
-                                    <td>PDF</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary mx-1">
-                                            تحميل
-
-                                        </a>
-                                    </td>
-                                </tr>
-                               
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col-md-12">
-                        <h3> رفع مستندات اخرى  </h3>
-                    </div>
-
-                    <div class="row">
-
-                    
-                    <div class="col-md-6">
-                        <label class="form-label"> اسم المستند</label>
-                        <input type="text" class="form-control" placeholder="" value="">
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">رفع المستند    </label>
-                        <div class="input-group">
-                            <input type="file" class="form-control" placeholder="" value="">
-                            <button class="btn btn-primary" type="button">اضافة </button>
-                        </div>
-                    </div>
-                </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-hover table-small-header">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th> اسم المستند </th>
-                                    <th>امتداد المستند</th>                                            
-                                    <th style="min-width: 140px">خيارات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>كمية المبيعات</td>
-                                    <td>PDF</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary mx-1">
-                                            تحميل
-
-                                        </a>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
+                      
+        <app-actual-production-and-designed-capacity-file [factoryId]="factoryId" [periodId]="periodId"></app-actual-production-and-designed-capacity-file>
+   
 
                 </div>
                 <div class="form-footer">

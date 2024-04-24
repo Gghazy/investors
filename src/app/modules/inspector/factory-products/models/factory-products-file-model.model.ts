@@ -1,4 +1,4 @@
-export class BasicInfoFileModel {
+export class FactoryProductsFileModel {
     Id!:number;
     FactoryId!:number;
     PeriodId!:number;

@@ -1,38 +1,40 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FileService } from 'src/app/core/service/file.service';
-import { BasicInfoFileModel } from '../../models/basic-info-file-model.model';
-import { InspectorBasicInfoService } from '../../basic-info.service';
-import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
+import { InspectorFactoryLocationService } from '../../factory-location.service';
+import { FactoryLocationFileModel } from '../../models/factory-location-file-model.model';
+import { FactoryLocationService } from 'src/app/modules/factory-location/factory-location.service';
 
 @Component({
-  selector: 'app-basic-info-file-form',
-  templateUrl: './basic-info-file-form.component.html',
-  styleUrls: ['./basic-info-file-form.component.scss']
+  selector: 'app-factory-location-file',
+  templateUrl: './factory-location-file.component.html',
+  styleUrls: ['./factory-location-file.component.scss']
 })
-export class BasicInfoFileFormComponent implements OnInit {
+export class FactoryLocationFileComponent implements OnInit {
   src!:string;
   files:any;
-  Inspectorsfiles:any;
+  InspectorsLocationfiles:any;
   @Input() factoryId!:string;
   @Input() periodId!:string;
-  request =new BasicInfoFileModel()
+  factoryLocationId!: number;
+  Inspectorsfiles!:any
+  request =new FactoryLocationFileModel()
   @ViewChild('fileInput') fileInput!: ElementRef;
 constructor(  private fileService:FileService,
-  private basicInfoService:InspectorBasicInfoService,
-  private FactoryService:BasicInfoService,
+  private basicInfoService:InspectorFactoryLocationService,
+  private factoryLocationService:FactoryLocationService,
 ){
 
-}ngOnInit(): void {
+}
+ngOnInit(): void {
   this.getFiles();
   this.getInspectorsFiles()
  }
 getFiles() {
-  this.FactoryService
-    .getAll(this.factoryId,this.periodId)
-    .subscribe((res: any) => {
-      this.files = res.Data;
-    
-    });
+  this.factoryLocationService
+      .getAllFiles(this.factoryLocationId)
+      .subscribe((res: any) => {
+        this.files = res.Data;
+      });
 }
 getInspectorsFiles() {
   let factoryid= parseInt( this.factoryId)
@@ -50,10 +52,10 @@ save(){
   this.basicInfoService
   .CreateFiles(this.request)
   .subscribe((res: any) => {
-    this.getInspectorsFiles
+    this.getInspectorsFiles()
   });
   console.log(this.request)
-  this.request= new BasicInfoFileModel()
+  this.request= new FactoryLocationFileModel()
   this.fileInput.nativeElement.value = '';
 }
   saveFile(file: any) {
@@ -75,10 +77,6 @@ getFile(attachmentId:number){
 
 
 deleteFile(id:number){
-    this.basicInfoService
-    .delete(id)
-    .subscribe((res: any) => {
-      this.getFiles();
-    });
+   
   }
 }

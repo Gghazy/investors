@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FactoryLocationModel } from '../../models/factory-location.model';
 import { FactoryLocationService } from '../../../../factory-location/factory-location.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { LookUpService } from 'src/app/core/service/look-up.service';
+import { InspectorFactoryLocationService } from '../../factory-location.service';
 
 @Component({
   selector: 'app-factory-location-form',
@@ -25,6 +26,8 @@ export class FactoryLocationFormComponent implements OnInit {
     private route: ActivatedRoute,
      private toastr: ToastrService,
      private factoryLocationService: FactoryLocationService,
+     private inspectorService: InspectorFactoryLocationService,
+     private router: Router,
      private lookUpService: LookUpService,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
@@ -105,12 +108,18 @@ export class FactoryLocationFormComponent implements OnInit {
   save(){
     this.request.FactoryId=this.factoryId;
     this.request.PeriodId=this.periodId;
+    this.request.WebSite=this.requestFactory.WebSite;
+    this.request.FactoryEntityId=this.requestFactory.FactoryEntityId;
+    this.request.CityId=this.requestFactory.CityId;
+    this.request.IndustrialAreaId=this.requestFactory.IndustrialAreaId;
     console.log(this.request)
-     // this.FormService
-    // .create(this.request)
-    // .subscribe((res: any) => {
-    //   this.toastr.success("تم الحفظ");
-    // });
+     this.inspectorService
+    .create(this.request)
+    .subscribe((res: any) => {
+      this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+      
+      this.toastr.success("تم الحفظ");
+    });
 
   }
 }

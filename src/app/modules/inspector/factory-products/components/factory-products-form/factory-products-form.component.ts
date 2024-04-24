@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { FileService } from 'src/app/core/service/file.service';
@@ -7,6 +7,7 @@ import { ProductModel } from 'src/app/modules/customs-items-update/models/produc
 import { ProductSearch } from 'src/app/modules/customs-items-update/models/product-search';
 import { FactoryProductService } from 'src/app/modules/factory-products/factory-product.service';
 import { FactoryProductsModel } from '../../models/factory-products.model';
+import { FactoryProductsService } from '../../factory-products.service';
 
 @Component({
   selector: 'app-factory-products-form',
@@ -23,8 +24,10 @@ export class FactoryProductsFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private factoryProductService: FactoryProductService,
+    private InspectorService: FactoryProductsService,
     private fileService: FileService,
      private toastr: ToastrService,
+     private router: Router,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -41,6 +44,7 @@ export class FactoryProductsFormComponent implements OnInit {
       .getAllPagination(this.search)
       .subscribe((res: any) => {
         this.Factoryproducts = res.Data;
+        console.log(this.Factoryproducts)
       });
   }
   pageChanged(data: any) {
@@ -66,11 +70,13 @@ export class FactoryProductsFormComponent implements OnInit {
 
   save(){
   console.log(this.request)
- // this.FormService
-    // .create(this.request)
-    // .subscribe((res: any) => {
-    //   this.toastr.success("تم الحفظ");
-    // });
+ this.InspectorService
+    .create(this.request)
+    .subscribe((res: any) => {
+      this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+      
+      this.toastr.success("تم الحفظ");
+    });
 
 
   }

@@ -1,5 +1,10 @@
 export class FactoryRawMaterialsModel {
     Id!: number;
-    IsPhotoClear!:boolean;
+    Name!: string;
+    PhotoId!: number;
+    IsClearImage!:boolean;
+    ClearPhotoId!:number;
     Comments!:string;
+    periodId!:number;
+    FactoryId!:number;
 }

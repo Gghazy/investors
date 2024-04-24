@@ -47,6 +47,9 @@ export class PeriodListComponent implements OnInit {
       this.router.navigate(['/pages/factory-landing', this.factoryId, periodId]);
     
     }
-
+    navigateToInspectorDetails(periodId: number) {
+      this.router.navigate(['/pages/Inspector/visit-landing', this.factoryId, periodId]);
+    
+    }
 
 }

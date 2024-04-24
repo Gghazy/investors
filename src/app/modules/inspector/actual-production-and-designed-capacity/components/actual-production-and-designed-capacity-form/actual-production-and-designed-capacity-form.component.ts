@@ -38,6 +38,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
     .getAllPagination(this.search)
     .subscribe((res: any) => {
       this.products = res.Data;
+      console.log(this.products)
     });
   }
   onInputChange(event: Event): void {

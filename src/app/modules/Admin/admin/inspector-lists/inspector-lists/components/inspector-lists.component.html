@@ -117,10 +117,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of inspector.FactoryInfo let i=index">
+            <tr *ngFor="let item of InspectorFactories let i=index">
               <td>{{i+1}}</td>
               <td hidden>{{item.Id}}</td>
-              <td>{{item.Name}}</td>
+              <td>{{item.FactoryName}}</td>
             </tr>
             
           </tbody>
@@ -196,14 +196,16 @@
             <tr>
               <th>#</th>
               <th>اسم المصنع</th>
+              <th>السجل التجاري </th>
               <th>خيارات</th>
             </tr>
           </thead>
             <tbody>
-              <tr *ngFor="let item of inspector.FactoryInfo let i=index">
+              <tr *ngFor="let item of InspectorFactories let i=index">
                 <td>{{i+1}}</td>
                 <td hidden>{{item.Id}}</td>
-                <td>{{item.Name}}</td>
+                <td>{{item.FactoryName}}</td>
+                <td>{{item.CommerialNumber}}</td>
                 <td><button href="" class="btn btn-danger">حذف</button></td>
               </tr>
               

@@ -1,4 +1,4 @@
-export class BasicInfoFileModel {
+export class ActualProductionAndDesignedCapacityFileModel {
     Id!:number;
     FactoryId!:number;
     PeriodId!:number;

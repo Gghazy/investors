@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
+import { InspectorBasicInfoService } from '../../basic-info.service';
 import { BasicInfoModel } from '../../models/basic-info.model';
 import { FactoryModel } from 'src/app/modules/factory/models/factory-model';
 import { FileService } from 'src/app/core/service/file.service';
@@ -23,8 +24,10 @@ export class BasicInfoFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
      private basicInfoService: BasicInfoService,
+     private inspectorService: InspectorBasicInfoService,
      private fileService:FileService,
      private toastr: ToastrService,
+     private router: Router,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -41,7 +44,7 @@ export class BasicInfoFormComponent implements OnInit {
     const showInputElement = closestRow?.querySelector('.show-input');
 
     if (showInputElement) {
-      if (target.value == '0') {
+      if (target.value == 'false') {
         showInputElement.classList.remove('d-none');
       } else {
         showInputElement.classList.add('d-none');
@@ -94,11 +97,13 @@ export class BasicInfoFormComponent implements OnInit {
   save(){
     this.request.FactoryId=this.factoryId;
     this.request.PeriodId=this.periodId;
+    this.request.OwnerIdentity ='123'
     console.log(this.request)
 
-     this.basicInfoService
+     this.inspectorService
     .create(this.request)
     .subscribe((res: any) => {
+      this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
       this.toastr.success("تم الحفظ");
     });
 // 

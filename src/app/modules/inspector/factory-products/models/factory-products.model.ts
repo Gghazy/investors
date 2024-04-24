@@ -1,9 +1,13 @@
 export class FactoryProductsModel {
     Id!:number;
-    productId!:number;
+    FactoryId!:number;
+    ProductId!:number;
+    PeriodId!:number;
+    PhotoId!:number;
     CurrentPhotoId!:number;
     ClearPhotoId!:number;
-    IsPhotoClear!:boolean;
-    FileId!:number;
+    IsProductPhotoCorrect!:boolean;
+    NewProductPhotoId!:number;
     Comments!:string;
 }
+

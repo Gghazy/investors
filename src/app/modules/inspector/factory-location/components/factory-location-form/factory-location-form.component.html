@@ -26,14 +26,14 @@
             <div class="col-md-3">
                 <label class="form-label"> هل الجهة التي يتبع لها المصنع​ صحيحة؟</label>
                 <select class="form-select " [(ngModel)]="request.IsFactoryEntityCorrect" (change)="onInputChange($event)">
-                    <option value="1" selected>نعم</option>
-                    <option value="0">لا</option>
+                    <option [ngValue]="true" selected>نعم</option>
+                    <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5 show-input d-none">
+            <div class="col-md-5" *ngIf="request.IsFactoryEntityCorrect == false">
                 <label class="form-label"> أختر  الجهة الصحيحة التي يتبع لها المصنع​ </label>
                 <select class="form-select" #FactoryEntityId="ngModel" required 
-                name="FactoryEntityId" [(ngModel)]="request.FactoryEntityId" (change)="onEntitySelect(request.FactoryEntityId)">
+                name="FactoryEntityId" [(ngModel)]="request.NewFactoryEntityId" (change)="onEntitySelect(request.FactoryEntityId)">
                     <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">{{factoryEntity.NameAr}} </option>
                 </select>
             </div>
@@ -53,14 +53,14 @@
             <div class="col-md-3">
                 <label class="form-label"> هل المدينة صحيحة؟</label>
                 <select class="form-select" [(ngModel)]="request.IsCityCorrect" (change)="onInputChange($event)">
-                    <option value="1" selected>نعم</option>
-                    <option value="0">لا</option>
+                    <option [ngValue]="true" selected>نعم</option>
+                    <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5 show-input d-none">
+            <div class="col-md-5" *ngIf="request.IsCityCorrect == false">
                 <label class="form-label"> أختر  المدينة الصحيحة</label>
                 <select class="form-select" #CityId="ngModel" required  
-                name="CityId" [(ngModel)]="request.CityId" (change)="onCitySelect(request.CityId)" (change)="onCitySelect(request.CityId)">
+                name="CityId" [(ngModel)]="request.NewCityId" (change)="onCitySelect(request.CityId)" (change)="onCitySelect(request.CityId)">
                     <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.NameAr}} </option>
 
                 </select>
@@ -79,14 +79,14 @@
             <div class="col-md-3">
                 <label class="form-label"> هل المنطقة الصناعية صحيحة؟</label>
                 <select class="form-select" [(ngModel)]="request.IsIndustrialAreaCorrect" (change)="onInputChange($event)">
-                    <option value="1" selected>نعم</option>
-                    <option value="0">لا</option>
+                    <option [ngValue]="true" selected>نعم</option>
+                    <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5 show-input d-none">
+            <div class="col-md-5" *ngIf="request.IsIndustrialAreaCorrect == false">
                 <label class="form-label"> أختر المنطقة الصناعية الصحيحة</label>
                 <select class="form-select" name="IndustrialAreaId" 
-                [(ngModel)]="request.IndustrialAreaId" >
+                [(ngModel)]="request.NewIndustrialAreaId" >
                     <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
                 </select>
             </div>
@@ -100,13 +100,13 @@
             <div class="col-md-3">
                 <label class="form-label"> هل  الرابط صحيح؟</label>
                 <select class="form-select" [(ngModel)]="request.IsLocationLinkCorrect" (change)="onInputChange($event)">
-                    <option value="1" selected>نعم</option>
-                    <option value="0">لا</option>
+                    <option [ngValue]="true" selected>نعم</option>
+                    <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5 show-input d-none">
+            <div class="col-md-5" *ngIf="request.IsLocationLinkCorrect == false">
                 <label class="form-label">  أدخل  رابط موقع المصنع الصحيح</label>
-                <input type="url" class="form-control" [(ngModel)]="request.NewLocationLink" value="">
+                <input type="url" class="form-control" [(ngModel)]="request.NewWebSite" value="">
             </div>
         </div>
         
@@ -115,73 +115,9 @@
             <textarea  rows="3" class="form-control" [(ngModel)]="request.Comment"></textarea>
         </div>
 
-        <div class="col-md-12">
-            <h3> المستندات المتعلقة بموقع المصنع </h3>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-hover table-small-header">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th> اسم المستند </th>
-                        <th>امتداد المستند</th>                                            
-                        <th style="min-width: 140px">خيارات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>صورة مدخل المصنع</td>
-                        <td>JPG</td>
-                        <td>
-                            <a href="#" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">عرض</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="col-md-12">
-            <h3> رفع مستندات اخرى  </h3>
-        </div>
-
-        <div class="row">
-
-        
-        <div class="col-md-6">
-            <label class="form-label"> اسم المستند</label>
-            <input type="text" class="form-control" placeholder="" value="">
-        </div>
-
-        <div class="col-md-6">
-            <label class="form-label">رفع المستند    </label>
-            <div class="input-group">
-                <input type="file" class="form-control" placeholder="" value="">
-                <button class="btn btn-primary" type="button">اضافة </button>
-            </div>
-        </div>
-    </div>
-
-        <div class="table-responsive">
-            <table class="table table-hover table-small-header">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th> اسم المستند </th>
-                        <th>امتداد المستند</th>                                            
-                        <th style="min-width: 140px">خيارات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="4">
-                            <div class="text-center">لا توجد ملفات </div>
-                             </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
+          
+        <app-factory-location-file [factoryId]="factoryId" [periodId]="periodId"></app-factory-location-file>
+   
 
     </div>
     <div class="form-footer">

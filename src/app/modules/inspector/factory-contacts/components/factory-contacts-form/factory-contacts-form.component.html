@@ -47,12 +47,12 @@
               (change)="onInputChange($event)"
               [(ngModel)]="request.IsOfficerMailCorrect"
             >
-              <option value="1" selected>نعم</option>
-              <option value="0">لا</option>
+              <option [ngValue]="true" selected>نعم</option>
+              <option [ngValue]="false">لا</option>
             </select>
           </div>
 
-          <div class="col-md-5 show-input d-none">
+          <div class="col-md-5" *ngIf="request.IsOfficerMailCorrect == false">
             <label class="form-label">
               أدخل البريد الإلكتروني الصحيح
             </label>
@@ -65,7 +65,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" >
           <div class="col-md-5">
             <label class="form-label"> رقم جوال ضابط الإتصال </label>
             <ngx-intl-tel-input
@@ -85,8 +85,8 @@
               [separateDialCode]="separateDialCode"
               [numberFormat]="PhoneNumberFormat.National"
               name="phone"
-              [(ngModel)]="requestContact.OfficerPhone"
-            >
+              [(ngModel)]="requestContact.OfficerPhone.nationalNumber"
+          aria-disabled="true"  >
             </ngx-intl-tel-input>
           </div>
 
@@ -97,12 +97,12 @@
               (change)="onInputChange($event)"
               [(ngModel)]="request.IsOfficerPhoneCorrect"
             >
-              <option value="1" selected>نعم</option>
-              <option value="0">لا</option>
+              <option [ngValue]="true" selected>نعم</option>
+              <option [ngValue]="false">لا</option>
             </select>
           </div>
 
-          <div class="col-md-5 show-input d-none">
+          <div class="col-md-5" *ngIf="request.IsOfficerPhoneCorrect == false">
             <label class="form-label"> أدخل رقم الجوال الصحيح </label>
             <ngx-intl-tel-input
               [cssClass]="'form-control'"

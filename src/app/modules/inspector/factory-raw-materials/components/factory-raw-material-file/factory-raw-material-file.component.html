@@ -1,0 +1,104 @@
+<div class="col-md-12">
+    <h3> المستندات المتعلقة بالمواد الأولية للمصنع </h3>
+ </div>
+ 
+ <div class="table-responsive">
+     <table class="table table-hover table-small-header">
+         <thead>
+             <tr>
+                 <th>#</th>
+                 <th> اسم المادة الأولية </th>
+                 <th> اسم المستند </th>
+                 <th>امتداد المستند</th>                                            
+                 <th style="min-width: 140px">خيارات</th>
+             </tr>
+         </thead>
+         <tbody>
+             <tr *ngFor="let file of files let i=index">
+                 <td>{{i+1}}</td>
+                 <td>    {{file.RawMaterialName}}</td>
+                 <td>  {{file.Name}}</td>
+                 <td>{{file.Extension}}</td>
+                 <td>
+                     <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                         عرض
+         
+                     </a>
+                  </td>
+               </tr>
+             
+             
+         </tbody>
+     </table>
+ </div>
+ <div class="col-md-12">
+     <h3> رفع مستندات اخرى  </h3>
+ </div>
+ <div class="row">
+    <div class="col-md-3">
+        <label class="form-label">  اختر المادة الأولية</label>
+        <select class="form-select">
+            <option value="">المادة رقم 1 (رقم البند الجمركي على مستوى 12 )</option>
+            <option value="">المادة رقم 2 (رقم البند الجمركي على مستوى 12 )</option>
+            <option value="">المادة رقم 3 (رقم البند الجمركي على مستوى 12 )</option>
+        </select>
+    </div>
+ 
+     <div class="col-md-6">
+         <label class="form-label"> اسم المستند</label>
+         <input type="text" class="form-control" placeholder="" [(ngModel)]="request.Name">
+     </div>
+ 
+     <div class="col-md-6">
+         <label class="form-label">رفع المستند    </label>
+         <div class="input-group">
+             <input type="file"  #fileInput  accept="image/*" class="form-control" placeholder="" value="" (change)="saveFile($event)">
+             <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+         </div>
+     </div>
+ </div>
+ 
+ <div class="table-responsive">
+     <table class="table table-hover table-small-header">
+         <thead>
+             <tr>
+                 <th>#</th>
+                 <th> اسم المادة الأولية </th>
+                 <th> اسم المستند </th>
+                 <th>امتداد المستند</th>                                            
+                 <th style="min-width: 140px">خيارات</th>
+             </tr>
+         </thead>
+         <tbody>
+             
+             <tr *ngFor="let file of Inspectorsfiles let i=index">
+                 <td>{{i+1}}</td>
+                 <td>{{file.RawMaterialName}}</td>
+                 <td>  {{file.Name}}</td>
+                 <td>{{file.Extension}}</td>
+                 <td>
+                     <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                         عرض
+         
+                     </a>
+                     <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
+                 </td>
+               </tr>
+         </tbody>
+     </table>
+ </div>
+ 
+ <!-- Modal photos-->
+ <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+ <div class="modal-content">
+     <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body text-center">
+         <img [src]="src" alt="" class="img-fluid">
+     </div>
+ </div>
+ </div>
+ </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,  EventEmitter, Output, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FactoryService } from 'src/app/modules/factory/factory.service';
 import { InspectorListsService } from '../inspector-lists.service';
@@ -13,72 +13,71 @@ import { FactorySearch } from 'src/app/modules/factory/models/factory-search';
   templateUrl: './inspector-lists.component.html',
   styleUrls: ['./inspector-lists.component.scss']
 })
-export class InspectorListsComponent  implements OnInit {
-  
+export class InspectorListsComponent implements OnInit {
+
   @Output() close = new EventEmitter<boolean>();
   @ViewChild('closeModal') Modal!: ElementRef;
-  Allfactories: any[]=[];
-  search=new  FactorySearch()
-inspectors!: InspectorModel[];
-inspector=new InspectorModel();
-factoryEntities:LookUpModel[]=[];
-  constructor(    private route: ActivatedRoute,
+  Allfactories: any[] = [];
+  search = new FactorySearch()
+  inspectors!: InspectorModel[];
+  inspector = new InspectorModel();
+  factoryEntities: LookUpModel[] = [];
+  InspectorFactories:any
+    constructor(private route: ActivatedRoute,
     private factoryService: FactoryService,
     private inspectorService: InspectorListsService,
     private lookUpService: LookUpService,
-    private toastr: ToastrService) {}
+    private toastr: ToastrService) { }
 
   ngOnInit() {
-   this.getInspectors()
-   
+    this.getInspectors()
+    this.getFactory()
   }
-  addFactory(FactoryId:number){
+  addFactory(FactoryId: number) {
     console.log(FactoryId)
-  //  let factory= this.Allfactories.find(x=>x.Id== FactoryId)
-  //    this.factories.push(FactoryId)
-     
-  //    this.factoriesAssigned.push(factory)
-  //   console.log(this.factories)
-  //   console.log(this.factoriesAssigned)
+    //  let factory= this.Allfactories.find(x=>x.Id== FactoryId)
+    //    this.factories.push(FactoryId)
+
+    //    this.factoriesAssigned.push(factory)
+    //   console.log(this.factories)
+    //   console.log(this.factoriesAssigned)
   }
-  getInspectors(){
+  getInspectors() {
     this.inspectorService
-    .getAll()
-    .subscribe((res: any) => {
-      this.inspectors = res.Data;
-    });
+      .getAll()
+      .subscribe((res: any) => {
+        this.inspectors = res.Data;
+      });
   }
 
   getData(id: number) {
-   console.log(id)
-   this.inspectorService
-   .getOne(id)
-   .subscribe((res: any) => {
-     this.inspector = res.Data;
-
-
-
-     console.log(this.inspector)
-   });
-   this.getFactoryEntities()
+    console.log(id)
+    this.inspectorService
+      .getOne(id)
+      .subscribe((res: any) => {
+        this.inspector = res.Data;
+        console.log(this.inspector)
+      });
+      this.getInspectorFactories(id)
+    this.getFactoryEntities()
   }
 
-getFactories(id:number){
-  this.factoryService
-  .getOne(id)
-  .subscribe((res:any)=>{
-   
-  })
-}
-getFactory(){
-   
-  this.factoryService
-  .getAllPagination(this.search)
-  .subscribe((res:any)=>{
-    this.Allfactories=res.Data.Items
-    console.log(res)
-  })
-}
+  getInspectorFactories(id: number) {
+    this.inspectorService
+      .getInspectorFactories(id)
+      .subscribe((res: any) => {
+this.InspectorFactories = res.Data
+      })
+  }
+  getFactory() {
+
+    this.factoryService
+      .getAllPagination(this.search)
+      .subscribe((res: any) => {
+        this.Allfactories = res.Data.Items
+        console.log(res)
+      })
+  }
   closePopUp() {
     this.Modal.nativeElement.click()
     this.getInspectors()
@@ -88,21 +87,21 @@ getFactory(){
   }
   edit(id: number) {
     console.log(id)
-   }
+  }
 
-Update (){
-  this.inspectorService
-  .update(this.inspector)
-  .subscribe((res: any) => {
-    console.log(this.inspector)
-    this.closePopUp()
-    this.toastr.success("تم التعديل");
-    
-  });
-}
+  Update() {
+    this.inspectorService
+      .update(this.inspector)
+      .subscribe((res: any) => {
+        console.log(this.inspector)
+        this.closePopUp()
+        this.toastr.success("تم التعديل");
+
+      });
+  }
 
 
-   getFactoryEntities() {
+  getFactoryEntities() {
     this.lookUpService
       .getAllFactoryEntities()
       .subscribe((res: any) => {

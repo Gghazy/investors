@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { ToastrService } from 'ngx-toastr';
 import { FactoryContactModel } from 'src/app/modules/factory-contacts/models/factory-contact-model';
 import { FactoryContactsModel } from '../../models/factory-contacts.model';
 import { FactoryContactService } from 'src/app/modules/factory-contacts/factory-contact.service';
+import { InspectorFactoryContactsService } from '../../factory-contacts.service';
 
 
 @Component({
@@ -20,8 +21,10 @@ export class FactoryContactsFormComponent implements OnInit {
   requestContact=new FactoryContactModel()
   constructor(
     private route: ActivatedRoute,
+    private inspectorContactService: InspectorFactoryContactsService,
     private factoryContactService: FactoryContactService,
      private toastr: ToastrService,
+     private router: Router,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -72,11 +75,12 @@ export class FactoryContactsFormComponent implements OnInit {
     this.request.PeriodId=this.periodId;
     console.log(this.request)
 
-     // this.FormService
-    // .create(this.request)
-    // .subscribe((res: any) => {
-    //   this.toastr.success("تم الحفظ");
-    // });
+     this.inspectorContactService
+    .create(this.request)
+    .subscribe((res: any) => {
+      this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+      this.toastr.success("تم الحفظ");
+    });
 
   }
 

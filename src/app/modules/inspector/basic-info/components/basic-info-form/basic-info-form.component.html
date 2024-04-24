@@ -21,11 +21,11 @@
             <div class="col-md-2">
                 <label class="form-label"> هل الاسم صحيح؟</label>
                 <select class="form-select" (change)="onInputChange($event)" [(ngModel)]="request.IsFactNameCorrect">
-                    <option value="1" selected>نعم</option>
-                    <option value="0">لا</option>
+                    <option [ngValue]="true" selected>نعم</option>
+                    <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5 show-input d-none">
+            <div class="col-md-5" *ngIf="request.IsFactNameCorrect == false">
                 <label class="form-label">أدخل اسم المصنع الصحيح</label>
                 <input type="text" class="form-control" [(ngModel)]="request.FactoryName">
             </div>
@@ -46,11 +46,11 @@
             <div class="col-md-2">
                 <label class="form-label"> هل الحالة صحيحة؟</label>
                 <select class="form-select if-no" (change)="onInputChange($event)" [(ngModel)]="request.IsFactStatusCorrect">
-                    <option value="1" selected>نعم</option>
-                    <option value="0">لا</option>
+                    <option [ngValue]="true" selected>نعم</option>
+                    <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5 show-input d-none">
+            <div class="col-md-5 " *ngIf="request.IsFactStatusCorrect == false">
                 <label class="form-label"> أختر الحالة الحالية الصحيحة</label>
                 <select class="form-select" [(ngModel)]="request.FactoryStatus">
                     <option [ngValue]="0">منتج</option>

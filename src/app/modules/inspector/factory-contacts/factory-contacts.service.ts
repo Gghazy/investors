@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FactoryContactModel } from '../../factory-contacts/models/factory-contact-model';
+import { FactoryContactsModel } from '../factory-contacts/models/factory-contacts.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FactoryContactsService {
+export class InspectorFactoryContactsService {
 
   constructor(private http: HttpClient) { }
   
-  create(model: FactoryContactModel): Observable<any> {
-    return this.http.post<any>('x', model);
+  create(model: FactoryContactsModel): Observable<any> {
+    return this.http.post<any>('InspectFactoryContact', model);
   }
 }
