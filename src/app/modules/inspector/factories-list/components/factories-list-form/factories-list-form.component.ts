@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FactoriesListService } from '../../factories-list.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-factories-list-form',
@@ -8,12 +9,15 @@ import { FactoriesListService } from '../../factories-list.service';
 })
 export class FactoriesListFormComponent implements OnInit {
 factories: any=[]
-  constructor(private factoryService :FactoriesListService){
+  constructor(private factoryService :FactoriesListService,
+    private shared: SharedService,
+  ){
 
   }
 
   ngOnInit(): void {
     this.getInspectorFactories();
+    this.shared.setUserRole('Inspector');
    } 
 
    getInspectorFactories() { 
