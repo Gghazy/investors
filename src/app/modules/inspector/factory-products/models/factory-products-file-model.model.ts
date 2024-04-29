@@ -7,4 +7,6 @@ export class FactoryProductsFileModel {
     Type!:string;
     Path!:string;
     Extension!:string;
+    ProductId!:number;
+    ProductName!:string;
 }

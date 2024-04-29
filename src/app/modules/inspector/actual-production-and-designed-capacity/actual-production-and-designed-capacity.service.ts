@@ -14,8 +14,12 @@ export class InspectorActualProductionAndDesignedCapacityService {
   create(model: ActualProductionAndDesignedCapacityModel): Observable<any> {
     return this.http.post<any>('InspectActualProductions', model);
   }
-
-
+  getProducts(FactoryId: number,periodId:number): Observable<any> {
+    return this.http.get<any>('InspectActualProductions?factoryId='+FactoryId+'&periodId='+periodId);
+  }
+  update(model: ActualProductionAndDesignedCapacityModel): Observable<any> {
+    return this.http.put<any>('InspectActualProductions', model);
+  }
  /// Files
 
  CreateFiles(model: ActualProductionAndDesignedCapacityFileModel): Observable<any> {

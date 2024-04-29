@@ -37,10 +37,8 @@
  <div class="row">
     <div class="col-md-3">
         <label class="form-label"> اختر المنتج</label>
-        <select class="form-select">
-            <option value="">المنتج رقم 1 (رقم البند الجمركي على مستوى 12 )</option>
-            <option value="">المنتج رقم 2 (رقم البند الجمركي على مستوى 12 )</option>
-            <option value="">المنتج رقم 3 (رقم البند الجمركي على مستوى 12 )</option>
+        <select class="form-select"  [(ngModel)]="request.ProductId">
+            <option *ngFor="let product of products let i=index"  [ngValue]="product.ProductId">{{product.ProductName}}</option>
         </select>
     </div>
  
@@ -73,6 +71,7 @@
              
              <tr *ngFor="let file of Inspectorsfiles let i=index">
                  <td>{{i+1}}</td>
+                 <td>  {{file.ProductName}}</td>
                  <td>  {{file.Name}}</td>
                  <td>{{file.Extension}}</td>
                  <td>

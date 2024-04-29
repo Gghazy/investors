@@ -4,7 +4,7 @@ export class FactoryLocationFileModel {
     PeriodId!:number;
     Name!:string;
     AttachmentId!:number;
-    Type!:string;
+    Type!:number;
     Path!:string;
     Extension!:string;
 }

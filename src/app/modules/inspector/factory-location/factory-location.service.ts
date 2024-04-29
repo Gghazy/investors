@@ -20,10 +20,10 @@ export class InspectorFactoryLocationService {
 
 
   CreateFiles(model: FactoryLocationFileModel): Observable<any> {
-    return this.http.post<any>('x',model);
+    return this.http.post<any>('InspectFactoryLocationAttachments',model);
   }
 
   getFiles(FactoryId: number,periodId:number): Observable<any> {
-    return this.http.get<any>('x?factoryId='+FactoryId+'&periodId='+periodId);
+    return this.http.get<any>('InspectFactoryLocationAttachments?factoryId='+FactoryId+'&periodId='+periodId);
   }
 }

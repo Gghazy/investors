@@ -20,7 +20,7 @@ export class FactoryLocationFileComponent implements OnInit {
   request =new FactoryLocationFileModel()
   @ViewChild('fileInput') fileInput!: ElementRef;
 constructor(  private fileService:FileService,
-  private basicInfoService:InspectorFactoryLocationService,
+  private InspectorService:InspectorFactoryLocationService,
   private factoryLocationService:FactoryLocationService,
 ){
 
@@ -30,8 +30,10 @@ ngOnInit(): void {
   this.getInspectorsFiles()
  }
 getFiles() {
-  this.factoryLocationService
-      .getAllFiles(this.factoryLocationId)
+this.request.FactoryId = parseInt(this.factoryId)
+this.request.PeriodId = parseInt(this.periodId)
+  this.InspectorService
+      .getFiles(this.request.FactoryId,this.request.PeriodId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
@@ -39,7 +41,7 @@ getFiles() {
 getInspectorsFiles() {
   let factoryid= parseInt( this.factoryId)
   let periodId=parseInt( this.periodId)
-  this.basicInfoService
+  this.InspectorService
     .getFiles(factoryid,periodId)
     .subscribe((res: any) => {
       this.Inspectorsfiles = res.Data;
@@ -49,12 +51,14 @@ getInspectorsFiles() {
 save(){
   this.request.FactoryId= parseInt( this.factoryId)
   this.request.PeriodId=parseInt( this.periodId)
-  this.basicInfoService
+  this.request.Type=0
+  console.log(this.request)
+  this.InspectorService
   .CreateFiles(this.request)
   .subscribe((res: any) => {
     this.getInspectorsFiles()
   });
-  console.log(this.request)
+  
   this.request= new FactoryLocationFileModel()
   this.fileInput.nativeElement.value = '';
 }

@@ -11,8 +11,16 @@ export class FactoryProductsService {
 
   constructor(private http: HttpClient) { }
   
+
+  getProducts(FactoryId: number,periodId :number): Observable<any> {
+    return this.http.get<any>('InspectProducts?factoryId='+FactoryId+'&periodId='+periodId);
+  }
   create(model: FactoryProductsModel): Observable<any> {
     return this.http.post<any>('InspectProducts', model);
+  }
+
+  update(model: FactoryProductsModel): Observable<any> {
+    return this.http.put<any>('InspectProducts', model);
   }
 //Files
   CreateFiles(model: FactoryProductsFileModel): Observable<any> {
@@ -20,6 +28,6 @@ export class FactoryProductsService {
   }
 
   getFiles(FactoryId: number): Observable<any> {
-    return this.http.get<any>('InspectProductAttachments?factoryId='+FactoryId);
+    return this.http.get<any>('InspectProductAttachments/'+FactoryId);
   }
 }

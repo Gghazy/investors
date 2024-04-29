@@ -6,6 +6,7 @@ import { ActualProductModel } from 'src/app/modules/actual-production-and-design
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { ActualProductionAndDesignedCapacityModel } from '../../models/actual-production-and-designed-capacity.model';
 import { ToastrService } from 'ngx-toastr';
+import { InspectorActualProductionAndDesignedCapacityService } from '../../actual-production-and-designed-capacity.service';
 
 @Component({
   selector: 'app-actual-production-and-designed-capacity-form',
@@ -15,30 +16,29 @@ import { ToastrService } from 'ngx-toastr';
 export class ActualProductionAndDesignedCapacityFormComponent {
   factoryId:any;
   periodId:any;
-  products = new ResultResponse<ActualProductModel>();
+  products:ActualProductionAndDesignedCapacityModel[]= [];
   search=new ActualProductSearch();
   request=new ActualProductionAndDesignedCapacityModel();
   
   constructor(
     private route: ActivatedRoute,
     private ActualProductionService: ActualProductionAndDesignedCapacityService,
-    private FormService: ActualProductionAndDesignedCapacityService,
+    private FormService: InspectorActualProductionAndDesignedCapacityService,
     private toastr: ToastrService,
     ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
-    this.getLevel12Product();
+    this.getProduct();
   }
-  getLevel12Product(){
-    this.search.FactoryId=this.factoryId;
-    this.search.PeriodId=this.periodId;
-    this.ActualProductionService
-    .getAllPagination(this.search)
+  getProduct(){
+    
+    this.FormService
+    .getProducts(this.factoryId, this.periodId)
     .subscribe((res: any) => {
       this.products = res.Data;
-      console.log(this.products)
+      console.log(res)
     });
   }
   onInputChange(event: Event): void {
@@ -59,11 +59,31 @@ export class ActualProductionAndDesignedCapacityFormComponent {
   save(){
     
     console.log(this.request)
-    // this.FormService
-    // .create(this.request)
-    // .subscribe((res: any) => {
-    //   this.toastr.success("تم الحفظ");
-    // });
 
+    this.products.forEach(element => {
+
+      if(element.Id ==0){
+        console.log(element)
+        element.Comments = this.request.Comments
+    
+        this.FormService
+        .create(element)
+        .subscribe((res: any) => {
+        
+        });
+      }
+      else{
+
+      
+      element.Comments = this.request.Comments
+  
+      this.FormService
+      .update(element)
+      .subscribe((res: any) => {
+       
+      });
+    }  
+  });
+  this.toastr.success("تم الحفظ");
   }
 }

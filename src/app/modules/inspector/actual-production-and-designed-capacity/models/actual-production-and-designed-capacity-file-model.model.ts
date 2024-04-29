@@ -6,5 +6,5 @@ export class ActualProductionAndDesignedCapacityFileModel {
     AttachmentId!:number;
     Type!:string;
     Path!:string;
-    Extension!:string;
+    Extention!:string;
 }

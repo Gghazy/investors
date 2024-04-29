@@ -12,19 +12,21 @@ import { FactoryProductService } from 'src/app/modules/factory-products/factory-
 export class FactoryProductsFileComponent implements OnInit {
   src!:string;
   files:any;
+  products:any;
   Inspectorsfiles:any;
   @Input() factoryId!:string;
   @Input() periodId!:string;
   request =new FactoryProductsFileModel()
   @ViewChild('fileInput') fileInput!: ElementRef;
 constructor(  private fileService:FileService,
-  private basicInfoService:FactoryProductsService,
+  private Service:FactoryProductsService,
   private FactoryService:FactoryProductService,
 ){
 
 }ngOnInit(): void {
   this.getFiles();
   this.getInspectorsFiles()
+  this.getProducts()
  }
 getFiles() {
   // this.FactoryService
@@ -36,8 +38,7 @@ getFiles() {
 }
 getInspectorsFiles() {
   let factoryid= parseInt( this.factoryId)
-  let periodId=parseInt( this.periodId)
-  this.basicInfoService
+  this.Service
     .getFiles(factoryid)
     .subscribe((res: any) => {
       this.Inspectorsfiles = res.Data;
@@ -47,12 +48,13 @@ getInspectorsFiles() {
 save(){
   this.request.FactoryId= parseInt( this.factoryId)
   this.request.PeriodId=parseInt( this.periodId)
-  this.basicInfoService
+  console.log(this.request)
+  this.Service
   .CreateFiles(this.request)
   .subscribe((res: any) => {
-    this.getInspectorsFiles
+    this.getInspectorsFiles()
   });
-  console.log(this.request)
+ 
   this.request= new FactoryProductsFileModel()
   this.fileInput.nativeElement.value = '';
 }
@@ -65,6 +67,17 @@ save(){
          
         });
     }
+  }
+  getProducts() {
+    this.request.FactoryId= parseInt( this.factoryId)
+    this.request.PeriodId=parseInt( this.periodId)
+   
+    this.Service
+      .getProducts(this.request.FactoryId,this.request.PeriodId) 
+      .subscribe((res: any) => {
+        this.products = res.Data;
+        console.log(res)
+      });
   }
 getFile(attachmentId:number){
   console.log(attachmentId)

@@ -17,7 +17,7 @@
                   
 
                     <ul class="list-review factory-lines p-0">
-                        <li *ngFor="let product of products.Items let i=index">
+                        <li *ngFor="let product of products let i=index">
                             
                             <h4>المنتج رقم {{i+1}} ({{product.ProductName}})</h4>
                             
@@ -35,18 +35,18 @@
 
                                             
                                                 <label class="form-label"> هل الطاقة التصميمة الشهرية صحيحة ؟</label>
-                                                <select class="form-select" [(ngModel)]="request.IsDesignedCapacityCorrect" (change)="onInputChange($event)">
-                                                    <option value="1" >نعم</option>
-                                                    <option value="0">لا</option>
+                                                <select class="form-select" [(ngModel)]="product.IsDesignedCapacityCorrect" (change)="onInputChange($event)">
+                                                    <option [ngValue]="true" >نعم</option>
+                                                    <option [ngValue]="false">لا</option>
                                                 </select>
                                             
 
                                         </div>
-                                        <div class="col-md-4 show-input d-none">
+                                        <div class="col-md-4" *ngIf="product.IsDesignedCapacityCorrect == false">
                                             
                                                 <label class="form-label"> أدخل  الطاقة التصميمة الشهرية الصحيحة </label>
                                                 <div class="input-group">    
-                                                    <input type="text" class="form-control"  [(ngModel)]="request.CorrectDesignedCapacity">
+                                                    <input type="text" class="form-control"  [(ngModel)]="product.CorrectDesignedCapacity">
                                                     <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
                                                 </div>
                                             
@@ -68,18 +68,18 @@
 
                                             
                                                 <label class="form-label"> هل الإنتاج الفعلي​ الشهري صحيح ؟</label>
-                                                <select class="form-select" [(ngModel)]="request.IsActualProductionCorrect" (change)="onInputChange($event)">
-                                                    <option value="1" >نعم</option>
-                                                    <option value="0">لا</option>
+                                                <select class="form-select" [(ngModel)]="product.IsActualProductionCorrect" (change)="onInputChange($event)">
+                                                    <option [ngValue]="true" >نعم</option>
+                                                    <option [ngValue]="false">لا</option>
                                                 </select>
                                             
 
                                         </div>
-                                        <div class="col-md-4 show-input d-none">
+                                        <div class="col-md-4"  *ngIf="product.IsActualProductionCorrect == false">
                                             
                                                 <label class="form-label">أدخل   الإنتاج الفعلي​ الشهري الصحيح </label>
                                                 <div class="input-group">    
-                                                    <input type="text" class="form-control" [(ngModel)]="request.CorrectActualProduction">
+                                                    <input type="text" class="form-control" [(ngModel)]="product.CorrectActualProduction">
                                                     <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
                                                 </div>
                                             

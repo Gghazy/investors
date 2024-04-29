@@ -14,14 +14,14 @@
         </div>
 
         <ul class="list-review p-0">
-            <li *ngFor="let product of Factoryproducts.Items let i=index">
+            <li *ngFor="let product of request let i=index">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3"> 
                         <label class="form-label"> صورة المنتج الحالية</label>
                         <div class="input-group">
                             <input type="text" class="form-control" [(ngModel)]="product.ProductName" disabled>
                             <div data-bs-toggle="modal" data-bs-target="#photoModal">
-                                <button class="btn btn-primary" type="button"  (click)="getFile(product.PhototId)"
+                                <button class="btn btn-primary" type="button"  (click)="getFile(product.PhotoId)"
                                   data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" عرض الصورة الحالية للمنتج"> 
                                    
                                         <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 8.976C3 4.05476 4.05476 3 8.976 3H15.024C19.9452 3 21 4.05476 21 8.976V15.024C21 19.9452 19.9452 21 15.024 21H8.976C4.05476 21 3 19.9452 3 15.024V8.976Z" stroke="#ffffff" stroke-width="2"></path> <path d="M17.0045 16.5022L12.7279 12.2256C9.24808 8.74578 7.75642 8.74578 4.27658 12.2256L3 13.5022" stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path> <path d="M21 13.6702C18.9068 12.0667 17.4778 12.2919 15.198 14.3459" stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path> <path d="M17 8C17 8.55228 16.5523 9 16 9C15.4477 9 15 8.55228 15 8C15 7.44772 15.4477 7 16 7C16.5523 7 17 7.44772 17 8Z" stroke="#ffffff" stroke-width="2"></path> </g></svg>
@@ -34,15 +34,15 @@
                     </div>
                     <div class="col-md-3">
                         <label class="form-label"> هل الصورة واضحة ؟</label>
-                        <select class="form-select" (change)="onInputChange($event)" [(ngModel)]="request.IsProductPhotoCorrect">
+                        <select class="form-select" (change)="onInputChange($event)"  [(ngModel)]="product.IsProductPhotoCorrect">
                             <option [ngValue]="true" selected>نعم</option>
                             <option [ngValue]="false">لا</option>
                         </select>
                     </div>
-                    <div class="col-md-6" *ngIf="request.IsProductPhotoCorrect == true">
+                    <div class="col-md-6" *ngIf="product.IsProductPhotoCorrect == false">
                         <label class="form-label">  رفع صورة واضحة للمنتج</label>
                         <div class="input-group">
-                            <input type="file" class="form-control" placeholder="" [(ngModel)]="request.NewProductPhotoId">
+                            <input type="file" class="form-control" placeholder="" (change)="savePhoto($event)">
                             <button class="btn btn-primary" type="button" >اضافة </button>
                         </div>
                     </div>
@@ -55,10 +55,10 @@
 
         <div class="col-md-12">
             <label class="form-label"> تعليقات </label>
-            <textarea  rows="3" class="form-control" [(ngModel)]="request.Comments"></textarea>
+            <textarea  rows="3" class="form-control" [(ngModel)]="request[0].Comments"></textarea>
         </div>
 
-    <app-factory-products-file [factoryId]="factoryId"></app-factory-products-file>
+    <app-factory-products-file [factoryId]="factoryId" [periodId]="periodId"></app-factory-products-file>
 
     </div>
     <div class="form-footer">
@@ -67,18 +67,19 @@
             <a href="" class="btn btn-danger">الغاء</a>
         </div>
     </div>
-    <!-- Modal photos-->
+   
+</section>
+<!-- Modal photos-->
 <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img [src]="src" alt="" class="img-fluid">
-            </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <img [src]="src" alt="" class="img-fluid">
         </div>
     </div>
-</div>
-</section>
+    </div>
+    </div>

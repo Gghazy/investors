@@ -68,6 +68,7 @@ export class FactoryContactFormComponent implements OnInit {
   save() {
     this.request = this.phoneForm.value
     this.request.FactoryId = this.factoryId;
+    this.request.periodId = this.periodId;
     if (this.request.Id == 0) {
       this.factoryContactService
         .create(this.request)

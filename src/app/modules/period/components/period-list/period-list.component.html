@@ -35,12 +35,12 @@
                 <td *ngIf="period.Status" class="text-success">تم الاعتماد</td>
                 <td *ngIf="!period.Status" class="text-danger">لم يتم الاعتماد</td>
                 <td>
-                    <a (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                    <!-- <a (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                         عرض
-                    </a>
-                    <!-- <a (click)="navigateToInspectorDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
-                تدقيق
                     </a> -->
+                    <a (click)="navigateToInspectorDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                عرض
+                    </a>
                 </td>
 
               </tr>

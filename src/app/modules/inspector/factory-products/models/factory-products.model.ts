@@ -1,7 +1,7 @@
 export class FactoryProductsModel {
     Id!:number;
     FactoryId!:number;
-    ProductId!:number;
+    ProductId:number | undefined;
     PeriodId!:number;
     PhotoId!:number;
     CurrentPhotoId!:number;
@@ -9,5 +9,6 @@ export class FactoryProductsModel {
     IsProductPhotoCorrect!:boolean;
     NewProductPhotoId!:number;
     Comments!:string;
+    ProductName!:string
 }
 

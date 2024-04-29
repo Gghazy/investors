@@ -8,5 +8,5 @@ export class ActualProductionAndDesignedCapacityModel  {
         IsActualProductionCorrect!:boolean;
         CorrectActualProduction !: number;
         Comments !: number;
-
+        ProductName!:string;
 }

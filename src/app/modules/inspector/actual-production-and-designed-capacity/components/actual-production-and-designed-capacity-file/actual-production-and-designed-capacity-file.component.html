@@ -64,7 +64,7 @@
             <tr *ngFor="let file of Inspectorsfiles let i=index">
                 <td>{{i+1}}</td>
                 <td>  {{file.Name}}</td>
-                <td>{{file.Extension}}</td>
+                <td>{{file.Extention}}</td>
                 <td>
                     <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                         عرض

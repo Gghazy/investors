@@ -37,21 +37,21 @@ getFiles() {
 getInspectorsFiles() {
   let factoryid= parseInt( this.factoryId)
   let periodId=parseInt( this.periodId)
-  // this.ActualProductionService
-  //   .getFiles(factoryid,periodId)
-  //   .subscribe((res: any) => {
-  //     this.Inspectorsfiles = res.Data;
-    
-  //   });
+  this.ActualProductionService
+    .getFiles(factoryid,periodId)
+    .subscribe((res: any) => {
+      this.Inspectorsfiles = res.Data;
+    console.log(res)
+    });
 }
 save(){
   this.request.FactoryId= parseInt( this.factoryId)
   this.request.PeriodId=parseInt( this.periodId)
-  // this.ActualProductionService
-  // .CreateFiles(this.request)
-  // .subscribe((res: any) => {
-  //   this.getInspectorsFiles
-  // });
+  this.ActualProductionService
+  .CreateFiles(this.request)
+  .subscribe((res: any) => {
+    this.getInspectorsFiles()
+  });
   console.log(this.request)
   //this.request= new BasicInfoFileModel()
   this.fileInput.nativeElement.value = '';

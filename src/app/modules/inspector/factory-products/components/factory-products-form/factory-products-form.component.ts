@@ -19,11 +19,10 @@ export class FactoryProductsFormComponent implements OnInit {
   periodId: any;
   src: any;
   search = new ProductSearch();
-  Factoryproducts = new ResultResponse<ProductModel>();
-  request = new FactoryProductsModel();
+  Factoryproducts = new ProductModel();
+  request:FactoryProductsModel [] = []
   constructor(
     private route: ActivatedRoute,
-    private factoryProductService: FactoryProductService,
     private InspectorService: FactoryProductsService,
     private fileService: FileService,
      private toastr: ToastrService,
@@ -37,14 +36,11 @@ export class FactoryProductsFormComponent implements OnInit {
   }
   getProducts() {
     
-    this.search.FactoryId = this.factoryId;
-    this.search.PeriodId = this.periodId;
-    this.search.IsActive = true;
-    this.factoryProductService
-      .getAllPagination(this.search)
+    this.InspectorService
+      .getProducts(this.factoryId,this.periodId)
       .subscribe((res: any) => {
-        this.Factoryproducts = res.Data;
-        console.log(this.Factoryproducts)
+        this.request = res.Data;
+        console.log(res)
       });
   }
   pageChanged(data: any) {
@@ -53,11 +49,12 @@ export class FactoryProductsFormComponent implements OnInit {
 
   }
   getFile(attachmentId:number){
+    console.log(attachmentId)
     if(attachmentId==null){
       this.toastr.error("لا يوجد ملف");    }
     else{
-      this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
-        this.downloadattachment(res)    
+      this.fileService.getImage(attachmentId).subscribe((res: any) => {
+        this.src='data:image/jpeg;base64,'+res.Image
       });
     }
     
@@ -65,25 +62,65 @@ export class FactoryProductsFormComponent implements OnInit {
   downloadattachment(data: any) {
     const blob = new Blob([data], { type: data.type });
     const url= window.URL.createObjectURL(blob);
-    this.src=url
+    window.open(url)
+  }
+  savePhoto(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.request[0].NewProductPhotoId = res.Data.Id
+          console.log(this.request)
+
+        });
+    }
+  }
+
+  AddProduct(row:FactoryProductsModel,product:ProductModel){
+this.request.forEach(element => {
+ 
+    this.InspectorService
+    .create(element)
+    .subscribe((res: any) => {
+    });
+     
+});
+    console.log(row)
   }
 
   save(){
   console.log(this.request)
- this.InspectorService
-    .create(this.request)
+  
+  this.request.forEach(element => {
+    if(element.Id ==0){
+    
+      this.InspectorService
+      .create(element)
+      .subscribe((res: any) => {
+        this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+        
+      
+      });
+    
+  }
+  else {
+    this.InspectorService
+    .update(element)
     .subscribe((res: any) => {
       this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
       
-      this.toastr.success("تم الحفظ");
+      
     });
-
+    this.toastr.success("تم الحفظ");
+  }
+});
 
   }
   onInputChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const closestRow = target.closest('.row');
-
+    console.log(closestRow)
+//this.AddProduct(this.request,)
     const showInputElement = closestRow?.querySelector('.show-input');
 
     if (showInputElement) {
