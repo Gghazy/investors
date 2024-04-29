@@ -13,6 +13,7 @@ export class VisitLandingFormComponent implements OnInit  {
   periodId: any;
   allScreenStatus:Boolean=false;
   screenStatuse = new InspectorScreenStatusModel();
+  isChecked: boolean = false;
   constructor(
     private route: ActivatedRoute,
    private visitLandingService: VisitLandingService,

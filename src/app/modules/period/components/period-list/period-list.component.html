@@ -2,7 +2,19 @@
     <div class="form-header">
         <h2 class="form-title">الفترات</h2>
         <div>
-            <a  class="back-link"
+            <a  class="back-link" *ngIf="userRole== 'Inspector'"
+            routerLink="/pages/Inspector/factories-list"
+            
+            >
+                رجوع
+                <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h48v48h-48z" fill="none"></path>
+                    <path
+                        d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
+                        style="fill: #666;"></path>
+                </svg>
+            </a>
+            <a  class="back-link" *ngIf="userRole== 'Investor'"
             routerLink="/pages/factories-list"
             
             >
@@ -35,10 +47,10 @@
                 <td *ngIf="period.Status" class="text-success">تم الاعتماد</td>
                 <td *ngIf="!period.Status" class="text-danger">لم يتم الاعتماد</td>
                 <td>
-                    <!-- <a (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                    <a  *ngIf="userRole== 'Investor'" (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                         عرض
-                    </a> -->
-                    <a (click)="navigateToInspectorDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                    </a>
+                    <a *ngIf="userRole== 'Inspector'" (click)="navigateToInspectorDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                 عرض
                     </a>
                 </td>

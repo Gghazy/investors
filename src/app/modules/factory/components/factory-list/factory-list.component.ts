@@ -4,6 +4,7 @@ import { FactoryService } from '../../factory.service';
 import { FactorySearch } from '../../models/factory-search';
 import { FactoryModel } from '../../models/factory-model';
 import { ResultResponse } from 'src/app/core/models/result-response';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-factory-list',
@@ -19,12 +20,15 @@ export class FactoryListComponent implements OnInit {
 
   factories = new ResultResponse<FactoryModel>();
 
-  constructor(private factoryService :FactoryService){
+  constructor(private factoryService :FactoryService,
+    private shared: SharedService,
+  ){
 
   }
 
   ngOnInit(): void {
    this.getFactories();
+   this.shared.setUserRole('Investor');
   } 
 
   getFactories() { 
