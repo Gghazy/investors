@@ -19,5 +19,6 @@ constructor(private shared: SharedService,
 }
 ngOnInit(): void {
   console.log(this.currentUrl)
+  this.shared.setUserRole('1012955132');
 }
 }

@@ -13,4 +13,11 @@ export class InspectorFactoryContactsService {
   create(model: FactoryContactsModel): Observable<any> {
     return this.http.post<any>('InspectFactoryContact', model);
   }
+
+  update(model: FactoryContactsModel): Observable<any> {
+    return this.http.put<any>('InspectFactoryContact', model);
+  }
+  getOne(factoryId:number, periodId :number , OwnerIdentity :string): Observable<any> {
+    return this.http.get<any>('InspectFactoryContact?factoryId='+factoryId+'&periodId='+periodId+'&ownerIdentity='+OwnerIdentity);
+  }
 }

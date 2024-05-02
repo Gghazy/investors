@@ -2,11 +2,11 @@ export class FactoryContactsModel {
     Id!:number;
 FactoryId!:number;
 PeriodId!:number;
-OldOfficerPhoneId!:number;
+OldOfficerPhoneId!:string;
 OldOfficerEmail:string='';
 IsOfficerPhoneCorrect!:boolean;
 IsOfficerMailCorrect!:boolean;
-NewOfficerPhoneId!:number;
+NewOfficerPhoneId!:string;
 NewOfficerEmail:string='';
 Comments!:string;
 
