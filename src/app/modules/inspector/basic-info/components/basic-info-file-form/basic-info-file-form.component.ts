@@ -31,7 +31,7 @@ getFiles() {
     .getAll(this.factoryId,this.periodId)
     .subscribe((res: any) => {
       this.files = res.Data;
-    
+    console.log(this.files)
     });
 }
 getInspectorsFiles() {
@@ -41,19 +41,20 @@ getInspectorsFiles() {
     .getFiles(factoryid,periodId)
     .subscribe((res: any) => {
       this.Inspectorsfiles = res.Data;
-    
+    console.log(this.Inspectorsfiles)
     });
 }
 save(){
+  console.log(this.request.AttachmentId)
   this.request.FactoryId= parseInt( this.factoryId)
   this.request.PeriodId=parseInt( this.periodId)
   this.basicInfoService
   .CreateFiles(this.request)
   .subscribe((res: any) => {
-    this.getInspectorsFiles
+    this.getInspectorsFiles()
   });
   console.log(this.request)
-  this.request= new BasicInfoFileModel()
+ // this.request= new BasicInfoFileModel()
   this.fileInput.nativeElement.value = '';
 }
   saveFile(file: any) {
@@ -78,7 +79,7 @@ deleteFile(id:number){
     this.basicInfoService
     .delete(id)
     .subscribe((res: any) => {
-      this.getFiles();
+      this.getInspectorsFiles();
     });
   }
 }

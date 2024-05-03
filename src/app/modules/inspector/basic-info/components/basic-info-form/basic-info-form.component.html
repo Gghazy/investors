@@ -15,19 +15,19 @@
             </div>
             <div class="col-md-5">
                 <label class="form-label"> اسم المصنع</label>
-                <input type="text" class="form-control" [(ngModel)]="requestFactory.NameAr" disabled>
+                <input type="text" class="form-control" [(ngModel)]="requestFactory.FactoryName" disabled>
                 
             </div>
             <div class="col-md-2">
                 <label class="form-label"> هل الاسم صحيح؟</label>
-                <select class="form-select" (change)="onInputChange($event)" [(ngModel)]="request.IsFactNameCorrect">
+                <select class="form-select" (change)="onInputChange($event)" [(ngModel)]="requestFactory.IsFactNameCorrect">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5" *ngIf="request.IsFactNameCorrect == false">
+            <div class="col-md-5" *ngIf="requestFactory.IsFactNameCorrect == false">
                 <label class="form-label">أدخل اسم المصنع الصحيح</label>
-                <input type="text" class="form-control" [(ngModel)]="request.FactoryName">
+                <input type="text" class="form-control" [(ngModel)]="requestFactory.CorrectFactoryName">
             </div>
         </div>
 
@@ -35,7 +35,7 @@
            
             <div class="col-md-5">
                 <label class="form-label">الحالة الحالية</label>
-                <select class="form-select disabled" [(ngModel)]="requestFactory.Status"  disabled>
+                <select class="form-select disabled" [(ngModel)]="requestFactory.FactoryStatus"  disabled>
                     <option [ngValue]="0">منتج</option>
                     <option [ngValue]="1">تحت التأسيس </option>
                     <option [ngValue]="2">متوقف</option>
@@ -45,14 +45,14 @@
             </div>
             <div class="col-md-2">
                 <label class="form-label"> هل الحالة صحيحة؟</label>
-                <select class="form-select if-no" (change)="onInputChange($event)" [(ngModel)]="request.IsFactStatusCorrect">
+                <select class="form-select if-no" (change)="onInputChange($event)" [(ngModel)]="requestFactory.IsFactStatusCorrect">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5 " *ngIf="request.IsFactStatusCorrect == false">
+            <div class="col-md-5 " *ngIf="requestFactory.IsFactStatusCorrect == false">
                 <label class="form-label"> أختر الحالة الحالية الصحيحة</label>
-                <select class="form-select" [(ngModel)]="request.FactoryStatus">
+                <select class="form-select" [(ngModel)]="requestFactory.CorrectFactoryStatus">
                     <option [ngValue]="0">منتج</option>
                     <option [ngValue]="1">تحت التأسيس </option>
                     <option [ngValue]="2">متوقف</option>
@@ -65,7 +65,7 @@
 
         <div class="col-md-12">
             <label class="form-label"> تعليقات </label>
-            <textarea  rows="3" class="form-control" [(ngModel)]="request.Comments"></textarea>
+            <textarea  rows="3" class="form-control" [(ngModel)]="requestFactory.Comments"></textarea>
         </div>
       
         <app-basic-info-file-form [factoryId]="factoryId" [periodId]="periodId"></app-basic-info-file-form>
