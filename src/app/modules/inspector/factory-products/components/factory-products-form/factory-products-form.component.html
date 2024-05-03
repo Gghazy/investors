@@ -1,64 +1,247 @@
 <section class="form-panel">
     <div class="form-header">
-        <h2 class="form-title">     المنتجات </h2>
+        <h2 class="form-title"> المنتجات </h2>
         <div>
             <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
                 رجوع
-                <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
+                <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h48v48h-48z" fill="none"></path>
+                    <path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
+                        style="fill: #666;"></path>
+                </svg>
             </a>
         </div>
     </div>
     <div class="form-body">
         <div class="col-md-12">
-            <h3>  التحقق من وضوح صور منتجات المصنع</h3>
+            <h3> التحقق من وضوح صور منتجات المصنع</h3>
         </div>
 
-        <ul class="list-review p-0">
+        <ul class="list-review factory-lines p-0">
             <li *ngFor="let product of request let i=index">
-                <div class="row">
-                    <div class="col-md-3"> 
-                        <label class="form-label"> صورة المنتج الحالية</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" [(ngModel)]="product.ProductName" disabled>
-                            <div data-bs-toggle="modal" data-bs-target="#photoModal">
-                                <button class="btn btn-primary" type="button"  (click)="getFile(product.PhotoId)"
-                                  data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" عرض الصورة الحالية للمنتج"> 
-                                   
-                                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 8.976C3 4.05476 4.05476 3 8.976 3H15.024C19.9452 3 21 4.05476 21 8.976V15.024C21 19.9452 19.9452 21 15.024 21H8.976C4.05476 21 3 19.9452 3 15.024V8.976Z" stroke="#ffffff" stroke-width="2"></path> <path d="M17.0045 16.5022L12.7279 12.2256C9.24808 8.74578 7.75642 8.74578 4.27658 12.2256L3 13.5022" stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path> <path d="M21 13.6702C18.9068 12.0667 17.4778 12.2919 15.198 14.3459" stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path> <path d="M17 8C17 8.55228 16.5523 9 16 9C15.4477 9 15 8.55228 15 8C15 7.44772 15.4477 7 16 7C16.5523 7 17 7.44772 17 8Z" stroke="#ffffff" stroke-width="2"></path> </g></svg>
-                                   
-                                </button>
+                <h4>المنتج رقم {{i+1}} ({{product.ProductName}})</h4>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="form-label"> صورة المنتج الحالية</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" [(ngModel)]="product.ProductName" disabled
+                                    hidden>
+                                <div data-bs-toggle="modal" data-bs-target="#photoModal">
+                                    <button class="btn btn-primary" type="button" (click)="getImage(product.PhotoId)"
+                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                        data-bs-original-title=" عرض الصورة الحالية للمنتج">
+
+                                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M3 8.976C3 4.05476 4.05476 3 8.976 3H15.024C19.9452 3 21 4.05476 21 8.976V15.024C21 19.9452 19.9452 21 15.024 21H8.976C4.05476 21 3 19.9452 3 15.024V8.976Z"
+                                                    stroke="#ffffff" stroke-width="2"></path>
+                                                <path
+                                                    d="M17.0045 16.5022L12.7279 12.2256C9.24808 8.74578 7.75642 8.74578 4.27658 12.2256L3 13.5022"
+                                                    stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                                <path d="M21 13.6702C18.9068 12.0667 17.4778 12.2919 15.198 14.3459"
+                                                    stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                                <path
+                                                    d="M17 8C17 8.55228 16.5523 9 16 9C15.4477 9 15 8.55228 15 8C15 7.44772 15.4477 7 16 7C16.5523 7 17 7.44772 17 8Z"
+                                                    stroke="#ffffff" stroke-width="2"></path>
+                                            </g>
+                                        </svg>
+
+                                    </button>
+                                </div>
+
                             </div>
-                            
+
                         </div>
-                        
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label"> هل الصورة واضحة ؟</label>
-                        <select class="form-select" (change)="onInputChange($event)"  [(ngModel)]="product.IsProductPhotoCorrect">
-                            <option [ngValue]="true" selected>نعم</option>
-                            <option [ngValue]="false">لا</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6" *ngIf="product.IsProductPhotoCorrect == false">
-                        <label class="form-label">  رفع صورة واضحة للمنتج</label>
-                        <div class="input-group">
-                            <input type="file" class="form-control" placeholder="" (change)="savePhoto($event)">
-                            <button class="btn btn-primary" type="button" >اضافة </button>
+                        <div class="col-md-2">
+                            <label class="form-label"> ورقة بيانات المنتج الحالية</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" [(ngModel)]="product.ProductName" disabled
+                                    hidden>
+                                <button class="btn btn-primary" type="button" (click)="getFile(product.PaperId)"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                    data-bs-original-title=" عرض الصورة الحالية للمنتج">
+
+                                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M3 8.976C3 4.05476 4.05476 3 8.976 3H15.024C19.9452 3 21 4.05476 21 8.976V15.024C21 19.9452 19.9452 21 15.024 21H8.976C4.05476 21 3 19.9452 3 15.024V8.976Z"
+                                                stroke="#ffffff" stroke-width="2"></path>
+                                            <path
+                                                d="M17.0045 16.5022L12.7279 12.2256C9.24808 8.74578 7.75642 8.74578 4.27658 12.2256L3 13.5022"
+                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                            <path d="M21 13.6702C18.9068 12.0667 17.4778 12.2919 15.198 14.3459"
+                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                            <path
+                                                d="M17 8C17 8.55228 16.5523 9 16 9C15.4477 9 15 8.55228 15 8C15 7.44772 15.4477 7 16 7C16.5523 7 17 7.44772 17 8Z"
+                                                stroke="#ffffff" stroke-width="2"></path>
+                                        </g>
+                                    </svg>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label"> هل صورة/ ورقة بيانات المنتج صحيحة ؟</label>
+                            <select class="form-select" (change)="onInputChange($event)"
+                                [(ngModel)]="product.IsProductPhotoCorrect">
+                                <option [ngValue]="true" selected>نعم</option>
+                                <option [ngValue]="false">لا</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                        <div *ngIf="product.IsProductPhotoCorrect == false">
+                            <!-- <div class="col-md-3">
+                            <label class="form-label"> رفع صورة واضحة للمنتج</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" placeholder="" (change)="savePhoto($event)">
+                                <button class="btn btn-primary" type="button">اضافة </button>
+                            </div>
+
+                        </div> -->
+
+
+                            <div class="col-md-3">
+                                <label class="form-label" data-bs-toggle="tooltip" data-bs-placement="right" title=""
+                                    data-bs-original-title="شرح الحقل">إرفاق صورة المنتج
+
+                                    <i>؟</i>
+                                </label>
+                                <div class="input-group">
+                                    <button class="btn btn-primary px-2 py-1 upload-btn" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة"
+                                        aria-describedby="tooltip468370">
+                                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="#ffffff"
+                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                                <path
+                                                    d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                                                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                    <input type="file" class="d-none">
+                                    <span data-bs-toggle="modal" data-bs-target="#photoModal">
+                                        <button class="btn btn-warning px-2 py-1 mx-1" type="button"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                            data-bs-original-title=" عرض صورة  المادة"
+                                            (click)="getImage(product.PhotoId)">
+
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path
+                                                        d="M3 8.976C3 4.05476 4.05476 3 8.976 3H15.024C19.9452 3 21 4.05476 21 8.976V15.024C21 19.9452 19.9452 21 15.024 21H8.976C4.05476 21 3 19.9452 3 15.024V8.976Z"
+                                                        stroke="#ffffff" stroke-width="2"></path>
+                                                    <path
+                                                        d="M17.0045 16.5022L12.7279 12.2256C9.24808 8.74578 7.75642 8.74578 4.27658 12.2256L3 13.5022"
+                                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                                    <path d="M21 13.6702C18.9068 12.0667 17.4778 12.2919 15.198 14.3459"
+                                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                                    <path
+                                                        d="M17 8C17 8.55228 16.5523 9 16 9C15.4477 9 15 8.55228 15 8C15 7.44772 15.4477 7 16 7C16.5523 7 17 7.44772 17 8Z"
+                                                        stroke="#ffffff" stroke-width="2"></path>
+                                                </g>
+                                            </svg>
+
+                                        </button>
+                                    </span>
+                                    <a class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="" data-bs-original-title=" حذف صورة المادة"
+                                        (click)="deleteImage(product)"><i class="icon-delete"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" data-bs-toggle="tooltip" data-bs-placement="right" title=""
+                                    data-bs-original-title="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
+                                    aria-describedby="tooltip617728"> إرفاق ورقة البيانات <i>؟</i></label>
+                                <div class="input-group">
+
+                                    <button class="btn btn-primary px-2 py-1 upload-btn" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="" data-bs-original-title=" رفع الملف"
+                                        aria-describedby="tooltip93704">
+                                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="#ffffff"
+                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                                <path
+                                                    d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                                                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                    <input type="file" class="d-none">
+
+                                    <button class="btn btn-warning px-2 py-1 mx-1" type="button"
+                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                        data-bs-original-title=" تحميل الملف " (click)="getFile(product.PaperId)">
+
+                                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                                                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                                                <path d="M12 2L12 15M12 15L9 11.5M12 15L15 11.5" stroke="#ffffff"
+                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+
+                                    </button>
+
+                                    <a class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="" data-bs-original-title=" حذف الملف"
+                                        (click)="deleteFile(product)"><i class="icon-delete"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
             </li>
-          
         </ul>
 
-      
+
 
         <div class="col-md-12">
             <label class="form-label"> تعليقات </label>
-            <textarea  rows="3" class="form-control" [(ngModel)]="request[0].Comments"></textarea>
+            <textarea rows="3" class="form-control" [(ngModel)]="request[0].Comments"></textarea>
         </div>
-
-    <app-factory-products-file [factoryId]="factoryId" [periodId]="periodId"></app-factory-products-file>
 
     </div>
     <div class="form-footer">
@@ -67,19 +250,19 @@
             <a href="" class="btn btn-danger">الغاء</a>
         </div>
     </div>
-   
+
 </section>
 <!-- Modal photos-->
 <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> عرض الصورة </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img [src]="src" alt="" class="img-fluid">
+            </div>
         </div>
-        <div class="modal-body text-center">
-            <img [src]="src" alt="" class="img-fluid">
-        </div>
     </div>
-    </div>
-    </div>
+</div>

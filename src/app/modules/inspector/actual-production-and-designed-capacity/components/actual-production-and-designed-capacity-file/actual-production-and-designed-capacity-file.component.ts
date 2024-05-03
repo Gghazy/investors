@@ -3,6 +3,8 @@ import { FileService } from 'src/app/core/service/file.service';
 import { InspectorActualProductionAndDesignedCapacityService } from '../../actual-production-and-designed-capacity.service';
 import { ActualProductionAndDesignedCapacityService } from 'src/app/modules/actual-production-and-designed-capacity/actual-production-and-designed-capacity.service';
 import { ActualProductionAndDesignedCapacityFileModel } from '../../models/actual-production-and-designed-capacity-file-model.model';
+import { SharedService } from 'src/app/shared/services/shared.service';
+import { ReasonService } from 'src/app/modules/actual-production-and-designed-capacity/reason.service';
 
 @Component({
   selector: 'app-actual-production-and-designed-capacity-file',
@@ -10,72 +12,83 @@ import { ActualProductionAndDesignedCapacityFileModel } from '../../models/actua
   styleUrls: ['./actual-production-and-designed-capacity-file.component.scss']
 })
 export class ActualProductionAndDesignedCapacityFileComponent implements OnInit {
-  src!:string;
-  files:any;
-  Inspectorsfiles:any;
-  @Input() factoryId!:string;
-  @Input() periodId!:string;
-  request =new ActualProductionAndDesignedCapacityFileModel()
+  src!: string;
+  files: any;
+  userId: any;
+  Inspectorsfiles: any;
+  @Input() factoryId!: number;
+  @Input() periodId!: number;
+  request = new ActualProductionAndDesignedCapacityFileModel()
   @ViewChild('fileInput') fileInput!: ElementRef;
-constructor(  private fileService:FileService,
-  private ActualProductionService:InspectorActualProductionAndDesignedCapacityService,
-  private FactoryService:ActualProductionAndDesignedCapacityService,
-){
+  constructor(private fileService: FileService,
+    private ActualProductionService: InspectorActualProductionAndDesignedCapacityService,
+    private FactoryService: ActualProductionAndDesignedCapacityService,
+    private shared: SharedService,
+    private reasonService: ReasonService,
 
-}ngOnInit(): void {
-  this.getFiles();
-  this.getInspectorsFiles()
- }
-getFiles() {
-  // this.FactoryService
-  //   .getOne(this.factoryId,this.periodId)
-  //   .subscribe((res: any) => {
-  //     this.files = res.Data;
-    
-  //   });
-}
-getInspectorsFiles() {
-  let factoryid= parseInt( this.factoryId)
-  let periodId=parseInt( this.periodId)
-  this.ActualProductionService
-    .getFiles(factoryid,periodId)
-    .subscribe((res: any) => {
-      this.Inspectorsfiles = res.Data;
-    console.log(res)
-    });
-}
-save(){
-  this.request.FactoryId= parseInt( this.factoryId)
-  this.request.PeriodId=parseInt( this.periodId)
-  this.ActualProductionService
-  .CreateFiles(this.request)
-  .subscribe((res: any) => {
+  ) {
+
+  } ngOnInit(): void {
+    this.userId = this.shared.getUserRole();
+    this.getFiles();
     this.getInspectorsFiles()
-  });
-  console.log(this.request)
-  //this.request= new BasicInfoFileModel()
-  this.fileInput.nativeElement.value = '';
-}
+  }
+  getFiles() {
+    this.reasonService
+      .getAllFiles(this.factoryId, this.periodId)
+      .subscribe((res: any) => {
+        this.files = res.Data;
+      });
+  }
+  getInspectorsFiles() {
+    this.ActualProductionService
+      .getFiles(this.factoryId, this.periodId, this.userId)
+      .subscribe((res: any) => {
+        this.Inspectorsfiles = res.Data;
+        console.log(res)
+      });
+  }
+
+
+  save() {
+    this.request.FactoryId=this.factoryId;
+    this.request.PeriodId=this.periodId;
+    this.ActualProductionService
+      .CreateFiles(this.request)
+      .subscribe((res: any) => {
+        this.getInspectorsFiles()
+      });
+    //this.request= new BasicInfoFileModel()
+    this.fileInput.nativeElement.value = '';
+  }
   saveFile(file: any) {
     if (file.target.files.length > 0) {
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
-         
+
         });
     }
   }
-getFile(attachmentId:number){
-  console.log(attachmentId)
-    this.fileService.getImage(attachmentId).subscribe((res: any) => {
-      this.src='data:image/jpeg;base64,'+res.Image
+  getFile(attachmentId: number) {
+    this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
+      this.downloadattachment(res)
     });
+  }
+  downloadattachment(data: any) {
+    const blob = new Blob([data], { type: data.type });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
   }
 
 
-deleteFile(id:number){
-  
+  deleteFile(id: number) {
+    this.ActualProductionService
+    .deleteFile(id)
+    .subscribe((res: any) => {
+      this.getInspectorsFiles();
+    });
   }
 }
 

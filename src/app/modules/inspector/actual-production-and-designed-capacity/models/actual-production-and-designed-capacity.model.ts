@@ -9,4 +9,8 @@ export class ActualProductionAndDesignedCapacityModel  {
         CorrectActualProduction !: number;
         Comments !: number;
         ProductName!:string;
+        IncreaseReasonId !: number;
+        IncreaseReasonCorrect!:number;
+        IncreaseReason!:string;
+        IsIncreaseReasonCorrect!:boolean;
 }

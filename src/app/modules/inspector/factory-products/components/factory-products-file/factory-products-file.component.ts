@@ -72,18 +72,21 @@ save(){
     this.request.FactoryId= parseInt( this.factoryId)
     this.request.PeriodId=parseInt( this.periodId)
    
-    this.Service
-      .getProducts(this.request.FactoryId,this.request.PeriodId) 
-      .subscribe((res: any) => {
-        this.products = res.Data;
-        console.log(res)
-      });
+    // this.Service
+    //   .getProducts(this.request.FactoryId,this.request.PeriodId) 
+    //   .subscribe((res: any) => {
+    //     this.products = res.Data;
+    //     console.log(res)
+    //   });
   }
-getFile(attachmentId:number){
-  console.log(attachmentId)
-    this.fileService.getImage(attachmentId).subscribe((res: any) => {
-      this.src='data:image/jpeg;base64,'+res.Image
-    });
+  getFile(attachmentId:number){
+    this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
+      this.downloadattachment(res)    });
+  }
+  downloadattachment(data: any) {
+    const blob = new Blob([data], { type: data.type });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
   }
 
 

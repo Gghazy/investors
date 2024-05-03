@@ -7,6 +7,7 @@ import { ResultResponse } from 'src/app/core/models/result-response';
 import { ActualProductionAndDesignedCapacityModel } from '../../models/actual-production-and-designed-capacity.model';
 import { ToastrService } from 'ngx-toastr';
 import { InspectorActualProductionAndDesignedCapacityService } from '../../actual-production-and-designed-capacity.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-actual-production-and-designed-capacity-form',
@@ -16,12 +17,14 @@ import { InspectorActualProductionAndDesignedCapacityService } from '../../actua
 export class ActualProductionAndDesignedCapacityFormComponent {
   factoryId:any;
   periodId:any;
+  userId: any;
   products:ActualProductionAndDesignedCapacityModel[]= [];
   search=new ActualProductSearch();
   request=new ActualProductionAndDesignedCapacityModel();
   
   constructor(
     private route: ActivatedRoute,
+    private shared: SharedService,
     private ActualProductionService: ActualProductionAndDesignedCapacityService,
     private FormService: InspectorActualProductionAndDesignedCapacityService,
     private toastr: ToastrService,
@@ -30,12 +33,13 @@ export class ActualProductionAndDesignedCapacityFormComponent {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
+    this.userId = this.shared.getUserRole();
     this.getProduct();
   }
   getProduct(){
-    
+    console.log(this.userId)
     this.FormService
-    .getProducts(this.factoryId, this.periodId)
+    .getProducts(this.factoryId, this.periodId,this.userId)
     .subscribe((res: any) => {
       this.products = res.Data;
       console.log(res)
@@ -65,7 +69,9 @@ export class ActualProductionAndDesignedCapacityFormComponent {
       if(element.Id ==0){
         console.log(element)
         element.Comments = this.request.Comments
-    
+        element.IncreaseReason = this.request.IncreaseReason
+        element.IncreaseReasonCorrect = this.request.IncreaseReasonCorrect
+        element.IncreaseReasonId = this.request.IncreaseReasonId
         this.FormService
         .create(element)
         .subscribe((res: any) => {
@@ -73,10 +79,11 @@ export class ActualProductionAndDesignedCapacityFormComponent {
         });
       }
       else{
-
-      
-      element.Comments = this.request.Comments
-  
+        element.Comments = this.request.Comments
+        element.IncreaseReason = this.request.IncreaseReason
+        element.IncreaseReasonCorrect = this.request.IncreaseReasonCorrect
+        element.IncreaseReasonId = this.request.IncreaseReasonId
+        console.log(element)
       this.FormService
       .update(element)
       .subscribe((res: any) => {

@@ -109,27 +109,27 @@
                         <div class="col-md-4">
                             <label class="form-label">   ما هو سبب زيادة الإنتاج الفعلي عن الطاقة التصميمية؟
                             </label>
-                            <input type="text" class="form-control" value="شراء معدات جديدة" disabled>
+                            <input type="text" class="form-control" value="شراء معدات جديدة" [(ngModel)]="products[0].IncreaseReason" disabled>
                            
                         </div>
                         <div class="col-md-4">
 
                             
-                                <label class="form-label"> هل سبب الزيادة صحيح ؟</label>
-                                <select class="form-select if-no" (change)="onInputChange($event)">
-                                    <option value="yes" selected>نعم</option>
-                                    <option value="no">لا</option>
+                                <label class="form-label" > هل سبب الزيادة صحيح ؟</label>
+                                <select class="form-select" (change)="onInputChange($event)" [(ngModel)]="products[0].IsIncreaseReasonCorrect">
+                                    <option [ngValue]="true" selected>نعم</option>
+                                    <option [ngValue]="false">لا</option>
                                 </select>
                             
 
                         </div>
-                        <div class="col-md-4 show-input d-none">
+                        <div class="col-md-4" *ngIf="products[0].IsIncreaseReasonCorrect== false">
                             
                                 <label class="form-label">أختر   سبب زيادة الإنتاج الفعلي الصحيح </label>
-                                <select class="form-select">
-                                    <option>شراء معدات جديدة</option>
-                                    <option>زيادة خطوط الإنتاج</option>
-                                    <option>زيادة  العمالة</option>
+                                <select class="form-select" [(ngModel)]="products[0].IncreaseReasonCorrect">
+                                    <option [ngValue]="1">شراء معدات جديدة</option>
+                                    <option [ngValue]="2">زيادة خطوط الإنتاج</option>
+                                    <option [ngValue]="3">زيادة  العمالة</option>
                                 </select>
                                 
                             
@@ -139,7 +139,7 @@
 
                     <div class="col-md-12">
                         <label class="form-label"> تعليقات </label>
-                        <textarea  rows="3" class="form-control" [(ngModel)]="request.Comments"></textarea>
+                        <textarea  rows="3" class="form-control" [(ngModel)]="products[0].Comments"></textarea>
                     </div>
 
                       
