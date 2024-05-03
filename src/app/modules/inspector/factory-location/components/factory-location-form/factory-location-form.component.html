@@ -25,12 +25,12 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label"> هل الجهة التي يتبع لها المصنع​ صحيحة؟</label>
-                <select class="form-select " [(ngModel)]="request.IsFactoryEntityCorrect" (change)="onInputChange($event)">
+                <select class="form-select " [(ngModel)]="requestFactory.IsFactoryEntityCorrect" (change)="onInputChange($event)">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5" *ngIf="request.IsFactoryEntityCorrect == false">
+            <div class="col-md-5" *ngIf="requestFactory.IsFactoryEntityCorrect == false">
                 <label class="form-label"> أختر  الجهة الصحيحة التي يتبع لها المصنع​ </label>
                 <select class="form-select" #FactoryEntityId="ngModel" required 
                 name="FactoryEntityId" [(ngModel)]="request.NewFactoryEntityId" (change)="onEntitySelect(request.FactoryEntityId)">
@@ -52,7 +52,7 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label"> هل المدينة صحيحة؟</label>
-                <select class="form-select" [(ngModel)]="request.IsCityCorrect" (change)="onInputChange($event)">
+                <select class="form-select" [(ngModel)]="requestFactory.IsCityCorrect" (change)="onInputChange($event)">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
@@ -78,12 +78,12 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label"> هل المنطقة الصناعية صحيحة؟</label>
-                <select class="form-select" [(ngModel)]="request.IsIndustrialAreaCorrect" (change)="onInputChange($event)">
+                <select class="form-select" [(ngModel)]="requestFactory.IsIndustrialAreaCorrect" (change)="onInputChange($event)">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5" *ngIf="request.IsIndustrialAreaCorrect == false">
+            <div class="col-md-5" *ngIf="requestFactory.IsIndustrialAreaCorrect == false">
                 <label class="form-label"> أختر المنطقة الصناعية الصحيحة</label>
                 <select class="form-select" name="IndustrialAreaId" 
                 [(ngModel)]="request.NewIndustrialAreaId" >
@@ -99,20 +99,20 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label"> هل  الرابط صحيح؟</label>
-                <select class="form-select" [(ngModel)]="request.IsLocationLinkCorrect" (change)="onInputChange($event)">
+                <select class="form-select" [(ngModel)]="requestFactory.IsWebSiteCorrect" (change)="onInputChange($event)">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5" *ngIf="request.IsLocationLinkCorrect == false">
+            <div class="col-md-5" *ngIf="requestFactory.IsWebSiteCorrect == false">
                 <label class="form-label">  أدخل  رابط موقع المصنع الصحيح</label>
-                <input type="url" class="form-control" [(ngModel)]="request.NewWebSite" value="">
+                <input type="url" class="form-control" [(ngModel)]="requestFactory.NewWebSite" value="">
             </div>
         </div>
         
         <div class="col-md-12">
             <label class="form-label"> تعليقات </label>
-            <textarea  rows="3" class="form-control" [(ngModel)]="request.Comment"></textarea>
+            <textarea  rows="3" class="form-control" [(ngModel)]="requestFactory.Comment"></textarea>
         </div>
 
           

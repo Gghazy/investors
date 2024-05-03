@@ -8,7 +8,7 @@ IndustrialAreaId	!:number;
 WebSite	!:string;
 IsFactoryEntityCorrect!	:boolean;
 IsCityCorrect!	:boolean;
-IsLocationLinkCorrect!	:boolean;
+IsWebSiteCorrect!	:boolean;
 IsIndustrialAreaCorrect!	:boolean;
 NewFactoryEntityId	!:number;
 NewLocationLink!:string;

@@ -6,6 +6,7 @@ import { FactoryLocationService } from '../../../../factory-location/factory-loc
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { InspectorFactoryLocationService } from '../../factory-location.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-factory-location-form',
@@ -16,6 +17,7 @@ export class FactoryLocationFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
   cityCode: any;
+  userId: any;
   request=new FactoryLocationModel()
   requestFactory=new FactoryLocationModel()
   cities:LookUpModel[]=[];
@@ -25,6 +27,7 @@ export class FactoryLocationFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
      private toastr: ToastrService,
+     private shared: SharedService,
      private factoryLocationService: FactoryLocationService,
      private inspectorService: InspectorFactoryLocationService,
      private router: Router,
@@ -34,16 +37,18 @@ export class FactoryLocationFormComponent implements OnInit {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit() {
+    this.userId = this.shared.getUserRole();
     this.getLocation();
     this.getCities();
     this.getIndustrialAreas();
     this.getFactoryEntities();
   }
   getLocation() {
-    this.factoryLocationService
-      .getOne(this.factoryId,this.periodId)
+    this.inspectorService
+      .getAll(this.factoryId,this.periodId,this.userId)
       .subscribe((res: any) => {
         this.requestFactory = res.Data;
+        console.log(this.requestFactory)
       });
   }
 
@@ -106,20 +111,31 @@ export class FactoryLocationFormComponent implements OnInit {
   }
 
   save(){
-    this.request.FactoryId=this.factoryId;
-    this.request.PeriodId=this.periodId;
-    this.request.WebSite=this.requestFactory.WebSite;
-    this.request.FactoryEntityId=this.requestFactory.FactoryEntityId;
-    this.request.CityId=this.requestFactory.CityId;
-    this.request.IndustrialAreaId=this.requestFactory.IndustrialAreaId;
-    console.log(this.request)
-     this.inspectorService
-    .create(this.request)
-    .subscribe((res: any) => {
-      this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+    this.requestFactory.FactoryId=this.factoryId;
+    this.requestFactory.PeriodId=this.periodId;
+    this.requestFactory.WebSite=this.requestFactory.WebSite;
+    this.requestFactory.FactoryEntityId=this.requestFactory.FactoryEntityId;
+    this.requestFactory.CityId=this.requestFactory.CityId;
+    this.requestFactory.IndustrialAreaId=this.requestFactory.IndustrialAreaId;
+    console.log(this.requestFactory)
+    if(this.requestFactory.Id==0){
+      this.inspectorService
+      .create(this.requestFactory)
+      .subscribe((res: any) => {
       
-      this.toastr.success("تم الحفظ");
-    });
+      });
+    }
+    else{
+      this.inspectorService
+      .update(this.requestFactory)
+      .subscribe((res: any) => {
+       
+      });
+    }
+    this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+        
+    this.toastr.success("تم الحفظ");
+   
 
   }
 }
