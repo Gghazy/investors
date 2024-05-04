@@ -9,6 +9,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 })
 export class FactoriesListFormComponent implements OnInit {
 factories: any=[]
+inspector:any
   constructor(private factoryService :FactoriesListService,
     private shared: SharedService,
   ){
@@ -26,6 +27,7 @@ factories: any=[]
       .getFacatories(27)
       .subscribe((res: any) => {
         this.factories = res.Data;
+        console.log(this.factories)
       });
   }
 }

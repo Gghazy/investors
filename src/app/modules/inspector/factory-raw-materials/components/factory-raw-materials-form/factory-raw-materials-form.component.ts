@@ -5,6 +5,7 @@ import { FileService } from 'src/app/core/service/file.service';
 import { RawMaterialSearch } from 'src/app/modules/factory-raw-materials/models/raw-material-search.model';
 import { FactoryRawMaterialService } from 'src/app/modules/factory-raw-materials/factory-raw-material.service';
 import { FactoryRawMaterialsService } from '../../factory-raw-materials.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 
 @Component({
@@ -15,68 +16,108 @@ import { FactoryRawMaterialsService } from '../../factory-raw-materials.service'
 export class FactoryRawMaterialsFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
-  src!:any;
-  materials:any[]=[]
+  userId: any;
+  src!: any;
+  materials: any[] = []
   searchRawmaterial = new RawMaterialSearch();
   request: any[] = [];
-    constructor(
+  constructor(
     private route: ActivatedRoute,
-     private toastr: ToastrService,
-     private rawMaterialService: FactoryRawMaterialService,
-     private service: FactoryRawMaterialsService,
-     private fileService: FileService,
-     ) {
+    private toastr: ToastrService,
+    private rawMaterialService: FactoryRawMaterialService,
+    private service: FactoryRawMaterialsService,
+    private fileService: FileService,
+    private shared: SharedService,
+  ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit() {
+    this.userId = this.shared.getUserRole();
     this.getRawMaterial()
   }
   getRawMaterial() {
-    this.rawMaterialService
-      .getRawMaterial(this.searchRawmaterial, this.factoryId)
+    this.service
+      .getAll(this.factoryId, this.periodId, this.userId)
       .subscribe((res: any) => {
-        
-          this.materials = res.Data.Items;
-          this.request = this.materials.map(item => ({
-            Name: item.Name,
-            PhotoId:item.PhotoId,
-            IsPhotoClear: true,
-            Comments: '',
-            ClearPhotoId:'',
 
-          }));
-        })
-      
-      }
+        this.materials = res.Data;
+console.log(this.materials)
+      })
 
-      getFile(attachmentId:number){
-        if(attachmentId==null){
-          this.toastr.error("لا يوجد ملف");    }
-        else{
-          this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
-            this.downloadattachment(res)    
-          });
-        }
-        
-      }
-      downloadattachment(data: any) {
-        const blob = new Blob([data], { type: data.type });
-        const url= window.URL.createObjectURL(blob);
-        this.src=url
-      }
- 
+  }
+  getImage(attachmentId: number) {
+    this.src = ""
+    console.log(attachmentId)
+    if (attachmentId == 0) {
+      this.toastr.error("لا يوجد صورة");
+    }
+    else {
+      this.fileService.getImage(attachmentId).subscribe((res: any) => {
+        this.src = 'data:image/jpeg;base64,' + res.Image
+      });
+    }
 
-  save(){
-    this.request.forEach(element => {
-      console.log(element)
+  }
+
+
+  getFile(attachmentId: number) {
+    if (attachmentId == 0) {
+      this.toastr.error("لا يوجد ملف");
+    }
+    else {
+      this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
+        this.downloadattachment(res)
+      });
+    }
+  }
+  downloadattachment(data: any) {
+    const blob = new Blob([data], { type: data.type });
+    const url = window.URL.createObjectURL(blob);
+    this.src = url
+  }
+  deleteImage(material: any) {
+    console.log(material)
+    material.CorrectPhotoId = 0
+
+  }
+
+  deleteFile(material: any) {
+    console.log(material)
+    material.CorrectPaperId = 0
+
+  }
+  save() {
     
-  
-     this.service
-    .create(element)
-    .subscribe((res: any) => {
-      this.toastr.success("تم الحفظ");
+    this.materials.forEach(element => {
+      console.log(element)
+
+element.Comment=      this.materials[0].Comment 
+      if (element.Id == 0) {
+        this.service
+          .create(element)
+          .subscribe((res: any) => {
+          
+          });
+      }
+      else {
+        this.service
+          .update(element)
+          .subscribe((res: any) => {
+           
+          });
+      }
+
     });
-  });
+    this.toastr.success("تم الحفظ");
+  }
+
+  onInputChange(event: Event): void {
+    //     if (target.value === 'no') {
+    //   showInputElement.classList.remove('d-none');
+    // } else {
+    //   showInputElement.classList.add('d-none');
+    // }
+
   }
 }

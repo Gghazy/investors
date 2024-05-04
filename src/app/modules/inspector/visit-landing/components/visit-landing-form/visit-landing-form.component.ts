@@ -40,7 +40,27 @@ export class VisitLandingFormComponent implements OnInit  {
       });
   }
 save(){
-  
+  // this.request.FactoryId = this.factoryId
+  // this.request.PeriodId = this.periodId
+  // this.request.UpdateStatus = true
+  // if(this.request.Id==0){
+  //   this.factoryLandingService
+  //   .create(this.request)
+  //   .subscribe((res: any) => {
+  //     console.log(this.request)
+  //     this.router.navigate(['/pages/factories-list']);
+  //     this.toastr.success("تم الحفظ");
+  //   });
+  // }
+  // else if(this.request.Id!=0){
+  //   this.factoryLandingService
+  //   .update(this.request)
+  //   .subscribe((res: any) => {
+  //     console.log(this.request)
+  //     this.router.navigate(['/pages/factories-list']);
+  //     this.toastr.success("تم الحفظ");
+  //   });
+  // }
 }
   checkAllScreenStatus(){
     debugger
