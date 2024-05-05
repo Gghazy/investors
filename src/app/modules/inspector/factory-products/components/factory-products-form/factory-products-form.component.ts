@@ -35,7 +35,7 @@ export class FactoryProductsFormComponent implements OnInit {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit() {
-    this.userId = this.shared.getUserRole();
+    this.userId = this.shared.getUserId();
     this.getProducts()
   }
   getProducts() {
@@ -91,6 +91,18 @@ export class FactoryProductsFormComponent implements OnInit {
     }
   }
 
+  saveFile(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.request[0].NewProductPaperId = res.Data.Id
+          console.log(this.request)
+
+        });
+    }
+  }
+
   AddProduct(row:FactoryProductsModel,product:ProductModel){
 this.request.forEach(element => {
  
@@ -102,7 +114,6 @@ this.request.forEach(element => {
 });
     console.log(row)
   }
-
   save(){
   console.log(this.request)
  

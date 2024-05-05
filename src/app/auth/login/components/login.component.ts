@@ -26,7 +26,7 @@ request = new LoginModel()
 
   login() {
     console.log(this.request)
-    this.sharedService.setUserRole(this.request.userId);
+    this.sharedService.setUserId(this.request.userId);
     if(this.request.userId=='admin'){
       this.router.navigate(['/pages/Admin/inspectors-list']);
     }

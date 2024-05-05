@@ -33,7 +33,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit() {
-    this.userId = this.shared.getUserRole();
+    this.userId = this.shared.getUserId();
     this.getRawMaterial()
   }
   getRawMaterial() {
@@ -86,6 +86,29 @@ console.log(this.materials)
     console.log(material)
     material.CorrectPaperId = 0
 
+  }
+  savePhoto(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.materials[0].CorrectPhotoId = res.Data.Id
+          console.log(this.materials)
+
+        });
+    }
+  }
+
+  saveFile(file: any) {
+    if (file.target.files.length > 0) {
+      this.fileService
+        .addFile(file.target.files[0])
+        .subscribe((res: any) => {
+          this.materials[0].CorrectPaperId = res.Data.Id
+          console.log(this.materials)
+
+        });
+    }
   }
   save() {
     

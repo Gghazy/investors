@@ -26,17 +26,13 @@ export class PeriodListComponent implements OnInit {
     private shared: SharedService,
     ){
       this.factoryId = this.route.snapshot.paramMap.get('id');
-      this.userRole = this.shared.getUserRole();
+    
       this.currentUrl = this.router.url
     }
   ngOnInit(): void {
+    this.userRole = this.shared.getUserRole();
     this.getPeriods()
-    this.route.params.subscribe(params => {
-      this.UserType = params['Inspector'];
-      console.log(this.userRole); 
-    });
-    console.log(this.currentUrl)
-    }
+  }
 
   getPeriods() { 
     

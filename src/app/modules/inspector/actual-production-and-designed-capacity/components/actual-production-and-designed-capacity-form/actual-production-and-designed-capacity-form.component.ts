@@ -33,7 +33,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
-    this.userId = this.shared.getUserRole();
+    this.userId = this.shared.getUserId();
     this.getProduct();
   }
   getProduct(){

@@ -36,7 +36,7 @@ export class BasicInfoFormComponent implements OnInit {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit() {
-    this.userId = this.shared.getUserRole();
+    this.userId = this.shared.getUserId();
     this.getBasicInfo();
     this.getFiles();
   }

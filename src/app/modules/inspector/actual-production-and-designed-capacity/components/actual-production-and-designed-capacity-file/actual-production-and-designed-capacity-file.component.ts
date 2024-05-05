@@ -29,7 +29,7 @@ export class ActualProductionAndDesignedCapacityFileComponent implements OnInit 
   ) {
 
   } ngOnInit(): void {
-    this.userId = this.shared.getUserRole();
+    this.userId = this.shared.getUserId();
     this.getFiles();
     this.getInspectorsFiles()
   }

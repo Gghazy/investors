@@ -40,7 +40,7 @@ export class FactoryLocationFormComponent implements OnInit {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit() {
-    this.userId = this.shared.getUserRole();
+    this.userId = this.shared.getUserId();
     this.getLocation();
     this.getCities();
     this.getIndustrialAreas();

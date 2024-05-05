@@ -9,7 +9,8 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 })
 export class FactoriesListFormComponent implements OnInit {
 factories: any=[]
-inspector:any
+userId:any
+InspectorFactory:any
   constructor(private factoryService :FactoriesListService,
     private shared: SharedService,
   ){
@@ -17,14 +18,15 @@ inspector:any
   }
 
   ngOnInit(): void {
+   this.userId= this.shared.getUserId()
+   this.shared.setUserRole('Inspector');
     this.getInspectorFactories();
-    this.shared.setUserRole('Inspector');
+     
    } 
-
    getInspectorFactories() { 
     
     this.factoryService
-      .getFacatories(27)
+      .getFacatories(this.userId)
       .subscribe((res: any) => {
         this.factories = res.Data;
         console.log(this.factories)
