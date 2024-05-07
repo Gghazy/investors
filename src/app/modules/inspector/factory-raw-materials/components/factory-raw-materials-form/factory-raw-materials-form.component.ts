@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ResolveStart } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from 'src/app/core/service/file.service';
 import { RawMaterialSearch } from 'src/app/modules/factory-raw-materials/models/raw-material-search.model';
@@ -62,19 +62,22 @@ console.log(this.materials)
 
 
   getFile(attachmentId: number) {
+   
     if (attachmentId == 0) {
       this.toastr.error("لا يوجد ملف");
     }
     else {
       this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
+        console.log(res)
         this.downloadattachment(res)
       });
     }
   }
   downloadattachment(data: any) {
+ 
     const blob = new Blob([data], { type: data.type });
-    const url = window.URL.createObjectURL(blob);
-    this.src = url
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
   }
   deleteImage(material: any) {
     console.log(material)
@@ -87,24 +90,24 @@ console.log(this.materials)
     material.CorrectPaperId = 0
 
   }
-  savePhoto(file: any) {
+  savePhoto(file: any,i:number) {
     if (file.target.files.length > 0) {
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
-          this.materials[0].CorrectPhotoId = res.Data.Id
+          this.materials[i].CorrectPhotoId = res.Data.Id
           console.log(this.materials)
 
         });
     }
   }
 
-  saveFile(file: any) {
+  saveFile(file: any,i:number) {
     if (file.target.files.length > 0) {
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
-          this.materials[0].CorrectPaperId = res.Data.Id
+          this.materials[i].CorrectPaperId = res.Data.Id
           console.log(this.materials)
 
         });
@@ -136,11 +139,7 @@ element.Comment=      this.materials[0].Comment
   }
 
   onInputChange(event: Event): void {
-    //     if (target.value === 'no') {
-    //   showInputElement.classList.remove('d-none');
-    // } else {
-    //   showInputElement.classList.add('d-none');
-    // }
+    
 
   }
 }

@@ -19,7 +19,6 @@ InspectorFactory:any
 
   ngOnInit(): void {
    this.userId= this.shared.getUserId()
-   this.shared.setUserRole('Inspector');
     this.getInspectorFactories();
      
    } 
@@ -31,5 +30,10 @@ InspectorFactory:any
         this.factories = res.Data;
         console.log(this.factories)
       });
+  }
+
+  getData(id: number) {
+ let x=  this.factories.find((x: any)=>x.Id == id);
+ console.log(x)
   }
 }

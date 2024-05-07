@@ -81,7 +81,8 @@ export class FactoryLocationFileComponent implements OnInit {
     this.InspectorService
     .deleteFile(id)
     .subscribe((res: any) => {
-      this.InspectorsLocationfiles();
+      this.getInspectorsFiles();
+      
     });
   }
 }

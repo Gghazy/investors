@@ -79,29 +79,23 @@ export class FactoryProductsFormComponent implements OnInit {
     const url= window.URL.createObjectURL(blob);
     window.open(url);
   }
-  savePhoto(file: any) {
+  saveAttachment(file: any, i :number,type: string) {
+console.log(type)
     if (file.target.files.length > 0) {
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
-          this.request[0].NewProductPhotoId = res.Data.Id
-          console.log(this.request)
+        
+          if (type == 'photo') {
+            this.request[i].NewProductPhotoId = res.Data.Id
+          } else if (type == 'paper') {
+            this.request[i].NewProductPaperId = res.Data.Id
+          }
 
         });
     }
   }
 
-  saveFile(file: any) {
-    if (file.target.files.length > 0) {
-      this.fileService
-        .addFile(file.target.files[0])
-        .subscribe((res: any) => {
-          this.request[0].NewProductPaperId = res.Data.Id
-          console.log(this.request)
-
-        });
-    }
-  }
 
   AddProduct(row:FactoryProductsModel,product:ProductModel){
 this.request.forEach(element => {
@@ -144,16 +138,16 @@ this.toastr.success("تم الحفظ");
   }
 
 
-deleteImage(product:FactoryProductsModel){
+deleteImage(product:FactoryProductsModel,i:number){
 console.log(product)
-product.NewProductPhotoId=0
-
+this.request[i].NewProductPhotoId=0
+this.toastr.success("تم الحذف  ");  
 }
 
-deleteFile(product:FactoryProductsModel){
+deleteFile(product:FactoryProductsModel,i:number){
   console.log(product)
-  product.NewProductPaperId=0
-  
+  this.request[i].NewProductPaperId=0
+  this.toastr.success("تم الحذف  ");  
   }
   onInputChange(event: Event): void {
       //     if (target.value === 'no') {

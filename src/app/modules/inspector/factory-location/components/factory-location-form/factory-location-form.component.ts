@@ -84,6 +84,8 @@ export class FactoryLocationFormComponent implements OnInit {
       .subscribe((res: any) => {
 
         this.cities = res.Data;
+        this.requestFactory.NewCityId = -1
+        this.requestFactory.NewIndustrialAreaId =-1
       });
   }
   getFactoryEntities() {
@@ -92,7 +94,7 @@ export class FactoryLocationFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.factoryEntities = res.Data;
         this.FactoryEntityName = this.factoryEntities.find(x => x.Id == this.requestFactory.FactoryEntityId)?.NameAr;
-
+     
       });
   }
 
@@ -103,6 +105,7 @@ export class FactoryLocationFormComponent implements OnInit {
       .getAreaByCity(this.cityCode)
       .subscribe((res: any) => {
         this.industrialAreas = res.Data;
+        this.requestFactory.NewIndustrialAreaId =-1
       });
   }
   onInputChange(event: Event): void {

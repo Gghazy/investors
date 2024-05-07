@@ -13,6 +13,11 @@ export class SharedService {
   private pageTitleSource = new BehaviorSubject<string>('');
   routeTitle$ = this.pageTitleSource.asObservable();
 
+
+  constructor() {
+    // Simulate loading user role from an API or local storage
+    this.userRole = 'admin'; // Example role value
+  }
   setPageTitle(title: string): void {
     this.pageTitleSource.next(title);
   }
@@ -35,4 +40,5 @@ export class SharedService {
   getUserId() {
     return this.userId;
   }
+
 }

@@ -63,7 +63,7 @@ save(){
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
-         
+         console.log(this.request)
         });
     }
   }

@@ -25,11 +25,20 @@ if(this.currentUrl == '/pages/factories-list'){
   this.shared.setUserRole('Investor');
   console.log(this.userRole)
 }
+
+
 if( this.currentUrl == '/pages/Inspector/factories-list'){
   this.shared.setUserRole('Inspector');
   console.log('tesst')
 }
 this.userRole = this.shared.getUserRole()
+
   this.shared.setUserId('1012955132');
+  console.log(this.userRole)
+}
+isUrlIncludes(value: string): boolean {
+  console.log(this.router.url)
+  return this.router.url.includes(value);
+
 }
 }

@@ -32,7 +32,7 @@
         </div> -->
 
         <ul class="d-flex license p-0 row mt-4">
-            <li class="col-12 col-xl-4 col-lg-6 col-md-6 col-sm-12" *ngFor="let factory of factories">
+            <li class="col-12 col-xl-4 col-lg-6 col-md-6 col-sm-12" *ngFor="let factory of factories let i=index;">
                 <div class="license-container">
 
                     <div class="license-info">
@@ -52,8 +52,8 @@
                     </div>
                     <div class="license-footer justify-content-center">
                         <a href="#" class="btn btn-primary mx-2" data-bs-toggle="modal"
-                            data-bs-target="#detailsModal" >تفاصيل</a>
-                        <a [routerLink]="'/pages/period/'+factory.FactoryId" class="btn btn-primary">بدء الزيارة</a>
+                            data-bs-target="#detailsModal" (click)="getData(i)">تفاصيل</a>
+                        <a [routerLink]="'/pages/period/'+factory.FactoryId+'/Inspector'" class="btn btn-primary">بدء الزيارة</a>
                     </div>
 
                 </div>
@@ -68,8 +68,11 @@
 </div>
 <!-- Modal details-->
 <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+       
         <div class="modal-content">
+         
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">تفاصيل</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -79,39 +82,40 @@
                     <h3>تفاصيل</h3>
                 </div>
                 <div class="row">
-                    <!-- <div class="col-md-6">
+                    <div>
                         <label for="" class="form-label">رقم المصنع</label>
-                        <input type="text" class="form-control" [(ngModel)]="inspector.Name" disabled />
-                    </div> -->
-                    <!-- <div class="col-md-6">
+                        <input type="text" class="form-control" [(ngModel)]="factories[0].FactoryNumber" disabled />
+                    </div>
+                    <div>
                         <label for="" class="form-label">رقم الهاتف</label>
-                        <input type="text" class="form-control" [(ngModel)]="inspector.Name" disabled />
+                        <input type="text" class="form-control" [(ngModel)]="factories[0].MobileNumber" disabled />
+                    </div>
+
+
+                    <div>
+                        <label for="" class="form-label">البريد الالكتروني</label>
+                        <input type="text" class="form-control" [(ngModel)]="factories[0].Email" disabled />
+                    </div>
+
+
+                    <div>
+                        <label for="" class="form-label">المدينة</label>
+                        <input type="text" class="form-control" [(ngModel)]="factories[0].CityName" disabled />
+                    </div>
+                    <!-- <div>
+                        <label for="" class="form-label">عنوان المصنع</label>
+                        <input type="text" class="form-control" [(ngModel)]="factories[0].Address" disabled />
                     </div> -->
+                </div>
+            </div>
 
-                
-                <!-- <div class="col-md-6">
-                    <label for="" class="form-label">البريد الالكتروني</label>
-                    <input type="text" class="form-control" [(ngModel)]="inspector.Name" disabled />
-                </div> -->
-
-          
-            <!-- <div class="col-md-6">
-                <label for="" class="form-label">المدينة</label>
-                <input type="text" class="form-control" [(ngModel)]="factory.CityName" disabled />
-            </div> -->
-            <!-- <div class="col-md-6">
-                <label for="" class="form-label">عنوان المصنع</label>
-                <input type="text" class="form-control" [(ngModel)]="inspector.Name" disabled />
-            </div>  -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    اغلاق
+                </button>
+            </div>
         </div>
         </div>
     
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            اغلاق
-        </button>
-    </div>
-</div>
-    </div>
-    
+
 </div>

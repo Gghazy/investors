@@ -19,12 +19,11 @@
 
         <ul class="list-review factory-lines p-0">
             <li *ngFor="let material of materials let i=index">
-                <div class="col-md-12">
                     <div class="row">
 
                         <h4>مادة أولية رقم {{i+1}} ({{material.RawMaterialName}})</h4>
                         <div class="col-md-2">
-                            <label class="form-label"> صورة المادة الاولية الحالية</label>
+                            <label class="form-label"> صورة المادة الاولية </label>
                             <div class="input-group">
                                 <div data-bs-toggle="modal" data-bs-target="#photoModal">
                                     <button class="btn btn-primary" type="button" (click)="getImage(material.PhotoId)"
@@ -58,8 +57,8 @@
                             </div>
 
                         </div>
-                        <div class="col-md-3">
-                            <label class="form-label"> ورقة بيانات المادة الاولية الحالية</label>
+                        <div class="col-md-2">
+                            <label class="form-label"> ورقة بيانات المادة الاولية </label>
                             <div class="input-group">
                               
                                 <button class="btn btn-primary" type="button" (click)="getFile(material.PaperId)"
@@ -100,7 +99,8 @@
                             </select>
                         </div>
                        
-                            <div *ngIf="material.IsImageClear == false">
+                            <div *ngIf="material.IsImageClear == false" class="col-md-5">
+                                <div class="row">
                                 <!-- <div class="col-md-3">
                                 <label class="form-label"> رفع صورة واضحة للمنتج</label>
                                 <div class="input-group">
@@ -111,17 +111,17 @@
                             </div> -->
 
 
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <label class="form-label" data-bs-toggle="tooltip" data-bs-placement="right"
                                         title="" data-bs-original-title="شرح الحقل">إرفاق صورة المادة الاولية
 
                                      
                                     </label>
                                     <div class="input-group">
-                                        <input type="file" #fileInput accept="image/*" class="form-control" placeholder=""
-                                        value="" (change)="savePhoto($event)">
-
-                                        <input type="file" class="d-none">
+                                        <input type="file" #fileInput style="display: none;" (change)="savePhoto($event,i)" />
+                                        <button class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                                        </button>
                                         <span data-bs-toggle="modal" data-bs-target="#photoModal">
                                             <button class="btn btn-warning px-2 py-1 mx-1" type="button"
                                                 data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
@@ -159,23 +159,28 @@
                                                 class="icon-delete"></i></a>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <label class="form-label" data-bs-toggle="tooltip" data-bs-placement="right"
                                         title=""
                                         data-bs-original-title="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
                                         aria-describedby="tooltip617728"> إرفاق ورقة البيانات <i>؟</i></label>
                                     <div class="input-group">
+                                        <input type="file" #fileInput2 style="display: none;" (change)="saveFile($event,i)" />
+                                        <button class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput2.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
+                                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" 
+                                            xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0">
+                                            </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
 
-                                        <input type="file" #fileInput  class="form-control"
-                                        placeholder="" value="" (change)="saveFile($event)">
-    
-    
-                                        <input type="file" class="d-none">
+                                            </g><g id="SVGRepo_iconCarrier"> 
+                                                <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> 
+                                                <path d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749" 
+                                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                                        </button>
 
                                         <button class="btn btn-warning px-2 py-1 mx-1" type="button"
                                             data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                                            data-bs-original-title=" تحميل الملف " (click)="getFile(material.CorrectPaperId)">
-
+                                            data-bs-original-title=" تحميل الملف " 
+                                            (click)="getFile(material.CorrectPaperId)">
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -204,7 +209,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
                     <!-- <div class="col-md-3">
                         <label class="form-label"> صورة المادة الأولية الحالية</label>
                         <div class="input-group">
@@ -234,7 +239,8 @@
                             <button class="btn btn-primary" type="button">اضافة </button>
                         </div>
                     </div> -->
-
+                  
+                    
              
             </li>
 

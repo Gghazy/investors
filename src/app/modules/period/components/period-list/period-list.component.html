@@ -47,10 +47,10 @@
                 <td *ngIf="period.Status" class="text-success">تم الاعتماد</td>
                 <td *ngIf="!period.Status" class="text-danger">لم يتم الاعتماد</td>
                 <td>
-                    <a  *ngIf="userRole== 'Investor'" (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                    <a  *ngIf="!InspectorRole" (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                         عرض
                     </a>
-                    <a *ngIf="userRole== 'Inspector'" (click)="navigateToInspectorDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                    <a *ngIf="InspectorRole" (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                 عرض
                     </a>
                 </td>
