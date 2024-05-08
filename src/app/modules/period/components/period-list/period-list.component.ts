@@ -19,6 +19,7 @@ export class PeriodListComponent implements OnInit {
   factoryId:any;
   userRole!: string;
   currentUrl: string;
+  InspectorRole!:boolean;
   constructor(
     private periodService:PeriodService,
     private router: Router,
@@ -26,17 +27,14 @@ export class PeriodListComponent implements OnInit {
     private shared: SharedService,
     ){
       this.factoryId = this.route.snapshot.paramMap.get('id');
-      this.userRole = this.shared.getUserRole();
+    
       this.currentUrl = this.router.url
     }
   ngOnInit(): void {
+    this.userRole = this.shared.getUserRole();
     this.getPeriods()
-    this.route.params.subscribe(params => {
-      this.UserType = params['Inspector'];
-      console.log(this.userRole); 
-    });
-    console.log(this.currentUrl)
-    }
+this.InspectorRole =this.router.url.includes('Inspector')
+  }
 
   getPeriods() { 
     
@@ -52,12 +50,16 @@ export class PeriodListComponent implements OnInit {
 
   }
   navigateToDetails(periodId: number) {
-      this.router.navigate(['/pages/factory-landing', this.factoryId, periodId]);
-    
-    }
-    navigateToInspectorDetails(periodId: number) {
+    if(this.router.url.includes('Inspector')){
       this.router.navigate(['/pages/Inspector/visit-landing', this.factoryId, periodId]);
     
     }
+    if(this.router.url.includes('Investor')){
+      this.router.navigate(['/pages/factory-landing', this.factoryId, periodId]);
+    
+    }
+      
+    }
+  
 
 }

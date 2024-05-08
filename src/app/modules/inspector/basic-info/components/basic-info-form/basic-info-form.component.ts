@@ -7,6 +7,7 @@ import { BasicInfoModel } from '../../models/basic-info.model';
 import { FactoryModel } from 'src/app/modules/factory/models/factory-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { BasicFileModel } from 'src/app/modules/basic-info/models/basic-file-model';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-basic-info-form',
@@ -14,30 +15,34 @@ import { BasicFileModel } from 'src/app/modules/basic-info/models/basic-file-mod
   styleUrls: ['./basic-info-form.component.scss']
 })
 export class BasicInfoFormComponent implements OnInit {
-  files:BasicFileModel[]=[];
-  requestFile=new BasicFileModel();
-  request=new BasicInfoModel();
-  src!:string;
+  files: BasicFileModel[] = [];
+  requestFile = new BasicFileModel();
+  request = new BasicInfoModel();
+  src!: string;
+  userId: any;
   factoryId: any;
   periodId: any;
-  requestFactory =new FactoryModel();
+  requestFactory = new BasicInfoModel();
   constructor(
     private route: ActivatedRoute,
-     private basicInfoService: BasicInfoService,
-     private inspectorService: InspectorBasicInfoService,
-     private fileService:FileService,
-     private toastr: ToastrService,
-     private router: Router,
-     ) {
+    private shared: SharedService,
+    private basicInfoService: BasicInfoService,
+    private inspectorService: InspectorBasicInfoService,
+    private fileService: FileService,
+    private toastr: ToastrService,
+    private router: Router,
+  ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit() {
+    this.userId = this.shared.getUserId();
     this.getBasicInfo();
     this.getFiles();
   }
   onInputChange(event: Event): void {
     debugger;
+    console.log('test')
     const target = event.target as HTMLInputElement;
     const closestRow = target.closest('.row');
 
@@ -51,16 +56,16 @@ export class BasicInfoFormComponent implements OnInit {
       }
     }
   }
-  deleteFile(id:number){
+  deleteFile(id: number) {
     this.basicInfoService
-    .delete(id)
-    .subscribe((res: any) => {
-      this.getFiles();
-    });
+      .delete(id)
+      .subscribe((res: any) => {
+        this.getFiles();
+      });
   }
   getFiles() {
-    this.basicInfoService
-      .getAll(this.factoryId,this.periodId)
+    this.inspectorService
+      .getOne(this.factoryId, this.periodId, this.userId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
@@ -77,35 +82,44 @@ export class BasicInfoFormComponent implements OnInit {
     }
   }
 
-  getFile(attachmentId:number){
+  getFile(attachmentId: number) {
     this.fileService.getImage(attachmentId).subscribe((res: any) => {
-      this.src='data:image/jpeg;base64,'+res.Image
+      this.src = 'data:image/jpeg;base64,' + res.Image
       const blob = new Blob([res], { type: res.type });
-    const url= window.URL.createObjectURL(blob);
-    window.open(url);
+      const url = window.URL.createObjectURL(blob);
+      window.open(url);
     });
   }
 
   getBasicInfo() {
-    this.basicInfoService
-      .getOne(this.factoryId,this.periodId)
+    this.inspectorService
+      .getOne(this.factoryId, this.periodId, this.userId)
       .subscribe((res: any) => {
-     this.requestFactory = res.Data;
+        this.requestFactory = res.Data;
+        console.log(this.requestFactory)
       });
   }
 
-  save(){
-    this.request.FactoryId=this.factoryId;
-    this.request.PeriodId=this.periodId;
-    this.request.OwnerIdentity ='123'
+  save() {
+    this.requestFactory.FactoryId = this.factoryId;
+    this.requestFactory.PeriodId = this.periodId;
     console.log(this.request)
+    if (this.requestFactory.Id == 0) {
+      this.inspectorService
+        .create(this.requestFactory)
+        .subscribe((res: any) => {
 
-     this.inspectorService
-    .create(this.request)
-    .subscribe((res: any) => {
-      this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
-      this.toastr.success("تم الحفظ");
-    });
-// 
+        });
+    }
+    else {
+      this.inspectorService
+        .update(this.requestFactory)
+        .subscribe((res: any) => {
+
+        });
+    }
+    this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
+    this.toastr.success("تم الحفظ");
+    // 
   }
 }

@@ -14,8 +14,8 @@ export class InspectorActualProductionAndDesignedCapacityService {
   create(model: ActualProductionAndDesignedCapacityModel): Observable<any> {
     return this.http.post<any>('InspectActualProductions', model);
   }
-  getProducts(FactoryId: number,periodId:number): Observable<any> {
-    return this.http.get<any>('InspectActualProductions?factoryId='+FactoryId+'&periodId='+periodId);
+  getProducts(FactoryId: number,periodId:number,ownerIdentity:string): Observable<any> {
+    return this.http.get<any>('InspectActualProductions?factoryId='+FactoryId+'&periodId='+periodId+'&OwnerIdentity='+ownerIdentity);
   }
   update(model: ActualProductionAndDesignedCapacityModel): Observable<any> {
     return this.http.put<any>('InspectActualProductions', model);
@@ -26,8 +26,12 @@ export class InspectorActualProductionAndDesignedCapacityService {
   return this.http.post<any>('InspectActualProductionAttchs',model);
 }
 
-getFiles(FactoryId: number,periodId:number): Observable<any> {
-  return this.http.get<any>('InspectActualProductionAttchs?factoryId='+FactoryId+'&periodId='+periodId);
+getFiles(FactoryId: number,periodId:number,ownerIdentity:string): Observable<any> {
+  return this.http.get<any>('InspectActualProductionAttchs?factoryId='+FactoryId+'&periodId='+periodId+'&OwnerIdentity='+ownerIdentity);
+}
+
+deleteFile(id: number): Observable<any> {
+  return this.http.delete<any>('InspectActualProductionAttchs/' + id);
 }
 
 }

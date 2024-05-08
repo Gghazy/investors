@@ -11,8 +11,15 @@ export class FactoryRawMaterialsService {
 
   constructor(private http: HttpClient) { }
   
+  getAll(FactoryId: number,periodId:number,ownerIdentity:number): Observable<any> {
+    return this.http.get<any>('InspectorRawMaterial?factoryId='+FactoryId+'&periodId='+periodId+'&ownerIdentity='+ownerIdentity);
+  }
+
   create(model: FactoryRawMaterialsModel): Observable<any> {
     return this.http.post<any>('InspectorRawMaterial', model);
+  }
+  update(model: FactoryRawMaterialsModel): Observable<any> {
+    return this.http.put<any>('InspectorRawMaterial', model);
   }
 
   //Files

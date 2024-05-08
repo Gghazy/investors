@@ -10,77 +10,79 @@ import { FactoryLocationService } from 'src/app/modules/factory-location/factory
   styleUrls: ['./factory-location-file.component.scss']
 })
 export class FactoryLocationFileComponent implements OnInit {
-  src!:string;
-  files:any;
-  InspectorsLocationfiles:any;
-  @Input() factoryId!:string;
-  @Input() periodId!:string;
+  src!: string;
+  files: any;
+  InspectorsLocationfiles: any;
+  @Input() factoryId!: string;
+  @Input() periodId!: string;
   factoryLocationId!: number;
-  Inspectorsfiles!:any
-  request =new FactoryLocationFileModel()
+  Inspectorsfiles!: any
+  request = new FactoryLocationFileModel()
   @ViewChild('fileInput') fileInput!: ElementRef;
-constructor(  private fileService:FileService,
-  private InspectorService:InspectorFactoryLocationService,
-  private factoryLocationService:FactoryLocationService,
-){
+  constructor(private fileService: FileService,
+    private InspectorService: InspectorFactoryLocationService,
+    private factoryLocationService: FactoryLocationService,
+  ) {
 
-}
-ngOnInit(): void {
-  this.getFiles();
-  this.getInspectorsFiles()
- }
-getFiles() {
-this.request.FactoryId = parseInt(this.factoryId)
-this.request.PeriodId = parseInt(this.periodId)
-  this.InspectorService
-      .getFiles(this.request.FactoryId,this.request.PeriodId)
+  }
+  ngOnInit(): void {
+    this.getFiles();
+    this.getInspectorsFiles()
+  }
+  getFiles() {
+    this.request.FactoryId = parseInt(this.factoryId)
+    this.request.PeriodId = parseInt(this.periodId)
+    this.factoryLocationService
+      .getAllFiles(this.request.FactoryId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
-}
-getInspectorsFiles() {
-  let factoryid= parseInt( this.factoryId)
-  let periodId=parseInt( this.periodId)
-  this.InspectorService
-    .getFiles(factoryid,periodId)
-    .subscribe((res: any) => {
-      this.Inspectorsfiles = res.Data;
-    
-    });
-}
-save(){
-  this.request.FactoryId= parseInt( this.factoryId)
-  this.request.PeriodId=parseInt( this.periodId)
-  this.request.Type=0
-  console.log(this.request)
-  this.InspectorService
-  .CreateFiles(this.request)
-  .subscribe((res: any) => {
-    this.getInspectorsFiles()
-  });
-  
-  this.request= new FactoryLocationFileModel()
-  this.fileInput.nativeElement.value = '';
-}
+  }
+  getInspectorsFiles() {
+    let factoryid = parseInt(this.factoryId)
+    let periodId = parseInt(this.periodId)
+    this.InspectorService
+      .getFiles(factoryid, periodId)
+      .subscribe((res: any) => {
+        this.Inspectorsfiles = res.Data;
+
+      });
+  }
+  save() {
+    this.request.FactoryId = parseInt(this.factoryId)
+    this.request.PeriodId = parseInt(this.periodId)
+    console.log(this.request)
+    this.InspectorService
+      .CreateFiles(this.request)
+      .subscribe((res: any) => {
+        this.getInspectorsFiles()
+      });
+
+    this.request = new FactoryLocationFileModel()
+    this.fileInput.nativeElement.value = '';
+  }
   saveFile(file: any) {
     if (file.target.files.length > 0) {
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
-         
         });
     }
   }
-getFile(attachmentId:number){
-  console.log(attachmentId)
+  getFile(attachmentId: number) {
     this.fileService.getImage(attachmentId).subscribe((res: any) => {
-      this.src='data:image/jpeg;base64,'+res.Image
-    });
+      this.src='data:image/jpeg;base64,'+res.Image;
+     });
   }
 
 
-deleteFile(id:number){
-   
+  deleteFile(id: number) {
+    this.InspectorService
+    .deleteFile(id)
+    .subscribe((res: any) => {
+      this.getInspectorsFiles();
+      
+    });
   }
 }

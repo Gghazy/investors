@@ -11,9 +11,20 @@ export class InspectorBasicInfoService {
   
   constructor(private http: HttpClient) { }
   
+
+  getOne(id:number,periodId:number,ownerIdentity:string): Observable<any> {
+    return this.http.get<any>('InspectBaiscDatas?factoryId='+id+'&periodId='+periodId+'&OwnerIdentity='+ownerIdentity);
+ 
+  }
   create(model: BasicInfoModel): Observable<any> {
     return this.http.post<any>('InspectBaiscDatas', model);
   }
+
+  update(model: BasicInfoModel): Observable<any> {
+    return this.http.put<any>('InspectBaiscDatas', model);
+  }
+
+//Files
 
   CreateFiles(model: BasicFileModel): Observable<any> {
     return this.http.post<any>('InspectFactoryFiles',model);
@@ -23,6 +34,6 @@ export class InspectorBasicInfoService {
     return this.http.get<any>('InspectFactoryFiles?factoryId='+FactoryId+'&periodId='+periodId);
   }
   delete(id: number): Observable<any> {
-    return this.http.delete<any>('x'+id);
+    return this.http.delete<any>('InspectFactoryFiles/'+id);
   }
 }

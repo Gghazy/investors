@@ -9,7 +9,7 @@ export class FactoriesListService {
 
   constructor(private http: HttpClient) { }
 
-  getFacatories(inspectorId:number): Observable<any> {
-    return this.http.get<any>('Inspectors/GetInspectorFactories?id='+inspectorId);
+  getFacatories(inspectorId:string): Observable<any> {
+    return this.http.get<any>('Inspectors/GetInspectorFactories?InspectorId='+inspectorId);
   }
 }

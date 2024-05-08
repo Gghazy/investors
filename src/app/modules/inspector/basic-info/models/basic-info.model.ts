@@ -8,5 +8,6 @@ FactoryName	!:string;
 OwnerIdentity	!:string;
 Comments	!:string;
 FactoryStatus!:number;
-FileName!:number;
+CorrectFactoryStatus!:number;
+CorrectFactoryName	!:string;
 }

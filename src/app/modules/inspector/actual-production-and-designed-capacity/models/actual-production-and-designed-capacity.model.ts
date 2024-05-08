@@ -5,8 +5,13 @@ export class ActualProductionAndDesignedCapacityModel  {
         IsDesignedCapacityCorrect!:boolean;
         CorrectDesignedCapacity !: number;
         ActualProduction !: number;
+        ActualProductionWeight !: number;
         IsActualProductionCorrect!:boolean;
         CorrectActualProduction !: number;
         Comments !: number;
         ProductName!:string;
+        IncreaseReasonId !: number;
+        IncreaseReasonCorrect!:number;
+        IncreaseReason!:string;
+        IsIncreaseReasonCorrect!:boolean;
 }

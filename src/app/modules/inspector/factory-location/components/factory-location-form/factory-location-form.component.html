@@ -17,23 +17,23 @@
            
             <div class="col-md-4">
                 <label class="form-label"> الجهة التي يتبع لها المصنع​<span class="required">*</span></label>
-                <select class="form-select" #FactoryEntityId="ngModel" required 
-                name="FactoryEntityId" [(ngModel)]="requestFactory.FactoryEntityId" disabled>
+                 <select class="form-select" #FactoryEntityId="ngModel" required disabled
+                name="FactoryEntityId" [(ngModel)]="requestFactory.FactoryEntityId" (change)="onEntitySelect(requestFactory.FactoryEntityId)">
                     <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">{{factoryEntity.NameAr}} </option>
                 </select>
                
             </div>
             <div class="col-md-3">
                 <label class="form-label"> هل الجهة التي يتبع لها المصنع​ صحيحة؟</label>
-                <select class="form-select " [(ngModel)]="request.IsFactoryEntityCorrect" (change)="onInputChange($event)">
+                <select class="form-select " [(ngModel)]="requestFactory.IsFactoryEntityCorrect" (change)="onInputChange($event)">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5" *ngIf="request.IsFactoryEntityCorrect == false">
+            <div class="col-md-5" *ngIf="requestFactory.IsFactoryEntityCorrect == false">
                 <label class="form-label"> أختر  الجهة الصحيحة التي يتبع لها المصنع​ </label>
                 <select class="form-select" #FactoryEntityId="ngModel" required 
-                name="FactoryEntityId" [(ngModel)]="request.NewFactoryEntityId" (change)="onEntitySelect(request.FactoryEntityId)">
+                name="FactoryEntityId" [(ngModel)]="requestFactory.NewFactoryEntityId" (change)="onEntitySelect(requestFactory.NewFactoryEntityId)">
                     <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">{{factoryEntity.NameAr}} </option>
                 </select>
             </div>
@@ -43,8 +43,8 @@
            
             <div class="col-md-4">
                 <label class="form-label"> المدينة<span class="required">*</span></label>
-                <select class="form-select" #CityId="ngModel" required  
-                name="CityId" [(ngModel)]="requestFactory.CityId" (change)="onCitySelect(request.CityId)" disabled>
+                <select class="form-select" #CityId="ngModel" required  disabled
+                name="CityId" [(ngModel)]="requestFactory.CityId">
                     <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.NameAr}} </option>
 
                 </select>
@@ -52,16 +52,16 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label"> هل المدينة صحيحة؟</label>
-                <select class="form-select" [(ngModel)]="request.IsCityCorrect" (change)="onInputChange($event)">
+                <select class="form-select" [(ngModel)]="requestFactory.IsCityCorrect" (change)="onInputChange($event)">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5" *ngIf="request.IsCityCorrect == false">
+            <div class="col-md-5" *ngIf="requestFactory.IsCityCorrect == false">
                 <label class="form-label"> أختر  المدينة الصحيحة</label>
-                <select class="form-select" #CityId="ngModel" required  
-                name="CityId" [(ngModel)]="request.NewCityId" (change)="onCitySelect(request.CityId)" (change)="onCitySelect(request.CityId)">
-                    <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.NameAr}} </option>
+                <select class="form-select" #NewCityId="ngModel" required  
+                name="NewCityId" [(ngModel)]="requestFactory.NewCityId" (change)="onCitySelect(requestFactory.NewCityId)">
+                    <option *ngFor="let city of Newcities" [ngValue]="city.Id">{{city.NameAr}} </option>
 
                 </select>
                
@@ -71,23 +71,23 @@
             
             <div class="col-md-4">
                 <label class="form-label"> المنطقة الصناعية<span class="required">*</span></label>
-                <select class="form-select" name="IndustrialAreaId" 
-                [(ngModel)]="requestFactory.IndustrialAreaId" disabled>
+                <select class="form-select" name="IndustrialAreaId" disabled
+                [(ngModel)]="requestFactory.IndustrialAreaId" >
                     <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
                 </select>
             </div>
             <div class="col-md-3">
                 <label class="form-label"> هل المنطقة الصناعية صحيحة؟</label>
-                <select class="form-select" [(ngModel)]="request.IsIndustrialAreaCorrect" (change)="onInputChange($event)">
+                <select class="form-select" [(ngModel)]="requestFactory.IsIndustrialAreaCorrect" (change)="onInputChange($event)">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5" *ngIf="request.IsIndustrialAreaCorrect == false">
+            <div class="col-md-5" *ngIf="requestFactory.IsIndustrialAreaCorrect == false">
                 <label class="form-label"> أختر المنطقة الصناعية الصحيحة</label>
                 <select class="form-select" name="IndustrialAreaId" 
-                [(ngModel)]="request.NewIndustrialAreaId" >
-                    <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
+                [(ngModel)]="requestFactory.NewIndustrialAreaId" >
+                    <option *ngFor="let industrialArea of NewindustrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
                 </select>
             </div>
         </div>
@@ -99,20 +99,20 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label"> هل  الرابط صحيح؟</label>
-                <select class="form-select" [(ngModel)]="request.IsLocationLinkCorrect" (change)="onInputChange($event)">
+                <select class="form-select" [(ngModel)]="requestFactory.IsWebSiteCorrect" (change)="onInputChange($event)">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5" *ngIf="request.IsLocationLinkCorrect == false">
+            <div class="col-md-5" *ngIf="requestFactory.IsWebSiteCorrect == false">
                 <label class="form-label">  أدخل  رابط موقع المصنع الصحيح</label>
-                <input type="url" class="form-control" [(ngModel)]="request.NewWebSite" value="">
+                <input type="url" class="form-control" [(ngModel)]="requestFactory.NewWebSite" value="">
             </div>
         </div>
         
         <div class="col-md-12">
             <label class="form-label"> تعليقات </label>
-            <textarea  rows="3" class="form-control" [(ngModel)]="request.Comment"></textarea>
+            <textarea  rows="3" class="form-control" [(ngModel)]="requestFactory.Comment"></textarea>
         </div>
 
           

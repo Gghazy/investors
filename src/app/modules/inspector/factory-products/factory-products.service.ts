@@ -12,8 +12,8 @@ export class FactoryProductsService {
   constructor(private http: HttpClient) { }
   
 
-  getProducts(FactoryId: number,periodId :number): Observable<any> {
-    return this.http.get<any>('InspectProducts?factoryId='+FactoryId+'&periodId='+periodId);
+  getProducts(FactoryId: number,periodId :number,ownerIdentity:string): Observable<any> {
+    return this.http.get<any>('InspectProducts?factoryId='+FactoryId+'&periodId='+periodId+'&ownerIdentity='+ownerIdentity);
   }
   create(model: FactoryProductsModel): Observable<any> {
     return this.http.post<any>('InspectProducts', model);

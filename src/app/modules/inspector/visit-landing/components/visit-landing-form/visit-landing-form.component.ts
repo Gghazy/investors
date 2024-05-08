@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VisitLandingService } from '../../visit-landing.service';
 import { InspectorScreenStatusModel } from '../../models/inspector-screen-status-model.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-visit-landing-form',
@@ -16,6 +17,8 @@ export class VisitLandingFormComponent implements OnInit  {
   isChecked: boolean = false;
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService,
    private visitLandingService: VisitLandingService,
 
   ) {
@@ -35,15 +38,40 @@ export class VisitLandingFormComponent implements OnInit  {
       .subscribe((res: any) => {
         
         this.screenStatuse = res.Data
+        console.log(this.screenStatuse)
         this.checkAllScreenStatus();
         console.log(this.screenStatuse)
       });
   }
 save(){
-  
+  console.log(this.screenStatuse)
+  this.screenStatuse.FactoryId = this.factoryId
+  this.screenStatuse.PeriodId = this.periodId
+  this.screenStatuse.UpdateStatus = true
+  console.log(this.screenStatuse)
+
+  if(this.screenStatuse.Id==0){
+
+    this.visitLandingService
+    .create(this.screenStatuse)
+    .subscribe((res: any) => {
+      console.log(this.screenStatuse)
+    this.router.navigate(['/pages/Inspector/factories-list']);
+      this.toastr.success("تم الحفظ");
+    });
+  }
+  else if(this.screenStatuse.Id!=0){
+    this.visitLandingService
+    .update(this.screenStatuse)
+    .subscribe((res: any) => {
+      console.log(this.screenStatuse)
+      this.router.navigate(['/pages/Inspector/factories-list']);
+      this.toastr.success("تم الحفظ");
+    });
+  }
 }
   checkAllScreenStatus(){
-    debugger
+    // debugger
         
         this.allScreenStatus=
         this.screenStatuse.InspectorBasicFactoryInfo&&

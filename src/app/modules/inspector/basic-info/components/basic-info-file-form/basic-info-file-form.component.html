@@ -8,6 +8,7 @@
             <tr>
                 <th>#</th>
                 <th> اسم المستند </th>
+                <th> نوع المستند </th>
                 <th>امتداد المستند</th>                                            
                 <th style="min-width: 140px">خيارات</th>
             </tr>
@@ -16,6 +17,7 @@
             <tr *ngFor="let file of files let i=index">
                 <td>{{i+1}}</td>
                 <td>  {{file.Name}}</td>
+                <td>  {{file.Type}}</td>
                 <td>{{file.Extension}}</td>
                 <td>
                     <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
@@ -39,11 +41,16 @@
         <label class="form-label"> اسم المستند</label>
         <input type="text" class="form-control" placeholder="" [(ngModel)]="request.Name">
     </div>
-
+    <div class="col-md-6">
+        <label class="form-label" > نوع المستند <span class="required">*</span></label>
+        <select name="Type" #Type="ngModel" required  id="Type" [(ngModel)]="request.Type" class="form-select"  >
+            <option [ngValue]="0" selected>صورة واجهة المصنع</option>
+        </select>
+    </div>
     <div class="col-md-6">
         <label class="form-label">رفع المستند    </label>
         <div class="input-group">
-            <input type="file"  #fileInput  accept="image/*" class="form-control" placeholder="" value="" (change)="saveFile($event)">
+            <input type="file"  #fileInput   class="form-control" placeholder="" value="" (change)="saveFile($event)">
             <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
         </div>
     </div>
@@ -55,6 +62,7 @@
             <tr>
                 <th>#</th>
                 <th> اسم المستند </th>
+                <th> نوع المستند </th>
                 <th>امتداد المستند</th>                                            
                 <th style="min-width: 140px">خيارات</th>
             </tr>
@@ -64,6 +72,7 @@
             <tr *ngFor="let file of Inspectorsfiles let i=index">
                 <td>{{i+1}}</td>
                 <td>  {{file.Name}}</td>
+                <td>  {{file.Type}}</td>
                 <td>{{file.Extension}}</td>
                 <td>
                     <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">

@@ -11,11 +11,18 @@ export class InspectorFactoryLocationService {
 
   constructor(private http: HttpClient) { }
   
+  getAll(FactoryId: number,periodId:number,ownerIdentity:string): Observable<any> {
+    return this.http.get<any>('InspectFactoryLocations?factoryId='+FactoryId+'&periodId='+periodId+'&ownerIdentity='+ownerIdentity);
+  }
+
+
   create(model: FactoryLocationModel): Observable<any> {
     return this.http.post<any>('InspectFactoryLocations', model);
   }
 
-
+  update(model: FactoryLocationModel): Observable<any> {
+    return this.http.put<any>('InspectFactoryLocations', model);
+  }
   //Files
 
 
@@ -25,5 +32,8 @@ export class InspectorFactoryLocationService {
 
   getFiles(FactoryId: number,periodId:number): Observable<any> {
     return this.http.get<any>('InspectFactoryLocationAttachments?factoryId='+FactoryId+'&periodId='+periodId);
+  }
+  deleteFile(id: number): Observable<any> {
+    return this.http.delete<any>('InspectFactoryLocationAttachments/' + id);
   }
 }

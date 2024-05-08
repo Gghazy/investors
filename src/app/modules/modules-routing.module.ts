@@ -72,7 +72,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'period/:id',
+        path: 'period/:id/:UserType',
         loadChildren: () =>
           import('../modules/period/period.module').then((m) => m.PeriodModule)
       },
