@@ -5,7 +5,8 @@ import { FactoryContactModel } from 'src/app/modules/factory-contacts/models/fac
 import { FactoryContactsModel } from '../../models/factory-contacts.model';
 import { InspectorFactoryContactsService } from '../../factory-contacts.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
-
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-factory-contacts-form',
@@ -18,6 +19,17 @@ export class FactoryContactsFormComponent implements OnInit {
   request = new FactoryContactsModel()
   requestContact = new FactoryContactModel()
   userId!: string;
+  separateDialCode = false;
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+  preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
+ 
+  phoneForm = new FormGroup({
+    NewOfficerPhoneId: new FormControl(undefined, [Validators.required, this.saPhoneNumberValidator]),
+    NewOfficerEmail: new FormControl(undefined, [Validators.required,this.isValidEmail])
+
+  });
   constructor(
     private route: ActivatedRoute,
     private inspectorContactService: InspectorFactoryContactsService,
@@ -53,6 +65,26 @@ export class FactoryContactsFormComponent implements OnInit {
     if (this.request.IsOfficerPhoneCorrect == true) {
       this.request.NewOfficerPhoneId = ''
     }
+
+  }
+
+  saPhoneNumberValidator(control: FormControl): ValidationErrors | null {
+    const phoneNumber = control.value?.number;
+    if (phoneNumber != null) {
+      const saPhoneNumberPattern = /^(05\d{8})$/; // Saudi Arabian phone number pattern without country code
+      const isValid = saPhoneNumberPattern.test(phoneNumber);
+      return isValid ? null : { saPhoneNumber: true };
+
+    }
+    return null;
+  }
+
+  isValidEmail(control: FormControl): ValidationErrors | null {
+    let email = control.value;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var isvalid= emailPattern.test(email);
+
+    return isvalid ? null : { isValidEmail: true };
 
   }
 

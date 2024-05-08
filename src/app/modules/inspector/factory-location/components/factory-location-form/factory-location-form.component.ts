@@ -21,8 +21,11 @@ export class FactoryLocationFormComponent implements OnInit {
   request = new FactoryLocationModel()
   requestFactory = new FactoryLocationModel()
   cities: LookUpModel[] = [];
+  Newcities: LookUpModel[] = [];
   industrialAreas: LookUpModel[] = [];
+  NewindustrialAreas: LookUpModel[] = [];
   factoryEntities: LookUpModel[] = [];
+  NewfactoryEntities: LookUpModel[] = [];
   cityName:any;
   FactoryEntityName:any;
   IndusterialName:any;
@@ -42,9 +45,10 @@ export class FactoryLocationFormComponent implements OnInit {
   ngOnInit() {
     this.userId = this.shared.getUserId();
     this.getLocation();
+    this.getFactoryEntities();
     this.getCities();
     this.getIndustrialAreas();
-    this.getFactoryEntities();
+   
    
 
   }
@@ -62,7 +66,7 @@ export class FactoryLocationFormComponent implements OnInit {
       .getAllCities()
       .subscribe((res: any) => {
         this.cities = res.Data;
-        this.cityName = this.cities.find(x => x.Id == this.requestFactory.CityId)?.NameAr;
+      //  this.cityName = this.cities.find(x => x.Id == this.requestFactory.CityId)?.NameAr;
 
       });
   }
@@ -73,19 +77,20 @@ export class FactoryLocationFormComponent implements OnInit {
       .subscribe((res: any) => {
 
         this.industrialAreas = res.Data;
-        this.IndusterialName = this.industrialAreas.find(x => x.Id == this.requestFactory.IndustrialAreaId)?.NameAr;
+      //  this.IndusterialName = this.industrialAreas.find(x => x.Id == this.requestFactory.IndustrialAreaId)?.NameAr;
 
       });
   }
 
   onEntitySelect(id: number) {
+    this.Newcities=[]
+    this.NewindustrialAreas=[]
     this.lookUpService
       .getCityByEntity(id)
       .subscribe((res: any) => {
 
-        this.cities = res.Data;
-        this.requestFactory.NewCityId = -1
-        this.requestFactory.NewIndustrialAreaId =-1
+        this.Newcities = res.Data;
+       
       });
   }
   getFactoryEntities() {
@@ -99,12 +104,13 @@ export class FactoryLocationFormComponent implements OnInit {
   }
 
   onCitySelect(id: number) {
+    this.NewindustrialAreas=[]
     this.cityCode = this.cities.find(x => x.Id == id)?.CityCode;
 
     this.lookUpService
       .getAreaByCity(this.cityCode)
       .subscribe((res: any) => {
-        this.industrialAreas = res.Data;
+        this.NewindustrialAreas = res.Data;
         this.requestFactory.NewIndustrialAreaId =-1
       });
   }

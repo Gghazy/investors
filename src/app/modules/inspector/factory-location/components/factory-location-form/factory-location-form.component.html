@@ -17,8 +17,10 @@
            
             <div class="col-md-4">
                 <label class="form-label"> الجهة التي يتبع لها المصنع​<span class="required">*</span></label>
-                <input type="text" class="form-control "  value="{{FactoryEntityName}}"  disabled>
-           
+                 <select class="form-select" #FactoryEntityId="ngModel" required disabled
+                name="FactoryEntityId" [(ngModel)]="requestFactory.FactoryEntityId" (change)="onEntitySelect(requestFactory.FactoryEntityId)">
+                    <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">{{factoryEntity.NameAr}} </option>
+                </select>
                
             </div>
             <div class="col-md-3">
@@ -41,8 +43,11 @@
            
             <div class="col-md-4">
                 <label class="form-label"> المدينة<span class="required">*</span></label>
-                <input type="text" class="form-control "  value="{{cityName}}"  disabled>
-           
+                <select class="form-select" #CityId="ngModel" required  disabled
+                name="CityId" [(ngModel)]="requestFactory.CityId">
+                    <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.NameAr}} </option>
+
+                </select>
                
             </div>
             <div class="col-md-3">
@@ -54,9 +59,9 @@
             </div>
             <div class="col-md-5" *ngIf="requestFactory.IsCityCorrect == false">
                 <label class="form-label"> أختر  المدينة الصحيحة</label>
-                <select class="form-select" #CityId="ngModel" required  
-                name="CityId" [(ngModel)]="requestFactory.NewCityId" (change)="onCitySelect(requestFactory.NewCityId)">
-                    <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.NameAr}} </option>
+                <select class="form-select" #NewCityId="ngModel" required  
+                name="NewCityId" [(ngModel)]="requestFactory.NewCityId" (change)="onCitySelect(requestFactory.NewCityId)">
+                    <option *ngFor="let city of Newcities" [ngValue]="city.Id">{{city.NameAr}} </option>
 
                 </select>
                
@@ -66,8 +71,10 @@
             
             <div class="col-md-4">
                 <label class="form-label"> المنطقة الصناعية<span class="required">*</span></label>
-                <input type="text" class="form-control "  value="{{IndusterialName}}"  disabled>
-           
+                <select class="form-select" name="IndustrialAreaId" disabled
+                [(ngModel)]="requestFactory.IndustrialAreaId" >
+                    <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
+                </select>
             </div>
             <div class="col-md-3">
                 <label class="form-label"> هل المنطقة الصناعية صحيحة؟</label>
@@ -80,7 +87,7 @@
                 <label class="form-label"> أختر المنطقة الصناعية الصحيحة</label>
                 <select class="form-select" name="IndustrialAreaId" 
                 [(ngModel)]="requestFactory.NewIndustrialAreaId" >
-                    <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
+                    <option *ngFor="let industrialArea of NewindustrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
                 </select>
             </div>
         </div>

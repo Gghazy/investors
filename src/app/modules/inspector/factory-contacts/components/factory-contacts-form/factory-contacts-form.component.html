@@ -63,6 +63,19 @@
                 [(ngModel)]="request.NewOfficerEmail"
               />
           </div>
+          <!-- <div class="input-group mb-3">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="example@mail.com"
+              name="FinanceManagerEmail"
+              formControlName="NewOfficerEmail"
+            />
+          </div>
+          <div style="color: #F00;" *ngIf="phoneForm.get('FinanceManagerEmail')?.errors && phoneForm.get('FinanceManagerEmail')?.touched">
+            <div *ngIf="phoneForm.get('FinanceManagerEmail')?.hasError('required')">هذا الحقل مطلوب</div>
+            <div *ngIf="phoneForm.get('FinanceManagerEmail')?.hasError('isValidEmail')">عنوان بريد إلكتروني غير صالح</div>
+          </div> -->
         </div>
 
         <div class="row" >
@@ -92,13 +105,32 @@
 
           <div class="col-md-5" *ngIf="request.IsOfficerPhoneCorrect == false">
             <label class="form-label"> أدخل رقم الجوال الصحيح </label>
-            <input
-            type="tel"
-            class="form-control"
-            [(ngModel)]="request.NewOfficerPhoneId"
            
-          />
-         
+          <ngx-intl-tel-input
+                    [cssClass]="'form-control'"
+                    [preferredCountries]="preferredCountries"
+                    [enableAutoCountrySelect]="true"
+                    [enablePlaceholder]="true"
+                    [searchCountryFlag]="true"
+                    [searchCountryField]="[
+                      SearchCountryField.Iso2,
+                      SearchCountryField.Name
+                    ]"
+                    [selectFirstCountry]="false"
+                    [selectedCountryISO]="CountryISO.SaudiArabia"
+                    [maxLength]="15"
+                    [phoneValidation]="true"
+                    [separateDialCode]="separateDialCode"
+                    [numberFormat]="PhoneNumberFormat.National"
+                    name="NewOfficerPhoneId"
+                    formControlName="NewOfficerPhoneId"
+
+                  >
+                  </ngx-intl-tel-input>
+                  <div style="color: #F00;" *ngIf="phoneForm.get('NewOfficerPhoneId')?.errors && phoneForm.get('NewOfficerPhoneId')?.touched">
+                    <div *ngIf="phoneForm.get('NewOfficerPhoneId')?.hasError('required')">هذا الحقل مطلوب</div>
+                    <div *ngIf="phoneForm.get('NewOfficerPhoneId')?.hasError('saPhoneNumber')">الرجاء إدخال رقم هاتف سعودي صالح</div>
+                  </div>
           </div>
         </div>
 
