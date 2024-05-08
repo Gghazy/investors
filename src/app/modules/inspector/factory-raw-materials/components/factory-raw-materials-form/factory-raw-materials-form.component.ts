@@ -6,6 +6,7 @@ import { RawMaterialSearch } from 'src/app/modules/factory-raw-materials/models/
 import { FactoryRawMaterialService } from 'src/app/modules/factory-raw-materials/factory-raw-material.service';
 import { FactoryRawMaterialsService } from '../../factory-raw-materials.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   materials: any[] = []
   searchRawmaterial = new RawMaterialSearch();
   request: any[] = [];
+  PeriodName!:string
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -28,6 +30,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     private service: FactoryRawMaterialsService,
     private fileService: FileService,
     private shared: SharedService,
+    private periodService : PeriodService,
+
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -35,6 +39,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   ngOnInit() {
     this.userId = this.shared.getUserId();
     this.getRawMaterial()
+    this.getperiod()
   }
   getRawMaterial() {
     this.service
@@ -137,7 +142,14 @@ element.Comment=      this.materials[0].Comment
     });
     this.toastr.success("تم الحفظ");
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
   onInputChange(event: Event): void {
     
 

@@ -8,6 +8,7 @@ import { FactoryModel } from 'src/app/modules/factory/models/factory-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { BasicFileModel } from 'src/app/modules/basic-info/models/basic-file-model';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-basic-info-form',
@@ -23,6 +24,7 @@ export class BasicInfoFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
   requestFactory = new BasicInfoModel();
+  PeriodName!:string
   constructor(
     private route: ActivatedRoute,
     private shared: SharedService,
@@ -31,6 +33,8 @@ export class BasicInfoFormComponent implements OnInit {
     private fileService: FileService,
     private toastr: ToastrService,
     private router: Router,
+    private periodService : PeriodService,
+
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -39,6 +43,7 @@ export class BasicInfoFormComponent implements OnInit {
     this.userId = this.shared.getUserId();
     this.getBasicInfo();
     this.getFiles();
+    this.getperiod()
   }
   onInputChange(event: Event): void {
     debugger;
@@ -81,7 +86,14 @@ export class BasicInfoFormComponent implements OnInit {
         });
     }
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
   getFile(attachmentId: number) {
     this.fileService.getImage(attachmentId).subscribe((res: any) => {
       this.src = 'data:image/jpeg;base64,' + res.Image

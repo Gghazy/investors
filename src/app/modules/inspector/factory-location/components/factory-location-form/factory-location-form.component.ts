@@ -7,6 +7,7 @@ import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { InspectorFactoryLocationService } from '../../factory-location.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-factory-location-form',
@@ -29,7 +30,7 @@ export class FactoryLocationFormComponent implements OnInit {
   cityName:any;
   FactoryEntityName:any;
   IndusterialName:any;
-
+PeriodName!:string
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -38,6 +39,8 @@ export class FactoryLocationFormComponent implements OnInit {
     private inspectorService: InspectorFactoryLocationService,
     private router: Router,
     private lookUpService: LookUpService,
+    private periodService : PeriodService,
+
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -48,7 +51,7 @@ export class FactoryLocationFormComponent implements OnInit {
     this.getFactoryEntities();
     this.getCities();
     this.getIndustrialAreas();
-   
+   this.getperiod()
    
 
   }
@@ -81,7 +84,14 @@ export class FactoryLocationFormComponent implements OnInit {
 
       });
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
   onEntitySelect(id: number) {
     this.Newcities=[]
     this.NewindustrialAreas=[]

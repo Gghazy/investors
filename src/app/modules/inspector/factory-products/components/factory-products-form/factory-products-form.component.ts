@@ -9,6 +9,7 @@ import { FactoryProductService } from 'src/app/modules/factory-products/factory-
 import { FactoryProductsModel } from '../../models/factory-products.model';
 import { FactoryProductsService } from '../../factory-products.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-factory-products-form',
@@ -23,6 +24,7 @@ export class FactoryProductsFormComponent implements OnInit {
   search = new ProductSearch();
   Factoryproducts = new ProductModel();
   request:FactoryProductsModel [] = []
+  PeriodName!:string
   constructor(
     private route: ActivatedRoute,
     private InspectorService: FactoryProductsService,
@@ -30,6 +32,8 @@ export class FactoryProductsFormComponent implements OnInit {
     private fileService: FileService,
      private toastr: ToastrService,
      private router: Router,
+     private periodService : PeriodService,
+
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -37,6 +41,7 @@ export class FactoryProductsFormComponent implements OnInit {
   ngOnInit() {
     this.userId = this.shared.getUserId();
     this.getProducts()
+    this.getperiod()
   }
   getProducts() {
     
@@ -107,6 +112,14 @@ this.request.forEach(element => {
      
 });
     console.log(row)
+  }
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
   }
   save(){
   console.log(this.request)

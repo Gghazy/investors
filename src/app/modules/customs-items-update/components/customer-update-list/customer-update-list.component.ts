@@ -7,6 +7,7 @@ import { FactoryProductService } from 'src/app/modules/factory-products/factory-
 import { ProductPeriodActiveModel } from '../../models/product-period-active-model';
 import { CustomsItemsUpdateService } from '../../customs-items-update.service';
 import { ToastrService } from 'ngx-toastr';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-customer-update-list',
@@ -19,7 +20,7 @@ export class CustomerUpdateListComponent implements OnInit {
   periodId: any;
   search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
-
+PeriodName!:string
   ProductPeriodActives:ProductPeriodActiveModel[]=[];
 
   constructor(
@@ -27,6 +28,7 @@ export class CustomerUpdateListComponent implements OnInit {
      private factoryProductService: FactoryProductService,
      private customsItemsUpdateService: CustomsItemsUpdateService,
      private toastr: ToastrService,
+     private periodService : PeriodService,
 
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
@@ -34,6 +36,7 @@ export class CustomerUpdateListComponent implements OnInit {
   }
   ngOnInit() {
     this.getProducts()
+    this.getperiod()
   }
 
     isChecked(item: ProductPeriodActiveModel): boolean {
@@ -57,7 +60,14 @@ export class CustomerUpdateListComponent implements OnInit {
       this.ProductPeriodActives.push(newObject);
     }
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
   getProducts() {
 
     this.search.FactoryId = this.factoryId;

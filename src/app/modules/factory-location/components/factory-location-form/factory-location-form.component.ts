@@ -6,6 +6,7 @@ import { FactoryLocationService } from '../../factory-location.service';
 import { ToastrService } from 'ngx-toastr';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
+import { PeriodService } from 'src/app/modules/period/period.service';
  
 @Component({
   selector: 'app-factory-location-form',
@@ -19,6 +20,7 @@ export class FactoryLocationFormComponent {
   factoryId: any;
   periodId: any;
   cityCode: any;
+  PeriodName!:string
   request = new LocationModel();
   cities:LookUpModel[]=[];
   industrialAreas:LookUpModel[]=[];
@@ -30,6 +32,7 @@ export class FactoryLocationFormComponent {
      private lookUpService: LookUpService,
      private toastr: ToastrService,
      private router: Router,
+     private periodService : PeriodService,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -39,8 +42,16 @@ export class FactoryLocationFormComponent {
     this.getCities();
     this.getIndustrialAreas();
     this.getFactoryEntities();
+    this.getperiod()
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
   getLocation() {
     this.factoryLocationService
       .getOne(this.factoryId,this.periodId)
