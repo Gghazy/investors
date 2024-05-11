@@ -6,6 +6,7 @@ import { FactoryModel } from 'src/app/modules/factory/models/factory-model';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { FactorySearch } from 'src/app/modules/factory/models/factory-search';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-basic-info-form',
@@ -20,18 +21,21 @@ export class BasicInfoFormComponent implements OnInit {
   periodId: any;
   request = new FactoryModel();
   search = new FactorySearch();
+  PeriodName!:string
   constructor(
     private route: ActivatedRoute,
      private basicInfoService: BasicInfoService,
      private toastr: ToastrService,
      private router: Router,
      private sharedService: SharedService,
+     private periodService : PeriodService,
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
     this.getBasicInfo();
+    this.getperiod()
   }
 
   getBasicInfo() {
@@ -41,7 +45,14 @@ export class BasicInfoFormComponent implements OnInit {
         this.request = res.Data;
       });
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
 
   save() {
     if(!this.request.DataEntry){

@@ -14,21 +14,30 @@ export class MonthlyFinancialFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
   request = new MonthlyFinancialModel();
-
+PeriodName!:string
   constructor(
     private route: ActivatedRoute,
      private monthlyFinancialService: MonthlyFinancialService,
      private periodService: PeriodService,
      private toastr: ToastrService,
      private router: Router,
+
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
     this.getFinancial()
+    this.getperiod()
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
 
   getFinancial() {
     this.monthlyFinancialService

@@ -13,6 +13,7 @@ import { LookUpService } from 'src/app/core/service/look-up.service';
 import { ProductSearch } from 'src/app/modules/customs-items-update/models/product-search';
 import { SearchCriteria } from 'src/app/core/models/search-criteria';
 import { RawMaterialSearch } from '../../models/raw-material-search.model';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-factory-raw-materials-lists',
@@ -43,7 +44,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   src!: string;
   saveSuccessful: boolean = false;
   numRows: number = 0;
-
+PeriodName!:string;
 
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
@@ -51,7 +52,8 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     private fileService: FileService,
     private toastr: ToastrService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+  private periodService:PeriodService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
 
@@ -72,7 +74,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     };
 
     this.getUnits();
-
+this.getperiod()
   }
   showInput = false;
 
@@ -83,7 +85,14 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   }
 
 
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  } 
   handleUploadClick(event: Event) {
     const targetButton = event.target as HTMLButtonElement;
     const closestDiv = targetButton.closest('div');

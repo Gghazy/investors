@@ -1,6 +1,6 @@
 <section class="form-panel">
     <div class="form-header">
-        <h2 class="form-title">بيانات المواد الأولية الفعلية </h2>
+        <h2 class="form-title">بيانات المواد الأولية الفعلية ({{PeriodName}})</h2>
         <div>
             <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
                 رجوع
@@ -119,11 +119,7 @@
         <div class="row">
 
 
-            <div class="col-md-6">
-                <label class="form-label"> اسم المستند</label>
-                <input type="text" name="Name" class="form-control" [(ngModel)]="requestFile.Name">
-
-            </div>
+         
 
             <div class="col-md-6">
                 <label class="form-label">رفع المستند </label>

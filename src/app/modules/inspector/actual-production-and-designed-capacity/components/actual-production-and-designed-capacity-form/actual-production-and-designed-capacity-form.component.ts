@@ -11,6 +11,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { ReasonService } from 'src/app/modules/actual-production-and-designed-capacity/reason.service';
 import { ReasonModel } from 'src/app/modules/actual-production-and-designed-capacity/models/reason-model';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-actual-production-and-designed-capacity-form',
@@ -26,6 +27,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
   request=new ActualProductionAndDesignedCapacityModel();
   reasons = new ReasonModel();
   Allreasons:any=[]
+  PeriodName!:string
   constructor(
     private route: ActivatedRoute,
     private shared: SharedService,
@@ -34,6 +36,8 @@ export class ActualProductionAndDesignedCapacityFormComponent {
     private toastr: ToastrService,
     private lookUpService: LookUpService,
     private reasonService: ReasonService,
+    private periodService : PeriodService,
+
     ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -41,7 +45,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
   ngOnInit(): void {
     this.userId = this.shared.getUserId();
     this.getProduct();
-   
+   this.getperiod()
   }
 
 
@@ -87,7 +91,14 @@ export class ActualProductionAndDesignedCapacityFormComponent {
       }
     }
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
   save(){
     
     console.log(this.request)

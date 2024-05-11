@@ -6,6 +6,7 @@ import { ProductSearch } from 'src/app/modules/customs-items-update/models/produ
 import { FactoryProductService } from '../../factory-product.service';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastrService } from 'ngx-toastr';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-product-list',
@@ -18,19 +19,22 @@ export class ProductListComponent implements OnInit {
   search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
   productId!: number |undefined;
+  PeriodName!:string;
   @ViewChild('closeModal') Modal!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
      private factoryProductService: FactoryProductService,
      private fileService: FileService,
-     private toastr: ToastrService
+     private toastr: ToastrService,
+    private periodService : PeriodService, 
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
     this.getProducts();
+    this.getperiod()
   }
 
   showInput = false;
@@ -40,7 +44,14 @@ export class ProductListComponent implements OnInit {
 
     this.showInput = selectedValue === 'yes';
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  } 
   getProducts() {
     
     this.search.FactoryId = this.factoryId;

@@ -1,7 +1,7 @@
 
 <section class="form-panel">
     <div class="form-header">
-        <h2 class="form-title">    البيانات الأساسية   </h2>
+        <h2 class="form-title">    البيانات الأساسية ({{PeriodName}}) </h2>
         <div>
             <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
                 رجوع
@@ -60,6 +60,8 @@
                 
             </div>
         </div>
+        
+        <app-basic-info-file  [factoryId]="factoryId" [periodId]="periodId"></app-basic-info-file>
         <div class="form-footer">
             <div class="col-12">
                 <button (click)="save()" class="btn btn-primary me-1" type="submit">حفظ</button>
@@ -67,7 +69,6 @@
             </div>
         </div>
 
-        <app-basic-info-file  [factoryId]="factoryId" [periodId]="periodId"></app-basic-info-file>
     </div>
 
     

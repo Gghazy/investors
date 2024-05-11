@@ -6,6 +6,7 @@ import { fade } from 'src/app/shared/animation/app.animation';
 import { FactoryContactModel } from '../../models/factory-contact-model';
 import { FactoryContactService } from '../../factory-contact.service';
 import { ToastrService } from 'ngx-toastr';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-factory-contact-form',
@@ -20,6 +21,7 @@ export class FactoryContactFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
   request: any;
+  PeriodName!:string
   separateDialCode = false;
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
@@ -42,6 +44,7 @@ export class FactoryContactFormComponent implements OnInit {
     private factoryContactService: FactoryContactService,
     private toastr: ToastrService,
     private router: Router,
+    private periodService : PeriodService,
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -49,6 +52,7 @@ export class FactoryContactFormComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getContact();
+    this.getperiod()
   }
 
   getContact() {
@@ -88,7 +92,14 @@ export class FactoryContactFormComponent implements OnInit {
     }
 
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
   saPhoneNumberValidator(control: FormControl): ValidationErrors | null {
     const phoneNumber = control.value?.number;
     if (phoneNumber != null) {

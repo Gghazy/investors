@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ProductsNotInFactorySearch } from '../../models/products-not-in-factory-search';
 import { ResultResponse } from 'src/app/core/models/result-response';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-product-form',
@@ -28,13 +29,11 @@ export class ProductFormComponent implements OnInit {
   isLoading = false;
   selectProductId!:any;
 
-
   constructor(
     private factoryProductService: FactoryProductService,
     private lookUpService: LookUpService,
     private fileService: FileService,
-    private toastr: ToastrService
-
+    private toastr: ToastrService,
   ) { }
   ngOnInit(): void {
     if (this.productId != 0) {
@@ -58,7 +57,8 @@ export class ProductFormComponent implements OnInit {
     };
 
   }
-
+ 
+ 
   getOne() {
 
     this.factoryProductService

@@ -14,6 +14,7 @@ import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ActualRawMaterialSearch } from '../../models/actualRawMaterialSearch.model';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-actual-raw-materials-form',
@@ -44,11 +45,12 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   selectedItemId: number | null = null;
   selectedX: number = 0;
   sign: string | null = null;
-
+PeriodName!:string
 
   constructor(private route: ActivatedRoute, private service: ActualRawMaterialsService,
     private toastr: ToastrService,
     private router: Router,
+    private periodService:PeriodService,
     private lookUpService: LookUpService, private fileService: FileService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -60,7 +62,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     this.getRawMaterial();
     this.getFiles();
     this.getUnits()
-
+this.getperiod()
 
     this.dropdownSettings = {
       singleSelection: true,
@@ -72,7 +74,14 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     };
   }
 
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  } 
 
 
 

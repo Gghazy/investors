@@ -7,6 +7,7 @@ import { InspectorFactoryContactsService } from '../../factory-contacts.service'
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
+import { PeriodService } from 'src/app/modules/period/period.service';
 
 @Component({
   selector: 'app-factory-contacts-form',
@@ -19,6 +20,7 @@ export class FactoryContactsFormComponent implements OnInit {
   request = new FactoryContactsModel()
   requestContact = new FactoryContactModel()
   userId!: string;
+  PeriodName!:string
   separateDialCode = false;
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
@@ -36,6 +38,8 @@ export class FactoryContactsFormComponent implements OnInit {
     private shared: SharedService,
     private toastr: ToastrService,
     private router: Router,
+    private periodService : PeriodService,
+
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -43,7 +47,7 @@ export class FactoryContactsFormComponent implements OnInit {
   ngOnInit() {
     this.userId = this.shared.getUserId();
     this.getContact()
-
+this.getperiod()
 
   }
 
@@ -55,7 +59,14 @@ export class FactoryContactsFormComponent implements OnInit {
         console.log(this.request)
       });
   }
-
+  getperiod(){
+    this.periodService
+    .getOne(this.periodId)
+    .subscribe((res: any) => {
+      
+      this.PeriodName= res.Data.PeriodName;
+    });
+  }
 
   onInputChange(event: Event): void {
 
