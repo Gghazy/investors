@@ -8,7 +8,6 @@
              <tr>
                  <th>#</th>
                  <th>اسم المنتج</th>
-                 <th> اسم المستند </th>
                  <th>امتداد المستند</th>                                            
                  <th style="min-width: 140px">خيارات</th>
              </tr>
@@ -16,8 +15,7 @@
          <tbody>
              <tr *ngFor="let file of files let i=index">
                  <td>{{i+1}}</td>
-                 <td>Products</td>   
-                 <td>  {{file.Name}}</td>
+                 <td>Products</td> 
                  <td>{{file.Extension}}</td>
                  <td>
                      <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">

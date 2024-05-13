@@ -2,25 +2,26 @@
 
     <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل" disabled> اسم البند الجمركي
-            <i>؟</i>
+       
         </label>
 
-        <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="filterData(searchTerm)">
-        <select  class="form-select" *ngIf="searchValue" [(ngModel)]="request.CustomItemName" (change)="onSelectionChange()">
-          <option *ngFor="let item of filteredData" [value]="item.Id">
-            <!-- Display your data here -->{{ item.Hs12NameAr }} ({{item. Hs12Code}})
+        <!-- <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="filterData(searchTerm)"> -->
+        <!-- <select  class="form-select" *ngIf="searchValue" [(ngModel)]="request.CustomItemName" (change)="onSelectionChange()">
+          <option *ngFor="let item of filteredData" [value]="item.Id"> -->
+           <!-- {{ item.Hs12NameAr }} ({{item. Hs12Code}})
           </option>
-        </select>
-        <!-- <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName">
+        </select> -->
+        <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName">
             <option *ngFor="let item of products" [value]="item.Id">
                 {{ item.Hs12NameAr }} ({{item. Hs12Code}})
 
             </option>
-        </select> -->
+        </select>
     </div>
     <div class="col-md-3">
-        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اسم المادةالأولية
-            <i>؟</i>
+        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اسم المادة الأولية ( المادة الخام)
+            
+            <span class="required">*</span>
         </label>
 
         <input type="text" class="form-control" value="" [(ngModel)]="request.Name">
@@ -28,7 +29,8 @@
     </div>
     <div class="col-md-3">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اقصى استهلاك شهري
-            <i>؟</i>
+            
+            <span class="required">*</span>
         </label>
         <input type="number"  class="form-control" noMinus [(ngModel)]="request.MaximumMonthlyConsumption" >
 
@@ -37,7 +39,7 @@
 
 
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">
-            وحدة القياس <i>؟</i>
+            وحدة القياس 
         </label>
         <select class="form-select" [(ngModel)]="request.UnitId" disabled>
             <option *ngFor="let item of units" [value]="item.Id">
@@ -49,7 +51,8 @@
     <div class="col-md-3">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">متوسط الوزن بحسب الوحدة لكل
             كيلوجرام
-            <!-- <i>؟</i> -->
+            <!--  -->
+            <span class="required">*</span>
         </label>
         <div class="input-group">
             <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG" noMinus
@@ -59,7 +62,8 @@
     </div>
     <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">تستخدم في أي منتج ؟
-            <i>؟</i>
+            
+            <span class="required">*</span>
         </label>
 
         <div class="multiselect-parent">
@@ -76,20 +80,22 @@
     <div class="col-md-3">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">إرفاق صورة المادة
             الأولية
-            <i>؟</i>
+            
+            <span class="required">*</span>
         </label>
         <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
     </div>
     <div class="col-md-3">
         <label class="form-label" placement="left" title=""
             tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت" aria-describedby="tooltip617728"> إرفاق ورقة
-            البيانات <i>؟</i></label>
+            البيانات </label>
+            <span class="required">*</span>
         <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">
     </div>
 
     <div class="col-md-12">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">وصف للمادة الأوليةالمستخدمة
-            <i>؟</i>
+            
         </label>
 
         <textarea class="form-control" rows="2" [(ngModel)]="request.Description"></textarea>

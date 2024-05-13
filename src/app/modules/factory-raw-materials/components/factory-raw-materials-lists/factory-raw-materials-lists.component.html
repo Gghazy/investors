@@ -1,6 +1,6 @@
 <section class="form-panel">
     <div class="form-header">
-        <h2 class="form-title">بيانات المواد الأولية ({{PeriodName}})</h2>
+        <h2 class="form-title">بيانات المواد الأولية ( المواد الخام) ({{PeriodName}})</h2>
         <div>
             <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
                 رجوع
@@ -15,11 +15,12 @@
     <div class="form-body">
 
         <div class="col-md-12 mt-3">
-            <h3> إدخال التفاصيل التالية عن المواد الأولية </h3>
+            <h3> إدخال التفاصيل التالية عن المواد الأولية ( المواد الخام) </h3>
         </div>
 
         <div class="col-md-6 mb-5">
-            <label class="form-label"> كم عدد المواد الأولية المستخدمة؟​</label>
+            <label class="form-label"> كم عدد المواد الأولية ( المواد الخام) المستخدمة؟​</label>
+            <span class="required">*</span>
             <input type="number"  class="form-control" [(ngModel)]="materialCount"  (input)="generateRows()"min="1">
         </div>
 
@@ -29,9 +30,9 @@
                     <tr>
                         <th>#</th>
                        
-                        <th> اسم المادةالأولية </th>
-                        <th> صورة المادةالأولية </th>
-                        <th> ورقة بيانات المادة الاولية</th>
+                        <th> اسم المادة الأولية ( المادة الخام) </th>
+                        <th> صورة المادة الأولية ( المادة الخام) </th>
+                        <th>ورقة بيانات المادة الاولية(المادة الخام)</th>
                         <th> خيارات</th>
                     </tr>
                 </thead>
@@ -129,7 +130,12 @@
             </div>
         </div>
 
-
+        <div class="form-footer">
+            <div class="col-12">
+                <button  class="btn btn-primary me-1" type="submit">حفظ</button>
+                <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId"  class="btn btn-danger">الغاء</a>
+            </div>
+        </div>
     </div>
 
     <!-- Modal photos-->
@@ -137,7 +143,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> صورة المادة الأولية</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> صورة المادة الأولية ( المادة الخام)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">

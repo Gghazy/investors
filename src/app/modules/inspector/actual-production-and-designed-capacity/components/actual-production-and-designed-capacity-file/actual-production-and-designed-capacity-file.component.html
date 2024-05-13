@@ -7,7 +7,6 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th> اسم المستند </th>
                 <th> نوع المستند </th>
                 <th>امتداد المستند</th>
                 <th style="min-width: 140px">خيارات</th>
@@ -16,7 +15,6 @@
         <tbody>
             <tr *ngFor="let file of files let i=index">
                 <td>{{i+1}}</td>
-                <td> {{file.Name}}</td>
                 <td *ngIf="file.Type==0">البيانات المالية المدققة</td>
                 <td *ngIf="file.Type==1">سجل الإنتاج </td>
                 <td *ngIf="file.Type==2">كمية المبيعات</td>
@@ -49,7 +47,7 @@
     </div>
 
     <div class="col-md-6">
-        <label class="form-label">رفع المستند </label>
+        <label class="form-label">رفع المستند <span class="required">*PDF</span></label>
         <div class="input-group">
             <input type="file" #fileInput class="form-control" placeholder="" value="" (change)="saveFile($event)">
             <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
@@ -62,7 +60,6 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th> اسم المستند </th>
                 <th> نوع المستند </th>
                 <th>امتداد المستند</th>
                 <th style="min-width: 140px">خيارات</th>
@@ -72,7 +69,6 @@
 
             <tr *ngFor="let file of Inspectorsfiles let i=index">
                 <td>{{i+1}}</td>
-                <td> {{file.Name}}</td>
                 <td *ngIf="file.Type==0">البيانات المالية المدققة</td>
                 <td *ngIf="file.Type==1">سجل الإنتاج </td>
                 <td *ngIf="file.Type==2">كمية المبيعات</td>

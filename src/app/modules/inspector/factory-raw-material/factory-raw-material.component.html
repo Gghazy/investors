@@ -1,6 +1,6 @@
             <section class="form-panel">
                 <div class="form-header">
-                    <h2 class="form-title">     المواد الأولية </h2>
+                    <h2 class="form-title">     المواد الأولية ( المواد الخام) </h2>
                     <div>
                         <a routerLink="/visit-landing" class="back-link">
                             رجوع
@@ -10,7 +10,7 @@
                 </div>
                 <div class="form-body">
                     <div class="col-md-12">
-                        <h3>  التحقق من وضوح صور المواد الأولية للمصنع</h3>
+                        <h3>  التحقق من وضوح صور المواد الأولية ( المواد الخام) للمصنع</h3>
                     </div>
 
                     <ul class="list-review p-0" *ngFor="let material of rawMaterials ; let j =index">
@@ -18,7 +18,7 @@
                             <div class="row">
                        
                                 <div class="col-md-3">
-                                    <label class="form-label"> صورة المادة الأولية الحالية</label>
+                                    <label class="form-label"> صورة المادة الأولية ( المادة الخام) الحالية</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" value="المادة رقم {{j+1}} " disabled>
                                         <div data-bs-toggle="modal" data-bs-target="#photoModal">
@@ -63,14 +63,14 @@
                     </div>
 
                     <div class="col-md-12">
-                        <h3> المستندات المتعلقة بالمواد الأولية للمصنع </h3>
+                        <h3> المستندات المتعلقة بالمواد الأولية ( المواد الخام) للمصنع </h3>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover table-small-header">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th> اسم المادة الأولية </th>
+                                    <th> اسم المادة الأولية ( المادة الخام) </th>
                                     <th> اسم المستند </th>
                                     <th>امتداد المستند</th>                                            
                                     <th style="min-width: 140px">خيارات</th>
@@ -79,8 +79,8 @@
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>    المادة الأولية 1 </td>
-                                    <td>  كتالوج  المادة الأولية 1 </td>
+                                    <td>    المادة الأولية ( المادة الخام) 1 </td>
+                                    <td>  كتالوج  المادة الأولية ( المادة الخام) 1 </td>
                                     <td>PDF</td>
                                     <td>
                                         <a href="#" class="btn btn-primary mx-1">
@@ -102,7 +102,7 @@
 
                     
                     <div class="col-md-3">
-                        <label class="form-label">  اختر المادة الأولية</label>
+                        <label class="form-label">  اختر المادة الأولية ( المادة الخام)</label>
                         <select class="form-select">
                             <option value="">المادة رقم 1 (رقم البند الجمركي على مستوى 12 )</option>
                             <option value="">المادة رقم 2 (رقم البند الجمركي على مستوى 12 )</option>
@@ -129,7 +129,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th> اسم المادة الأولية </th>
+                                    <th> اسم المادة الأولية ( المادة الخام) </th>
                                     <th> اسم المستند </th>
                                     <th>امتداد المستند</th>                                            
                                     <th style="min-width: 140px">خيارات</th>
@@ -169,7 +169,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> صورة المادة الأولية</h5>
+                <h5 class="modal-title" id="exampleModalLabel"> صورة المادة الأولية ( المادة الخام)</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
