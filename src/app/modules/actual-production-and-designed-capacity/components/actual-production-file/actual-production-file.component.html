@@ -41,7 +41,6 @@
 <app-list>
     <ng-template #header>
         <th>#</th>
-        <th> اسم المستند </th>
         <th> نوع المستند </th>
         <th>امتداد المستند</th>                                            
         <th style="min-width: 140px">خيارات</th>
@@ -49,7 +48,6 @@
     <ng-template #body>
       <tr *ngFor="let file of files let i=index">
         <td>{{i+1}}</td>
-        <td>  {{file.Name}}</td>
         <td *ngIf="file.Type==0">البيانات المالية المدققة</td>
         <td *ngIf="file.Type==1">سجل الإنتاج </td>
         <td *ngIf="file.Type==2">كمية المبيعات</td>

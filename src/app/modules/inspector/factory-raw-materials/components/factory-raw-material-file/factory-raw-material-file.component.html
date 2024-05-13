@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <h3> المستندات المتعلقة بالمواد الأولية للمصنع </h3>
+    <h3> المستندات المتعلقة بالمواد الأولية ( المواد الخام) للمصنع </h3>
  </div>
  
  <div class="table-responsive">
@@ -7,7 +7,7 @@
          <thead>
              <tr>
                  <th>#</th>
-                 <th> اسم المادة الأولية </th>
+                 <th> اسم المادة الأولية ( المادة الخام) </th>
                  <th> اسم المستند </th>
                  <th>امتداد المستند</th>                                            
                  <th style="min-width: 140px">خيارات</th>
@@ -36,7 +36,7 @@
  </div>
  <div class="row">
     <div class="col-md-3">
-        <label class="form-label">  اختر المادة الأولية</label>
+        <label class="form-label">  اختر المادة الأولية ( المادة الخام)</label>
         <select class="form-select">
             <option value="">المادة رقم 1 (رقم البند الجمركي على مستوى 12 )</option>
             <option value="">المادة رقم 2 (رقم البند الجمركي على مستوى 12 )</option>
@@ -63,8 +63,7 @@
          <thead>
              <tr>
                  <th>#</th>
-                 <th> اسم المادة الأولية </th>
-                 <th> اسم المستند </th>
+                 <th> اسم المادة الأولية ( المادة الخام) </th>
                  <th>امتداد المستند</th>                                            
                  <th style="min-width: 140px">خيارات</th>
              </tr>
@@ -74,7 +73,6 @@
              <tr *ngFor="let file of Inspectorsfiles let i=index">
                  <td>{{i+1}}</td>
                  <td>{{file.RawMaterialName}}</td>
-                 <td>  {{file.Name}}</td>
                  <td>{{file.Extension}}</td>
                  <td>
                      <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FactoryRawMaterialsFormComponent } from './components/factory-raw-materials-form/factory-raw-materials-form.component';
 
 const routes: Routes = [
-  { path: '', component: FactoryRawMaterialsFormComponent , data: { title: 'المواد الأولية' }},
+  { path: '', component: FactoryRawMaterialsFormComponent , data: { title: 'المواد الأولية ( المواد الخام)' }},
 
 ];
 

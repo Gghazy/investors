@@ -28,7 +28,7 @@
 </div>
 
 <div class="col-md-6">
-    <label class="form-label">رفع المستند <span class="required">*jpeg , jpg</span>   </label>
+    <label class="form-label">رفع المستند <span class="required">*jpeg , jpg , png , pdf</span>   </label>
     <div class="input-group">
         <input type="file" #fileInput  accept="image/*" class="form-control" placeholder="" value="" (change)="saveFile($event)">
         <button class="btn btn-primary" type="submit">اضافة </button>
@@ -40,7 +40,6 @@
 <app-list>
     <ng-template #header>
         <th>#</th>
-        <th> اسم المستند </th>
         <th> نوع المستند </th>
         <th>امتداد المستند</th>                                            
         <th style="min-width: 140px">خيارات</th>
@@ -48,7 +47,6 @@
     <ng-template #body>
       <tr *ngFor="let file of files let i=index">
         <td>{{i+1}}</td>
-        <td>  {{file.Name}}</td>
         <td>  {{file.Type}}</td>
         <td>{{file.Extension}}</td>
         <td>

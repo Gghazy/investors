@@ -48,12 +48,19 @@
             </ng-template>
         </app-list>
         <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
-       
+       <div *ngIf="showReason">
         <app-reason *ngIf="factoryStatus!=3" [periodId]="periodId" [factoryId]="factoryId"></app-reason>
+       
+       </div>
         <app-actual-production-file *ngIf="factoryId &&factoryStatus!=3" [periodId]="periodId"  [factoryId]="factoryId"></app-actual-production-file>      
 
     </div>
-
+    <div class="form-footer">
+      <div class="col-12">
+          <button  class="btn btn-primary me-1" type="submit">حفظ</button>
+          <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId"  class="btn btn-danger">الغاء</a>
+      </div>
+  </div>
 </section>
 
 <!-- Modal Add Product-->

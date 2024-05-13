@@ -22,7 +22,7 @@ export class ActualProductionListComponent implements OnInit {
   factoryStatus!:number;
   PeriodName!:string;
   @ViewChild('closeModal') Modal!: ElementRef;
-
+  showReason: boolean = false
   constructor(
     private route: ActivatedRoute,
     private ActualProductionService: ActualProductionAndDesignedCapacityService,
@@ -46,6 +46,16 @@ export class ActualProductionListComponent implements OnInit {
     .getAllPagination(this.search)
     .subscribe((res: any) => {
       this.products = res.Data;
+      this.products.Items.forEach((element:any) => {
+        if (element.ActualProduction > element.DesignedCapacity){
+         
+          this.showReason = true
+          return
+         }else{
+          this.showReason = false
+         }
+      });
+     
     });
   }
   getperiod(){

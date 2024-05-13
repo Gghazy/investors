@@ -31,7 +31,7 @@ export class FactoryLandingFormComponent implements OnInit {
   FactoryStatus: string = 'Default Label';
   FactoryStatusId!:number
   request = new FactoryStatus();
-  Year!:string
+  Year!:number
   constructor(
     private route: ActivatedRoute,
     private basicInfoService: BasicInfoService,
@@ -79,7 +79,7 @@ export class FactoryLandingFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.periodStartDate = res.Data.PeriodStartDate
         this.periodEndDate = res.Data.PeriodEndDate
-        this.Year= res.Data.Year
+        this.Year= res.Data.Year -1
         debugger
         this.periodMonth = res.Data.Month
       });

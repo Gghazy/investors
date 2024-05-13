@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ActualRawMaterialsFormComponent } from './components/actual-raw-materials-form/actual-raw-materials-form.component';
 
 const routes: Routes = [
-  { path: '', component: ActualRawMaterialsFormComponent , data: { title: 'بيانات المواد الأولية الفعلية' }},
+  { path: '', component: ActualRawMaterialsFormComponent , data: { title: 'بيانات المواد الأولية ( المواد الخام) الفعلية' }},
 
 ];
 
