@@ -6,6 +6,7 @@ import { ActualProductionAndDesignedCapacityService } from '../../actual-product
 import { ActualProductSearch } from '../../models/actual-product-search';
 import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-actual-production-list',
@@ -27,7 +28,7 @@ export class ActualProductionListComponent implements OnInit {
     private route: ActivatedRoute,
     private ActualProductionService: ActualProductionAndDesignedCapacityService,
     private basicInfoService: BasicInfoService,
-    
+    private toastr: ToastrService,
     private periodService : PeriodService, 
     ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
@@ -88,5 +89,7 @@ export class ActualProductionListComponent implements OnInit {
     this.Modal.nativeElement.click()
     this.getLevel12Product();
   }
-
+save(){
+  this.toastr.success("تم الحفظ");
+}
 }

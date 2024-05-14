@@ -61,6 +61,7 @@ export class ProductListComponent implements OnInit {
       .getAllPagination(this.search)
       .subscribe((res: any) => {
         this.products = res.Data;
+        console.log(this.products)
       });
   }
   pageChanged(data: any) {
@@ -92,5 +93,7 @@ export class ProductListComponent implements OnInit {
     const url= window.URL.createObjectURL(blob);
     window.open(url);
   }
-
+  save(){
+    this.toastr.success("تم الحفظ");
+  }
 }

@@ -212,8 +212,7 @@ this.generateRows()
 
     }
 
-
-
+  
     getImage(attachmentId: number) {
       if (attachmentId == null) {
         this.toastr.error("لا يوجد ملف");
@@ -317,36 +316,36 @@ this.generateRows()
 
 
     save() {
-      this.data.FactoryId = this.factoryId;
-      this.data.forEach((element: RawMaterial) => {
-        element.FactoryProductId = this.request.FactoryProductId;
-        if (element.Id == 0) {
-          this.rawMaterialService
-            .create(element)
-            .subscribe((res: any) => {
-              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+      // this.data.FactoryId = this.factoryId;
+      // this.data.forEach((element: RawMaterial) => {
+      //   element.FactoryProductId = this.request.FactoryProductId;
+      //   if (element.Id == 0) {
+      //     this.rawMaterialService
+      //       .create(element)
+      //       .subscribe((res: any) => {
+      //         this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
 
 
-            });
+      //       });
 
 
-        }
-        else {
-          this.rawMaterialService
-            .update(element)
-            .subscribe((res: any) => {
-              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+      //   }
+      //   else {
+      //     this.rawMaterialService
+      //       .update(element)
+      //       .subscribe((res: any) => {
+      //         this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
 
-              //  this.toastr.success("تم الحفظ");
-            });
-        }
+      //         //  this.toastr.success("تم الحفظ");
+      //       });
+      //   }
 
-        if (this.saveSuccessful == true) {
-          this.data = new RawMaterial();
-          this.selectedProducts = []
-        }
+      //   if (this.saveSuccessful == true) {
+      //     this.data = new RawMaterial();
+      //     this.selectedProducts = []
+      //   }
 
-      });
+      // });
       this.toastr.success("تم الحفظ");
     }
 

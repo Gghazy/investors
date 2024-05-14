@@ -3,6 +3,7 @@ import { LocationFileModel } from '../../models/location-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { FactoryLocationService } from '../../factory-location.service';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-location-file',
@@ -10,15 +11,19 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./location-file.component.scss']
 })
 export class LocationFileComponent implements OnInit {
+  factoryId: any;
   files: LocationFileModel[] = [];
   request = new LocationFileModel();
   src!: string;
   @Input() factoryLocationId!: number;
   constructor(
+    private route: ActivatedRoute,
     private fileService: FileService,
     private factoryLocationService: FactoryLocationService,
     private toastr: ToastrService
-  ){ }
+  ){ 
+    this.factoryId = this.route.snapshot.paramMap.get('id');
+  }
 
   ngOnInit(): void {
     this.getFiles();
@@ -26,7 +31,7 @@ export class LocationFileComponent implements OnInit {
 
   getFiles() {
     this.factoryLocationService
-      .getAllFiles(this.factoryLocationId)
+      .getAllFiles(this.factoryId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
@@ -49,6 +54,9 @@ export class LocationFileComponent implements OnInit {
   }
   save(){
     this.request.FactoryLocationId = this.factoryLocationId;
+    this.request.FactoryId = this.factoryId;
+    this.request.Name = "";
+    console.log(this.request)
     this.factoryLocationService
       .createFile(this.request)
       .subscribe((res: any) => {
