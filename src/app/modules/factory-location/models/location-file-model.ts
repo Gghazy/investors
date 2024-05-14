@@ -6,4 +6,5 @@ export class LocationFileModel {
     Extension !: string;
     AttachmentId !: number;
     FactoryLocationId!: number;
+    FactoryId!: number;
 }

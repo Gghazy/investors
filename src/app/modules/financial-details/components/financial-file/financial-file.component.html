@@ -21,10 +21,10 @@
 
 
     
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
         <label class="form-label"> اسم المستند<span class="required">*</span></label>
         <input  type="text" name="Name" class="form-control"  [(ngModel)]="request.Name">
-    </div>
+    </div> -->
     
     <div class="col-md-6">
         <label class="form-label" > نوع المستند <span class="required">*</span></label>
@@ -35,7 +35,7 @@
     </div>
     
     <div class="col-md-6">
-        <label class="form-label">رفع المستند <span class="required">*</span>   </label>
+        <label class="form-label">رفع المستند <span class="required">*PDF</span>   </label>
         <div class="input-group">
             <input type="file" #fileInput class="form-control" placeholder="" value="" (change)="saveFile($event)">
             <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
@@ -46,7 +46,7 @@
 <app-list>
     <ng-template #header>
         <th>#</th>
-        <th> اسم المستند </th>
+        <!-- <th> اسم المستند </th> -->
         <th> نوع المستند </th>
         <th>امتداد المستند</th>                                            
         <th style="min-width: 140px">خيارات</th>
@@ -54,7 +54,7 @@
     <ng-template #body>
       <tr *ngFor="let file of files let i=index">
         <td>{{i+1}}</td>
-        <td>  {{file.Name}}</td>
+        <!-- <td>  {{file.Name}}</td> -->
         <td>  {{file.Type=='zakat'?'الإقرار الزكوي ':'القوائم المالية'}}</td>
         <td>{{file.Extension}}</td>
         <td>

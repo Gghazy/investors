@@ -34,13 +34,13 @@
         <input  type="number" [disabled]="isDisabled" name="Kilograms_Per_Unit" class="form-control"  [(ngModel)]="request.Kilograms_Per_Unit">
     </div>
     <div class="col-md-6">
-        <label class="form-label">صورة المنتج <span class="required">*</span></label>
+        <label class="form-label">صورة المنتج <span class="required">*jpeg , jpg , png , pdf</span></label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
         </div>
     </div>
     <div class="col-md-6">
-        <label class="form-label">ورقة البيانات <span class="required">*</span></label>
+        <label class="form-label">ورقة البيانات <span class="required">*pdf</span></label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">
         </div>

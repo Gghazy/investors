@@ -21,7 +21,8 @@ export class FinancialDetailFormComponent {
   year!:number;
   factoryStatus!:number;
   request = new FinancialModel();
-
+  min: number = 10000;
+  max: number = 50000000000;
   constructor(
     private route: ActivatedRoute,
      private financialDetailService: FinancialDetailService,
@@ -96,5 +97,12 @@ export class FinancialDetailFormComponent {
     return total
   }
 
-
+  onChange() {
+    if (this.request.Revenues < this.min || this.request.Revenues > this.max) {
+      // Handle validation error
+      // For example, you can set a flag to display error message in the template
+    } else {
+      // Input is valid, handle accordingly
+    }
+  }
 }

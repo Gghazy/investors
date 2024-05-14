@@ -3,6 +3,7 @@ import { FinancialFileModel } from '../../Models/financial-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { FinancialDetailService } from '../../financial-detail.service';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-financial-file',
@@ -11,16 +12,21 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FinancialFileComponent implements OnInit {
   files:FinancialFileModel[]=[];
+  factoryId: any;
   request=new FinancialFileModel();
   src!:string;
   @Input() financialId!:number;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(
+    private route: ActivatedRoute,
     private fileService:FileService,
     private financialDetailService:FinancialDetailService,
     private toastr: ToastrService
-    ){}
+    ){
+      this.factoryId = this.route.snapshot.paramMap.get('id');
+    
+    }
 
   ngOnInit(): void {
    this.getFiles();
@@ -28,7 +34,7 @@ export class FinancialFileComponent implements OnInit {
 
   getFiles() { 
     this.financialDetailService
-      .getAllFiles(this.financialId)
+      .getAllFiles(this.factoryId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });

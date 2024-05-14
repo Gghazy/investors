@@ -14,12 +14,13 @@
     </div>
     <div class="form-body">
         <form #myForm="ngForm" (ngSubmit)="save()">
-            <div class="row" *ngIf="factoryStatus!=1" >
+            <div class="row" *ngIf="factoryStatus!=1">
                 <div class="col-md-12 mt-3">
                     <h3>الايرادات</h3>
                 </div>
-                <div class="col-md-4" >
-                    <label class="form-label" placement="left" title="" tooltip="هي إجمالي الأموال التي يحصل عليه المصنع من بيعه للسلع التي ينتجها.">
+                <div class="col-md-4">
+                    <label class="form-label" placement="left" title=""
+                        tooltip="هي إجمالي الأموال التي يحصل عليه المصنع من بيعه للسلع التي ينتجها.">
 
                         الإيرادات
                         <span class="required">*</span>
@@ -27,20 +28,23 @@
                         <i>؟</i>
                     </label>
 
-                    <div class="input-group" >
-                       
+                    <div class="input-group">
+
                         <input type="number" noMinus #Revenues="ngModel" required class="form-control" name="Revenues"
-                            [(ngModel)]="request.Revenues" min="10000" max="50000000000" >
+                            [(ngModel)]="request.Revenues"  min="10000" >
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
-                            style="max-width: 117px;" >
-                        </div>
-                
+                            style="max-width: 117px;">
+                    </div>
+
                     <div *ngIf="Revenues.invalid && (Revenues.dirty || Revenues.touched)" class="validation-error">
                         <div *ngIf="Revenues.errors?.['required']">حقل الايرادات مطلوب</div>
                     </div>
+                    <div *ngIf="Revenues.value < min || Revenues.value > max" class="validation-error">
+                        <div *ngIf="Revenues.errors?.['required']">أقل قيمة 10 الآف</div>
+                    </div>
                 </div>
-                
-                
+
+
             </div>
 
             <div class="row">
@@ -132,8 +136,9 @@
 
                 </div>
 
-                <div class="col-md-4" *ngIf="factoryStatus!=1" >
-                    <label class="form-label" placement="left" title="" tooltip="كل المبالغ التي يتم إنفاقها على الموظف من: الرواتب ونفقات الرعاية الصحية وأجور العمل الإضافي وتكاليف الإجازة المدفوعة و تكاليف نقل العمالة والمزايا الأخرى.">
+                <div class="col-md-4" *ngIf="factoryStatus!=1">
+                    <label class="form-label" placement="left" title=""
+                        tooltip="كل المبالغ التي يتم إنفاقها على الموظف من: الرواتب ونفقات الرعاية الصحية وأجور العمل الإضافي وتكاليف الإجازة المدفوعة و تكاليف نقل العمالة والمزايا الأخرى.">
 
                         نفقات العمالة ​​​
                         <span class="required">*</span>
@@ -142,7 +147,7 @@
                     </label>
                     <div class="input-group">
                         <input type="number" noMinus #EmploymentExpenses="ngModel" required class="form-control "
-                            name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses" min="5000">
+                            value="5000" name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
                     </div>
@@ -154,7 +159,8 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label class="form-label" placement="left" title="" tooltip="النفقات التشغيلية هي التكاليف التي يتكبدها العمل في إطار نشاطه اليومي للحفاظ على سير أعماله وتحقيق أهدافه تشمل هذه النفقات تكاليف المواد الخام، والإيجارات، وتكاليف الطاقة، والإعلانات، والصيانة، وغيرها من التكاليف التي ترتبط بالعمليات اليومية للمصنع.">
+                    <label class="form-label" placement="left" title=""
+                        tooltip="النفقات التشغيلية هي التكاليف التي يتكبدها العمل في إطار نشاطه اليومي للحفاظ على سير أعماله وتحقيق أهدافه تشمل هذه النفقات تكاليف المواد الخام، والإيجارات، وتكاليف الطاقة، والإعلانات، والصيانة، وغيرها من التكاليف التي ترتبط بالعمليات اليومية للمصنع.">
 
                         نفقات تشغيلية أخرى​​​​
                         <span class="required">*</span>
@@ -202,7 +208,8 @@
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
-                    <label class="form-label" placement="left" title="" tooltip="أصول يسهل تحويلها إلى نقد خلال سنة واحدة (12) شهر مثل (النقدية، استثمارات قصيرة المدى، المخزون..أصول أخرى)">
+                    <label class="form-label" placement="left" title=""
+                        tooltip="أصول يسهل تحويلها إلى نقد خلال سنة واحدة (12) شهر مثل (النقدية، استثمارات قصيرة المدى، المخزون..أصول أخرى)">
 
                         الأصول المتداولة
                         <span class="required">*</span>
@@ -222,7 +229,8 @@
 
                 <div class="col-md-4">
 
-                    <label class="form-label" placement="left" title="" tooltip="أصول وممتلكات لايمكن تحويلها بسهولة إلى نقود وتزيد عن سنة واحدة  وتسمى بالأصول الثابتة مثل ( عقارات وأرضي ومعدات، قروض طويلة الأجل، سندات مستحقة الدفع،.... مطلوبات غير متداولة أخرى)">
+                    <label class="form-label" placement="left" title=""
+                        tooltip="أصول وممتلكات لايمكن تحويلها بسهولة إلى نقود وتزيد عن سنة واحدة  وتسمى بالأصول الثابتة مثل ( عقارات وأرضي ومعدات، قروض طويلة الأجل، سندات مستحقة الدفع،.... مطلوبات غير متداولة أخرى)">
 
                         الأصول غير المتداولة
                         <span class="required">*</span>
@@ -246,7 +254,8 @@
 
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
-                    <label class="form-label" placement="left" title="" tooltip="هي التزامات على المصنع ويجب على المصنع سداده خلال سنة (12) شهر">
+                    <label class="form-label" placement="left" title=""
+                        tooltip="هي التزامات على المصنع ويجب على المصنع سداده خلال سنة (12) شهر">
 
                         الخصوم المتداولة
                         <span class="required">*</span>
@@ -266,7 +275,8 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label class="form-label" placement="left" title="" tooltip="هي التزامات مستحقة الدفع يجب على المصنع سداده لأكثر من سنة ">
+                    <label class="form-label" placement="left" title=""
+                        tooltip="هي التزامات مستحقة الدفع يجب على المصنع سداده لأكثر من سنة ">
 
                         الخصوم غير المتداولة
                         <span class="required">*</span>
@@ -288,6 +298,7 @@
 
 
 
+            <app-financial-file  [financialId]="request.Id"></app-financial-file>
 
 
 
@@ -299,8 +310,7 @@
             </div>
         </form>
 
-        <app-financial-file *ngIf="request.Id" [financialId]="request.Id"></app-financial-file>
-
+     
     </div>
 
 
