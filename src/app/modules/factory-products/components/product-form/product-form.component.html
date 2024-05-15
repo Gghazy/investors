@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6" *ngIf="productId!=0">
-        <label class="form-label"> اسم المنتج <span class="required">*</span></label>
+        <label class="form-label"> اسم المنتج على حسب المستوى12<span class="required">*</span></label>
         <input disabled  type="text" name="ProductName" class="form-control"  [(ngModel)]="request.ProductName">
       </div>
 
@@ -30,7 +30,12 @@
         </select>
     </div>
     <div class="col-md-6">
-        <label class="form-label">الوزن المقابل​ بالكيلوغرام لكل وحدة​ <span class="required">*</span></label>
+        
+        <label class="form-label" tooltip="يتم كتابة الوزن المقابل لوحدة القياس المحددة للمنتج بالكيلوجرام مثال : في حال كانت وحدة قياس المنتج هي الطن يتم كتابة القيمة 1000 في حقل الوزن المقابل بالكيلوجرام" placement="left">
+            الوزن المقابل​ بالكيلوغرام لكل وحدة​ 
+            <span class="required">*</span>
+            <i>؟</i>
+        </label>
         <input  type="number" [disabled]="isDisabled" name="Kilograms_Per_Unit" class="form-control"  [(ngModel)]="request.Kilograms_Per_Unit">
     </div>
     <div class="col-md-6">

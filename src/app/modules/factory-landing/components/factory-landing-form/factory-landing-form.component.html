@@ -5,9 +5,9 @@
 
             ({{factoryName}})
         </h2>
-        <h6>
-            ({{periodStartDate}}) - ({{periodEndDate}})
-        </h6>
+        <h5>
+    في الفترة من         ({{periodStartDate}}) الى ({{periodEndDate}})
+        </h5>
         <div>
             <a class="back-link" [routerLink]="'/pages/factories-list'">
                 رجوع
@@ -72,7 +72,7 @@
                         </svg>
                         <span>
                             البيانات المالية
-                            <span class="custom-badge">سنوى {{Year}}</span>
+                            <span class="custom-badge">لعام {{Year}}</span>
                         </span>
                     </a>
                     <span class="completed" *ngIf="screenStatuse.FinancialData; else elsefinanical" placement="bottom"
@@ -108,7 +108,7 @@
                         </svg>
                         <span>
                             البيانات المالية
-                            <span class="custom-badge">الشهرية</span>
+                            <span class="custom-badge"> لشهر {{periodName}}</span>
                         </span>
                     </a>
                         <span class="completed" *ngIf="screenStatuse.MonthlyFinancialData; else elseFinancialMonthly" placement="bottom" title="" tooltip=" تم إدخال البيانات وتحديثها"><i
@@ -574,7 +574,17 @@
 </section>
 
 <div class="submit-info">
-    <button class="btn" [disabled]="!isChecked || !allScreenStatus" (click)="save()">
+    <!-- <button   data-bs-toggle="modal"
+    data-bs-target="#FactoryStatus" class="btn"  (click)="save()">
+        <svg fill="none" height="24" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 11.07V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="23 3 12 14 9 11" />
+        </svg>
+        <span>{{FactoryStatus}}</span>
+    </button> -->
+    <button   data-bs-toggle="modal"
+    data-bs-target="#FactoryStatus" class="btn" [disabled]="!isChecked || !allScreenStatus" (click)="save()">
         <svg fill="none" height="24" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
             stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M22 11.07V12a10 10 0 1 1-5.93-9.14" />
@@ -582,4 +592,28 @@
         </svg>
         <span>{{FactoryStatus}}</span>
     </button>
+</div>
+
+
+<!-- Modal -->
+<div
+class="modal fade"
+id="FactoryStatus"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+
+<div
+  class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md"
+>
+  <div class="modal-content">
+   
+    <div class="modal-body">
+       
+       <h3 class="text-success" >تم اعتماد بيانات المسح المدخلة بنجاح </h3>
+        </div>
+   
+    </div>
+</div>
 </div>

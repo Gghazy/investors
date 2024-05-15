@@ -9,7 +9,6 @@
             صورة واجهة المصنع <small class="text-danger mx-1">(الزامي)</small>
         </li>       
     </ul>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
 <form #myForm="ngForm" (ngSubmit)="save()">
@@ -28,7 +27,7 @@
 </div>
 
 <div class="col-md-6">
-    <label class="form-label">رفع المستند <span class="required">*jpeg , jpg , png , pdf</span>   </label>
+    <label class="form-label">رفع المستند بصيغة <span class="required">*jpeg , jpg , png , pdf</span>   </label>
     <div class="input-group">
         <input type="file" #fileInput  accept="image/*" class="form-control" placeholder="" value="" (change)="saveFile($event)">
         <button class="btn btn-primary" type="submit">اضافة </button>

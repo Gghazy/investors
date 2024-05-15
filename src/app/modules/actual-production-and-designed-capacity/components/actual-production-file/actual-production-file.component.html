@@ -5,14 +5,10 @@
 <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
     <strong><span class="d-block mb-2">الرجاء إرفاق المستندات الداعمة التالية:</span></strong>
     <ul>
-        <li>البيانات المالية المدققة <small class="text-danger mx-1">(الزامي)</small></li>
+        <li>القوائم المالية المدققة <small class="text-danger mx-1">(الزامي)</small></li>
         
-        <li>  سجل الإنتاج <small class="text-danger mx-1">(الزامي)</small></li>
-       
-        <li>   كمية المبيعات <small class="text-danger mx-1">(الزامي)</small></li>
-       
+        
     </ul>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
 
@@ -23,14 +19,12 @@
     <div class="col-md-6">
         <label class="form-label" > نوع المستند <span class="required">*</span></label>
         <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select">
-            <option [ngValue]="0">البيانات المالية المدققة</option>
-            <option [ngValue]="1">سجل الإنتاج </option>
-            <option [ngValue]="2">كمية المبيعات</option>
+            <option [ngValue]="0">القوائم المالية المدققة</option>
         </select>
     </div>
     
     <div class="col-md-6">
-        <label class="form-label">رفع المستند <span class="required">*PDF</span> </label>
+        <label class="form-label">رفع المستند بصيغة بصيغة<span class="required">*PDF</span> </label>
         <div class="input-group">
             <input type="file" #fileInput class="form-control" placeholder="" value="" (change)="saveFile($event)">
             <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>

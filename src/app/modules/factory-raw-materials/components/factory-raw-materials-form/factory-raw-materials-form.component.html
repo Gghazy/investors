@@ -28,9 +28,11 @@
 
     </div>
     <div class="col-md-3">
-        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اقصى استهلاك شهري
+        
+        <label class="form-label" placement="left" title="" tooltip="يتم كتابة اقصى كمية من المواد الاولية (الخام) يتم استهلاكها خلال الشهر"> اقصى استهلاك شهري
             
             <span class="required">*</span>
+            <i>؟</i>
         </label>
         <input type="number"  class="form-control" noMinus [(ngModel)]="request.MaximumMonthlyConsumption" >
 
@@ -48,11 +50,14 @@
         </select>
     </div>
 
-    <div class="col-md-3">
-        <label class="form-label" placement="left" title="" tooltip="شرح الحقل">متوسط الوزن بحسب الوحدة لكل
+    <div class="col-md-4">
+          <label class="form-label" tooltip="يتم كتابة الوزن المقابل لوحدة القياس المحددة(الحقل السابق ) للمادة الاولية -المادة الخام- بالكيلوجرام مثال : في حال كانت وحدة قياس المادة الاولية - المادة الخام- هي الطن يتم كتابة القيمة 1000 في حقل الوزن المقابل بالكيلوجرام" placement="left">
+       
+            متوسط الوزن بحسب الوحدة لكل
             كيلوجرام
             <!--  -->
             <span class="required">*</span>
+            <i>؟</i>
         </label>
         <div class="input-group">
             <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG" noMinus
@@ -60,7 +65,7 @@
             <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
         </div>
     </div>
-    <div class="col-md-6">
+            <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">تستخدم في أي منتج ؟
             
             <span class="required">*</span>
@@ -77,7 +82,7 @@
 
 
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">إرفاق صورة المادة
             الأولية
             
