@@ -1,6 +1,6 @@
 <section class="form-panel">
     <div class="form-header">
-      <h2 class="form-title">بيانات تحديث البند الجمركي ({{PeriodName}})</h2>
+      <h2 class="form-title"> بيانات تحديث البند الجمركي لشهر {{PeriodName}} </h2>
       <div>
         <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
           رجوع
@@ -13,7 +13,10 @@
       </div>
     </div>
     <div class="form-body">
-
+      <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
+     <P>
+      يتم تحديد المنتجات النشطة والتي يتم تصنيعها في المصنع خلال الفترة المحددة للمسح الحالي وذلك من خلال الضغط على المربع الفارغ بجانب كل منتج لإظهار علامة التحديد (/) ومن ثم الضغط على خيار الحفظ
+    </div>
   
       <div>
   

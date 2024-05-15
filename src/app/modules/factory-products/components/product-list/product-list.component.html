@@ -1,6 +1,6 @@
 <section class="form-panel">
   <div class="form-header">
-    <h2 class="form-title">بيانات المنتجات({{PeriodName}})</h2>
+    <h2 class="form-title">بيانات المنتجات  لشهر {{PeriodName}}</h2>
     <div>
       <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
         رجوع
@@ -95,7 +95,11 @@
       [totalCount]="products.TotalCount"></app-pagination>
     <div class="row">
       <div class="col-md-4">
-        <label class="form-label">هل لديك منتجات جديدة تريد إضافتها؟</label>
+        <label class="form-label" tooltip="في حال عدم وجود اسم المنتج المراد اضافته ضمن القائمة الخاصة بإسم المنتج حسب البند الجمركي على المستوى 12 ، الرجاء التواصل مع الجهة المختصة بوزارة الصناعة" placement="left">هل لديك منتجات جديدة تريد إضافتها؟
+         
+          <i>؟</i>
+        </label>
+
         <select class="form-select if-yes" (change)="handleSelectChange($event)">
           <option value="yes">نعم</option>
           <option value="no" selected>لا</option>

@@ -1,6 +1,6 @@
 <section class="form-panel">
     <div class="form-header">
-        <h2 class="form-title">بيانات المواد الأولية ( المواد الخام) الفعلية ({{PeriodName}})</h2>
+        <h2 class="form-title"> بيانات المواد الأولية ( المواد الخام) الفعلية لشهر {{PeriodName}}</h2>
         <div>
             <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
                 رجوع
@@ -44,8 +44,8 @@
                             <input type="number" noMinus class="form-control" style="max-width: 117px;"
                                 [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)">
                         </td>
-                        <td disabled>
-                            <select [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)" disabled> 
+                        <td >
+                            <select class="form-select disabled" [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)" disabled> 
                                 <option *ngFor="let item of units" [value]="item.Id">
                                     {{ item.Name }}
                                 </option>
@@ -66,7 +66,7 @@
                                 style="max-width: 117px;" (change)="onSelectionChange(material)">
                         </td>
                         <td>
-                            <select [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)" disabled>
+                            <select class="form-select disabled" [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)" disabled>
                                 <option *ngFor="let item of units" [value]="item.Id">
                                     {{ item.Name }}
                                 </option>
@@ -111,7 +111,7 @@
         </div>
     </div>
         <div class="col-md-12 mt-3">
-            <h3> إرفاق المستندات الداعمة </h3>
+            <h3>  إرفاق المستندات الداعمة (ان وجدت) </h3>
         </div>
 
 
@@ -122,7 +122,7 @@
          
 
             <div class="col-md-6">
-                <label class="form-label">رفع المستند <span class="required">*PDF</span> </label>
+                <label class="form-label">رفع المستند بصيغة <span class="required">*PDF</span> </label>
                 <div class="input-group">
                     <input type="file" class="form-control" placeholder="" value="" (change)="saveDocs($event)">
                     <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>

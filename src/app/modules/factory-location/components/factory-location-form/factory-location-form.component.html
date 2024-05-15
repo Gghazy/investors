@@ -1,6 +1,6 @@
 <section class="form-panel">
     <div class="form-header">
-        <h2 class="form-title"> موقع المصنع ({{PeriodName}})</h2>
+        <h2 class="form-title"> موقع المصنع لشهر {{PeriodName}}</h2>
         <div>
             <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
                 رجوع
@@ -50,7 +50,11 @@
             </div>
 
             <div class="col-md-6">
-                <label class="form-label"> رابط موقع المصنع<span class="required">*</span></label>
+               
+                <label class="form-label" placement="left" title="" tooltip="يتم نسخ رابط موقع المصنع من Google maps ولصقه في الحقل"> رابط موقع المصنع
+                    <span class="required">*</span>
+                    <i>؟</i>
+                </label>
                 <input type="url" #WebSite="ngModel" required class="form-control " [(ngModel)]="request.WebSite" placeholder="https://googl/maps/123">
                 <div *ngIf="WebSite.invalid && (WebSite.dirty || WebSite.touched)" class="validation-error">
                     <div *ngIf="WebSite.errors?.['required']">حقل مطلوب</div>

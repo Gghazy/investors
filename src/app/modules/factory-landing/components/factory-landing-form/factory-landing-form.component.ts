@@ -32,6 +32,7 @@ export class FactoryLandingFormComponent implements OnInit {
   FactoryStatusId!:number
   request = new FactoryStatus();
   Year!:number
+  periodName!:string
   constructor(
     private route: ActivatedRoute,
     private basicInfoService: BasicInfoService,
@@ -82,6 +83,7 @@ export class FactoryLandingFormComponent implements OnInit {
         this.Year= res.Data.Year -1
         debugger
         this.periodMonth = res.Data.Month
+        this.periodName = res.Data.PeriodName
       });
   }
 
@@ -110,28 +112,18 @@ export class FactoryLandingFormComponent implements OnInit {
   }
 
   save() {
-    this.request.FactoryId = this.factoryId
-    this.request.PeriodId = this.periodId
-    this.request.UpdateStatus = true
-    if(this.request.Id==0){
-      this.factoryLandingService
-      .create(this.request)
-      .subscribe((res: any) => {
-        console.log(this.request)
-        this.router.navigate(['/pages/factories-list']);
-        this.toastr.success("تم الحفظ");
-      });
-    }
-    else if(this.request.Id!=0){
-      this.factoryLandingService
-      .update(this.request)
-      .subscribe((res: any) => {
-        console.log(this.request)
-        this.router.navigate(['/pages/factories-list']);
-        this.toastr.success("تم الحفظ");
-      });
-    }
     
+//     this.request.FactoryId = this.factoryId
+//     this.request.PeriodId = this.periodId
+//     this.request.UpdateStatus = true
+//     console.log(this.request)
+  
+//       this.factoryLandingService
+//       .create(this.request)
+//       .subscribe((res: any) => {
+//         console.log(this.request)
+//         this.router.navigate(['/pages/factories-list']);
+// });
   }
 
 
