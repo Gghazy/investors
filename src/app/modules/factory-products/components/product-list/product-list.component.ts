@@ -20,6 +20,7 @@ export class ProductListComponent implements OnInit {
   products = new ResultResponse<ProductModel>();
   productId!: number |undefined;
   PeriodName!:string;
+  modalLable!:string;
   @ViewChild('closeModal') Modal!: ElementRef;
 
   constructor(
@@ -70,7 +71,14 @@ export class ProductListComponent implements OnInit {
 
   }
   edit(id: number) {
+    if(id==0){
+      this.modalLable='إضافة منتج'
+    }
+   else{
+      this.modalLable='تعديل منتج'
+    }
     this.productId = id;
+    
   }
   closePopUp(){
     this.productId=undefined

@@ -45,7 +45,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   saveSuccessful: boolean = false;
   numRows: number = 0;
 PeriodName!:string;
-
+modalLabel!:string;
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
     private lookUpService: LookUpService,
@@ -106,6 +106,12 @@ this.getperiod()
     }
   }
   edit(id: number) {
+    if(id==0){
+this.modalLabel ='إضافة مادة أولية'
+    }
+    else{
+      this.modalLabel ='تعديل مادة أولية'
+    }
     this.Id = id
   }
   onSelectAll(items: any) {

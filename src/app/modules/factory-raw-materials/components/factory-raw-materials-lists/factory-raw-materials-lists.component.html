@@ -32,8 +32,12 @@
                        
                         <th> اسم المادة الأولية ( المادة الخام) </th>
                         <th> صورة المادة الأولية ( المادة الخام) </th>
-                        <th>ورقة بيانات المادة الاولية(المادة الخام)</th>
-                        <th> خيارات</th>
+                        <th>
+                            <span class="form-label" placement="left" title=""
+                            tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت" aria-describedby="tooltip617728"> 	ورقة بيانات المادة الاولية(المادة الخام)
+                            <i>؟</i>
+                        </span>
+                                                <th> خيارات</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -122,9 +126,9 @@
                 </select>
             </div>
             <div class="col-md-4 show-input" [ngClass]="{'d-none': !showInput}">
-                <label class="form-label"> إضافة مادة أولية جديد</label>
+                <label class="form-label"> إضافة مادة أولية جديدة</label>
                 <div class="form-group">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRawMaterial">إضافة مادة
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRawMaterial" (click)="edit(0)">إضافة مادة
                         أولية</button>
                 </div>
             </div>
@@ -158,7 +162,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> إضافة مادة أولية</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{modalLabel}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         #closeModal></button>
                 </div>

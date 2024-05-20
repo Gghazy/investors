@@ -72,6 +72,7 @@ export class FactoryLandingFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.sharedService.factoryStatus = res.Data.Status;
         this.factoryName = res.Data.NameAr
+        console.log(res.Data)
       });
   }
   getPeriod() {
@@ -113,17 +114,17 @@ export class FactoryLandingFormComponent implements OnInit {
 
   save() {
     
-//     this.request.FactoryId = this.factoryId
-//     this.request.PeriodId = this.periodId
-//     this.request.UpdateStatus = true
-//     console.log(this.request)
+    this.request.FactoryId = this.factoryId
+    this.request.PeriodId = this.periodId
+    this.request.UpdateStatus = true
+    console.log(this.request)
   
-//       this.factoryLandingService
-//       .create(this.request)
-//       .subscribe((res: any) => {
-//         console.log(this.request)
-//         this.router.navigate(['/pages/factories-list']);
-// });
+      this.factoryLandingService
+      .create(this.request)
+      .subscribe((res: any) => {
+        console.log(this.request)
+        this.router.navigate(['/pages/factories-list']);
+});
   }
 
 

@@ -1,8 +1,11 @@
 <div class="row">
-
+    <div *ngIf="Id==0" class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
+        في حال عدم وجود اسم المادة الأولية - المادة الخام- المراد اضافتها ضمن القائمة الخاصة بإسم البند الجمركي   (رقم البند الجمركي على مستوى 12) ، الرجاء التواصل مع الجهة المختصة بوزارة الصناعة ورفع طلب بذلك .
+    </div>
     <div class="col-md-6">
-        <label class="form-label" placement="left" title="" tooltip="شرح الحقل" disabled> اسم البند الجمركي
-       
+        <label class="form-label" placement="left" title="" tooltip="شرح الحقل" disabled> 
+            اسم البند الجمركي
+            (رقم البند الجمركي على مستوى 12)
         </label>
 
         <!-- <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="filterData(searchTerm)"> -->
@@ -19,8 +22,10 @@
         </select>
     </div>
     <div class="col-md-3">
-        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> اسم المادة الأولية ( المادة الخام)
+        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> 
+           
             
+            اسم المادة الأولية ( المادة الخام)
             <span class="required">*</span>
         </label>
 
@@ -37,7 +42,7 @@
         <input type="number"  class="form-control" noMinus [(ngModel)]="request.MaximumMonthlyConsumption" >
 
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
 
 
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">
@@ -82,19 +87,21 @@
 
 
 
-    <div class="col-md-4">
+    <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">إرفاق صورة المادة
-            الأولية
+            الأولية بصيغة
             
             <span class="required">*jpeg , jpg , png , pdf</span>
         </label>
         <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
         <label class="form-label" placement="left" title=""
             tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت" aria-describedby="tooltip617728"> إرفاق ورقة
-            البيانات </label>
+            بصيغة  البيانات 
             <span class="required">*pdf</span>
+            <i>؟</i>
+        </label>
         <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">
     </div>
 

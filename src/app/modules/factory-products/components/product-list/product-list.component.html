@@ -17,18 +17,26 @@
     <app-list>
       <ng-template #header>
         <th>#</th>
-        <th>المنتج</th>
+        <th>
+          اسم المنتج (حسب البند الجمركي على مستوى 12)
+
+        </th>
         <th>
           <span class="has-des" tooltip="شرح الحقل " placement="left">
-            اسم المنتج التجاري <i>؟</i></span>
+            اسم المنتج التجاري </span>
         </th>
         <th>
           <span class="has-des" placement="left" title="" tooltip="شرح الحقل">
-            وحدة القياس <i>؟</i></span>
+            وحدة القياس </span>
         </th>
         <th>
-          <span class="has-des" placement="left" title="" tooltip="شرح الحقل">
-            الوزن المقابل​ بالكيلوغرام لكل وحدة​ <i>؟</i></span>
+          <span class="form-label" tooltip="يتم كتابة الوزن المقابل لوحدة القياس المحددة(الحقل السابق) للمنتج بالكيلوجرام مثال : في حال كانت وحدة قياس المنتج هي الطن يتم كتابة القيمة 1000 في حقل الوزن المقابل بالكيلوجرام" placement="left">
+           
+            الوزن المقابل​ بالكيلوغرام لكل وحدة​ 
+            
+            <i>؟</i>
+          </span>
+        
         </th>
         <th> صورة المنتج</th>
         <th>
@@ -40,7 +48,7 @@
       <ng-template #body>
         <tr *ngFor="let product of products.Items let i=index">
           <td>{{i+1}}</td>
-          <td>{{product.ProductName}}</td>
+          <td>{{product.Hs12NameAr}}({{product.Hs12Code}})</td>
           <td>
             {{product.CommericalName}}
           </td>
@@ -95,9 +103,8 @@
       [totalCount]="products.TotalCount"></app-pagination>
     <div class="row">
       <div class="col-md-4">
-        <label class="form-label" tooltip="في حال عدم وجود اسم المنتج المراد اضافته ضمن القائمة الخاصة بإسم المنتج حسب البند الجمركي على المستوى 12 ، الرجاء التواصل مع الجهة المختصة بوزارة الصناعة" placement="left">هل لديك منتجات جديدة تريد إضافتها؟
+        <label class="form-label" placement="left">هل لديك منتجات جديدة تريد إضافتها؟
          
-          <i>؟</i>
         </label>
 
         <select class="form-select if-yes" (change)="handleSelectChange($event)">
@@ -131,8 +138,9 @@
 <div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
     <div class="modal-content">
+      
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">إضافة منتج</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{modalLable}} </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeModal
           (click)="closePopUp()"></button>
       </div>

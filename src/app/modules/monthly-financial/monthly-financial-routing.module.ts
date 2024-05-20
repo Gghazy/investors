@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MonthlyFinancialFormComponent } from './components/monthly-financial-form/monthly-financial-form.component';
 
 const routes: Routes = [
-  { path: '', component: MonthlyFinancialFormComponent , data: { title: 'البيانات المالية' }},
+  { path: '', component: MonthlyFinancialFormComponent , data: { title: ' البيانات المالية الشهرية' }},
 
 ];
 
