@@ -44,8 +44,10 @@
                 <td>  {{period.PeriodName}}</td>
                 <td>  {{period.PeriodStartDate}}</td>
                 <td>{{period.PeriodEndDate}}</td>
-                <td *ngIf="period.Status &&  !InspectorRole" class="text-success">تم الاعتماد</td>
-                <td *ngIf="!period.Status &&  !InspectorRole" class="text-danger">لم يتم الاعتماد</td>
+                <td *ngIf="period.Status=='1' &&  !InspectorRole" class="text-warning">تم الادخال</td>
+                <td *ngIf="period.Status=='2' &&  !InspectorRole" class="text-warning">تمت المراجعة</td>
+                <td *ngIf="period.Status=='3' &&  !InspectorRole" class="text-success">تم الاعتماد</td>
+                <td *ngIf="period.Status=='0' &&  !InspectorRole" class="text-danger">لم يتم الاعتماد</td>
                 <td *ngIf="InspectorRole" class="text-danger">لم يتم الاعتماد</td>
                 
                 <td>

@@ -37,11 +37,11 @@ this.InspectorRole =this.router.url.includes('Inspector')
   }
 
   getPeriods() { 
-    
     this.periodService
       .getAll(this.search)
       .subscribe((res: any) => {
         this.periods = res.Data;
+        console.log(this.periods)
       });
   }
   pageChanged(data:any){
