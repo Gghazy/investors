@@ -6,4 +6,5 @@ export class FinancialFileModel {
     Extension !: string;
     AttachmentId !: number;
     FactoryFinancialId!: number;
+    FactoryId!:number;
 }

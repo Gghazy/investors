@@ -41,7 +41,9 @@ export class FinancialFileComponent implements OnInit {
   }
 
   saveFile(file: any) {
+
     if (file.target.files.length > 0) {
+      
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
@@ -60,7 +62,11 @@ export class FinancialFileComponent implements OnInit {
     window.open(url);
   }
   save(){
+   
     this.request.FactoryFinancialId=Number(this.financialId);
+    this.request.FactoryId=this.factoryId;
+    this.request.Name='';
+    console.log(this.request)
     this.financialDetailService
     .createFile(this.request)
     .subscribe((res: any) => {

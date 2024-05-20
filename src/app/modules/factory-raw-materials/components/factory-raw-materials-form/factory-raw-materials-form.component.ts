@@ -80,7 +80,10 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     if (changes['Id']) {
       this.selectedProducts = []
       this.selectedItems1 = []
-      this.getOneRawMaterial(this.Id)
+      if(this.Id !=0){
+        this.getOneRawMaterial(this.Id)
+      }
+      
       this.getProducts();
       this.getUnits();
       this.dropdownSettings = {

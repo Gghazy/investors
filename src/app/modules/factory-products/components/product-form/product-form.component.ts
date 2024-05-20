@@ -66,6 +66,7 @@ export class ProductFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.request = res.Data;
         this.getUnits()
+        console.log(this.request)
       });
   }
 

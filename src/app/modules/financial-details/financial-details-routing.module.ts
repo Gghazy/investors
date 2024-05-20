@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FinancialDetailFormComponent } from './components/financial-detail-form/financial-detail-form.component';
 
 const routes: Routes = [
-  { path: '', component: FinancialDetailFormComponent , data: { title: 'البيانات المالية' }},
+  { path: '', component: FinancialDetailFormComponent , data: { title: 'البيانات المالية السنوية'  }},
 
 ];
 
