@@ -45,12 +45,14 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   selectedItemId: number | null = null;
   selectedX: number = 0;
   sign: string | null = null;
-PeriodName!:string
+  PeriodName!: string
+  fileError: string | null = null;
+  addFileButton: boolean = false
 
   constructor(private route: ActivatedRoute, private service: ActualRawMaterialsService,
     private toastr: ToastrService,
     private router: Router,
-    private periodService:PeriodService,
+    private periodService: PeriodService,
     private lookUpService: LookUpService, private fileService: FileService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -62,7 +64,7 @@ PeriodName!:string
     this.getRawMaterial();
     this.getFiles();
     this.getUnits()
-this.getperiod()
+    this.getperiod()
 
     this.dropdownSettings = {
       singleSelection: true,
@@ -74,22 +76,22 @@ this.getperiod()
     };
   }
 
-  getperiod(){
+  getperiod() {
     this.periodService
-    .getOne(this.periodId)
-    .subscribe((res: any) => {
-      
-      this.PeriodName= res.Data.PeriodName;
-    });
-  } 
+      .getOne(this.periodId)
+      .subscribe((res: any) => {
+
+        this.PeriodName = res.Data.PeriodName;
+      });
+  }
 
 
 
   getRawMaterial() {
 
-this.ActualRawMaterialsearch.FactoryId= this.factoryId;
-this.ActualRawMaterialsearch.PeriodId= this.periodId;
-this.x=[]
+    this.ActualRawMaterialsearch.FactoryId = this.factoryId;
+    this.ActualRawMaterialsearch.PeriodId = this.periodId;
+    this.x = []
     this.service
       .getAll(this.ActualRawMaterialsearch)
       .subscribe((res: any) => {
@@ -107,7 +109,7 @@ this.x=[]
 
 
               this.rawMaterials.forEach((item: any) => {
-                
+
                 this.x.push({
                   'RawMaterialId': item.Id,
                   'Name': item.Name,
@@ -128,10 +130,10 @@ this.x=[]
 
         this.rawMaterials.forEach((item: any) => {
           this.request.IncreasedUsageReason = item.IncreasedUsageReason
-          if(item.IncreasedUsageReason>0){
+          if (item.IncreasedUsageReason > 0) {
             this.showInput = true
           }
-          else{
+          else {
             this.showInput = false
           }
           this.x.push({
@@ -156,16 +158,16 @@ this.x=[]
 
 
   onSelectionChange(row: ActualRawMaterial) {
-      row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
-       row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
-       
-       if (row.UsedQuantity_KG > row.CurrentStockQuantity_KG){
-        this.showInput = true
-       }else{
-        this.showInput = false
-       }
+    row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
+    row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
 
-       
+    if (row.UsedQuantity_KG > row.CurrentStockQuantity_KG) {
+      this.showInput = true
+    } else {
+      this.showInput = false
+    }
+
+
 
 
     // }
@@ -186,7 +188,7 @@ this.x=[]
 
   getFiles() {
     this.service
-      .getFiles(this.factoryId,this.periodId)
+      .getFiles(this.factoryId, this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
@@ -194,12 +196,23 @@ this.x=[]
 
   saveDocs(file: any) {
     if (file.target.files.length > 0) {
-      this.fileService
-        .addFile(file.target.files[0])
-        .subscribe((res: any) => {
-          this.requestFile.AttachmentId = res.Data.Id
-          this.requestFile.Path = res.Data.Path
-        });
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+      const validFileTypes = ['application/pdf'];
+      if (validFileTypes.includes(fileType)) {
+        this.fileError = null;
+
+        this.fileService
+          .addFile(file.target.files[0])
+          .subscribe((res: any) => {
+            this.requestFile.AttachmentId = res.Data.Id
+            this.requestFile.Path = res.Data.Path
+          });
+        this.addFileButton = true
+      } else {
+        this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
+
+      }
 
     }
 
@@ -208,7 +221,7 @@ this.x=[]
   save() {
     this.requestFile.PeriodId = this.periodId;
     this.requestFile.FactoryId = this.factoryId;
-
+    this.requestFile.Name = '';
     this.service
       .AddFile(this.requestFile)
       .subscribe((res: any) => {
@@ -250,7 +263,7 @@ this.x=[]
   saveItems() {
 
     if (this.isNewData == true) {
-    
+
       this.x.forEach((item: any) => {
         item.periodId = this.periodId;
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
@@ -265,7 +278,7 @@ this.x=[]
       this.request = new ActualRawMaterial();
     }
     else {
-     
+
       this.x.forEach((item: any) => {
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
 

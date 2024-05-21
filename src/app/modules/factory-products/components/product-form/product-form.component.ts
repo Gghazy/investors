@@ -65,6 +65,7 @@ export class ProductFormComponent implements OnInit {
       .getOne(this.productId)
       .subscribe((res: any) => {
         this.request = res.Data;
+        this.request.ProductName = this.request.Hs12NameAr +(this.request.Hs12Code)
         this.getUnits()
         console.log(this.request)
       });

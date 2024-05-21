@@ -33,11 +33,13 @@ export class PeriodListComponent implements OnInit {
   ngOnInit(): void {
     this.userRole = this.shared.getUserRole();
     this.getPeriods()
+
 this.InspectorRole =this.router.url.includes('Inspector')
   }
 
+  
   getPeriods() { 
-    
+    this.search.FactoryId = this.factoryId
     this.periodService
       .getAll(this.search)
       .subscribe((res: any) => {

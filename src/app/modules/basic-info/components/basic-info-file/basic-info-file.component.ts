@@ -14,6 +14,8 @@ export class BasicInfoFileComponent implements OnInit {
   files:BasicFileModel[]=[];
   request=new BasicFileModel();
   src!:string;
+  fileError: string | null = null;
+  addFileButton:boolean= false
   @Input() factoryId!:string;
   @Input() periodId!:string;
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -37,11 +39,24 @@ export class BasicInfoFileComponent implements OnInit {
 
   saveFile(file: any) {
     if (file.target.files.length > 0) {
-      this.fileService
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+
+      if (fileType === 'image/png' || fileType === 'image/jpeg') {
+        this.fileError = null;
+
+        this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
+         
         });
+        this.addFileButton =true
+      } else {
+        this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
+        
+      }
+    
     }
   }
 

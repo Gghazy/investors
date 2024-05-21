@@ -18,6 +18,8 @@ export class FinancialFileComponent implements OnInit {
   @Input() financialId!:number;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
+  fileError: string | null = null;
+  addFileButton: boolean = false
   constructor(
     private route: ActivatedRoute,
     private fileService:FileService,
@@ -41,14 +43,24 @@ export class FinancialFileComponent implements OnInit {
   }
 
   saveFile(file: any) {
-
     if (file.target.files.length > 0) {
-      
+    
+    const file1 = file.target.files[0];
+    const fileType = file1.type;
+    const validFileTypes = ['application/pdf'];
+    if (validFileTypes.includes(fileType)) {
+      this.fileError = null;
+    
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
         });
+        this.addFileButton = true
+      } else {
+        this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
+
+      }
     }
   }
 

@@ -72,7 +72,9 @@ export class FactoryLandingFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.sharedService.factoryStatus = res.Data.Status;
         this.factoryName = res.Data.NameAr
-        console.log(res.Data)
+        if(res.Data.DataApprover== res.Data.DataEntry && res.Data.DataEntry==res.Data.DataReviewer){
+this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
+        }
       });
   }
   getPeriod() {
@@ -92,22 +94,22 @@ export class FactoryLandingFormComponent implements OnInit {
     this.factoryLandingService
       .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
+        this.request= res.Data;
+        console.log(this.request)
         this.isChecked=res.Data.UpdateStatus;
         this.FactoryStatusId = res.Data.DataStatus;
-        if(this.FactoryStatusId==0){
+        if(this.FactoryStatusId==0 &&   this.FactoryStatus==''){
           this.FactoryStatus= ' ادخال'
         }
-        if(this.FactoryStatusId==1 ){
+        if(this.FactoryStatusId==1 &&   this.FactoryStatus==''){
           this.FactoryStatus=  ' اعتماد البيانات المدخلة'
         }
-        if(this.FactoryStatusId==2){
+        if(this.FactoryStatusId==2&&   this.FactoryStatus==''){
           this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
         }
-        if(this.FactoryStatusId==3){
+        if(this.FactoryStatusId==3&&   this.FactoryStatus==''){
           this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
         }
-        
-                console.log(this.FactoryStatus)
             
       });
   }
@@ -117,14 +119,22 @@ export class FactoryLandingFormComponent implements OnInit {
     this.request.FactoryId = this.factoryId
     this.request.PeriodId = this.periodId
     this.request.UpdateStatus = true
-    console.log(this.request)
-  
+  if(this.request.Id==0){
+    this.factoryLandingService
+    .create(this.request)
+    .subscribe((res: any) => {
+      console.log(this.request)
+      this.router.navigate(['/pages/factories-list']);
+});
+  }
+     else{
       this.factoryLandingService
-      .create(this.request)
+      .update(this.request)
       .subscribe((res: any) => {
         console.log(this.request)
         this.router.navigate(['/pages/factories-list']);
 });
+     }
   }
 
 
