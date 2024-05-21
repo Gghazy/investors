@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-md-6">
-        <label class="form-label">رفع المستند بصيغة <span class="required">*jpeg , jpg , png , pdf</span></label>
+        <label class="form-label">رفع المستند بصيغة jpeg , jpg , png , pdf<span class="required">*</span></label>
         <div class="input-group">
             <input type="file"  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
             <button  *ngIf="addFileButton" class="btn btn-primary" type="button" (click)="save()">اضافة </button>

@@ -11,6 +11,9 @@
         </div>
     </div>
     <div class="form-body">
+      <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
+        <P>
+          يتم إضافة البيانات المطلوبة و الخاصة بالمنتجات من خلال الضغط على خيار تعديل و ملء الحقول بالصورة الصحيحة و من ثم الضغط على خيار حفظ الموجود في نافذة التعديل، بعدها يتم الضغط على خيار حفظ الموجود اسفل الشاشة. </div>
         <app-list>
             <ng-template #header>
                 <th>#</th> 
@@ -19,7 +22,7 @@
                 <th *ngIf="factoryStatus!=3">الإنتاج الفعلي​</th>
                 <th *ngIf="factoryStatus!=3"></th>
                 <th *ngIf="factoryStatus!=3"> وزن الإنتاج الفعلي​ </th>
-                <th>تعديل</th>
+                <th></th>
             </ng-template>
             <ng-template #body>
               <tr *ngFor="let product of products.Items let i=index">

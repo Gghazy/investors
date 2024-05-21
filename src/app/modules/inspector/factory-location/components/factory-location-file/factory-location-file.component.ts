@@ -13,6 +13,8 @@ export class FactoryLocationFileComponent implements OnInit {
   src!: string;
   files: any;
   InspectorsLocationfiles: any;
+  fileError: string | null = null;
+  addFileButton: boolean = false
   @Input() factoryId!: string;
   @Input() periodId!: string;
   factoryLocationId!: number;
@@ -51,6 +53,7 @@ export class FactoryLocationFileComponent implements OnInit {
   save() {
     this.request.FactoryId = parseInt(this.factoryId)
     this.request.PeriodId = parseInt(this.periodId)
+    this.request.Name=''
     console.log(this.request)
     this.InspectorService
       .CreateFiles(this.request)
@@ -62,27 +65,39 @@ export class FactoryLocationFileComponent implements OnInit {
     this.fileInput.nativeElement.value = '';
   }
   saveFile(file: any) {
+
     if (file.target.files.length > 0) {
-      this.fileService
-        .addFile(file.target.files[0])
-        .subscribe((res: any) => {
-          this.request.AttachmentId = res.Data.Id
-        });
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+
+      if (fileType === 'image/png' || fileType === 'image/jpeg') {
+        this.fileError = null;
+
+        this.fileService
+          .addFile(file.target.files[0])
+          .subscribe((res: any) => {
+            this.request.AttachmentId = res.Data.Id
+          });
+      }
+      this.addFileButton = true
+    } else {
+      this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
+
     }
   }
   getFile(attachmentId: number) {
     this.fileService.getImage(attachmentId).subscribe((res: any) => {
-      this.src='data:image/jpeg;base64,'+res.Image;
-     });
+      this.src = 'data:image/jpeg;base64,' + res.Image;
+    });
   }
 
 
   deleteFile(id: number) {
     this.InspectorService
-    .deleteFile(id)
-    .subscribe((res: any) => {
-      this.getInspectorsFiles();
-      
-    });
+      .deleteFile(id)
+      .subscribe((res: any) => {
+        this.getInspectorsFiles();
+
+      });
   }
 }

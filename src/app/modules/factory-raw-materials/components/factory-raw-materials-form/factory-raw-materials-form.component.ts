@@ -27,7 +27,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   @Input() factoryId!: number;
   @Input() Id!: number;
   @Output() close = new EventEmitter<boolean>();
-
+  searchproduct = new ProductSearch();
   searchValue:boolean=false;
   searchTerm: string = '';
   filteredData: any[] = [];
@@ -89,7 +89,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       this.dropdownSettings = {
         singleSelection: false,
         idField: 'ProductId',
-        textField: 'ProductName',
+        textField: 'Hs12NameAr(Hs12Code)',
         selectAllText: 'تحديد الكل',
         unSelectAllText: 'ازالة التحديد',
         searchPlaceholderText: 'بحث',
@@ -162,9 +162,10 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.Modal.nativeElement.click()
   }
   getProducts() {
-
+    this.searchproduct.FactoryId = this.factoryId;
+    this.searchproduct.PeriodId = parseInt(this.periodId);
     this.productService
-      .getAllProducts()
+    .getAllPagination(this.searchproduct)
       .subscribe((res: any) => {
         this.products = res.Data;
         this.filteredData =res.Data;

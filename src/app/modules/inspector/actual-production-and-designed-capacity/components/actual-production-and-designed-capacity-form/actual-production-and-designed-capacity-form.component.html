@@ -44,7 +44,9 @@
                                         </div>
                                         <div class="col-md-4" *ngIf="product.IsDesignedCapacityCorrect == false">
                                             
-                                                <label class="form-label"> أدخل  الطاقة التصميمة الشهرية الصحيحة </label>
+                                                <label class="form-label"> أدخل  الطاقة التصميمة الشهرية الصحيحة 
+                                                    <span class="required">*</span>
+                                                </label>
                                                 <div class="input-group">    
                                                     <input type="text" class="form-control"  [(ngModel)]="product.CorrectDesignedCapacity">
                                                     <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
@@ -77,7 +79,9 @@
                                         </div>
                                         <div class="col-md-4"  *ngIf="product.IsActualProductionCorrect == false">
                                             
-                                                <label class="form-label">أدخل   الإنتاج الفعلي​ الشهري الصحيح </label>
+                                                <label class="form-label">أدخل   الإنتاج الفعلي​ الشهري الصحيح 
+                                                    <span class="required">*</span>
+                                                </label>
                                                 <div class="input-group">    
                                                     <input type="text" class="form-control" [(ngModel)]="product.CorrectActualProduction">
                                                     <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
@@ -149,7 +153,9 @@
                         </div>
                         <div class="col-md-4" *ngIf="products[0].IsIncreaseReasonCorrect== false">
                             
-                                <label class="form-label">أختر   سبب زيادة الإنتاج الفعلي الصحيح </label>
+                                <label class="form-label">أختر   سبب زيادة الإنتاج الفعلي الصحيح 
+                                    <span class="required">*</span>
+                                </label>
                                 <select class="form-select" [(ngModel)]="products[0].IncreaseReasonCorrect">
                                     <option [ngValue]="1">شراء معدات جديدة</option>
                                     <option [ngValue]="2">زيادة خطوط الإنتاج</option>
@@ -166,10 +172,7 @@
                         <textarea  rows="3" class="form-control" [(ngModel)]="products[0].Comments"></textarea>
                     </div>
 
-                      
-        <app-actual-production-and-designed-capacity-file [factoryId]="factoryId" [periodId]="periodId"></app-actual-production-and-designed-capacity-file>
-   
-
+                    
                 </div>
                 <div class="form-footer">
                     <div class="col-12">

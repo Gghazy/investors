@@ -13,7 +13,10 @@
     </div>
   </div>
   <div class="form-body">
-
+    <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
+      <P>
+        يتم إضافة البيانات المطلوبة و الخاصة بالمنتجات من خلال الضغط على خيار تعديل و ملء الحقول بالصورة الصحيحة و من ثم الضغط على خيار حفظ الموجود في نافذة تعديل بيانات المنتجات، اما في حال إضافة بيانات منتج جديد فيجب إختيار الخيار نعم من قائمة هل لديك منتجات جديدة تريد إضافتها؟ بعد ذلك الضغط على خيار إضافة منتج جديد و ملء الحقول بالصورة المطلوبة و حفظ البيانات المدخلة و اخيراً الضغط على خيار حفظ الموجود اسفل الشاشة. 
+      </div>
     <app-list>
       <ng-template #header>
         <th>#</th>
@@ -22,8 +25,10 @@
 
         </th>
         <th>
-          <span class="has-des" tooltip="شرح الحقل " placement="left">
-            اسم المنتج التجاري </span>
+          <span class="has-des" tooltip="الاسم المتداول في السوق " placement="left">
+            اسم المنتج التجاري 
+            <i>؟</i>
+          </span>
         </th>
         <th>
           <span class="has-des" placement="left" title="" tooltip="شرح الحقل">
@@ -43,7 +48,7 @@
           <span class="has-des" placement="top" title="" tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت">
             ورقة البيانات <i>؟</i></span>
         </th>
-        <th> تعديل</th>
+        <th> </th>
       </ng-template>
       <ng-template #body>
         <tr *ngFor="let product of products.Items let i=index">
