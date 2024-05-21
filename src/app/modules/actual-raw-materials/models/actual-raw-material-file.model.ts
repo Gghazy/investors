@@ -5,4 +5,5 @@ export class ActualRawMaterialFile {
     AttachmentId!:number;
     Name !: string;
     Path !: string;
+    Extension!:string;
 }

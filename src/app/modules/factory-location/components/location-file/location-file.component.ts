@@ -16,6 +16,8 @@ export class LocationFileComponent implements OnInit {
   request = new LocationFileModel();
   src!: string;
   @Input() factoryLocationId!: number;
+  fileError: string | null = null;
+  addFileButton:boolean= false
   constructor(
     private route: ActivatedRoute,
     private fileService: FileService,
@@ -39,12 +41,26 @@ export class LocationFileComponent implements OnInit {
 
   saveFile(file: any) {
     if (file.target.files.length > 0) {
-      this.fileService
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+
+      if (fileType === 'image/png' || fileType === 'image/jpeg') {
+        this.fileError = null;
+
+        this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
+         
         });
+        this.addFileButton =true
+      } else {
+        this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
+        
+      }
+    
     }
+   
   }
 
   getFile(attachmentId: number){

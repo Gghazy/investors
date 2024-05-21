@@ -49,8 +49,9 @@ export class BasicInfoFileComponent implements OnInit {
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
+         
         });
-this.addFileButton =true
+        this.addFileButton =true
       } else {
         this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
         

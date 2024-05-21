@@ -88,7 +88,7 @@
 
                      </tbody>
             </table>
-            <app-pagination (changePage)="pageChanged($event)" [pageSize]="materials.PageSize" [pageNumber]="materials.PageNumber" [totalCount]="materials.TotalCount"></app-pagination>
+            <!-- <app-pagination (changePage)="pageChanged($event)" [pageSize]="materials.PageSize" [pageNumber]="materials.PageNumber" [totalCount]="materials.TotalCount"></app-pagination> -->
              
         </div>
       
@@ -124,9 +124,10 @@
             <div class="col-md-6">
                 <label class="form-label">رفع المستند بصيغة <span class="required">*PDF</span> </label>
                 <div class="input-group">
-                    <input type="file" class="form-control" placeholder="" value="" (change)="saveDocs($event)">
-                    <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+                    <input type="file" class="form-control" accept=".pdf" placeholder="" value="" (change)="saveDocs($event)">
+                    <button *ngIf="addFileButton"  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
                 </div>
+                <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
             </div>
         </div>
 
@@ -142,7 +143,7 @@
                 <tbody>
                     <tr *ngFor="let file of files let i=index">
                         <td>{{i+1}}</td>
-                        <td> {{file.Path}}</td>
+                        <td> {{file.Extension}}</td>
 
                         <td>
 
