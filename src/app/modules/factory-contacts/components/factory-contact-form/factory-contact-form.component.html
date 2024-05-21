@@ -13,6 +13,10 @@
     </div>
   </div>
   <div class="form-body">
+    <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
+      <P>
+        يتم إدخال أرقام هواتف الموظفين المعنيين مع الحرص على ان تكون أرقام الهواتف صحيحة و مفعلة كذلك البريد الإلكتروني لكل موظف و من ثم الضغط على خيار حفظ.
+       </div>
     <form #f="ngForm" [formGroup]="phoneForm" (submit)="save()">
               <div class="row">
                 <div class="col-md-6">

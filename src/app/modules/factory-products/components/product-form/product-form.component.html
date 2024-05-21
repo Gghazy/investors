@@ -22,7 +22,9 @@
     </div>
     
     <div class="col-md-6">
-        <label class="form-label"> 	اسم المنتج التجاري <span class="required">*</span></label>
+        <label class="form-label" tooltip="الاسم المتداول في السوق "> 	اسم المنتج التجاري <span class="required">*</span>
+            <i>؟</i>
+        </label>
         <input  type="text" name="CommericalName" class="form-control"  [(ngModel)]="request.CommericalName">
     </div>
     
@@ -43,14 +45,14 @@
         <input  type="number" [disabled]="isDisabled" name="Kilograms_Per_Unit" class="form-control"  [(ngModel)]="request.Kilograms_Per_Unit">
     </div>
     <div class="col-md-6">
-        <label class="form-label">صورة المنتج  بصيغة <span class="required">*jpeg , jpg , png , pdf</span></label>
+        <label class="form-label">صورة المنتج  بصيغة jpeg , jpg , png , pdf (ان وجدت)<span class="required">*</span></label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
         </div>
     </div>
     <div class="col-md-6">
-        <label class="form-label" tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت">ورقة البيانات بصيغة
-            <span class="required">*pdf</span>
+        <label class="form-label" tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"> ورقة البيانات بصيغة pdf 
+            <span class="required">*</span>
             <i>؟</i></label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">

@@ -22,11 +22,11 @@
         </select>
     </div>
     <div class="col-md-3">
-        <label class="form-label" placement="left" title="" tooltip="شرح الحقل"> 
+        <label class="form-label" placement="left" title="" tooltip="الاسم المتداول في السوق "> 
            
-            
-            اسم المادة الأولية ( المادة الخام)
+            اسم المادةالأولية(المادة الخام)التجاري
             <span class="required">*</span>
+            <i>؟</i>
         </label>
 
         <input type="text" class="form-control" value="" [(ngModel)]="request.Name">
@@ -89,17 +89,17 @@
 
     <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">إرفاق صورة المادة
-            الأولية بصيغة
+            الأولية بصيغة jpeg , jpg , png , pdf (ان وجدت)
             
-            <span class="required">*jpeg , jpg , png , pdf</span>
+            <span class="required">*</span>
         </label>
         <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
     </div>
     <div class="col-md-6">
         <label class="form-label" placement="left" title=""
             tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت" aria-describedby="tooltip617728"> إرفاق ورقة
-            بصيغة  البيانات 
-            <span class="required">*pdf</span>
+            بصيغة  البيانات pdf
+            <span class="required">*</span>
             <i>؟</i>
         </label>
         <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">

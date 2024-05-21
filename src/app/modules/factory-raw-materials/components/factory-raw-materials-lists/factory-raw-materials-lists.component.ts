@@ -139,7 +139,8 @@ this.modalLabel ='إضافة مادة أولية'
     
     //this.data = [];
     for (let i = 0; i < this.materialCount; i++) {
-     this.data.push({
+     this.data.push
+     ({
         'CustomItemName': '',
         'Name': '',
         'MaximumMonthlyConsumption': 0,
@@ -152,7 +153,8 @@ this.modalLabel ='إضافة مادة أولية'
         'UnitId': 0,
         'FactoryProductId': [],
         'FactoryProducts': []
-      })}
+      })
+      console.log(this.data)}
     //  this.getRawMaterial()
     }
     getRawMaterial() {
@@ -180,7 +182,7 @@ this.modalLabel ='إضافة مادة أولية'
                 'UnitId': item.UnitId,
                 'FactoryProductId': item.FactoryProductId
               })
-
+console.log(this.data)
             })
 
 this.generateRows()
