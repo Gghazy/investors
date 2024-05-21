@@ -113,8 +113,9 @@
 
                                 <div class="col-md-6">
                                     <label class="form-label" data-bs-toggle="tooltip" data-bs-placement="right"
-                                        title="" data-bs-original-title="شرح الحقل">إرفاق صورة المادة الاولية
-
+                                        title=""   tooltip=" صيغة jpeg , jpg , png , pdf">إرفاق صورة المنتج
+                                        <span class="required">*</span>
+                                        <i>؟</i>
                                      
                                     </label>
                                     <div class="input-group">
@@ -163,7 +164,11 @@
                                     <label class="form-label" data-bs-toggle="tooltip" data-bs-placement="right"
                                         title=""
                                         data-bs-original-title="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
-                                        aria-describedby="tooltip617728"> إرفاق ورقة البيانات <i>؟</i></label>
+                                        tooltip="صيغة jpeg , jpg , png , pdf">
+                                    إرفاق ورقة البيانات
+                                    <span class="required">*</span>
+                                    <i>؟</i>
+                                    </label>
                                     <div class="input-group">
                                         <input type="file" #fileInput2 style="display: none;" (change)="saveFile($event,i)" />
                                         <button class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput2.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">

@@ -13,6 +13,8 @@ export class BasicInfoFileFormComponent implements OnInit {
   src!:string;
   files:any;
   Inspectorsfiles:any;
+  fileError: string | null = null;
+  addFileButton:boolean= false
   @Input() factoryId!:string;
   @Input() periodId!:string;
   request =new BasicInfoFileModel()
@@ -48,6 +50,7 @@ save(){
   console.log(this.request.AttachmentId)
   this.request.FactoryId= parseInt( this.factoryId)
   this.request.PeriodId=parseInt( this.periodId)
+  this.request.Name =''
   this.basicInfoService
   .CreateFiles(this.request)
   .subscribe((res: any) => {
@@ -59,6 +62,11 @@ save(){
 }
   saveFile(file: any) {
     if (file.target.files.length > 0) {
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+
+      if (fileType === 'image/png' || fileType === 'image/jpeg') {
+        this.fileError = null;
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
@@ -66,6 +74,11 @@ save(){
          console.log(this.request)
         });
     }
+    this.addFileButton =true
+  } else {
+    this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
+    
+  }
   }
 getFile(attachmentId:number){
   console.log(attachmentId)
