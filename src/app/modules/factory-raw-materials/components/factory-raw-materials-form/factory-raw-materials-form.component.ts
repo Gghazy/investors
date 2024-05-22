@@ -32,6 +32,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   searchTerm: string = '';
   filteredData: any[] = [];
   products  !: ProductModel[];
+  products12  !: ProductModel[];
   showInput: boolean = false
   units!: LookUpModel[];
   request = new RawMaterial();
@@ -75,21 +76,26 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   selectedItems2 = [];
 
   dropdownSettings!: IDropdownSettings;
+
   ngOnChanges(changes: SimpleChanges) {
+   
     this.request = new RawMaterial();
     if (changes['Id']) {
       this.selectedProducts = []
       this.selectedItems1 = []
       if(this.Id !=0){
         this.getOneRawMaterial(this.Id)
+       
       }
       
-      this.getProducts();
+        this.getProducts();
+     
+      
       this.getUnits();
       this.dropdownSettings = {
         singleSelection: false,
         idField: 'ProductId',
-        textField: 'Hs12NameAr(Hs12Code)',
+        textField: 'Hs12NameAr',
         selectAllText: 'تحديد الكل',
         unSelectAllText: 'ازالة التحديد',
         searchPlaceholderText: 'بحث',
@@ -97,21 +103,24 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
         allowSearchFilter: true
       };
     }
+   
   }
   ngOnInit() {
-
+   
     this.getProducts();
+   
     this.getUnits();
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'ProductId',
-      textField: 'ProductName',
+      textField: 'Hs12NameAr',
       selectAllText: 'تحديد الكل',
       unSelectAllText: 'ازالة التحديد',
       searchPlaceholderText: 'بحث',
       itemsShowLimit: 2,
       allowSearchFilter: true
     };
+   
   }
 
   getOneRawMaterial(id: number) {
@@ -120,19 +129,23 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       .getOne(id)
       .subscribe((res: any) => {
         this.request = res.Data;
+        console.log(this.request)
         this.productService
           .getAllProducts()
           .subscribe((res: any) => {
-            this.products = res.Data;
+           this.products12 = res.Data;
+
             this.request.FactoryProductId.forEach(element => {
-              let ProductName = this.products.find(x => x.Id == element)?.ProductName;
+              let ProductName = this.products12.find(x => x.Id == element)?.Hs12NameAr;
 
               this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductName })
 
-
+console.log(this.selectedItems1)
               this.selectedProducts = this.selectedItems1
             });
-          })
+            this.getProducts();
+//             console.log(this.products12)
+         })
 
 
       });
@@ -149,7 +162,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   onSelectionChange() {
 
 
-    this.request.UnitId = this.products.find(item => item.Id == this.products[0].Id)?.UnitId;
+    this.request.UnitId = this.products12.find(item => item.Id == this.products12[0].Id)?.UnitId;
     let selectedValue: any = this.units.find(option => option.Id == this.request.UnitId);
     if (selectedValue?.Name == 'kilograms') {
       this.request.AverageWeightKG = 1
@@ -167,22 +180,22 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.productService
     .getAllPagination(this.searchproduct)
       .subscribe((res: any) => {
-        this.products = res.Data;
-        this.filteredData =res.Data;
-        console.log(this.products)
+        this.products12 = res.Data.Items;
+       // this.filteredData =res.Data;
+       console.log(this.products12)
       });
 
   }
 
   filterData(searchTerm: string): void {
-    this.searchValue=true
-    if (!searchTerm) {
-      this.filteredData = this.products; 
-      return;
-    }
-    this.filteredData = this.products.filter(item => {
-      return item.Hs12NameAr.includes(searchTerm);
-    });
+    // this.searchValue=true
+    // if (!searchTerm) {
+    //   this.filteredData = this.products; 
+    //   return;
+    // }
+    // this.filteredData = this.products.filter(item => {
+    //   return item.Hs12NameAr.includes(searchTerm);
+    // });
   }
   onItemSelect(item: any) {
     this.request.FactoryProductId.push(item.ProductId)
