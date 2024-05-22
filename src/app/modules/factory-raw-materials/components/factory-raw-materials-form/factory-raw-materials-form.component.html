@@ -15,7 +15,7 @@
           </option>
         </select> -->
         <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName">
-            <option *ngFor="let item of products" [value]="item.Id">
+            <option *ngFor="let item of products12" [value]="item.Id">
                 {{ item.Hs12NameAr }} ({{item. Hs12Code}})
 
             </option>
@@ -77,7 +77,7 @@
         </label>
 
         <div class="multiselect-parent">
-            <ng-multiselect-dropdown [placeholder]="'أختر'" [settings]="dropdownSettings" [data]="products"
+            <ng-multiselect-dropdown [placeholder]="'أختر'" [settings]="dropdownSettings" [data]="products12"
                 [(ngModel)]="selectedProducts" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
                 (onSelectAll)="onSelectAll($event)">
             </ng-multiselect-dropdown>
