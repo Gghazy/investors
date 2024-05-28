@@ -13,5 +13,5 @@ export class RawMaterial {
       UnitId!:number|undefined;
       FactoryProductId :number[]=[];
       FactoryId !:number;
-
+PeriodId!:number;
 }

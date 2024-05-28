@@ -91,6 +91,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
     this.ActualRawMaterialsearch.FactoryId = this.factoryId;
     this.ActualRawMaterialsearch.PeriodId = this.periodId;
+    this.search.PeriodId =this.periodId;
     this.x = []
     this.service
       .getAll(this.ActualRawMaterialsearch)
@@ -105,7 +106,6 @@ export class ActualRawMaterialsFormComponent implements OnInit {
               this.rawMaterials = res.Data.Items;
 
               this.materials = res.Data;
-
 
 
               this.rawMaterials.forEach((item: any) => {

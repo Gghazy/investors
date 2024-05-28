@@ -114,6 +114,21 @@ this.modalLabel ='إضافة مادة أولية'
     }
     this.Id = id
   }
+
+
+  delete(id: number) {
+   
+    this.rawMaterialService
+          .delete(id)
+          .subscribe((res: any) => {
+             this.toastr.success("تم الحذف");
+             this.getRawMaterial()
+          });
+
+         
+
+  }
+
   onSelectAll(items: any) {
   }
   getUnits() {
@@ -134,30 +149,9 @@ this.modalLabel ='إضافة مادة أولية'
     this.selectedProducts.splice(item.ProductId)
   }
 
-
-  generateRows() {
-    
-    //this.data = [];
-    for (let i = 0; i < this.materialCount; i++) {
-     this.data.push
-     ({
-        'CustomItemName': '',
-        'Name': '',
-        'MaximumMonthlyConsumption': 0,
-        'AverageWeightKG': 0,
-        'Description': '',
-        'FactoryId': this.factoryId,
-        'AttachmentId': 0,
-        'PaperId': 0,
-        'PhotoId': 0,
-        'UnitId': 0,
-        'FactoryProductId': [],
-        'FactoryProducts': []
-      })
-      console.log(this.data)}
-    //  this.getRawMaterial()
-    }
+ 
     getRawMaterial() {
+      this.searchRawmaterial.PeriodId =this.periodId;
       this.rawMaterialService
         .getRawMaterial(this.searchRawmaterial, this.factoryId)
         .subscribe((res: any) => {
@@ -165,10 +159,13 @@ this.modalLabel ='إضافة مادة أولية'
             this.rawMaterials = res.Data.Items;
             this.materials = res.Data;
             this.materialCount = this.materials.Items.length;
-
+this.getProducts()
             this.rawMaterials.forEach((item: RawMaterial) => {
+              let productId = parseInt(item.CustomItemName)
+              let product12=this.products.find(x => x.Id == productId)?.ProductName;
               this.data.push({
                 'Id': item.Id,
+                'Product12':product12,
                 'CustomItemName': item.CustomItemName,
                 'Name': item.Name,
                 'MaximumMonthlyConsumption': item.MaximumMonthlyConsumption,
@@ -176,36 +173,17 @@ this.modalLabel ='إضافة مادة أولية'
 
                 'Description': item.Description,
                 'FactoryId': this.factoryId,
-                //  'AttachmentId': item.AttachmentId,
                 'PaperId': item.PaperId,
                 'PhotoId': item.PhotoId,
                 'UnitId': item.UnitId,
                 'FactoryProductId': item.FactoryProductId
               })
-console.log(this.data)
             })
 
-this.generateRows()
           }
           
         });
 
-      // this.rawMaterials.forEach((item: any) => {
-      //   this.data.push({
-      //     'CustomItemName': '',
-      //     'Name': '',
-      //     'MaximumMonthlyConsumption': 0,
-      //     'AverageWeightKG': 0,
-      //     'Description': '',
-      //     'FactoryId': this.factoryId,
-      //     'AttachmentId': 0,
-      //     'PaperId': 0,
-      //     'PhotoId': 0,
-      //     'UnitId': 0,
-      //     'FactoryProductId': [],
-      //     'FactoryProducts': []
-      //   })
-      // })
 
     }
     getFile(attachmentId: number) {
@@ -288,10 +266,10 @@ this.generateRows()
     getProducts() {
 
       this.productService
-        .getAllProducts()
+          .getAllProducts()
         .subscribe((res: any) => {
-          this.products = res.Data.Items;
-          console.log(this.products)
+          this.products = res.Data;
+     console.log(this.products)
         });
 
     }
@@ -314,6 +292,7 @@ this.generateRows()
 
     closePopUp() {
       this.Modal.nativeElement.click()
+      this.getRawMaterial()
     }
     pageChanged(data: any) {
       this.search.PageNumber = data;
@@ -324,36 +303,7 @@ this.generateRows()
 
 
     save() {
-      // this.data.FactoryId = this.factoryId;
-      // this.data.forEach((element: RawMaterial) => {
-      //   element.FactoryProductId = this.request.FactoryProductId;
-      //   if (element.Id == 0) {
-      //     this.rawMaterialService
-      //       .create(element)
-      //       .subscribe((res: any) => {
-      //         this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-
-
-      //       });
-
-
-      //   }
-      //   else {
-      //     this.rawMaterialService
-      //       .update(element)
-      //       .subscribe((res: any) => {
-      //         this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-
-      //         //  this.toastr.success("تم الحفظ");
-      //       });
-      //   }
-
-      //   if (this.saveSuccessful == true) {
-      //     this.data = new RawMaterial();
-      //     this.selectedProducts = []
-      //   }
-
-      // });
+      
       this.toastr.success("تم الحفظ");
     }
 

@@ -16,25 +16,28 @@
         <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
             <P>
                 
-                يتم إضافة البيانات المطلوبة و الخاصة بالمواد الأولية(الموااد الخام )  من خلال الضغط على خيار تعديل (الموجود بجانب كل مادة أولية ) 
-                و ملء الحقول بالصورة الصحيحة و من ثم الضغط على خيار حفظ الموجود في نافذة تعديل بيانات المواد الأولية. 
+                يتم إضافة البيانات المطلوبة و الخاصة بالمواد الأولية(المواد الخام )  من خلال الضغط على خيار   إضافة مادة اولية   
+                و ملء الحقول بالصورة الصحيحة و من ثم الضغط على خيار حفظ الموجود في نافذة اضافة المادة الاولية. 
             </div>
         <div class="col-md-12 mt-3">
             <h3> إدخال التفاصيل التالية عن المواد الأولية ( المواد الخام) </h3>
         </div>
 
-        <div class="col-md-6 mb-5">
-            <label class="form-label"> كم عدد المواد الأولية ( المواد الخام) المستخدمة؟​</label>
-            <span class="required">*</span>
-            <input type="number"  class="form-control" [(ngModel)]="materialCount"  (input)="generateRows()"min="1">
-        </div>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRawMaterial" (click)="edit(0)">إضافة مادة
+            أولية
+        </button>
 
         <div class="table-responsive">
             <table class="table table-hover table-small-header ">
                 <thead>
                     <tr>
                         <th>#</th>
-                       
+                       <th>
+
+                        اسم البند الجمركي
+                        (رقم البند الجمركي على مستوى 12)
+
+                       </th>
                         <th  >  
                            <span class="form-label" placement="left" title="" tooltip="الاسم المتداول في السوق ">
                             اسم المادة الأولية  ( المادة الخام) التجاري
@@ -50,6 +53,7 @@
                             <i>؟</i>
                         </span>
                                                 <th> </th>
+                                                <th> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +61,7 @@
                         <td>{{j+1}}</td>
 
                         <td hidden> {{material.Id}} </td>
-                        
+                        <td>{{material.Product12}}</td>
                         <td> {{material.Name}} </td>
                        
 
@@ -118,9 +122,9 @@
                             <button class="btn btn-primary"  data-bs-toggle="modal"  data-bs-target="#addRawMaterial"
                             (click)="edit(material.Id)"> تعديل  </button>
                         </td>
-                        <td *ngIf="material.Id==undefined || material.Id==0" >
-                            <button class="btn btn-primary"  data-bs-toggle="modal"  data-bs-target="#addRawMaterial"
-                            (click)="edit(material.Id)">اضافة  </button>
+                        <td>
+                            <button class="btn btn-danger"  
+                            (click)="delete(material.Id)">حذف  </button>
                         </td>
                     </tr>
                 </tbody>
@@ -129,7 +133,7 @@
 
 
     
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-6">
                 <label class="form-label">هل لديك مواد أولية جديدة تريد إضافتها؟</label>
                 <select class="form-select if-yes" (change)="handleSelectChange($event)">
@@ -144,7 +148,7 @@
                         أولية</button>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="form-footer">
             <div class="col-12">

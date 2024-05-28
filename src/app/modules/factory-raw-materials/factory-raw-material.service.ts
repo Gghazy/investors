@@ -36,7 +36,9 @@ export class FactoryRawMaterialService {
   create(material: RawMaterial): Observable<any> {
     return this.http.post<any>('RawMaterials', material);
   }
-
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>('RawMaterials?id='+ id);
+  }
 
 //AttachmentService
 

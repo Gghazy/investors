@@ -42,7 +42,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   periodId: any;
   saveSuccessful: boolean = false;
   productx: any;
-
+  fileError: string | null = null;
+  fileErrorPhoto: string | null = null;
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private fileService: FileService,
     private router: Router,
@@ -95,7 +96,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       this.dropdownSettings = {
         singleSelection: false,
         idField: 'ProductId',
-        textField: 'Hs12NameAr',
+        textField: 'ProductName',
         selectAllText: 'تحديد الكل',
         unSelectAllText: 'ازالة التحديد',
         searchPlaceholderText: 'بحث',
@@ -113,7 +114,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'ProductId',
-      textField: 'Hs12NameAr',
+      textField: 'ProductName',
       selectAllText: 'تحديد الكل',
       unSelectAllText: 'ازالة التحديد',
       searchPlaceholderText: 'بحث',
@@ -135,16 +136,15 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
           .subscribe((res: any) => {
            this.products12 = res.Data;
 
-//             this.request.FactoryProductId.forEach(element => {
-//               let ProductName = this.products12.find(x => x.Id == element)?.Hs12NameAr;
-
-//               this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductName })
-
-// console.log(this.selectedItems1)
-//               this.selectedProducts = this.selectedItems1
-//             });
+            this.request.FactoryProductId.forEach(element => {
+              debugger
+              let ProductNamex = this.products12.find(x => x.ProductId == element)?.ProductName;
+console.log(ProductNamex)
+              this.selectedItems1.push({ 'ProductId': element , 'ProductName': ProductNamex })
+              this.selectedProducts = this.selectedItems1
+            });
             this.getProducts();
-//             console.log(this.products12)
+         
          })
 
 
@@ -226,21 +226,43 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   }
 
   savePaper(file: any) {
+
     if (file.target.files.length > 0) {
-      this.fileService
-        .addFile(file.target.files[0])
-        .subscribe((res: any) => {
-          this.request.PaperId = res.Data.Id
-        });
-    }
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+      const validFileTypes = ['application/pdf'];
+      if (validFileTypes.includes(fileType)) {
+        this.fileError = null;
+
+        this.fileService
+          .addFile(file.target.files[0])
+          .subscribe((res: any) => {
+            this.request.PaperId = res.Data.Id
+          });
+      } else {
+        this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
+
+      }}
   }
   savePhoto(file: any) {
     if (file.target.files.length > 0) {
-      this.fileService
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+
+      if (fileType === 'image/png' || fileType === 'image/jpeg') {
+        this.fileErrorPhoto = null;
+
+        this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.PhotoId = res.Data.Id
+         
         });
+      } else {
+        this.fileErrorPhoto = 'الرجاء رفع المستند بالصيغة الموضحة';
+        
+      }
+    
     }
   }
 
@@ -250,6 +272,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   save() {
     this.request.FactoryId = this.factoryId;
+    this.request.PeriodId = this.periodId;
     console.log(this.request)
     if (this.request.Id == undefined) {
       this.rawMaterialService
