@@ -22,6 +22,9 @@ export class FactoryProductService {
   getAll(factoryId:number): Observable<any> {
     return this.http.get<any>(`Products/GetAll?factoryId=${factoryId}`);
   }
+  getAddedProducts(factoryId:number): Observable<any> {
+    return this.http.get<any>(`Products/GetAddedAll?factoryId=${factoryId}`);
+  }
   getAllProductsNotInFactory(search:ProductsNotInFactorySearch): Observable<any> {
     return this.http.post<any>('Products/getAllProductsNotInFactory',search);
   }

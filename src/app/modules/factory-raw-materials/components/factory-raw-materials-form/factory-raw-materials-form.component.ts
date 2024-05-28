@@ -135,14 +135,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
           .subscribe((res: any) => {
            this.products12 = res.Data;
 
-            this.request.FactoryProductId.forEach(element => {
-              let ProductName = this.products12.find(x => x.Id == element)?.Hs12NameAr;
+//             this.request.FactoryProductId.forEach(element => {
+//               let ProductName = this.products12.find(x => x.Id == element)?.Hs12NameAr;
 
-              this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductName })
+//               this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductName })
 
-console.log(this.selectedItems1)
-              this.selectedProducts = this.selectedItems1
-            });
+// console.log(this.selectedItems1)
+//               this.selectedProducts = this.selectedItems1
+//             });
             this.getProducts();
 //             console.log(this.products12)
          })
@@ -178,9 +178,9 @@ console.log(this.selectedItems1)
     this.searchproduct.FactoryId = this.factoryId;
     this.searchproduct.PeriodId = parseInt(this.periodId);
     this.productService
-    .getAllPagination(this.searchproduct)
+    .getAllProducts()
       .subscribe((res: any) => {
-        this.products12 = res.Data.Items;
+        this.products12 = res.Data;
        // this.filteredData =res.Data;
        console.log(this.products12)
       });
@@ -203,7 +203,6 @@ console.log(this.selectedItems1)
 
 
   onItemDeSelect(item: any) {
-    debugger
     this.request.FactoryProductId.splice(item, 1)
 
     this.selectedItems1.splice(item, 1)
@@ -251,11 +250,12 @@ console.log(this.selectedItems1)
 
   save() {
     this.request.FactoryId = this.factoryId;
+    console.log(this.request)
     if (this.request.Id == undefined) {
       this.rawMaterialService
         .create(this.request)
         .subscribe((res: any) => {
-          this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+          // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
           this.saveSuccessful = true;
           this.close.emit(true);
           this.toastr.success("تم الحفظ");
@@ -268,7 +268,7 @@ console.log(this.selectedItems1)
       this.rawMaterialService
         .update(this.request)
         .subscribe((res: any) => {
-          this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+          // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
           this.saveSuccessful = true;
           this.close.emit(true);
           this.toastr.success("تم الحفظ");

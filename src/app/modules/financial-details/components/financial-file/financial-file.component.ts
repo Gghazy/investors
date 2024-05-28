@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class FinancialFileComponent implements OnInit {
   files:FinancialFileModel[]=[];
   factoryId: any;
+  periodId:any
   request=new FinancialFileModel();
   src!:string;
   @Input() financialId!:number;
@@ -27,7 +28,7 @@ export class FinancialFileComponent implements OnInit {
     private toastr: ToastrService
     ){
       this.factoryId = this.route.snapshot.paramMap.get('id');
-    
+      this.periodId = this.route.snapshot.paramMap.get('periodid');
     }
 
   ngOnInit(): void {
@@ -36,7 +37,7 @@ export class FinancialFileComponent implements OnInit {
 
   getFiles() { 
     this.financialDetailService
-      .getAllFiles(this.factoryId)
+      .getAllFiles(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
@@ -55,6 +56,7 @@ export class FinancialFileComponent implements OnInit {
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
+          console.log(this.request)
         });
         this.addFileButton = true
       } else {
@@ -75,8 +77,9 @@ export class FinancialFileComponent implements OnInit {
   }
   save(){
    
-    this.request.FactoryFinancialId=Number(this.financialId);
+    this.request.FactoryFinancialId=0;
     this.request.FactoryId=this.factoryId;
+    this.request.PeriodId=this.periodId;
     this.request.Name='';
     console.log(this.request)
     this.financialDetailService
