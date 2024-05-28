@@ -15,7 +15,7 @@
   <div class="form-body">
     <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
       <P>
-        يتم إضافة البيانات المطلوبة و الخاصة بالمنتجات من خلال الضغط على خيار تعديل و ملء الحقول بالصورة الصحيحة و من ثم الضغط على خيار حفظ الموجود في نافذة تعديل بيانات المنتجات، اما في حال إضافة بيانات منتج جديد فيجب إختيار الخيار نعم من قائمة هل لديك منتجات جديدة تريد إضافتها؟ بعد ذلك الضغط على خيار إضافة منتج جديد و ملء الحقول بالصورة المطلوبة و حفظ البيانات المدخلة و اخيراً الضغط على خيار حفظ الموجود اسفل الشاشة. 
+        يتم إضافة البيانات المطلوبة و الخاصة بالمنتجات من خلال الضغط على خيار تعديل (الموجود بجانب كل منتج) و ملء الحقول بالصورة الصحيحة و من ثم الضغط على خيار حفظ الموجود في نافذة تعديل بيانات المنتجات. 
       </div>
     <app-list>
       <ng-template #header>
@@ -43,10 +43,10 @@
           </span>
         
         </th>
-        <th> صورة المنتج</th>
+        <th>عرض صورة المنتج </th>
         <th>
           <span class="has-des" placement="top" title="" tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت">
-            ورقة البيانات <i>؟</i></span>
+         عرض ورقة البيانات <i>؟</i></span>
         </th>
         <th> </th>
       </ng-template>
@@ -65,7 +65,7 @@
           </td>
           <td>
             <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
-              tooltip=" تحميل الملف " (click)="getFile(product.PhototId)">
+              tooltip=" عرض الصورة " (click)="getFile(product.PhototId)">
               <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -81,7 +81,7 @@
           </td>
           <td>
             <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
-              tooltip=" تحميل الملف " (click)="getFile(product.PeperId)">
+              tooltip=" عرض الملف " (click)="getFile(product.PeperId)">
               <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -102,7 +102,9 @@
             </button>
           </td>
         </tr>
+        
       </ng-template>
+      
     </app-list>
     <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber"
       [totalCount]="products.TotalCount"></app-pagination>

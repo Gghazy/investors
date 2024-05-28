@@ -43,6 +43,7 @@ export class BasicInfoFormComponent implements OnInit {
       .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.request = res.Data;
+        console.log(this.request)
       });
   }
   getperiod(){

@@ -46,7 +46,7 @@
         <label class="form-label">رفع المستند بصيغة  <span class="required">*jpeg , jpg , png , pdf</span>  </label>
         <div class="input-group">
             <input type="file"  #fileInput accept=".png, .jpg, .jpeg, .pdf"   class="form-control" placeholder="" value="" (change)="saveFile($event)">
-            <button *ngIf="addFileButton" class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+            <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
         </div>
         <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
     </div>

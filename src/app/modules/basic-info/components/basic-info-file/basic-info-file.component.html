@@ -31,7 +31,7 @@
     <div class="input-group">
         <input type="file" #fileInput  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
        
-        <button *ngIf="addFileButton" class="btn btn-primary" type="submit" >اضافة </button>
+        <button  class="btn btn-primary" type="submit" >اضافة </button>
     </div>
     <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
 

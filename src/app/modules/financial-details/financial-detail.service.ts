@@ -11,8 +11,8 @@ export class FinancialDetailService {
 
   constructor(private http: HttpClient) { }
 
-  getAllFiles(factoryFinancialId:number): Observable<any> {
-    return this.http.get<any>('FactoryFinancialAttachments/'+factoryFinancialId);
+  getAllFiles(factoryId:number,periodId:number): Observable<any> {
+    return this.http.get<any>(`FactoryFinancialAttachments?Factoryid=${factoryId}&&PeriodId=${periodId}`);
   }
   createFile(request: FinancialFileModel): Observable<any> {
     return this.http.post<any>('FactoryFinancialAttachments', request);

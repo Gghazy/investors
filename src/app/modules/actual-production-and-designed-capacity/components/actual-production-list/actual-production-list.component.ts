@@ -47,6 +47,7 @@ export class ActualProductionListComponent implements OnInit {
     .getAllPagination(this.search)
     .subscribe((res: any) => {
       this.products = res.Data;
+      console.log(this.products)
       this.products.Items.forEach((element:any) => {
         if (element.ActualProduction > element.DesignedCapacity){
          

@@ -46,7 +46,6 @@ export class BasicInfoFormComponent implements OnInit {
     this.getperiod()
   }
   onInputChange(event: Event): void {
-    debugger;
     console.log('test')
     const target = event.target as HTMLInputElement;
     const closestRow = target.closest('.row');

@@ -39,7 +39,7 @@
             <input type="file" #fileInput class="form-control" placeholder="" value="" 
             accept=".pdf"
             (change)="saveFile($event)">
-            <button  *ngIf="addFileButton" class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+            <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
         </div>
         <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
     </div>
