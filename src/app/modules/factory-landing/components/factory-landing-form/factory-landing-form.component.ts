@@ -84,7 +84,6 @@ this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسا
         this.periodStartDate = res.Data.PeriodStartDate
         this.periodEndDate = res.Data.PeriodEndDate
         this.Year= res.Data.Year -1
-        debugger
         this.periodMonth = res.Data.Month
         this.periodName = res.Data.PeriodName
       });
@@ -139,7 +138,6 @@ this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسا
 
 
   checkAllScreenStatus(){
-debugger
     
     this.allScreenStatus=
     this.screenStatuse.ProductData&&

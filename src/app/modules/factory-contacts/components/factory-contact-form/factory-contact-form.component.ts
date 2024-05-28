@@ -61,11 +61,15 @@ export class FactoryContactFormComponent implements OnInit {
       .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         debugger
-        this.request = res.Data;
-        this.phoneForm.setValue(res.Data);
+        // this.request = res.Data;
+        // this.phoneForm.setValue(res.Data);
         this.phoneForm.controls.OfficerPhone.setValue(res.Data.OfficerPhone.Number);
         this.phoneForm.controls.FinanceManagerPhone.setValue(res.Data.FinanceManagerPhone.Number);
         this.phoneForm.controls.ProductionManagerPhone.setValue(res.Data.ProductionManagerPhone.Number);
+        
+        this.phoneForm.controls.OfficerEmail.setValue(res.Data.OfficerEmail);
+        this.phoneForm.controls.FinanceManagerEmail.setValue(res.Data.FinanceManagerEmail);
+        this.phoneForm.controls.ProductionManagerEmail.setValue(res.Data.ProductionManagerEmail);
       });
   }
 

@@ -13,15 +13,21 @@
         </div>
     </div>
     <div class="form-body">
-        <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
-            <P>
-                يتم إضافة البيانات المطلوبة و الخاصة بالمواد الأولية من خلال الضغط على خيار تعديل و ملء الحقول بالصورة الصحيحة و من ثم الضغط على خيار حفظ الموجود في نافذة التعديل، و إرفاق المستندات المطلوبة مع الإلتزام بإمتدادات الملفات المذكورة و عدم إرفاق مستند بإمتداد او صيغة غير مذكورة و بعدها الضغط على خيار حفظ أسفل الشاشة. </div>
-        <div class="table-responsive">
+       
+                <div class="table-responsive">
             <table class="table table-hover table-small-header ">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th> المادة</th>
+                       
+                        <th  >  
+                            <span class="form-label" placement="left" title=""  tooltip="اسم المادة الاولية (المادة الخام ) التجاري">
+                              المادة  
+                           
+                             <i>؟</i>
+                         </span>
+                         </th>    
+
                         <th> كمية المخزون الحالي   <span class="required">*</span></th>
                         <th> وحدة القياس</th>
                         <!-- <th> KG </th> -->
@@ -125,10 +131,10 @@
          
 
             <div class="col-md-6">
-                <label class="form-label">رفع المستند بصيغة PDF<span class="required">*</span> </label>
+                <label class="form-label">رفع المستند بصيغة PDF</label>
                 <div class="input-group">
                     <input type="file" class="form-control" accept=".pdf" placeholder="" value="" (change)="saveDocs($event)">
-                    <button *ngIf="addFileButton"  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+                    <button  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
                 </div>
                 <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
             </div>

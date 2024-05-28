@@ -9,7 +9,7 @@
 
 
       <div class="col-md-6" *ngIf="productId==0">
-        <label for="" class="form-label">اسم المنتج <span class="required">*</span></label>
+        <label for="" class="form-label"> اسم المنتج (حسب البند الجمركي على مستوى 12)<span class="required">*</span></label>
         <ng-multiselect-dropdown
          [placeholder]="'أختر'" 
          (keyup)="onSearch($event)"
@@ -22,7 +22,9 @@
     </div>
     
     <div class="col-md-6">
-        <label class="form-label" tooltip="الاسم المتداول في السوق "> 	اسم المنتج التجاري <span class="required">*</span>
+        <label class="form-label" tooltip="الاسم المتداول في السوق "> 
+            	اسم المنتج التجاري 
+                <span  class="required">*</span>
             <i>؟</i>
         </label>
         <input  type="text" name="CommericalName" class="form-control"  [(ngModel)]="request.CommericalName">
@@ -39,20 +41,21 @@
         <label class="form-label" tooltip="يتم كتابة الوزن المقابل لوحدة القياس المحددة(الحقل السابق) للمنتج بالكيلوجرام مثال : في حال كانت وحدة قياس المنتج هي الطن يتم كتابة القيمة 1000 في حقل الوزن المقابل بالكيلوجرام" placement="left">
            
             الوزن المقابل​ بالكيلوغرام لكل وحدة​ 
-            <span class="required">*</span>
+               <span  class="required">*</span>
             <i>؟</i>
         </label>
         <input  type="number" [disabled]="isDisabled" name="Kilograms_Per_Unit" class="form-control"  [(ngModel)]="request.Kilograms_Per_Unit">
     </div>
     <div class="col-md-6">
-        <label class="form-label">صورة المنتج  بصيغة jpeg , jpg , png , pdf (ان وجدت)<span class="required">*</span></label>
+        <label class="form-label">صورة المنتج  بصيغة jpeg , jpg , png , pdf (ان وجدت)
+           </label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
         </div>
     </div>
     <div class="col-md-6">
-        <label class="form-label" tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"> ورقة البيانات بصيغة pdf 
-            <span class="required">*</span>
+        <label class="form-label" tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"> ورقة البيانات بصيغة pdf (ان وجدت)
+           
             <i>؟</i></label>
         <div class="input-group">
             <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">

@@ -45,7 +45,7 @@ constructor(
     .subscribe((res: any) => {
       
       this.request = res.Data;
-
+console.log(this.request)
       
     });
   }

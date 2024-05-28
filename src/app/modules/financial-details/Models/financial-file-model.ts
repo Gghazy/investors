@@ -7,4 +7,5 @@ export class FinancialFileModel {
     AttachmentId !: number;
     FactoryFinancialId!: number;
     FactoryId!:number;
+    PeriodId!:number;
 }

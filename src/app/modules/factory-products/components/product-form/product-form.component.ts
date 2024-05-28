@@ -23,11 +23,11 @@ export class ProductFormComponent implements OnInit {
   request = new ProductModel();
   units!: LookUpModel[];
   isDisabled!: boolean;
-  products = new ResultResponse<ProductModel>();
+  products= new ResultResponse< ProductModel>;
   dropdownSettings!: IDropdownSettings;
   search = new ProductsNotInFactorySearch();
   isLoading = false;
-  selectProductId!:any;
+  selectProductId!: any;
 
   constructor(
     private factoryProductService: FactoryProductService,
@@ -57,15 +57,15 @@ export class ProductFormComponent implements OnInit {
     };
 
   }
- 
- 
+
+
   getOne() {
 
     this.factoryProductService
       .getOne(this.productId)
       .subscribe((res: any) => {
         this.request = res.Data;
-        this.request.ProductName = this.request.Hs12NameAr +(this.request.Hs12Code)
+        this.request.ProductName = this.request.Hs12NameAr + (this.request.Hs12Code)
         this.getUnits()
         console.log(this.request)
       });
@@ -86,11 +86,14 @@ export class ProductFormComponent implements OnInit {
     this.factoryProductService
       .getAllProductsNotInFactory(this.search)
       .subscribe((res: any) => {
+        // this.products = res.Data
+        // console.log(this.products)
         this.products.PageCount=res.Data.PageCount;
         this.products.TotalCount=res.Data.TotalCount;
         this.products.PageNumber=res.Data.PageNumber;
         this.products.PageSize=res.Data.PageSize;
         this.products.Items = [...this.products.Items, ...res.Data.Items];
+        console.log(this.products)
          this.isLoading = false;
       });
   }
@@ -127,17 +130,17 @@ export class ProductFormComponent implements OnInit {
 
     }
   }
-  productChanage(){
-    this.request.UnitId= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.UnitId;
+  productChanage() {
+    this.request.UnitId = this.products.Items.find(x => x.Id == this.selectProductId[0].Id)?.UnitId;
     this.unitChange();
 
   }
   save() {
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
-    if(this.productId==0){
+    if (this.productId == 0) {
 
-      this.request.ProductId= this.products.Items.find(x=>x.Id==this.selectProductId[0].Id)?.ProductId;
+      this.request.ProductId = this.products.Items.find(x => x.Id == this.selectProductId[0].Id)?.ProductId;
 
     }
     if (this.productId == 0) {
@@ -158,16 +161,16 @@ export class ProductFormComponent implements OnInit {
     }
   }
   onSearch(event: Event) {
-    this.search.TxtSearch= (event.target as HTMLInputElement).value;
-    this.search.PageNumber=1;
-    this.products.Items=[];
-    this.isLoading = true;
-    this.factoryProductService
-      .getAllProductsNotInFactory(this.search)
-      .subscribe((res: any) => {
-       this.products=res.Data; 
-        this.isLoading = false;
-      });
+    //   this.search.TxtSearch= (event.target as HTMLInputElement).value;
+    // //  this.search.PageNumber=1;
+    //   this.products=[];
+    //   this.isLoading = true;
+    //   this.factoryProductService
+    //     .getAllProductsNotInFactory(this.search)
+    //     .subscribe((res: any) => {
+    //      this.products=res.Data; 
+    //       this.isLoading = false;
+    //     });
 
   }
   onDropdownScroll(event: Event) {
@@ -176,12 +179,12 @@ export class ProductFormComponent implements OnInit {
     // Check if the user is near the bottom of the dropdown
     const isAtBottom = target.scrollHeight - target.scrollTop === target.clientHeight;
     if (isAtBottom) {
-      
+
       if (!this.isLoading) {
         this.search.PageNumber++;
         this.getAllProductsNotInFactory();
       }
     }
-   
+
   }
 }

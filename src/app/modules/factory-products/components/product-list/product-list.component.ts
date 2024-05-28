@@ -16,25 +16,28 @@ import { PeriodService } from 'src/app/modules/period/period.service';
 export class ProductListComponent implements OnInit {
   factoryId: any;
   periodId: any;
+  productsAdded= new ResultResponse<ProductModel>();
   search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
-  productId!: number |undefined;
-  PeriodName!:string;
-  modalLable!:string;
+  productId!: number | undefined;
+  PeriodName!: string;
+  modalLable!: string;
   @ViewChild('closeModal') Modal!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
-     private factoryProductService: FactoryProductService,
-     private fileService: FileService,
-     private toastr: ToastrService,
-    private periodService : PeriodService, 
-     ) {
+    private factoryProductService: FactoryProductService,
+    private fileService: FileService,
+    private toastr: ToastrService,
+    private periodService: PeriodService,
+  ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
     this.getProducts();
+    
+    this.getAddedProducts();
     this.getperiod()
   }
 
@@ -45,16 +48,16 @@ export class ProductListComponent implements OnInit {
 
     this.showInput = selectedValue === 'yes';
   }
-  getperiod(){
+  getperiod() {
     this.periodService
-    .getOne(this.periodId)
-    .subscribe((res: any) => {
-      
-      this.PeriodName= res.Data.PeriodName;
-    });
-  } 
+      .getOne(this.periodId)
+      .subscribe((res: any) => {
+
+        this.PeriodName = res.Data.PeriodName;
+      });
+  }
   getProducts() {
-    
+
     this.search.FactoryId = this.factoryId;
     this.search.PeriodId = this.periodId;
     this.search.IsActive = true;
@@ -65,43 +68,55 @@ export class ProductListComponent implements OnInit {
         console.log(this.products)
       });
   }
+
+  getAddedProducts() {
+
+    this.search.FactoryId = this.factoryId;
+    this.factoryProductService
+      .getAddedProducts(this.factoryId)
+      .subscribe((res: any) => {
+        this.productsAdded = res.Data;
+        console.log(this.productsAdded)
+      });
+  }
   pageChanged(data: any) {
     this.search.PageNumber = data;
     this.getProducts();
 
   }
   edit(id: number) {
-    if(id==0){
-      this.modalLable='إضافة منتج'
+    if (id == 0) {
+      this.modalLable = 'إضافة منتج'
     }
-   else{
-      this.modalLable='تعديل منتج'
+    else {
+      this.modalLable = 'تعديل منتج'
     }
     this.productId = id;
-    
+
   }
-  closePopUp(){
-    this.productId=undefined
+  closePopUp() {
+    this.productId = undefined
     this.Modal.nativeElement.click()
     this.getProducts();
   }
 
-  getFile(attachmentId:number){
-    if(attachmentId==null){
-      this.toastr.error("لا يوجد ملف");    }
-    else{
+  getFile(attachmentId: number) {
+    if (attachmentId == null) {
+      this.toastr.error("لا يوجد ملف");
+    }
+    else {
       this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
-        this.downloadattachment(res)    
+        this.downloadattachment(res)
       });
     }
-    
+
   }
   downloadattachment(data: any) {
     const blob = new Blob([data], { type: data.type });
-    const url= window.URL.createObjectURL(blob);
+    const url = window.URL.createObjectURL(blob);
     window.open(url);
   }
-  save(){
+  save() {
     this.toastr.success("تم الحفظ");
   }
 }
