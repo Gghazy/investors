@@ -7,4 +7,5 @@ export class LocationFileModel {
     AttachmentId !: number;
     FactoryLocationId!: number;
     FactoryId!: number;
+    PeriodId!: number;
 }

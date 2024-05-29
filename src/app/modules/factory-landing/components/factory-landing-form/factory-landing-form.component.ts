@@ -75,6 +75,9 @@ export class FactoryLandingFormComponent implements OnInit {
         if(res.Data.DataApprover== res.Data.DataEntry && res.Data.DataEntry==res.Data.DataReviewer){
 this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
         }
+        else {
+          this.FactoryStatus= ' ادخال'
+        }
       });
   }
   getPeriod() {
@@ -138,19 +141,34 @@ this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسا
 
 
   checkAllScreenStatus(){
-    
+    debugger
+    if(this.periodName == 'يناير'){
+      this.allScreenStatus=
+      this.screenStatuse.ProductData&&
+      this.screenStatuse.BasicFactoryInfo&&
+      this.screenStatuse.FinancialData&&
+      this.screenStatuse.MonthlyFinancialData&&
+      this.screenStatuse.FactoryLocation&&
+      this.screenStatuse.FactoryContact&&
+      this.screenStatuse.CustomItemsUpdated&&
+      //this.screenStatuse.CustomItemValidity&&
+      this.screenStatuse.ActualProduction
+      this.screenStatuse.RawMaterial&&
+      this.screenStatuse.ActualRawMaterila
+    }
+   else{
     this.allScreenStatus=
-    this.screenStatuse.ProductData&&
-    this.screenStatuse.BasicFactoryInfo&&
-    this.screenStatuse.FinancialData&&
-    this.screenStatuse.MonthlyFinancialData&&
-    this.screenStatuse.FactoryLocation&&
-    this.screenStatuse.FactoryContact&&
-    this.screenStatuse.CustomItemsUpdated&&
-    //this.screenStatuse.CustomItemValidity&&
-    this.screenStatuse.ActualProduction
-    // this.screenStatuse.RawMaterial&&
-    // this.screenStatuse.ActualRawMaterila&&
-   
+      this.screenStatuse.ProductData&&
+      this.screenStatuse.BasicFactoryInfo&&
+      this.screenStatuse.MonthlyFinancialData&&
+      this.screenStatuse.FactoryLocation&&
+      this.screenStatuse.FactoryContact&&
+      this.screenStatuse.CustomItemsUpdated&&
+      //this.screenStatuse.CustomItemValidity&&
+      this.screenStatuse.ActualProduction
+      this.screenStatuse.RawMaterial&&
+      this.screenStatuse.ActualRawMaterila
+   }
+   console.log(this.allScreenStatus)
   }
 }

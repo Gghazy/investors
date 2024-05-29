@@ -11,8 +11,8 @@ export class FactoryLocationService {
 
   constructor(private http: HttpClient) { }
 
-  getAllFiles(factoryFinancialId: number): Observable<any> {
-    return this.http.get<any>('FactoryLocationAttachments/' + factoryFinancialId);
+  getAllFiles(factoryId: number,periodId : number): Observable<any> {
+    return this.http.get<any>(`FactoryLocationAttachments?factoryid=${factoryId}&periodId=${periodId}`);
   }
   createFile(request: LocationFileModel): Observable<any> {
     return this.http.post<any>('FactoryLocationAttachments', request);

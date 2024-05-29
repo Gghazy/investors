@@ -12,6 +12,9 @@ export class ActualProductModel {
     ActualProductionWeight!:number;
     PeriodId!: number;
     FactoryId!: number;
+    ProductId!: number;
     ReasoneForIncreaseCapacity!:number;
     Kilograms_Per_Unit!:number;
+    Level12Number!:string
+    Level12ItemName!:string
 }

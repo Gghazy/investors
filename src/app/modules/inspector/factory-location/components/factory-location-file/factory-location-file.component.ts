@@ -35,7 +35,7 @@ export class FactoryLocationFileComponent implements OnInit {
     this.request.FactoryId = parseInt(this.factoryId)
     this.request.PeriodId = parseInt(this.periodId)
     this.factoryLocationService
-      .getAllFiles(this.request.FactoryId)
+      .getAllFiles(this.request.FactoryId,this.request.PeriodId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });

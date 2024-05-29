@@ -59,9 +59,9 @@ export class FactoryLocationFormComponent {
       .subscribe((res: any) => {
         this.request = res.Data;
         debugger
-        if (this.request.Id == 0 || this.request.Id == undefined) {
-          this.save();
-        }
+        // if (this.request.Id == 0 || this.request.Id == undefined) {
+        //   this.save();
+        // }
       });
   }
 
@@ -123,10 +123,9 @@ export class FactoryLocationFormComponent {
       this.factoryLocationService
         .update(this.request)
         .subscribe((res: any) => {
-          this.router.navigate(['/pages/factory-landing/' + this.factoryId]);
-          this.toastr.success("تم الحفظ");
+          
         });
     }
-
+    this.toastr.success("تم الحفظ");
   }
 }

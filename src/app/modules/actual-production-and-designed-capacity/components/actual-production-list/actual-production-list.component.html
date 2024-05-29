@@ -27,7 +27,7 @@
             <ng-template #body>
               <tr *ngFor="let product of products.Items let i=index">
                 <td>{{i+1}}</td>
-                <td>{{product.ProductName}}</td>
+                <td>{{product.Level12ItemName}}({{product.Level12Number}})</td>
                 
                 <td>
                     {{product.DesignedCapacity !=0? product.DesignedCapacity + product.DesignedCapacityUnitName:""}}

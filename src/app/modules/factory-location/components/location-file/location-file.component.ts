@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LocationFileComponent implements OnInit {
   factoryId: any;
+  periodId: any;
   files: LocationFileModel[] = [];
   request = new LocationFileModel();
   src!: string;
@@ -25,6 +26,7 @@ export class LocationFileComponent implements OnInit {
     private toastr: ToastrService
   ){ 
     this.factoryId = this.route.snapshot.paramMap.get('id');
+    this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
 
   ngOnInit(): void {
@@ -33,7 +35,7 @@ export class LocationFileComponent implements OnInit {
 
   getFiles() {
     this.factoryLocationService
-      .getAllFiles(this.factoryId)
+      .getAllFiles(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
       });
@@ -71,6 +73,7 @@ export class LocationFileComponent implements OnInit {
   save(){
     this.request.FactoryLocationId = this.factoryLocationId;
     this.request.FactoryId = this.factoryId;
+    this.request.PeriodId = this.periodId;
     this.request.Name = "";
     console.log(this.request)
     this.factoryLocationService

@@ -56,7 +56,7 @@ modalLabel!:string;
   private periodService:PeriodService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-
+    this.searchRawmaterial.PeriodId =this.periodId;
   }
 
   ngOnInit() {
@@ -151,7 +151,8 @@ this.modalLabel ='إضافة مادة أولية'
 
  
     getRawMaterial() {
-      this.searchRawmaterial.PeriodId =this.periodId;
+    debugger
+     
       this.rawMaterialService
         .getRawMaterial(this.searchRawmaterial, this.factoryId)
         .subscribe((res: any) => {

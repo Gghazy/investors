@@ -271,9 +271,13 @@ console.log(ProductNamex)
 
 
   save() {
+
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     console.log(this.request)
+    if( this.fileErrorPhoto ==null || this.fileError ==null){
+
+   
     if (this.request.Id == undefined) {
       this.rawMaterialService
         .create(this.request)
@@ -298,13 +302,15 @@ console.log(ProductNamex)
         });
     }
 
-
+  }
 
 
     // this.toastr.success("تم الحفظ");
     if (this.saveSuccessful == true) {
       this.request = new RawMaterial();
       this.selectedProducts = []
+      this.fileErrorPhoto =null
+      this.fileError =null
     }
   }
 
