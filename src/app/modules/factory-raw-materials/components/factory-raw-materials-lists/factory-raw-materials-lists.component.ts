@@ -60,6 +60,7 @@ modalLabel!:string;
   }
 
   ngOnInit() {
+    debugger
     this.getProducts()
     this.getRawMaterial()
     this.dropdownSettings = {
@@ -201,6 +202,8 @@ this.getProducts()
 
   
     getImage(attachmentId: number) {
+      console.log(attachmentId)
+       console.log(attachmentId)
       if (attachmentId == null) {
         this.toastr.error("لا يوجد ملف");
       }

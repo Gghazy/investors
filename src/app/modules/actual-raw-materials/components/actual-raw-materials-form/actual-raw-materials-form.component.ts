@@ -261,7 +261,10 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
 
   saveItems() {
-
+    if( this.fileError){
+      this.toastr.error("الرجاء التحقق من البيانات المدخلة")
+      return
+          }
     if (this.isNewData == true) {
 
       this.x.forEach((item: any) => {

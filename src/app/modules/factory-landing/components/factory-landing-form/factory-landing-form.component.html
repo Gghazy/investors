@@ -584,7 +584,10 @@
         <span>{{FactoryStatus}}</span>
     </button> -->
     <button   data-bs-toggle="modal"
-    data-bs-target="#FactoryStatus" class="btn" [disabled]="!isChecked || !allScreenStatus" (click)="save()">
+    data-bs-target="#FactoryStatus" class="btn"
+    [disabled]="!isChecked || !allScreenStatus"   (click)="save()">
+ 
+   
         <svg fill="none" height="24" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
             stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M22 11.07V12a10 10 0 1 1-5.93-9.14" />
@@ -608,10 +611,11 @@ aria-hidden="true"
   class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md"
 >
   <div class="modal-content">
-   
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+    #closeModal  ></button>
     <div class="modal-body">
        
-       <h3 class="text-success" >تم اعتماد بيانات المسح المدخلة بنجاح </h3>
+       <h3 class="text-success" (close)="closePopUp()">تم اعتماد بيانات المسح المدخلة بنجاح </h3>
         </div>
    
     </div>

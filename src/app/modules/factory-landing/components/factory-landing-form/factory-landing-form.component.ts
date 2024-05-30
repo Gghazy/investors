@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
 import { FactoryService } from 'src/app/modules/factory/factory.service';
@@ -19,6 +19,9 @@ import { ToastrService } from 'ngx-toastr';
   ]
 })
 export class FactoryLandingFormComponent implements OnInit {
+  @ViewChild('closeModal') Modal!: ElementRef;
+  
+@Output()close=new EventEmitter<boolean>();
   isChecked: boolean = false;
   factoryId: any;
   periodId: any;
@@ -71,13 +74,17 @@ export class FactoryLandingFormComponent implements OnInit {
       .getOne(this.factoryId, this.periodId)
       .subscribe((res: any) => {
         this.sharedService.factoryStatus = res.Data.Status;
+        console.log(this.sharedService.factoryStatus)
         this.factoryName = res.Data.NameAr
         if(res.Data.DataApprover== res.Data.DataEntry && res.Data.DataEntry==res.Data.DataReviewer){
 this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
         }
-        else {
-          this.FactoryStatus= ' ادخال'
+        else{
+          if(this.FactoryStatusId==0 ||   this.FactoryStatus=='') {
+            this.FactoryStatus= ' ادخال'
+          }
         }
+       
       });
   }
   getPeriod() {
@@ -102,20 +109,27 @@ this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسا
         this.FactoryStatusId = res.Data.DataStatus;
         if(this.FactoryStatusId==0 &&   this.FactoryStatus==''){
           this.FactoryStatus= ' ادخال'
+          this.request.DataStatus =1
         }
-        if(this.FactoryStatusId==1 &&   this.FactoryStatus==''){
-          this.FactoryStatus=  ' اعتماد البيانات المدخلة'
+        if(this.FactoryStatusId==1 ){
+          this.FactoryStatus=  ' مراجعة البيانات المدخلة'
+          this.request.DataStatus =2
         }
-        if(this.FactoryStatusId==2&&   this.FactoryStatus==''){
+        if(this.FactoryStatusId==2){
           this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
+          this.request.DataStatus =3
         }
-        if(this.FactoryStatusId==3&&   this.FactoryStatus==''){
+        if(this.FactoryStatusId==3){
           this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
+          this.request.DataStatus =3
         }
             
       });
   }
-
+  closePopUp() {
+    this.Modal.nativeElement.click()
+    this.close.emit(true);
+  }
   save() {
     
     this.request.FactoryId = this.factoryId
@@ -125,16 +139,20 @@ this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسا
     this.factoryLandingService
     .create(this.request)
     .subscribe((res: any) => {
-      console.log(this.request)
-      this.router.navigate(['/pages/factories-list']);
+      console.log(this.request) 
+      this.close.emit(true);
+      this.Modal.nativeElement.click()
+      this.router.navigate(['/pages/period/'+this.factoryId+'/Investor']);
 });
   }
      else{
-      this.factoryLandingService
+      this.factoryLandingService 
       .update(this.request)
       .subscribe((res: any) => {
         console.log(this.request)
-        this.router.navigate(['/pages/factories-list']);
+        this.close.emit(true);
+        this.Modal.nativeElement.click()
+        this.router.navigate(['/pages/period/'+this.factoryId+'/Investor']);
 });
      }
   }
@@ -171,4 +189,7 @@ this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسا
    }
    console.log(this.allScreenStatus)
   }
+
+
+ 
 }

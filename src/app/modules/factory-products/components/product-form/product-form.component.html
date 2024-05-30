@@ -50,16 +50,20 @@
         <label class="form-label">صورة المنتج  بصيغة jpeg , jpg , png , pdf (ان وجدت)
            </label>
         <div class="input-group">
-            <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
+            <input type="file"  accept=".png, .jpg, .jpeg, .pdf"  class="form-control" placeholder="" value="" (change)="savePhoto($event)">
+           
         </div>
+        <div *ngIf="fileErrorPhoto" class="validation-error">{{ fileErrorPhoto }}</div>
     </div>
     <div class="col-md-6">
         <label class="form-label" tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"> ورقة البيانات بصيغة pdf (ان وجدت)
            
             <i>؟</i></label>
         <div class="input-group">
-            <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">
+            <input type="file"  accept=".pdf" class="form-control" placeholder="" value="" (change)="savePaper($event)">
+         
         </div>
+        <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
     </div>
     <div class="col-md-12 text-center">
         <button class="btn btn-primary" type="button" (click)="save()">حفظ </button>

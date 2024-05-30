@@ -275,9 +275,13 @@ console.log(ProductNamex)
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     console.log(this.request)
-    if( this.fileErrorPhoto ==null || this.fileError ==null){
+    if( this.fileErrorPhoto|| this.fileError){
+this.toastr.error("الرجاء التحقق من البيانات المدخلة")
+return
+    }
+    else{
 
-   
+    
     if (this.request.Id == undefined) {
       this.rawMaterialService
         .create(this.request)
@@ -292,6 +296,7 @@ console.log(ProductNamex)
 
     }
     else {
+      console.log(this.request)
       this.rawMaterialService
         .update(this.request)
         .subscribe((res: any) => {
@@ -300,7 +305,7 @@ console.log(ProductNamex)
           this.close.emit(true);
           this.toastr.success("تم الحفظ");
         });
-    }
+      }
 
   }
 

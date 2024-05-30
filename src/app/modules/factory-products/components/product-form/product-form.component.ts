@@ -28,7 +28,8 @@ export class ProductFormComponent implements OnInit {
   search = new ProductsNotInFactorySearch();
   isLoading = false;
   selectProductId!: any;
-
+  fileError: string | null = null;
+  fileErrorPhoto: string | null = null;
   constructor(
     private factoryProductService: FactoryProductService,
     private lookUpService: LookUpService,
@@ -99,20 +100,46 @@ export class ProductFormComponent implements OnInit {
   }
   savePaper(file: any) {
     if (file.target.files.length > 0) {
-      this.fileService
-        .addFile(file.target.files[0])
-        .subscribe((res: any) => {
-          this.request.PeperId = res.Data.Id
-        });
-    }
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+      const validFileTypes = ['application/pdf'];
+      if (validFileTypes.includes(fileType)) {
+        this.fileError = null;
+
+               
+            this.fileService
+              .addFile(file.target.files[0])
+              .subscribe((res: any) => {
+                this.request.PeperId = res.Data.Id
+              });
+        
+
+      } else {
+        this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
+
+      }}
+
+
+   
   }
   savePhoto(file: any) {
     if (file.target.files.length > 0) {
-      this.fileService
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+
+      if (fileType === 'image/png' || fileType === 'image/jpeg') {
+        this.fileErrorPhoto = null;
+
+        this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.PhototId = res.Data.Id
         });
+      } else {
+        this.fileErrorPhoto = 'الرجاء رفع المستند بالصيغة الموضحة';
+        
+      }
+    
     }
   }
   unitChange() {
@@ -138,6 +165,11 @@ export class ProductFormComponent implements OnInit {
   save() {
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
+    if( this.fileErrorPhoto|| this.fileError){
+      this.toastr.error("الرجاء التحقق من البيانات المدخلة")
+      return
+          }
+          else{
     if (this.productId == 0) {
 
       this.request.ProductId = this.products.Items.find(x => x.Id == this.selectProductId[0].Id)?.ProductId;
@@ -158,7 +190,7 @@ export class ProductFormComponent implements OnInit {
           this.close.emit(true);
           this.toastr.success("تم الحفظ");
         });
-    }
+    }}
   }
   onSearch(event: Event) {
     //   this.search.TxtSearch= (event.target as HTMLInputElement).value;

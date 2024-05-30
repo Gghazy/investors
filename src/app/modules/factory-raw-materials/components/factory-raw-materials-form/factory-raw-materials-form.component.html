@@ -95,7 +95,7 @@
             الأولية بصيغة jpeg , jpg , png , pdf (ان وجدت)
             
         </label>
-        <input type="file" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
+        <input type="file"  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
         <div *ngIf="fileErrorPhoto" class="validation-error">{{ fileErrorPhoto }}</div>
     </div>
     <div class="col-md-6">
@@ -104,7 +104,7 @@
             بصيغة  البيانات pdf (ان وجدت)
             <i>؟</i>
         </label>
-        <input type="file" class="form-control" placeholder="" value="" (change)="savePaper($event)">
+        <input type="file" accept=".pdf" class="form-control" placeholder="" value="" (change)="savePaper($event)">
         <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
     </div>
 
