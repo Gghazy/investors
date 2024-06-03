@@ -28,7 +28,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   @Input() Id!: number;
   @Output() close = new EventEmitter<boolean>();
   searchproduct = new ProductSearch();
-  searchValue:boolean=false;
+  searchValue: boolean = false;
   searchTerm: string = '';
   filteredData: any[] = [];
   products  !: ProductModel[];
@@ -79,19 +79,21 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   dropdownSettings!: IDropdownSettings;
 
   ngOnChanges(changes: SimpleChanges) {
-   
+
     this.request = new RawMaterial();
     if (changes['Id']) {
       this.selectedProducts = []
       this.selectedItems1 = []
-      if(this.Id !=0){
+      if (this.Id != 0) {
         this.getOneRawMaterial(this.Id)
-       
+
       }
-      
-        this.getProducts();
-     
-      
+      else {
+
+      }
+      this.getProducts();
+
+
       this.getUnits();
       this.dropdownSettings = {
         singleSelection: false,
@@ -104,12 +106,16 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
         allowSearchFilter: true
       };
     }
-   
+
   }
   ngOnInit() {
-   
+
+    this.request = new RawMaterial();
+    this.selectedProducts = []
+    this.fileErrorPhoto = null
+    this.fileError = null
     this.getProducts();
-   
+
     this.getUnits();
     this.dropdownSettings = {
       singleSelection: false,
@@ -121,11 +127,11 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       itemsShowLimit: 2,
       allowSearchFilter: true
     };
-   
+
   }
 
   getOneRawMaterial(id: number) {
-    this.searchValue=true
+    this.searchValue = true
     this.rawMaterialService
       .getOne(id)
       .subscribe((res: any) => {
@@ -134,28 +140,27 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
         this.productService
           .getAllProducts()
           .subscribe((res: any) => {
-           this.products12 = res.Data;
+            this.products12 = res.Data;
 
             this.request.FactoryProductId.forEach(element => {
               debugger
               let ProductNamex = this.products12.find(x => x.ProductId == element)?.ProductName;
-console.log(ProductNamex)
-              this.selectedItems1.push({ 'ProductId': element , 'ProductName': ProductNamex })
+
+              this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductNamex })
               this.selectedProducts = this.selectedItems1
             });
             this.getProducts();
-         
-         })
+
+          })
 
 
       });
   }
 
   applyFilters() {
-  //  this.getProducts();
+    //  this.getProducts();
   }
   onItemChange(value: any) {
-    console.log('Selected Item:', value);
   }
 
 
@@ -173,16 +178,16 @@ console.log(ProductNamex)
   }
   closePopUp() {
     this.Modal.nativeElement.click()
+    this.close.emit(true);
   }
   getProducts() {
     this.searchproduct.FactoryId = this.factoryId;
     this.searchproduct.PeriodId = parseInt(this.periodId);
     this.productService
-    .getAllProducts()
+      .getAllProducts()
       .subscribe((res: any) => {
         this.products12 = res.Data;
-       // this.filteredData =res.Data;
-       console.log(this.products12)
+        // this.filteredData =res.Data;
       });
 
   }
@@ -206,9 +211,6 @@ console.log(ProductNamex)
     this.request.FactoryProductId.splice(item, 1)
 
     this.selectedItems1.splice(item, 1)
-
-    console.log(this.selectedItems1)
-    console.log(this.request.FactoryProductId)
   }
 
   onSelectAll(items: any) {
@@ -242,7 +244,8 @@ console.log(ProductNamex)
       } else {
         this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
 
-      }}
+      }
+    }
   }
   savePhoto(file: any) {
     if (file.target.files.length > 0) {
@@ -253,16 +256,16 @@ console.log(ProductNamex)
         this.fileErrorPhoto = null;
 
         this.fileService
-        .addFile(file.target.files[0])
-        .subscribe((res: any) => {
-          this.request.PhotoId = res.Data.Id
-         
-        });
+          .addFile(file.target.files[0])
+          .subscribe((res: any) => {
+            this.request.PhotoId = res.Data.Id
+
+          });
       } else {
         this.fileErrorPhoto = 'الرجاء رفع المستند بالصيغة الموضحة';
-        
+
       }
-    
+
     }
   }
 
@@ -274,48 +277,47 @@ console.log(ProductNamex)
 
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
-    console.log(this.request)
-    if( this.fileErrorPhoto|| this.fileError){
-this.toastr.error("الرجاء التحقق من البيانات المدخلة")
-return
-    }
-    else{
-
-    
-    if (this.request.Id == undefined) {
-      this.rawMaterialService
-        .create(this.request)
-        .subscribe((res: any) => {
-          // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-          this.saveSuccessful = true;
-          this.close.emit(true);
-          this.toastr.success("تم الحفظ");
-
-        });
-
-
+    if (this.fileErrorPhoto || this.fileError) {
+      this.toastr.error("الرجاء التحقق من البيانات المدخلة")
+      return
     }
     else {
-      console.log(this.request)
-      this.rawMaterialService
-        .update(this.request)
-        .subscribe((res: any) => {
-          // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
-          this.saveSuccessful = true;
-          this.close.emit(true);
-          this.toastr.success("تم الحفظ");
-        });
+
+
+      if (this.request.Id == undefined) {
+        this.rawMaterialService
+          .create(this.request)
+          .subscribe((res: any) => {
+            // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+            this.saveSuccessful = true;
+            this.close.emit(true);
+            this.toastr.success("تم الحفظ");
+
+          });
+
+
+      }
+      else {
+        console.log(this.request)
+        this.rawMaterialService
+          .update(this.request)
+          .subscribe((res: any) => {
+            // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+            this.saveSuccessful = true;
+            this.close.emit(true);
+            this.toastr.success("تم الحفظ");
+          });
       }
 
-  }
+    }
 
 
     // this.toastr.success("تم الحفظ");
     if (this.saveSuccessful == true) {
       this.request = new RawMaterial();
       this.selectedProducts = []
-      this.fileErrorPhoto =null
-      this.fileError =null
+      this.fileErrorPhoto = null
+      this.fileError = null
     }
   }
 

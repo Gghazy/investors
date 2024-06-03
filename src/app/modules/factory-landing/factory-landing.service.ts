@@ -26,4 +26,7 @@ export class FactoryLandingService {
     return this.http.put<any>('FactoryUpdateStatuses', data);
   }
   
+  checkSataus(factoryId:number,periodId:number,userId:string): Observable<any> {
+    return this.http.get<any>(`FactoryUpdateStatuses/StatusByIdentity?factoryId=${factoryId}&&periodId=${periodId}&&userId=${userId}`);
+  }
 }

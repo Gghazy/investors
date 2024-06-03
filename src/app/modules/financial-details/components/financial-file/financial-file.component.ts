@@ -4,6 +4,8 @@ import { FileService } from 'src/app/core/service/file.service';
 import { FinancialDetailService } from '../../financial-detail.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { SharedService } from 'src/app/shared/services/shared.service';
+import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-landing.service';
 
 @Component({
   selector: 'app-financial-file',
@@ -16,6 +18,7 @@ export class FinancialFileComponent implements OnInit {
   periodId:any
   request=new FinancialFileModel();
   src!:string;
+  isDisabled:boolean=false;
   @Input() financialId!:number;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
@@ -25,7 +28,9 @@ export class FinancialFileComponent implements OnInit {
     private route: ActivatedRoute,
     private fileService:FileService,
     private financialDetailService:FinancialDetailService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sharedService: SharedService,
+    public factoryLandingService: FactoryLandingService,
     ){
       this.factoryId = this.route.snapshot.paramMap.get('id');
       this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -33,8 +38,19 @@ export class FinancialFileComponent implements OnInit {
 
   ngOnInit(): void {
    this.getFiles();
+   this.ToggleDisable()
   }
+  
+  ToggleDisable() {
+    let userId=  this.sharedService.getUserId()
+    this.factoryLandingService
+      .checkSataus(this.factoryId, this.periodId,userId)
+      .subscribe((res: any) => {
 
+        this.isDisabled=res.Data.isDisable
+        console.log(this.isDisabled)
+      });
+  }
   getFiles() { 
     this.financialDetailService
       .getAllFiles(this.factoryId,this.periodId)

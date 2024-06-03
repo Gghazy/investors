@@ -21,6 +21,7 @@ export class ProductModel {
         Hs12NameAr!:string;
         Hs12NameEn!:string;
         IsActive!:boolean;
+        Level12ItemName!:string |undefined;
 }
 
 

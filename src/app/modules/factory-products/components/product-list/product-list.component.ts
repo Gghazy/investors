@@ -16,7 +16,7 @@ import { PeriodService } from 'src/app/modules/period/period.service';
 export class ProductListComponent implements OnInit {
   factoryId: any;
   periodId: any;
-  productsAdded= new ResultResponse<ProductModel>();
+  productsAdded = new ResultResponse<ProductModel>();
   search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
   productId!: number | undefined;
@@ -36,7 +36,7 @@ export class ProductListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getProducts();
-    
+
     this.getAddedProducts();
     this.getperiod()
   }

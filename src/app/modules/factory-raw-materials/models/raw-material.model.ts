@@ -14,4 +14,5 @@ export class RawMaterial {
       FactoryProductId :number[]=[];
       FactoryId !:number;
 PeriodId!:number;
+ProductName!:string;
 }

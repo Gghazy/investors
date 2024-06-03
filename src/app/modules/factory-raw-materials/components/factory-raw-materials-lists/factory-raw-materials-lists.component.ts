@@ -44,8 +44,8 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   src!: string;
   saveSuccessful: boolean = false;
   numRows: number = 0;
-PeriodName!:string;
-modalLabel!:string;
+  PeriodName!: string;
+  modalLabel!: string;
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
     private lookUpService: LookUpService,
@@ -53,85 +53,54 @@ modalLabel!:string;
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-  private periodService:PeriodService) {
+    private periodService: PeriodService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.searchRawmaterial.PeriodId =this.periodId;
+
   }
 
   ngOnInit() {
-    debugger
-    this.getProducts()
     this.getRawMaterial()
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'ProductId',
-      textField: 'ProductName',
-      selectAllText: 'تحديد الكل',
-      unSelectAllText: 'ازالة التحديد',
-      searchPlaceholderText: 'بحث',
-      itemsShowLimit: 2,
-      allowSearchFilter: true
-    };
-
-    this.getUnits();
-this.getperiod()
-  }
-  showInput = false;
-
-  handleSelectChange(event: Event) {
-    const selectedValue = (event.target as HTMLSelectElement).value;
-
-    this.showInput = selectedValue === 'yes';
+    // this.getProducts()
+    // this.getUnits();
+    // this.getperiod()
   }
 
 
-  getperiod(){
+  getperiod() {
     this.periodService
-    .getOne(this.periodId)
-    .subscribe((res: any) => {
-      
-      this.PeriodName= res.Data.PeriodName;
-    });
-  } 
-  handleUploadClick(event: Event) {
-    const targetButton = event.target as HTMLButtonElement;
-    const closestDiv = targetButton.closest('div');
+      .getOne(this.periodId)
+      .subscribe((res: any) => {
 
-    if (closestDiv) {
-      const fileInput = closestDiv.querySelectorAll('input')[0];
-
-      if (fileInput) {
-        fileInput.click();
-      }
-    }
+        this.PeriodName = res.Data.PeriodName;
+      });
   }
+
   edit(id: number) {
-    if(id==0){
-this.modalLabel ='إضافة مادة أولية'
+    if (id == 0) {
+      this.modalLabel = 'إضافة مادة أولية'
     }
-    else{
-      this.modalLabel ='تعديل مادة أولية'
+    else {
+      this.modalLabel = 'تعديل مادة أولية'
     }
     this.Id = id
   }
 
 
   delete(id: number) {
-   
+
     this.rawMaterialService
-          .delete(id)
-          .subscribe((res: any) => {
-             this.toastr.success("تم الحذف");
-             this.getRawMaterial()
-          });
+      .delete(id)
+      .subscribe((res: any) => {
+        this.toastr.success("تم الحذف");
+        this.getRawMaterial()
+      });
 
-         
+
 
   }
 
-  onSelectAll(items: any) {
-  }
+
   getUnits() {
     this.lookUpService
       .getAllUnits()
@@ -139,176 +108,122 @@ this.modalLabel ='إضافة مادة أولية'
         this.units = res.Data;
       });
   }
-  onItemSelect(item: any, i: number) {
-    //  this.request.FactoryProductId.push(item.ProductId)
-    this.data[i].FactoryProductId.push(item.ProductId)
-    this.selectedProducts.push([{ ProductId: item.ProductId, ProductName: item.ProductName }])
-  }
-  onItemDeSelect(item: any, i: number) {
-    this.data[i].FactoryProductId.splice(item.ProductId)
 
-    this.selectedProducts.splice(item.ProductId)
-  }
 
- 
-    getRawMaterial() {
+
+  getRawMaterial() {
     debugger
-     
-      this.rawMaterialService
-        .getRawMaterial(this.searchRawmaterial, this.factoryId)
-        .subscribe((res: any) => {
-          if (res) {
-            this.rawMaterials = res.Data.Items;
-            this.materials = res.Data;
-            this.materialCount = this.materials.Items.length;
-this.getProducts()
-            this.rawMaterials.forEach((item: RawMaterial) => {
-              let productId = parseInt(item.CustomItemName)
-              let product12=this.products.find(x => x.Id == productId)?.ProductName;
-              this.data.push({
-                'Id': item.Id,
-                'Product12':product12,
-                'CustomItemName': item.CustomItemName,
-                'Name': item.Name,
-                'MaximumMonthlyConsumption': item.MaximumMonthlyConsumption,
-                'AverageWeightKG': item.AverageWeightKG,
+    this.searchRawmaterial.PeriodId = this.periodId;
 
-                'Description': item.Description,
-                'FactoryId': this.factoryId,
-                'PaperId': item.PaperId,
-                'PhotoId': item.PhotoId,
-                'UnitId': item.UnitId,
-                'FactoryProductId': item.FactoryProductId
-              })
-            })
+    this.rawMaterialService
+      .getRawMaterial(this.searchRawmaterial, this.factoryId)
+      .subscribe((res: any) => {
+        if (res) {
+          //this.rawMaterials = res.Data.Items;
+          this.data = res.Data.Items;
+console.log(this.data)
+          // this.getProducts()
+          // this.rawMaterials.forEach((item: RawMaterial) => {
+          //   let productId = parseInt(item.CustomItemName)
+          //   let product12 = this.products.find(x => x.Id == productId)?.ProductName;
+          //   // this.data.push({
+            //   'Id': item.Id,
+            //   'Product12': product12,
+            //   'CustomItemName': item.CustomItemName,
+            //   'Name': item.Name,
+            //   'MaximumMonthlyConsumption': item.MaximumMonthlyConsumption,
+            //   'AverageWeightKG': item.AverageWeightKG,
+            //   'Description': item.Description,
+            //   'FactoryId': this.factoryId,
+            //   'PaperId': item.PaperId,
+            //   'PhotoId': item.PhotoId,
+            //   'UnitId': item.UnitId,
+            //   'FactoryProductId': item.FactoryProductId
+            // })
+          // })
 
-          }
-          
-        });
-
-
-    }
-    getFile(attachmentId: number) {
-      if (attachmentId == null) {
-        this.toastr.error("لا يوجد ملف");
+        }
+        else {
+          console.log('No content returned from server (204)');
+        }
       }
-      else {
-        this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
-          this.downloadattachment(res)
-        });
-      }
+       
 
+
+      );
+
+
+  }
+  getFile(attachmentId: number) {
+    if (attachmentId == null) {
+      this.toastr.error("لا يوجد ملف");
     }
-
-  
-    getImage(attachmentId: number) {
-      console.log(attachmentId)
-       console.log(attachmentId)
-      if (attachmentId == null) {
-        this.toastr.error("لا يوجد ملف");
-      }
-      else {
-        this.fileService.getImage(attachmentId).subscribe((res: any) => {
-
-          this.src = 'data:image/jpeg;base64,' + res.Image;
-        });
-      }
-
-    }
-    downloadattachment(data: any) {
-      const blob = new Blob([data], { type: data.type });
-      const url = window.URL.createObjectURL(blob);
-      window.open(url);
-    }
-
-    deleteFile(id: number) {
-      // this.fileService
-      //   .(id)
-      //   .subscribe((res: any) => {
-      //     this.getFiles();
-      //   });
-    }
-
-
-
-
-
-    onSelectionChange(item: any, i: number) {
-      item.UnitId = this.products.find(item => item.Id == this.products[0].Id)?.UnitId;
-      let selectedValue: any = this.units.find(option => option.Id == item.UnitId);
-      if (selectedValue?.Name == 'kilograms') {
-        item.AverageWeightKG = 1
-
-        this.showKG = true
-      }
-    }
-
-
-
-    savePaper(file: any, i: number) {
-      if (file.target.files.length > 0) {
-        this.fileService
-          .addFile(file.target.files[0])
-          .subscribe((res: any) => {
-            this.data[i].PaperId = res.Data.Id
-          });
-      }
-    }
-    savePhoto(file: any, i: number) {
-      if (file.target.files.length > 0) {
-        this.fileService
-          .addFile(file.target.files[0])
-          .subscribe((res: any) => {
-            this.data[i].PhotoId = res.Data.Id
-          });
-      }
-    }
-
-
-
-
-    getProducts() {
-
-      this.productService
-          .getAllProducts()
-        .subscribe((res: any) => {
-          this.products = res.Data;
-     console.log(this.products)
-        });
-
-    }
-
-    getRawMaterialProducts(id: number) {
-
-
-      this.productService
-        .getOne(id)
-        .subscribe((res: any) => {
-          this.ProductName = res.Data;
-        });
-
-    }
-
-
-
-
-
-
-    closePopUp() {
-      this.Modal.nativeElement.click()
-      this.getRawMaterial()
-    }
-    pageChanged(data: any) {
-      this.search.PageNumber = data;
-      this.getRawMaterial();
-
-    }
-
-
-
-    save() {
-      
-      this.toastr.success("تم الحفظ");
+    else {
+      this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
+        this.downloadattachment(res)
+      });
     }
 
   }
+
+
+  getImage(attachmentId: number) {
+    if (attachmentId == null) {
+      this.toastr.error("لا يوجد ملف");
+    }
+    else {
+      this.fileService.getImage(attachmentId).subscribe((res: any) => {
+
+        this.src = 'data:image/jpeg;base64,' + res.Image;
+      });
+    }
+
+  }
+  downloadattachment(data: any) {
+    const blob = new Blob([data], { type: data.type });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
+  }
+
+
+
+
+
+
+
+
+
+
+  getProducts() {
+
+    this.productService
+      .getAllProducts()
+      .subscribe((res: any) => {
+        this.products = res.Data;
+      });
+
+  }
+
+
+
+
+
+
+  closePopUp() {
+    this.Modal.nativeElement.click()
+    this.getRawMaterial()
+  }
+  pageChanged(data: any) {
+    this.search.PageNumber = data;
+    this.getRawMaterial();
+
+  }
+
+
+
+  save() {
+
+    this.toastr.success("تم الحفظ");
+  }
+
+}

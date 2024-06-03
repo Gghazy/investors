@@ -39,7 +39,7 @@
             <input type="file" #fileInput class="form-control" placeholder="" value="" 
             accept=".pdf"
             (change)="saveFile($event)">
-            <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+            <button class="btn btn-primary" type="button" (click)="save()" [disabled]="isDisabled">اضافة </button>
         </div>
         <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
     </div>
@@ -60,11 +60,13 @@
         <td>  {{file.Type=='zakat'?'الإقرار الزكوي ':'القوائم المالية'}}</td>
         <td>{{file.Extension}}</td>
         <td>
-            <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+            <span (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                 عرض
 
-            </a>
-            <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
+            </span>
+                <span (click)="deleteFile(file.Id)" class="btn btn-danger" *ngIf="!isDisabled" >حذف</span>
+     
+           
         </td>
       </tr>
     </ng-template>

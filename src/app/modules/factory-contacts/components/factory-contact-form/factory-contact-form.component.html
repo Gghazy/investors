@@ -59,7 +59,7 @@
                       formControlName="OfficerEmail"
                     />
                   </div>
-                  <div style="color: #F00;" *ngIf="phoneForm.get('OfficerEmail')?.errors && phoneForm.get('OfficerEmail')?.touched">
+                  <div style="color: #F00;" *ngIf="phoneForm.get('OfficerEmail')?.errors && phoneForm.get('OfficerEmail')?.touched ">
                     <div *ngIf="phoneForm.get('OfficerEmail')?.hasError('required')">هذا الحقل مطلوب</div>
                     <div *ngIf="phoneForm.get('OfficerEmail')?.hasError('isValidEmail')">عنوان بريد إلكتروني غير صالح</div>
                   </div>

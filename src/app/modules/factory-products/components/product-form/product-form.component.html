@@ -14,7 +14,7 @@
          [placeholder]="'أختر'" 
          (keyup)="onSearch($event)"
          [settings]="dropdownSettings"
-         [data]="products.Items"
+         [data]="products"
          [(ngModel)]="selectProductId"
          (onSelect)="productChanage()"
          >

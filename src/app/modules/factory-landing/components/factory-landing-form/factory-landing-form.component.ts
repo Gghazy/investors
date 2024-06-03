@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
-import { FactoryService } from 'src/app/modules/factory/factory.service';
 import { PeriodService } from 'src/app/modules/period/period.service';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { SharedService } from 'src/app/shared/services/shared.service';
@@ -20,22 +19,22 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FactoryLandingFormComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
-  
-@Output()close=new EventEmitter<boolean>();
+  @Output() close = new EventEmitter<boolean>();
   isChecked: boolean = false;
   factoryId: any;
   periodId: any;
   factoryName!: string;
   periodStartDate!: string;
-  periodMonth!:number;
+  periodMonth!: number;
   periodEndDate!: string;
   screenStatuse = new ScreenStatusModel();
-  allScreenStatus:Boolean=false;
+  allScreenStatus: Boolean = false;
   FactoryStatus: string = 'Default Label';
-  FactoryStatusId!:number
+  FactoryStatusId!: number
   request = new FactoryStatus();
-  Year!:number
-  periodName!:string
+  Year!: number
+  periodName!: string
+  DataStatus!: number
   constructor(
     private route: ActivatedRoute,
     private basicInfoService: BasicInfoService,
@@ -48,7 +47,6 @@ export class FactoryLandingFormComponent implements OnInit {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
 
-
   }
 
   ngOnInit(): void {
@@ -56,35 +54,46 @@ export class FactoryLandingFormComponent implements OnInit {
     this.getPeriod()
     this.getScreenStatus()
     this.getFactUpdateStatus()
+    this.checkStatus()
   }
 
   getScreenStatus() {
+    
     this.factoryLandingService
       .getScreenStatus(this.factoryId, this.periodId)
       .subscribe((res: any) => {
-        
+
         this.screenStatuse = res.Data
         this.checkAllScreenStatus();
       });
   }
 
 
+  checkStatus() {
+    let userId=  this.sharedService.getUserId()
+    this.factoryLandingService
+      .checkSataus(this.factoryId, this.periodId,userId)
+      .subscribe((res: any) => {
+
+        this.FactoryStatus=res.Data.StatusButton
+        this.DataStatus=res.Data.DataStatus
+      });
+  }
+
+
   getBasicInfo() {
+    debugger
+
+  let userId=  this.sharedService.getUserId()
+  console.log(userId)
     this.basicInfoService
       .getOne(this.factoryId, this.periodId)
       .subscribe((res: any) => {
         this.sharedService.factoryStatus = res.Data.Status;
         console.log(this.sharedService.factoryStatus)
         this.factoryName = res.Data.NameAr
-        if(res.Data.DataApprover== res.Data.DataEntry && res.Data.DataEntry==res.Data.DataReviewer){
-this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
-        }
-        else{
-          if(this.FactoryStatusId==0 ||   this.FactoryStatus=='') {
-            this.FactoryStatus= ' ادخال'
-          }
-        }
-       
+
+        
       });
   }
   getPeriod() {
@@ -93,37 +102,23 @@ this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسا
       .subscribe((res: any) => {
         this.periodStartDate = res.Data.PeriodStartDate
         this.periodEndDate = res.Data.PeriodEndDate
-        this.Year= res.Data.Year -1
+        this.Year = res.Data.Year - 1
         this.periodMonth = res.Data.Month
         this.periodName = res.Data.PeriodName
       });
   }
 
   getFactUpdateStatus() {
+   
     this.factoryLandingService
-      .getOne(this.factoryId,this.periodId)
+      .getOne(this.factoryId, this.periodId)
       .subscribe((res: any) => {
-        this.request= res.Data;
+        this.request = res.Data;
+        this.sharedService.CurrentfactoryStatus=res.Data.DataStatus
         console.log(this.request)
-        this.isChecked=res.Data.UpdateStatus;
-        this.FactoryStatusId = res.Data.DataStatus;
-        if(this.FactoryStatusId==0 &&   this.FactoryStatus==''){
-          this.FactoryStatus= ' ادخال'
-          this.request.DataStatus =1
-        }
-        if(this.FactoryStatusId==1 ){
-          this.FactoryStatus=  ' مراجعة البيانات المدخلة'
-          this.request.DataStatus =2
-        }
-        if(this.FactoryStatusId==2){
-          this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
-          this.request.DataStatus =3
-        }
-        if(this.FactoryStatusId==3){
-          this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسالها'
-          this.request.DataStatus =3
-        }
-            
+        this.isChecked = res.Data.UpdateStatus;
+   
+
       });
   }
   closePopUp() {
@@ -131,65 +126,93 @@ this.FactoryStatus= ' الاعتمادالنهائي للبيانات وارسا
     this.close.emit(true);
   }
   save() {
-    
+    console.log(this.DataStatus)
+    this.request.DataStatus=this.DataStatus
     this.request.FactoryId = this.factoryId
     this.request.PeriodId = this.periodId
     this.request.UpdateStatus = true
-  if(this.request.Id==0){
-    this.factoryLandingService
-    .create(this.request)
-    .subscribe((res: any) => {
-      console.log(this.request) 
-      this.close.emit(true);
-      this.Modal.nativeElement.click()
-      this.router.navigate(['/pages/period/'+this.factoryId+'/Investor']);
-});
-  }
-     else{
-      this.factoryLandingService 
-      .update(this.request)
-      .subscribe((res: any) => {
-        console.log(this.request)
-        this.close.emit(true);
-        this.Modal.nativeElement.click()
-        this.router.navigate(['/pages/period/'+this.factoryId+'/Investor']);
-});
-     }
-  }
 
-
-  checkAllScreenStatus(){
-    debugger
-    if(this.periodName == 'يناير'){
-      this.allScreenStatus=
-      this.screenStatuse.ProductData&&
-      this.screenStatuse.BasicFactoryInfo&&
-      this.screenStatuse.FinancialData&&
-      this.screenStatuse.MonthlyFinancialData&&
-      this.screenStatuse.FactoryLocation&&
-      this.screenStatuse.FactoryContact&&
-      this.screenStatuse.CustomItemsUpdated&&
-      //this.screenStatuse.CustomItemValidity&&
-      this.screenStatuse.ActualProduction
-      this.screenStatuse.RawMaterial&&
-      this.screenStatuse.ActualRawMaterila
+    if (this.request.Id == 0) {
+      this.factoryLandingService
+        .create(this.request)
+        .subscribe((res: any) => {
+          console.log(this.request)
+          this.close.emit(true);
+          this.Modal.nativeElement.click()
+          this.router.navigate(['/pages/period/' + this.factoryId + '/Investor']);
+        });
     }
-   else{
-    this.allScreenStatus=
-      this.screenStatuse.ProductData&&
-      this.screenStatuse.BasicFactoryInfo&&
-      this.screenStatuse.MonthlyFinancialData&&
-      this.screenStatuse.FactoryLocation&&
-      this.screenStatuse.FactoryContact&&
-      this.screenStatuse.CustomItemsUpdated&&
-      //this.screenStatuse.CustomItemValidity&&
-      this.screenStatuse.ActualProduction
-      this.screenStatuse.RawMaterial&&
-      this.screenStatuse.ActualRawMaterila
-   }
-   console.log(this.allScreenStatus)
+    else {
+      this.factoryLandingService
+        .update(this.request)
+        .subscribe((res: any) => {
+          console.log(this.request)
+          this.close.emit(true);
+          this.Modal.nativeElement.click()
+          this.router.navigate(['/pages/period/' + this.factoryId + '/Investor']);
+        });
+    }
   }
 
 
- 
+  checkAllScreenStatus() {
+    debugger
+    if (this.periodName == 'يناير') {
+      if (this.sharedService.factoryStatus == 1) {
+        this.allScreenStatus =
+          this.screenStatuse.BasicFactoryInfo &&
+          this.screenStatuse.FinancialData &&
+          this.screenStatuse.FactoryLocation &&
+          this.screenStatuse.FactoryContact
+      }
+      if (this.sharedService.factoryStatus == 0 || this.sharedService.factoryStatus == 2) {
+        this.allScreenStatus =
+          this.screenStatuse.ProductData &&
+          this.screenStatuse.BasicFactoryInfo &&
+          this.screenStatuse.FinancialData &&
+          this.screenStatuse.FactoryLocation &&
+          this.screenStatuse.FactoryContact &&
+          this.screenStatuse.CustomItemsUpdated &&
+          //this.screenStatuse.CustomItemValidity&&
+          this.screenStatuse.ActualProduction
+        this.screenStatuse.RawMaterial &&
+          this.screenStatuse.ActualRawMaterila
+      }
+      if (this.sharedService.factoryStatus == 4) {
+        this.allScreenStatus =
+          this.screenStatuse.FinancialData
+      }
+
+    }
+    else {
+      if (this.sharedService.factoryStatus == 1) {
+        this.allScreenStatus =
+          this.screenStatuse.BasicFactoryInfo &&
+          this.screenStatuse.MonthlyFinancialData &&
+          this.screenStatuse.FactoryLocation &&
+          this.screenStatuse.FactoryContact
+      }
+      if (this.sharedService.factoryStatus == 0 || this.sharedService.factoryStatus == 2) {
+        this.allScreenStatus =
+          this.screenStatuse.ProductData &&
+          this.screenStatuse.BasicFactoryInfo &&
+          this.screenStatuse.MonthlyFinancialData &&
+          this.screenStatuse.FactoryLocation &&
+          this.screenStatuse.FactoryContact &&
+          this.screenStatuse.CustomItemsUpdated &&
+          //this.screenStatuse.CustomItemValidity&&
+          this.screenStatuse.ActualProduction
+        this.screenStatuse.RawMaterial &&
+          this.screenStatuse.ActualRawMaterila
+      }
+      if (this.sharedService.factoryStatus == 4) {
+        this.allScreenStatus =
+          this.screenStatuse.MonthlyFinancialData
+      }
+    }
+    console.log(this.allScreenStatus)
+  }
+
+
+
 }

@@ -23,7 +23,7 @@ export class ProductFormComponent implements OnInit {
   request = new ProductModel();
   units!: LookUpModel[];
   isDisabled!: boolean;
-  products= new ResultResponse< ProductModel>;
+  products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
   search = new ProductsNotInFactorySearch();
   isLoading = false;
@@ -42,7 +42,7 @@ export class ProductFormComponent implements OnInit {
 
     }
     else {
-      this.getAllProductsNotInFactory();
+      this.getAllProducts();
       this.getUnits()
     }
 
@@ -81,21 +81,21 @@ export class ProductFormComponent implements OnInit {
 
       });
   }
-  getAllProductsNotInFactory() {
+  getAllProducts() {
     this.isLoading = true;
     this.search.FactoryId = this.factoryId;
     this.factoryProductService
-      .getAllProductsNotInFactory(this.search)
+      .getAllProducts()
       .subscribe((res: any) => {
-        // this.products = res.Data
+         this.products = res.Data
         // console.log(this.products)
-        this.products.PageCount=res.Data.PageCount;
-        this.products.TotalCount=res.Data.TotalCount;
-        this.products.PageNumber=res.Data.PageNumber;
-        this.products.PageSize=res.Data.PageSize;
-        this.products.Items = [...this.products.Items, ...res.Data.Items];
-        console.log(this.products)
-         this.isLoading = false;
+        // this.products.PageCount = res.Data.PageCount;
+        // this.products.TotalCount = res.Data.TotalCount;
+        // this.products.PageNumber = res.Data.PageNumber;
+        // this.products.PageSize = res.Data.PageSize;
+        // this.products.Items = [...this.products.Items, ...res.Data.Items];
+        // console.log(this.products)
+        // this.isLoading = false;
       });
   }
   savePaper(file: any) {
@@ -106,21 +106,22 @@ export class ProductFormComponent implements OnInit {
       if (validFileTypes.includes(fileType)) {
         this.fileError = null;
 
-               
-            this.fileService
-              .addFile(file.target.files[0])
-              .subscribe((res: any) => {
-                this.request.PeperId = res.Data.Id
-              });
-        
+
+        this.fileService
+          .addFile(file.target.files[0])
+          .subscribe((res: any) => {
+            this.request.PeperId = res.Data.Id
+          });
+
 
       } else {
         this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
 
-      }}
+      }
+    }
 
 
-   
+
   }
   savePhoto(file: any) {
     if (file.target.files.length > 0) {
@@ -131,15 +132,15 @@ export class ProductFormComponent implements OnInit {
         this.fileErrorPhoto = null;
 
         this.fileService
-        .addFile(file.target.files[0])
-        .subscribe((res: any) => {
-          this.request.PhototId = res.Data.Id
-        });
+          .addFile(file.target.files[0])
+          .subscribe((res: any) => {
+            this.request.PhototId = res.Data.Id
+          });
       } else {
         this.fileErrorPhoto = 'الرجاء رفع المستند بالصيغة الموضحة';
-        
+
       }
-    
+
     }
   }
   unitChange() {
@@ -158,39 +159,41 @@ export class ProductFormComponent implements OnInit {
     }
   }
   productChanage() {
-    this.request.UnitId = this.products.Items.find(x => x.Id == this.selectProductId[0].Id)?.UnitId;
+    this.request.UnitId = this.products.find(x => x.Id == this.selectProductId[0].Id)?.UnitId;
+    this.request.Level12ItemName = this.products.find(x => x.Id == this.selectProductId[0].Id)?.ProductName;
     this.unitChange();
 
   }
   save() {
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
-    if( this.fileErrorPhoto|| this.fileError){
+    if (this.fileErrorPhoto || this.fileError) {
       this.toastr.error("الرجاء التحقق من البيانات المدخلة")
       return
-          }
-          else{
-    if (this.productId == 0) {
-
-      this.request.ProductId = this.products.Items.find(x => x.Id == this.selectProductId[0].Id)?.ProductId;
-
-    }
-    if (this.productId == 0) {
-      this.factoryProductService
-        .create(this.request)
-        .subscribe((res: any) => {
-          this.close.emit(true);
-          this.toastr.success("تم الحفظ");
-        });
     }
     else {
-      this.factoryProductService
-        .update(this.request)
-        .subscribe((res: any) => {
-          this.close.emit(true);
-          this.toastr.success("تم الحفظ");
-        });
-    }}
+      if (this.productId == 0) {
+
+        this.request.ProductId = this.products.find(x => x.Id == this.selectProductId[0].Id)?.ProductId;
+
+      }
+      if (this.productId == 0) {
+        this.factoryProductService
+          .create(this.request)
+          .subscribe((res: any) => {
+            this.close.emit(true);
+            this.toastr.success("تم الحفظ");
+          });
+      }
+      else {
+        this.factoryProductService
+          .update(this.request)
+          .subscribe((res: any) => {
+            this.close.emit(true);
+            this.toastr.success("تم الحفظ");
+          });
+      }
+    }
   }
   onSearch(event: Event) {
     //   this.search.TxtSearch= (event.target as HTMLInputElement).value;
@@ -214,7 +217,7 @@ export class ProductFormComponent implements OnInit {
 
       if (!this.isLoading) {
         this.search.PageNumber++;
-        this.getAllProductsNotInFactory();
+        this.getAllProducts();
       }
     }
 

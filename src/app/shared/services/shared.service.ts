@@ -9,14 +9,15 @@ export class SharedService {
   private userId!: string;
   private userRole!: string;
   public factoryStatus!:number;
-
+  public CurrentfactoryStatus!:number;
+  public isDisabled = false;
   private pageTitleSource = new BehaviorSubject<string>('');
   routeTitle$ = this.pageTitleSource.asObservable();
 
 
   constructor() {
-    // Simulate loading user role from an API or local storage
-    this.userRole = 'admin'; // Example role value
+  
+    this.userRole = 'admin'; 
   }
   setPageTitle(title: string): void {
     this.pageTitleSource.next(title);
@@ -36,7 +37,18 @@ export class SharedService {
     this.userId = Id;
 
   }
+  
 
+  toggleDisable() {
+
+    
+    if(this.CurrentfactoryStatus==3){
+    this.isDisabled = !this.isDisabled;
+   
+    }
+    console.log(this.CurrentfactoryStatus)
+    console.log(this.isDisabled)
+  }
   getUserId() {
     return this.userId;
   }
