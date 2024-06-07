@@ -43,7 +43,6 @@ export class FinancialDetailFormComponent {
     this.ToggleDisable()
     this.getperiod()
     this.getBasicInfo()
-    console.log(this.isDisabled)
   }
 
   getperiod(){
@@ -59,13 +58,9 @@ export class FinancialDetailFormComponent {
 
   ToggleDisable() {
     let userId=  this.sharedService.getUserId()
-    this.factoryLandingService
-      .checkSataus(this.factoryId, this.periodId,userId)
-      .subscribe((res: any) => {
 
-        this.isDisabled=res.Data.isDisable
-        console.log(this.isDisabled)
-      });
+   this.isDisabled= this.sharedService.toggleDisable(this.factoryId,this.periodId,userId)
+  
   }
   getFinancial() {
     this.financialDetailService

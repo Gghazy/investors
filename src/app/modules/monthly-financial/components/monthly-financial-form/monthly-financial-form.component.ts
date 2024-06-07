@@ -4,6 +4,7 @@ import { MonthlyFinancialService } from '../../monthly-financial.service';
 import { PeriodService } from 'src/app/modules/period/period.service';
 import { ToastrService } from 'ngx-toastr';
 import { MonthlyFinancialModel } from '../../models/monthly-financial-model';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-monthly-financial-form',
@@ -11,6 +12,7 @@ import { MonthlyFinancialModel } from '../../models/monthly-financial-model';
   styleUrls: ['./monthly-financial-form.component.scss']
 }) 
 export class MonthlyFinancialFormComponent implements OnInit {
+  isDisabled!:boolean;
   factoryId: any;
   periodId: any;
   request = new MonthlyFinancialModel();
@@ -20,6 +22,7 @@ PeriodName!:string
      private monthlyFinancialService: MonthlyFinancialService,
      private periodService: PeriodService,
      private toastr: ToastrService,
+     private sharedService: SharedService,
      private router: Router,
 
      ) {
@@ -27,6 +30,7 @@ PeriodName!:string
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
+    this.ToggleDisable()
     this.getFinancial()
     this.getperiod()
   }
@@ -38,7 +42,12 @@ PeriodName!:string
       this.PeriodName= res.Data.PeriodName;
     });
   }
+  ToggleDisable() {
+    let userId=  this.sharedService.getUserId()
 
+   this.isDisabled= this.sharedService.toggleDisable(this.factoryId,this.periodId,userId)
+  
+  }
   getFinancial() {
     this.monthlyFinancialService
       .getOne(this.factoryId,this.periodId)

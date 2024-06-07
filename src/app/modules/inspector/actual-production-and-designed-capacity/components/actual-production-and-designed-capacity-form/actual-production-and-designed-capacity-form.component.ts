@@ -114,7 +114,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
         this.FormService
         .create(element)
         .subscribe((res: any) => {
-        
+          this.toastr.success("تم الحفظ");
         });
       }
       else{
@@ -126,10 +126,10 @@ export class ActualProductionAndDesignedCapacityFormComponent {
       this.FormService
       .update(element)
       .subscribe((res: any) => {
-       
+        this.toastr.success("تم الحفظ");
       });
     }  
   });
-  this.toastr.success("تم الحفظ");
+
   }
 }

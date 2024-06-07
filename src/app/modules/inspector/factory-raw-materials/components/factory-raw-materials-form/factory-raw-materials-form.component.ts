@@ -128,19 +128,19 @@ element.Comment=      this.materials[0].Comment
         this.service
           .create(element)
           .subscribe((res: any) => {
-          
+            this.toastr.success("تم الحفظ");
           });
       }
       else {
         this.service
           .update(element)
           .subscribe((res: any) => {
-           
+            this.toastr.success("تم الحفظ");
           });
       }
 
     });
-    this.toastr.success("تم الحفظ");
+    
   }
   getperiod(){
     this.periodService

@@ -275,9 +275,10 @@ export class ActualRawMaterialsFormComponent implements OnInit {
           .create(item)
           .subscribe((res: any) => {
             // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+            this.toastr.success("تم الحفظ");
           });
       })
-      this.toastr.success("تم الحفظ");
+      
       this.request = new ActualRawMaterial();
     }
     else {
@@ -289,9 +290,10 @@ export class ActualRawMaterialsFormComponent implements OnInit {
           .update(item)
           .subscribe((res: any) => {
             // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+            this.toastr.success("تم الحفظ");
           });
       })
-      this.toastr.success("تم الحفظ");
+      
       this.request = new ActualRawMaterial();
     }
   }

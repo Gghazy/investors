@@ -35,7 +35,7 @@
                 <label class="form-label"> المدينة<span class="required">*</span></label>
                 <select class="form-select" #CityId="ngModel" required  
                 name="CityId" [(ngModel)]="request.CityId" (change)="onCitySelect(request.CityId)">
-                    <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.NameAr}} </option>
+                    <option *ngFor="let city of cities" [ngValue]="city.Id" [disabled]="isDisabled">{{city.NameAr}} </option>
 
                 </select>
                 <div *ngIf="CityId.invalid && (CityId.dirty || CityId.touched)" class="validation-error">
@@ -49,7 +49,7 @@
                 <label class="form-label"> المنطقة الصناعية<span class="required">*</span></label>
                 <select class="form-select" name="IndustrialAreaId" 
                 [(ngModel)]="request.IndustrialAreaId" >
-                    <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
+                    <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" [disabled]="isDisabled">{{industrialArea.NameAr}} </option>
                 </select>
             </div>
 
@@ -59,7 +59,7 @@
                     <span class="required">*</span>
                     <i>؟</i>
                 </label>
-                <input type="url" #WebSite="ngModel" required class="form-control " [(ngModel)]="request.WebSite" placeholder="https://googl/maps/123">
+                <input type="url" #WebSite="ngModel" required class="form-control " [(ngModel)]="request.WebSite" placeholder="https://googl/maps/123" [disabled]="isDisabled">
                 <div *ngIf="WebSite.invalid && (WebSite.dirty || WebSite.touched)" class="validation-error">
                     <div *ngIf="WebSite.errors?.['required']">حقل مطلوب</div>
                 </div>

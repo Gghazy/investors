@@ -22,6 +22,7 @@ export class BasicInfoFormComponent implements OnInit {
   request = new FactoryModel();
   search = new FactorySearch();
   PeriodName!:string
+  isDisabled!:boolean;
   constructor(
     private route: ActivatedRoute,
      private basicInfoService: BasicInfoService,
@@ -34,6 +35,7 @@ export class BasicInfoFormComponent implements OnInit {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
+    this.ToggleDisable()
     this.getBasicInfo();
     this.getperiod()
   }
@@ -46,6 +48,12 @@ export class BasicInfoFormComponent implements OnInit {
         console.log(this.request)
       });
   }
+  ToggleDisable() {
+    let userId=  this.sharedService.getUserId()
+
+   this.isDisabled= this.sharedService.toggleDisable(this.factoryId,this.periodId,userId)
+  
+  }
   getperiod(){
     this.periodService
     .getOne(this.periodId)
@@ -56,15 +64,7 @@ export class BasicInfoFormComponent implements OnInit {
   }
 
   save() {
-    if(!this.request.DataEntry){
-      this.request.DataEntry=this.search.OwnerIdentity
-    }
-    if(!this.request.DataReviewer){
-      this.request.DataReviewer=this.search.OwnerIdentity
-    }
-    if(!this.request.DataApprover){
-      this.request.DataApprover=this.search.OwnerIdentity
-    }
+   
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
 

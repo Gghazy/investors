@@ -39,7 +39,7 @@
                     [numberFormat]="PhoneNumberFormat.National"
                     name="OfficerPhone"
                     formControlName="OfficerPhone"
-                  >
+                    [disabled]="isDisabled">
                   </ngx-intl-tel-input>
                   <div style="color: #F00;" *ngIf="phoneForm.get('OfficerPhone')?.errors && phoneForm.get('OfficerPhone')?.touched">
                     <div *ngIf="phoneForm.get('OfficerPhone')?.hasError('required')">هذا الحقل مطلوب</div>
@@ -57,6 +57,7 @@
                  
                       name="OfficerEmail"
                       formControlName="OfficerEmail"
+                      [disabled]="isDisabled"
                     />
                   </div>
                   <div style="color: #F00;" *ngIf="phoneForm.get('OfficerEmail')?.errors && phoneForm.get('OfficerEmail')?.touched ">
@@ -87,6 +88,7 @@
                     [numberFormat]="PhoneNumberFormat.National"
                     name="ProductionManagerPhone"
                     formControlName="ProductionManagerPhone"
+                    [disabled]="isDisabled"
                   >
                   </ngx-intl-tel-input>
                   <div style="color: #F00;" *ngIf="phoneForm.get('ProductionManagerPhone')?.errors && phoneForm.get('ProductionManagerPhone')?.touched">
@@ -105,6 +107,7 @@
                       
                       name="ProductionManagerEmail"
                       formControlName="ProductionManagerEmail"
+                      [disabled]="isDisabled"
                     />
                   </div>
                   <div style="color: #F00;" *ngIf="phoneForm.get('ProductionManagerEmail')?.errors && phoneForm.get('ProductionManagerEmail')?.touched">
@@ -135,7 +138,7 @@
                     [numberFormat]="PhoneNumberFormat.National"
                     name="FinanceManagerPhone"
                     formControlName="FinanceManagerPhone"
-
+                    [disabled]="isDisabled"
                   >
                   </ngx-intl-tel-input>
                   <div style="color: #F00;" *ngIf="phoneForm.get('FinanceManagerPhone')?.errors && phoneForm.get('FinanceManagerPhone')?.touched">
@@ -154,6 +157,7 @@
                     
                       name="FinanceManagerEmail"
                       formControlName="FinanceManagerEmail"
+                      [disabled]="isDisabled"
                     />
                   </div>
                   <div style="color: #F00;" *ngIf="phoneForm.get('FinanceManagerEmail')?.errors && phoneForm.get('FinanceManagerEmail')?.touched">

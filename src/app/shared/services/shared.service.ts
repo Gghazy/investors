@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-landing.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class SharedService {
   routeTitle$ = this.pageTitleSource.asObservable();
 
 
-  constructor() {
+  constructor(private statusService:FactoryLandingService) {
   
     this.userRole = 'admin'; 
   }
@@ -39,15 +40,14 @@ export class SharedService {
   }
   
 
-  toggleDisable() {
+  toggleDisable(factoryId:number,periodId:number,userId:string) {
 
-    
-    if(this.CurrentfactoryStatus==3){
-    this.isDisabled = !this.isDisabled;
-   
-    }
-    console.log(this.CurrentfactoryStatus)
+    this.statusService.checkSataus(factoryId,periodId,userId).subscribe(response => {
+      this.isDisabled=response.Data.isDisable
+     
+    });
     console.log(this.isDisabled)
+    return this.isDisabled
   }
   getUserId() {
     return this.userId;

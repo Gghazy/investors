@@ -7,6 +7,7 @@ import { FactoryContactModel } from '../../models/factory-contact-model';
 import { FactoryContactService } from '../../factory-contact.service';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-factory-contact-form',
@@ -18,6 +19,7 @@ import { PeriodService } from 'src/app/modules/period/period.service';
 })
 export class FactoryContactFormComponent implements OnInit {
 
+  isDisabled!:boolean;
   factoryId: any;
   periodId: any;
   request: any;
@@ -45,12 +47,14 @@ export class FactoryContactFormComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private periodService : PeriodService,
+    private sharedService:SharedService
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
 
   }
   ngOnInit(): void {
+    this.ToggleDisable()
     this.getContact();
     this.getperiod()
   }
@@ -72,7 +76,12 @@ export class FactoryContactFormComponent implements OnInit {
         this.phoneForm.controls.ProductionManagerEmail.setValue(res.Data.ProductionManagerEmail);
       });
   }
+  ToggleDisable() {
+    let userId=  this.sharedService.getUserId()
 
+   this.isDisabled= this.sharedService.toggleDisable(this.factoryId,this.periodId,userId)
+  
+  }
   save() {
     this.request = this.phoneForm.value
     this.request.FactoryId = this.factoryId;

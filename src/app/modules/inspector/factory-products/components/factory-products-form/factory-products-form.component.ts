@@ -130,7 +130,8 @@ this.request.forEach(element => {
       this.InspectorService
       .create(element)
       .subscribe((res: any) => {
-       
+        this.toastr.success("تم الحفظ");
+        this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
       });
     
   }
@@ -139,14 +140,14 @@ this.request.forEach(element => {
     this.InspectorService
     .update(element)
     .subscribe((res: any) => {
-      
-      
+      this.toastr.success("تم الحفظ");
+      this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
     });
      
   }
 });
-this.toastr.success("تم الحفظ");
-    this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+
+
     
   }
 

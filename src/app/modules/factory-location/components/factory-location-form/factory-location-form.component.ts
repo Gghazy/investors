@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-factory-location-form',
@@ -17,6 +18,7 @@ import { PeriodService } from 'src/app/modules/period/period.service';
   ]
 })
 export class FactoryLocationFormComponent {
+  isDisabled!:boolean;
   factoryId: any;
   periodId: any;
   cityCode: any;
@@ -33,11 +35,13 @@ export class FactoryLocationFormComponent {
     private toastr: ToastrService,
     private router: Router,
     private periodService: PeriodService,
+    private sharedService:SharedService
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
+    this.ToggleDisable()
     this.getLocation();
     this.getCities();
     this.getIndustrialAreas();
@@ -52,6 +56,12 @@ export class FactoryLocationFormComponent {
 
         this.PeriodName = res.Data.PeriodName;
       });
+  }
+  ToggleDisable() {
+    let userId=  this.sharedService.getUserId()
+
+   this.isDisabled= this.sharedService.toggleDisable(this.factoryId,this.periodId,userId)
+  
   }
   getLocation() {
     this.factoryLocationService
@@ -116,16 +126,18 @@ export class FactoryLocationFormComponent {
       this.factoryLocationService
         .create(this.request)
         .subscribe((res: any) => {
+          this.toastr.success("تم الحفظ");
           this.getLocation();
+        
         });
     }
     else {
       this.factoryLocationService
         .update(this.request)
         .subscribe((res: any) => {
-          
+          this.toastr.success("تم الحفظ");
         });
     }
-    this.toastr.success("تم الحفظ");
+   
   }
 }
