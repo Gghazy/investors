@@ -31,6 +31,7 @@ export class LocationFileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFiles();
+    this.request.Type='1'
   }
 
   getFiles() {
@@ -88,9 +89,10 @@ export class LocationFileComponent implements OnInit {
 
   deleteFile(id: number){
     this.factoryLocationService
-      .deleteFile(id)
+      .deleteFile(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.getFiles();
+        this.toastr.success("تم الحذف");
       });
   }
 }

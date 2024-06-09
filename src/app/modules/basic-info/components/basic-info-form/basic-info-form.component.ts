@@ -23,6 +23,8 @@ export class BasicInfoFormComponent implements OnInit {
   search = new FactorySearch();
   PeriodName!:string
   isDisabled!:boolean;
+  inputValue: string = '';
+  isValid: boolean = true;
   constructor(
     private route: ActivatedRoute,
      private basicInfoService: BasicInfoService,
@@ -74,7 +76,7 @@ export class BasicInfoFormComponent implements OnInit {
           this.toastr.success("تم الحفظ");
         });
   }
-
+ 
   changeStatus(){
     this.sharedService.factoryStatus=this.request.Status;
   }

@@ -171,7 +171,7 @@
     <div class="form-footer">
         <div class="col-12">
             <button class="btn btn-primary me-1" type="submit" (click)="saveItems()">حفظ</button>
-            <a href="" class="btn btn-danger">الغاء</a>
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
         </div>
     </div>
 </section>
