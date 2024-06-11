@@ -1,3 +1,6 @@
+
+<form #myForm="ngForm" (ngSubmit)="save()">
+
 <div class="row">
     <div *ngIf="Id==0" class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
         في حال عدم وجود اسم المادة الأولية - المادة الخام- المراد اضافتها ضمن القائمة الخاصة بإسم البند الجمركي   (رقم البند الجمركي على مستوى 12) ، الرجاء التواصل مع الجهة المختصة بوزارة الصناعة ورفع طلب بذلك .
@@ -17,7 +20,7 @@
         </select> -->
 
       
-        <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName">
+        <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName" name="CustomItemName" required>
             <option *ngFor="let item of products12" [value]="item.Id">
                 {{ item.Hs12NameAr }} ({{item. Hs12Code}})
 
@@ -32,8 +35,11 @@
             <i>؟</i>
         </label>
 
-        <input type="text" class="form-control" value="" [(ngModel)]="request.Name">
-
+        <input type="text" class="form-control" value="" name="productName" #productName="ngModel" [(ngModel)]="request.Name" required>
+        <div *ngIf="productName.invalid && (productName.dirty || productName.touched)"
+        class="validation-error">
+        <div *ngIf="productName.errors?.['required']">الرجاء إدخال إسم المادة الأولية </div>        
+    </div>
     </div>
     <div class="col-md-3">
         
@@ -42,8 +48,15 @@
             <span class="required">*</span>
             <i>؟</i>
         </label>
-        <input type="number"  class="form-control" noMinus [(ngModel)]="request.MaximumMonthlyConsumption" >
-
+        <input type="number" name="MaximumMonthlyConsump" #MaximumMonthlyConsump="ngModel"  min="1" max="1000000000000" pattern="[0-9]+([\.,][0-9]{1,5})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"    class="form-control" noMinus [(ngModel)]="request.MaximumMonthlyConsumption" required>
+        <div *ngIf="MaximumMonthlyConsump.invalid && (MaximumMonthlyConsump.dirty || MaximumMonthlyConsump.touched)"
+        class="validation-error">
+        <div *ngIf="MaximumMonthlyConsump.errors?.['required']"> الرجاء إدخال قيمة أقصى إستهلاك شهري </div>
+        <div *ngIf="MaximumMonthlyConsump.errors?.['min']" >الرجاء إدخال رقم أكبر من 0   </div>
+        <div *ngIf="MaximumMonthlyConsump.errors?.['max']" >الرجاء إدخال رقم أقل من 1000000000000   </div>
+        <div *ngIf="MaximumMonthlyConsump.errors?.['pattern']" >الرجاء إدخال رقم  صحيح   </div>
+        
+    </div>
     </div>
     <div class="col-md-2">
 
@@ -51,8 +64,8 @@
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">
             وحدة القياس 
         </label>
-        <select class="form-select" [(ngModel)]="request.UnitId" disabled>
-            <option *ngFor="let item of units" [value]="item.Id">
+        <select class="form-select" [(ngModel)]="request.UnitId" name="Name" disabled>
+            <option *ngFor="let item of units" [value]="item.Id" >
                 {{ item.Name }}
             </option>
         </select>
@@ -68,7 +81,7 @@
             <i>؟</i>
         </label>
         <div class="input-group">
-            <input type="number" class="form-control" [(ngModel)]="request.AverageWeightKG" noMinus
+            <input type="number"  name="AverageWeightKG" min="0" max="10000000000" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" step="1" class="form-control" [(ngModel)]="request.AverageWeightKG" noMinus
                 [disabled]="showInput" >
             <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
         </div>
@@ -79,12 +92,18 @@
             <span class="required">*</span>
         </label>
 
-        <div class="multiselect-parent">
-            <ng-multiselect-dropdown [placeholder]="'أختر'" [settings]="dropdownSettings" [data]="products12"
+       <div class="multiselect-parent">
+            <ng-multiselect-dropdown [placeholder]="'أختر'" name="FactoryProductId" [settings]="dropdownSettings" [data]="products12"
                 [(ngModel)]="selectedProducts" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
-                (onSelectAll)="onSelectAll($event)">
+                (onSelectAll)="onSelectAll($event)" required>
             </ng-multiselect-dropdown>
         </div>
+       <!-- <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.FactoryProductId" name="CustomItemName" required>
+            <option *ngFor="let item of products12" [value]="item.Id">
+                {{ item.Hs12NameAr }} ({{item. Hs12Code}})
+
+            </option>
+        </select>--> 
 
     </div>
 
@@ -93,18 +112,21 @@
     <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">إرفاق صورة المادة
             الأولية بصيغة jpeg , jpg , png , pdf (ان وجدت)
-            
+            <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
+            </span> 
         </label>
-        <input type="file"  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
+        <input type="file" #fileInputPhoto accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
         <div *ngIf="fileErrorPhoto" class="validation-error">{{ fileErrorPhoto }}</div>
     </div>
     <div class="col-md-6">
         <label class="form-label" placement="left" title=""
             tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت" aria-describedby="tooltip617728"> إرفاق ورقة
-            بصيغة  البيانات pdf (ان وجدت)
+            البيانات بصيغة   pdf (ان وجدت)
+            <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
+            </span> 
             <i>؟</i>
         </label>
-        <input type="file" accept=".pdf" class="form-control" placeholder="" value="" (change)="savePaper($event)">
+        <input type="file" #fileInputPaper accept=".pdf" class="form-control" placeholder="" value="" (change)="savePaper($event)">
         <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
     </div>
 
@@ -125,7 +147,7 @@
 
 <div class="modal-footer">
     <div class="col-12 text-end">
-        <button class="btn btn-primary me-1" type="submit" (click)="save()"> حفظ</button>
+        <button class="btn btn-primary me-1" [disabled]="myForm.invalid" type="submit">حفظ</button>
         <!-- <button class="btn btn-primary me-1" type="submit" (click)="saveProducts()"> Products</button> -->
         <a data-bs-dismiss="modal" class="btn btn-danger">الغاء</a>
     </div>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { fade } from 'src/app/shared/animation/app.animation';
 import { LocationModel } from '../../models/location-model';
 import { FactoryLocationService } from '../../factory-location.service';
@@ -18,6 +20,8 @@ import { SharedService } from 'src/app/shared/services/shared.service';
   ]
 })
 export class FactoryLocationFormComponent {
+  factoryLocForm!: FormGroup;
+  submitted: boolean | undefined;
   isDisabled!:boolean;
   factoryId: any;
   periodId: any;
@@ -27,8 +31,11 @@ export class FactoryLocationFormComponent {
   cities: LookUpModel[] = [];
   industrialAreas: LookUpModel[] = [];
   factoryEntities: LookUpModel[] = [];
+  requiredRecipients: boolean | undefined;
 
   constructor(
+    private formBuilder: FormBuilder,
+
     private route: ActivatedRoute,
     private factoryLocationService: FactoryLocationService,
     private lookUpService: LookUpService,
@@ -47,6 +54,7 @@ export class FactoryLocationFormComponent {
     this.getIndustrialAreas();
     this.getFactoryEntities();
     this.getperiod()
+    this.createfactoryLocationForm();
 
   }
   getperiod() {
@@ -109,6 +117,7 @@ export class FactoryLocationFormComponent {
   }
 
   onCitySelect(id: number) {
+    
     this.cityCode = this.cities.find(x => x.Id == id)?.CityCode;
 
     this.lookUpService
@@ -118,7 +127,29 @@ export class FactoryLocationFormComponent {
         console.log(this.industrialAreas)
       });
   }
+  createfactoryLocationForm(): void {
+   
+    this.factoryLocForm = this.formBuilder.group({
+      factoryEntityId: ['', [Validators.required]],
+      cityId: ['', [Validators.required]],
+      industrialAreaId: ['', [Validators.required]],
+      webSiteUrl:  ['https://www.google.com/maps', Validators.compose([Validators.required,Validators.pattern("https://www.google.com/maps.+")])],
+
+    });
+  }
+  /*get cityId() {
+		let r= this.BasicInfoForm.get('cityId');
+    if(r==null)
+    alert(r);
+    return r;
+	}*/
   save() {
+   
+    this.submitted = true;
+    if (this.factoryLocForm.invalid) {
+      this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
+      return;
+    }
     debugger
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
@@ -128,6 +159,8 @@ export class FactoryLocationFormComponent {
         .subscribe((res: any) => {
           this.toastr.success("تم الحفظ");
           this.getLocation();
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
         
         });
     }
@@ -136,6 +169,8 @@ export class FactoryLocationFormComponent {
         .update(this.request)
         .subscribe((res: any) => {
           this.toastr.success("تم الحفظ");
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
         });
     }
    

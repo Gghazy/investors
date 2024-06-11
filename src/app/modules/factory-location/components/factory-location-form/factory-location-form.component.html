@@ -13,44 +13,59 @@
         </div>
     </div>
     <div class="form-body">
+       
+            
         <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
             <P>
             في حال كان المصنع خارج نطاق اي منطقة صناعية ، يتم تحديد خيار (أخرى) في كل من قائمة الجهة التي يتبع لها المصنع 
             وقائمة المدينة ومن ثم اختيار خيار (خارج نطاق المدن الصناعية ) من قائمة المنطقة الصناعية.    
             </div>
-        <div class="row">
+            <form [formGroup]="factoryLocForm" (ngSubmit)="save()">
+                
+                
+                <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-6" for="factoryEntityId">
                 <label class="form-label"> الجهة التي يتبع لها المصنع​<span class="required">*</span></label>
-                <select class="form-select" #FactoryEntityId="ngModel" required 
-                name="FactoryEntityId" [(ngModel)]="request.FactoryEntityId" (change)="onEntitySelect(request.FactoryEntityId)">
-                    <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">{{factoryEntity.NameAr}} </option>
+              
+                <select class="form-select"  
+               #FactoryEntityId  name="FactoryEntityId" [(ngModel)]="request.FactoryEntityId" id="factoryEntityId"
+                 (change)="onEntitySelect(request.FactoryEntityId)" formControlName="factoryEntityId" required>
+                    <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">
+                        {{factoryEntity.NameAr}} </option>
                 </select>
-                <div *ngIf="FactoryEntityId.invalid && (FactoryEntityId.dirty || FactoryEntityId.touched)" class="validation-error">
-                    <div *ngIf="FactoryEntityId.errors?.['required']">حقل  مطلوب</div>
-                </div>
+                <span  class="text-danger" *ngIf="submitted && !request.FactoryEntityId">
+                    الرجاء إختيار الجهة التي يتبع لها المصنع 
+                  </span>
+                 
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6" >
                 <label class="form-label"> المدينة<span class="required">*</span></label>
-                <select class="form-select" #CityId="ngModel" required  
-                name="CityId" [(ngModel)]="request.CityId" (change)="onCitySelect(request.CityId)">
-                    <option *ngFor="let city of cities" [ngValue]="city.Id" [disabled]="isDisabled">{{city.NameAr}} </option>
+                <select class="form-select"   
+                name="CityId" [(ngModel)]="request.CityId"
+                 (change)="onCitySelect(request.CityId)" formControlName="cityId"  >
+                    <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.NameAr}} </option>
 
                 </select>
-                <div *ngIf="CityId.invalid && (CityId.dirty || CityId.touched)" class="validation-error">
-                    <div *ngIf="CityId.errors?.['required']">حقل مطلوب</div>
-                </div>
+                <span  class="text-danger" *ngIf="submitted && !request.CityId">
+                    الرجاء إختيار المدينة
+                  </span>
+                
             </div>
         </div>
-
+       
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" for="industrialAreaId">
                 <label class="form-label"> المنطقة الصناعية<span class="required">*</span></label>
-                <select class="form-select" name="IndustrialAreaId" 
+                <select class="form-select" name="IndustrialAreaId"  formControlName="industrialAreaId"  id="industrialAreaId"
                 [(ngModel)]="request.IndustrialAreaId" >
-                    <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" [disabled]="isDisabled">{{industrialArea.NameAr}} </option>
+                    <option *ngFor="let industrialArea of industrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
                 </select>
+                <span  class="text-danger" *ngIf="submitted && !request.IndustrialAreaId">
+                    الرجاء إختيار المنطقة الصناعية          
+                        </span>
+                
             </div>
 
             <div class="col-md-6">
@@ -59,10 +74,12 @@
                     <span class="required">*</span>
                     <i>؟</i>
                 </label>
-                <input type="url" #WebSite="ngModel" required class="form-control " [(ngModel)]="request.WebSite" placeholder="https://googl/maps/123" [disabled]="isDisabled">
-                <div *ngIf="WebSite.invalid && (WebSite.dirty || WebSite.touched)" class="validation-error">
-                    <div *ngIf="WebSite.errors?.['required']">حقل مطلوب</div>
-                </div>
+                <input type="url" id="webSiteUrl"  formControlName="webSiteUrl" name="WebSite"   class="form-control " [(ngModel)]="request.WebSite" placeholder="https://www.google.com/maps"    >
+                <span  class="text-danger" *ngIf="submitted && (factoryLocForm.get('webSiteUrl')?.errors?.['pattern'] || factoryLocForm.get('webSiteUrl')?.errors?.['required'])">
+
+                  الرجاء تحديد رابط موقع المصنع يبدأ ب https://www.google.com/maps
+
+                </span>
             </div>
 
 
@@ -70,12 +87,15 @@
 
         <app-location-file [factoryLocationId]="request.Id"></app-location-file>
 
-    </div>
+    
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" (click)="save()">حفظ</button>
+            <button class="btn btn-primary me-1"  type="submit">حفظ</button>
+
             <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
         </div>
+    </div>
+</form>
     </div>
 </section>
 

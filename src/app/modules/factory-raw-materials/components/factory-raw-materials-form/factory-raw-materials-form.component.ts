@@ -44,6 +44,9 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   productx: any;
   fileError: string | null = null;
   fileErrorPhoto: string | null = null;
+  @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
+  @ViewChild('fileInputPhoto') fileInputPhoto!: ElementRef;
+
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private fileService: FileService,
     private router: Router,
@@ -127,7 +130,10 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       itemsShowLimit: 2,
       allowSearchFilter: true
     };
-
+    this.fileErrorPhoto=''
+    this.fileError=''
+    //this.fileInputPaper.nativeElement.value = this.request.PhotoId;
+    //this.fileInputPhoto.nativeElement.value = this.request.PaperId;
   }
 
   getOneRawMaterial(id: number) {
@@ -229,7 +235,21 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   savePaper(file: any) {
 
-    if (file.target.files.length > 0) {
+    const input = file.target as HTMLInputElement;
+   
+    if (!input.files || input.files.length === 0) {
+      this.fileError = 'لم تقم بإختيار ملف';
+      console.error('لم تقم بإختيار ملف');
+      return;
+    }
+    const fileImage = input.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.fileError = ' 5MB حجم الملف أكبر من';
+            console.error(' 5MB حجم الملف أكبر من');
+    }
+    else {
       const file1 = file.target.files[0];
       const fileType = file1.type;
       const validFileTypes = ['application/pdf'];
@@ -248,7 +268,22 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     }
   }
   savePhoto(file: any) {
-    if (file.target.files.length > 0) {
+    const input = file.target as HTMLInputElement;
+   
+    if (!input.files || input.files.length === 0) {
+      this.fileErrorPhoto = 'لم تقم بإختيار ملف';
+      console.error('لم تقم بإختيار ملف');
+      return;
+    }
+    const fileImage = input.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.fileErrorPhoto = ' 5MB حجم الملف أكبر من';
+            console.error(' 5MB حجم الملف أكبر من');
+    }
+    else {
+ 
       const file1 = file.target.files[0];
       const fileType = file1.type;
 
@@ -274,7 +309,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
 
   save() {
-
+    if(!(this.fileError==null || this.fileError==''))
+      {
+        return
+      }
+      if(!(this.fileErrorPhoto==null || this.fileErrorPhoto==''))
+        {
+          return
+        }
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     if (this.fileErrorPhoto || this.fileError) {
@@ -292,6 +334,13 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
             this.saveSuccessful = true;
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
+            this.request = new RawMaterial();
+            this.selectedProducts = []
+            this.fileErrorPhoto = null
+            this.fileError = null
+            this.fileInputPaper.nativeElement.value = '';
+            this.fileInputPhoto.nativeElement.value = '';
+
 
           });
 
@@ -306,6 +355,12 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
             this.saveSuccessful = true;
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
+            this.request = new RawMaterial();
+            this.selectedProducts = []
+            this.fileErrorPhoto = null
+            this.fileError = null
+            this.fileInputPaper.nativeElement.value = '';
+            this.fileInputPhoto.nativeElement.value = '';
           });
       }
 
@@ -314,10 +369,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
     // this.toastr.success("تم الحفظ");
     if (this.saveSuccessful == true) {
-      this.request = new RawMaterial();
-      this.selectedProducts = []
-      this.fileErrorPhoto = null
-      this.fileError = null
+     
     }
   }
 

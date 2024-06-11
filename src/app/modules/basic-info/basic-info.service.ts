@@ -19,7 +19,11 @@ export class BasicInfoService {
     return this.http.post<any>('Factories', factory);
   }
   update(factory: FactoryModel): Observable<any> {
-    return this.http.put<any>('Factories', factory);
+    let result= this.http.put<any>('Factories', factory);
+
+    
+   
+    return result;
   }
 
   getAll(factoryId:string,periodId:string): Observable<any> {

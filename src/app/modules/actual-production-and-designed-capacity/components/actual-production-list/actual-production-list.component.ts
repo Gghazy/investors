@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ActualProductModel } from '../../models/actual-product-model';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { ActualProductionAndDesignedCapacityService } from '../../actual-production-and-designed-capacity.service';
@@ -29,6 +29,7 @@ export class ActualProductionListComponent implements OnInit {
     private ActualProductionService: ActualProductionAndDesignedCapacityService,
     private basicInfoService: BasicInfoService,
     private toastr: ToastrService,
+    private router: Router,
     private periodService : PeriodService, 
     ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
@@ -48,13 +49,12 @@ export class ActualProductionListComponent implements OnInit {
     .subscribe((res: any) => {
       this.products = res.Data;
       console.log(this.products)
+      this.showReason = false;
       this.products.Items.forEach((element:any) => {
         if (element.ActualProduction > element.DesignedCapacity){
-         
+      
           this.showReason = true
           return
-         }else{
-          this.showReason = false
          }
       });
      
@@ -92,5 +92,7 @@ export class ActualProductionListComponent implements OnInit {
   }
 save(){
   this.toastr.success("تم الحفظ");
+  this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
 }
 }

@@ -28,13 +28,21 @@
     </div>
 
     <div class="col-md-6">
-        <label class="form-label">رفع المستند بصيغة jpeg , jpg , png , pdf<span class="required">*</span></label>
+        
+        <label class="form-label">  رفع المستند بصيغة jpeg , jpg , png , pdf 
+            <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
+            </span> 
+             <span class="required">*</span></label>
         <div class="input-group">
-            <input type="file"  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
+            <input type="file"  #fileInputLoc name="fileN"  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
             <button [disabled]="fileError"  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
         </div>
-        
-    <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
+    
+    <div *ngIf="fileError" class="text-center">
+      <div class="validation-error">
+        {{ fileError }}
+    </div>
+    </div>
     </div>
 </div>
 
@@ -52,12 +60,12 @@
             <td> {{file.Type}}</td>
             <td>{{file.Extension}}</td>
             <td>
-                <a (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal"
+                <a  name="AttachmentIdFileN" (click)="getFile(file.AttachmentId)" class="btn btn-primary mx-1" data-bs-toggle="modal"
                     data-bs-target="#photoModal">
                     عرض
 
                 </a>
-                <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
+                <a  name="deleteFileN" (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
             </td>
         </tr>
     </ng-template>
@@ -73,7 +81,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img [src]="src" alt="" class="img-fluid">
+                <img name="image" [src]="src" alt="" class="img-fluid">
             </div>
         </div>
     </div>

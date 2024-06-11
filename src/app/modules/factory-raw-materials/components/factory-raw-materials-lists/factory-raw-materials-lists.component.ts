@@ -224,6 +224,8 @@ console.log(this.data)
   save() {
 
     this.toastr.success("تم الحفظ");
+    this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
   }
 
 }

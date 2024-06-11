@@ -1,7 +1,10 @@
-<div class="row">
+
+    <form #productForm="ngForm" (ngSubmit)="save()" class="row">
+
     <div *ngIf="productId==0" class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
         في حال عدم وجود اسم المنتج المراد اضافته ضمن القائمة الخاصة بإسم المنتج حسب البند الجمركي على المستوى 12 ، الرجاء التواصل مع الجهة المختصة بوزارة الصناعة ورفع طلب بذلك .
     </div>
+
     <div class="col-md-6" *ngIf="productId!=0">
         <label class="form-label"> اسم المنتج (حسب البند الجمركي على مستوى 12)<span class="required">*</span></label>
         <input disabled  type="text" name="ProductName" class="form-control"  [(ngModel)]="request.ProductName">
@@ -16,7 +19,7 @@
          [settings]="dropdownSettings"
          [data]="products"
          [(ngModel)]="selectProductId"
-         (onSelect)="productChanage()"
+         (onSelect)="productChanage($event)"
          >
         </ng-multiselect-dropdown>
     </div>
@@ -27,7 +30,13 @@
                 <span  class="required">*</span>
             <i>؟</i>
         </label>
-        <input  type="text" name="CommericalName" class="form-control"  [(ngModel)]="request.CommericalName">
+        <div class="input-group">
+        <input  type="text" #CommericalName="ngModel" name="CommericalName" class="form-control"  [(ngModel)]="request.CommericalName" required="">
+          </div>
+        <div *ngIf="CommericalName.invalid && (CommericalName.dirty || CommericalName.touched)"
+        class="validation-error">
+        <div *ngIf="CommericalName.errors?.['required']">الرجاء إدخال إسم المنتج التجاري</div>
+    </div>
     </div>
     
     <div class="col-md-6">
@@ -44,29 +53,47 @@
                <span  class="required">*</span>
             <i>؟</i>
         </label>
-        <input  type="number" [disabled]="isDisabled" name="Kilograms_Per_Unit" class="form-control"  [(ngModel)]="request.Kilograms_Per_Unit">
+        <div class="input-group">
+        <input  type="number" min="0" max="100000" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" step="1" 
+         [disabled]="isDisabled" #Kilograms_Per_Unit="ngModel" name="Kilograms_Per_Unit" class="form-control"  [(ngModel)]="request.Kilograms_Per_Unit" required>
+    </div>
+    <div *ngIf="Kilograms_Per_Unit.invalid && (Kilograms_Per_Unit.dirty || Kilograms_Per_Unit.touched)"
+    class="validation-error">
+    <div *ngIf="Kilograms_Per_Unit.errors?.['required']">الرجاء إدخال الوزن المقابل بالكيلوجرام  </div>
+    <div *ngIf="Kilograms_Per_Unit.errors?.['min']" >الرجاء إدخال رقم أكبر من 0   </div>
+    <div *ngIf="Kilograms_Per_Unit.errors?.['max']" >الرجاء إدخال رقم أقل من 100000   </div>
+
+    <div *ngIf="Kilograms_Per_Unit.errors?.['pattern']" >الرجاء إدخال رقم  صحيح   </div>
+
+</div>
+
+       
     </div>
     <div class="col-md-6">
-        <label class="form-label">صورة المنتج  بصيغة jpeg , jpg , png , pdf (ان وجدت)
+        <label class="form-label">صورة المنتج  بصيغة jpeg , jpg , png , pdf (ان وجدت) 
+            <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
+            </span> 
            </label>
         <div class="input-group">
-            <input type="file"  accept=".png, .jpg, .jpeg, .pdf"  class="form-control" placeholder="" value="" (change)="savePhoto($event)">
+            <input type="file" #fileInputPhoto  accept=".png, .jpg, .jpeg, .pdf"  class="form-control" placeholder="" value="" (change)="savePhoto($event)">
            
         </div>
         <div *ngIf="fileErrorPhoto" class="validation-error">{{ fileErrorPhoto }}</div>
     </div>
     <div class="col-md-6">
-        <label class="form-label" tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"> ورقة البيانات بصيغة pdf (ان وجدت)
-           
+        <label class="form-label" tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"> ورقة البيانات بصيغة pdf (ان وجدت) 
+            <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
+        </span> 
             <i>؟</i></label>
         <div class="input-group">
-            <input type="file"  accept=".pdf" class="form-control" placeholder="" value="" (change)="savePaper($event)">
+            <input type="file" #fileInputPaper  accept=".pdf" class="form-control" placeholder="" value="" (change)="savePaper($event)">
          
         </div>
         <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
     </div>
     <div class="col-md-12 text-center">
-        <button class="btn btn-primary" type="button" (click)="save()">حفظ </button>
+        <button class="btn btn-primary me-1" [disabled]="productForm.invalid" type="submit">حفظ</button>
 
     </div>
-    </div>
+    </form>
+   

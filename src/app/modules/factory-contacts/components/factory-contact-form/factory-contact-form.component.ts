@@ -18,11 +18,13 @@ import { SharedService } from 'src/app/shared/services/shared.service';
   ]
 })
 export class FactoryContactFormComponent implements OnInit {
+  submitted: boolean | undefined;
 
   isDisabled!:boolean;
   factoryId: any;
   periodId: any;
   request: any;
+  defaultPhone:any;
   PeriodName!:string
   separateDialCode = false;
   SearchCountryField = SearchCountryField;
@@ -30,14 +32,16 @@ export class FactoryContactFormComponent implements OnInit {
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
   phoneForm = new FormGroup({
-    OfficerPhone: new FormControl(undefined, [Validators.required, this.saPhoneNumberValidator]),
-    OfficerEmail: new FormControl(undefined, [Validators.required,this.isValidEmail]),
-    ProductionManagerPhone: new FormControl(undefined, [Validators.required, this.saPhoneNumberValidator]),
-    ProductionManagerEmail: new FormControl(undefined, [Validators.required,this.isValidEmail]),
-    FinanceManagerPhone: new FormControl(undefined, [Validators.required, this.saPhoneNumberValidator]),
-    FinanceManagerEmail: new FormControl(undefined, [Validators.required,this.isValidEmail]),
-    Id: new FormControl(0, [Validators.required]),
-    FactoryId: new FormControl(undefined, [Validators.required])
+    OfficerPhone: new FormControl(null, [Validators.required, this.saPhoneNumberValidator]),
+    OfficerEmail: new FormControl(null, [Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
+    ProductionManagerPhone: new FormControl(null, [Validators.required, this.saPhoneNumberValidator]),
+    ProductionManagerEmail: new FormControl(null, [Validators.required,    Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
+    ]),                                                                                                           
+    FinanceManagerPhone: new FormControl(null, [Validators.required, this.saPhoneNumberValidator]),
+    FinanceManagerEmail: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
+    ]),
+    Id: new FormControl(0),
+    FactoryId: new FormControl(undefined)
 
   });
 
@@ -57,6 +61,8 @@ export class FactoryContactFormComponent implements OnInit {
     this.ToggleDisable()
     this.getContact();
     this.getperiod()
+    this.defaultPhone="0xxxxxxxxx";
+
   }
 
   getContact() {
@@ -83,6 +89,11 @@ export class FactoryContactFormComponent implements OnInit {
   
   }
   save() {
+    this.submitted = true;
+    if (this.phoneForm.invalid) {
+      this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
+      return;
+    }
     this.request = this.phoneForm.value
     this.request.FactoryId = this.factoryId;
     this.request.periodId = this.periodId;
@@ -91,16 +102,18 @@ export class FactoryContactFormComponent implements OnInit {
         .create(this.request)
         .subscribe((res: any) => {
           this.request = res.Data;
-          this.router.navigate(['/pages/factory-landing/' + this.factoryId]);
           this.toastr.success("تم الحفظ");
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
         });
     }
     else {
       this.factoryContactService
         .update(this.request)
         .subscribe((res: any) => {
-          this.router.navigate(['/pages/factory-landing/' + this.factoryId]);
           this.toastr.success("تم الحفظ");
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
         });
     }
 
@@ -127,6 +140,7 @@ export class FactoryContactFormComponent implements OnInit {
   isValidEmail(control: FormControl): ValidationErrors | null {
     let email = control.value;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
     var isvalid= emailPattern.test(email);
 
     return isvalid ? null : { isValidEmail: true };
