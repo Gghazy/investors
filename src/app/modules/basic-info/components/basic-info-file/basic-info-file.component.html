@@ -20,20 +20,26 @@
 
 
 <div class="col-md-6">
+
+    
     <label class="form-label" > نوع المستند <span class="required">*</span></label>
-    <select name="Type" #Type="ngModel" required  id="Type" [(ngModel)]="request.Type" class="form-select"  >
+    <select name="Type"  #Type="ngModel" required  id="Type"  [(ngModel)]="request.Type" class="form-select"  required>
         <option [ngValue]="0" selected>صورة واجهة المصنع</option>
     </select>
+
 </div>
 
 <div class="col-md-6">
-    <label class="form-label">رفع المستند بصيغة jpeg , jpg , png , pdf<span class="required">*</span>   </label>
+    <label class="form-label">رفع المستند بصيغة jpeg , jpg , png , pdf 
+        <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
+        </span> 
+        <span class="required">*</span>   </label>
     <div class="input-group">
         <input type="file" #fileInput  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
        
         <button  class="btn btn-primary" type="submit" >اضافة </button>
     </div>
-    <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
+    <div *ngIf="fileError" class="validation-error text-center">{{ fileError }}</div>
 
 </div>
 </div>

@@ -15,7 +15,7 @@
   <div class="form-body">
     <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
       <P>
-        يتم إدخال أرقام هواتف الموظفين المعنيين مع الحرص على ان تكون أرقام الهواتف صحيحة و مفعلة كذلك البريد الإلكتروني لكل موظف و من ثم الضغط على خيار حفظ.
+        يتم إدخال أرقام هواتف الموظفين المعنيين مع الحرص على ان تكون أرقام الهواتف صحيحة و مفعلة كذلك البريد الإلكتروني لكل جهة إتصال و من ثم الضغط على خيار حفظ.
        </div>
     <form #f="ngForm" [formGroup]="phoneForm" (submit)="save()">
               <div class="row">
@@ -23,27 +23,32 @@
                   <label class="form-label"> رقم الجوال لضابط الإتصال <span class="required">*</span></label>
                   <ngx-intl-tel-input
                     [cssClass]="'form-control'"
-                    [preferredCountries]="preferredCountries"
+                    [onlyCountries]="[CountryISO.SaudiArabia]"
                     [enableAutoCountrySelect]="true"
                     [enablePlaceholder]="false"
-                    [searchCountryFlag]="true"
+                    [searchCountryFlag]="false"
                     [searchCountryField]="[
                       SearchCountryField.Iso2,
                       SearchCountryField.Name
                     ]"
                     [selectFirstCountry]="false"
                     [selectedCountryISO]="CountryISO.SaudiArabia"
+                    [enableAutoCountrySelect]="true"
                     [maxLength]="15"
                     [phoneValidation]="true"
                     [separateDialCode]="separateDialCode"
                     [numberFormat]="PhoneNumberFormat.National"
                     name="OfficerPhone"
                     formControlName="OfficerPhone"
-                    [disabled]="isDisabled">
+                    [enablePlaceholder]="true"
+                    [customPlaceholder]="defaultPhone"
+                    [disabled]="isDisabled"
+                   >
                   </ngx-intl-tel-input>
-                  <div style="color: #F00;" *ngIf="phoneForm.get('OfficerPhone')?.errors && phoneForm.get('OfficerPhone')?.touched">
-                    <div *ngIf="phoneForm.get('OfficerPhone')?.hasError('required')">هذا الحقل مطلوب</div>
-                    <div *ngIf="phoneForm.get('OfficerPhone')?.hasError('saPhoneNumber')">الرجاء إدخال رقم هاتف سعودي صالح</div>
+                
+                  <div class="text-danger" *ngIf="submitted && phoneForm.get('OfficerPhone')?.errors">
+                    <div *ngIf="phoneForm.get('OfficerPhone')?.hasError('required')">   الرجاء إدخال رقم الجوال  </div>
+                    <div *ngIf="phoneForm.get('OfficerPhone')?.hasError('saPhoneNumber')"> الرجاء إدخال رقم جوال سعودي  </div>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -60,9 +65,9 @@
                       [disabled]="isDisabled"
                     />
                   </div>
-                  <div style="color: #F00;" *ngIf="phoneForm.get('OfficerEmail')?.errors && phoneForm.get('OfficerEmail')?.touched ">
-                    <div *ngIf="phoneForm.get('OfficerEmail')?.hasError('required')">هذا الحقل مطلوب</div>
-                    <div *ngIf="phoneForm.get('OfficerEmail')?.hasError('isValidEmail')">عنوان بريد إلكتروني غير صالح</div>
+                  <div class="text-danger" *ngIf="submitted && phoneForm.get('OfficerEmail')?.errors">
+                    <div *ngIf="phoneForm.get('OfficerEmail')?.hasError('required')">الرجاء إدخال البريد الإلكتروني </div>
+                    <div *ngIf="!phoneForm.get('OfficerEmail')?.hasError('required') && phoneForm.get('OfficerEmail')?.hasError('pattern')">عنوان بريد إلكتروني غير صالح</div>
                   </div>
                 </div>
               </div>
@@ -72,10 +77,10 @@
                   <label class="form-label"> رقم الجوال لمدير الإنتاج <span class="required">*</span></label>
                   <ngx-intl-tel-input
                     [cssClass]="'form-control'"
-                    [preferredCountries]="preferredCountries"
+                    [onlyCountries]="[CountryISO.SaudiArabia]"
                     [enableAutoCountrySelect]="true"
                     [enablePlaceholder]="false"
-                    [searchCountryFlag]="true"
+                    [searchCountryFlag]="false"
                     [searchCountryField]="[
                       SearchCountryField.Iso2,
                       SearchCountryField.Name
@@ -88,12 +93,14 @@
                     [numberFormat]="PhoneNumberFormat.National"
                     name="ProductionManagerPhone"
                     formControlName="ProductionManagerPhone"
+                    [enablePlaceholder]="true"
+                    [customPlaceholder]="defaultPhone"
                     [disabled]="isDisabled"
                   >
                   </ngx-intl-tel-input>
-                  <div style="color: #F00;" *ngIf="phoneForm.get('ProductionManagerPhone')?.errors && phoneForm.get('ProductionManagerPhone')?.touched">
-                    <div *ngIf="phoneForm.get('ProductionManagerPhone')?.hasError('required')">هذا الحقل مطلوب</div>
-                    <div *ngIf="phoneForm.get('ProductionManagerPhone')?.hasError('saPhoneNumber')">الرجاء إدخال رقم هاتف سعودي صالح</div>
+                  <div class="text-danger" *ngIf="submitted && phoneForm.get('ProductionManagerPhone')?.errors">
+                    <div *ngIf="phoneForm.get('ProductionManagerPhone')?.hasError('required')">الرجاء إدخال رقم الجوال</div>
+                    <div *ngIf="phoneForm.get('ProductionManagerPhone')?.hasError('saPhoneNumber')">الرجاء إدخال رقم جوال سعودي </div>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -110,9 +117,9 @@
                       [disabled]="isDisabled"
                     />
                   </div>
-                  <div style="color: #F00;" *ngIf="phoneForm.get('ProductionManagerEmail')?.errors && phoneForm.get('ProductionManagerEmail')?.touched">
-                    <div *ngIf="phoneForm.get('ProductionManagerEmail')?.hasError('required')">هذا الحقل مطلوب</div>
-                    <div *ngIf="phoneForm.get('ProductionManagerEmail')?.hasError('isValidEmail')">عنوان بريد إلكتروني غير صالح</div>
+                  <div class="text-danger" *ngIf="submitted && phoneForm.get('ProductionManagerEmail')?.errors">
+                    <div *ngIf="phoneForm.get('ProductionManagerEmail')?.hasError('required')">الرجاء إدخال البريد الإلكتروني </div>
+                    <div *ngIf="!phoneForm.get('ProductionManagerEmail')?.hasError('required') &&  phoneForm.get('ProductionManagerEmail')?.hasError('pattern')">عنوان بريد إلكتروني غير صالح</div>
                   </div>
                 </div>
               </div>
@@ -122,10 +129,10 @@
                   <label class="form-label"> رقم الجوال لمدير المالية <span class="required">*</span></label>
                   <ngx-intl-tel-input
                     [cssClass]="'form-control'"
-                    [preferredCountries]="preferredCountries"
+                    [onlyCountries]="[CountryISO.SaudiArabia]"
                     [enableAutoCountrySelect]="true"
                     [enablePlaceholder]="false"
-                    [searchCountryFlag]="true"
+                    [searchCountryFlag]="false"
                     [searchCountryField]="[
                       SearchCountryField.Iso2,
                       SearchCountryField.Name
@@ -138,12 +145,14 @@
                     [numberFormat]="PhoneNumberFormat.National"
                     name="FinanceManagerPhone"
                     formControlName="FinanceManagerPhone"
+                    [enablePlaceholder]="true"
+                    [customPlaceholder]="defaultPhone"
                     [disabled]="isDisabled"
                   >
                   </ngx-intl-tel-input>
-                  <div style="color: #F00;" *ngIf="phoneForm.get('FinanceManagerPhone')?.errors && phoneForm.get('FinanceManagerPhone')?.touched">
-                    <div *ngIf="phoneForm.get('FinanceManagerPhone')?.hasError('required')">هذا الحقل مطلوب</div>
-                    <div *ngIf="phoneForm.get('FinanceManagerPhone')?.hasError('saPhoneNumber')">الرجاء إدخال رقم هاتف سعودي صالح</div>
+                  <div class="text-danger" *ngIf="submitted && phoneForm.get('FinanceManagerPhone')?.errors">
+                    <div *ngIf="phoneForm.get('FinanceManagerPhone')?.hasError('required')">الرجاء إدخال رقم الجوال</div>
+                    <div *ngIf="phoneForm.get('FinanceManagerPhone')?.hasError('saPhoneNumber')">الرجاء إدخال رقم جوال سعودي </div>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -154,15 +163,15 @@
                     <input
                       type="email"
                       class="form-control"
-                    
                       name="FinanceManagerEmail"
                       formControlName="FinanceManagerEmail"
                       [disabled]="isDisabled"
                     />
                   </div>
-                  <div style="color: #F00;" *ngIf="phoneForm.get('FinanceManagerEmail')?.errors && phoneForm.get('FinanceManagerEmail')?.touched">
-                    <div *ngIf="phoneForm.get('FinanceManagerEmail')?.hasError('required')">هذا الحقل مطلوب</div>
-                    <div *ngIf="phoneForm.get('FinanceManagerEmail')?.hasError('isValidEmail')">عنوان بريد إلكتروني غير صالح</div>
+                  <div class="text-danger" *ngIf="submitted && phoneForm.get('FinanceManagerEmail')?.errors">
+                    <div *ngIf="phoneForm.get('FinanceManagerEmail')?.hasError('required')">الرجاء إدخال البريد الإلكتروني </div>
+                    <div *ngIf="!phoneForm.get('FinanceManagerEmail')?.hasError('required') && phoneForm.get('FinanceManagerEmail')?.hasError('pattern')">عنوان بريد إلكتروني غير صالح</div>
+
                   </div>
                 </div>
               </div>

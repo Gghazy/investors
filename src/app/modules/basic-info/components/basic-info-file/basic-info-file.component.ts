@@ -3,13 +3,18 @@ import { BasicFileModel } from '../../models/basic-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { BasicInfoService } from '../../basic-info.service';
 import { ToastrService } from 'ngx-toastr';
- 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-basic-info-file',
   templateUrl: './basic-info-file.component.html',
   styleUrls: ['./basic-info-file.component.scss']
 })
 export class BasicInfoFileComponent implements OnInit {
+//  selectedValue: string = '0'; 
+  selectedFirstItem: any = 0; 
+
+  selectedFileForm!: FormGroup;
 
   files:BasicFileModel[]=[];
   request=new BasicFileModel();
@@ -20,6 +25,7 @@ export class BasicInfoFileComponent implements OnInit {
   @Input() periodId!:string;
   @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(
+    private formBuilder: FormBuilder,
     private fileService:FileService,
     private basicInfoService:BasicInfoService,
     private toastr: ToastrService
@@ -27,8 +33,18 @@ export class BasicInfoFileComponent implements OnInit {
 
   ngOnInit(): void {
    this.getFiles();
+   this.initValue();
   }
-
+  initValue(){
+    this.request.Type=this.selectedFirstItem;
+    this.fileError = '';
+   }
+  selectFirstItem(): void {
+    this.selectedFileForm = this.formBuilder.group({
+      type: [0]
+    });
+    this.request.Type=  this.selectedFileForm.value.type;
+  }
   getFiles() {
     this.basicInfoService
       .getAll(this.factoryId,this.periodId)
@@ -38,7 +54,22 @@ export class BasicInfoFileComponent implements OnInit {
   }
 
   saveFile(file: any) {
-    if (file.target.files.length > 0) {
+  
+    const input = file.target as HTMLInputElement;
+   
+    if (!input.files || input.files.length === 0) {
+      this.fileError = 'لم تقم بإختيار ملف';
+      console.error('لم تقم بإختيار ملف');
+      return;
+    }
+    const fileImage = input.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.fileError = ' الرجاء رفع مستند بحجم أقل من  5MB  ';
+            console.error(' 5MB حجم الملف أكبر من');
+    }
+    else {
       const file1 = file.target.files[0];
       const fileType = file1.type;
 
@@ -67,6 +98,11 @@ export class BasicInfoFileComponent implements OnInit {
   }
 
   save(){
+    if(this.fileError!=null)
+      {
+        this.fileError = 'لم تقم بإختيار ملف';
+        return
+      }
     this.request.FactoryId=Number(this.factoryId);
     this.request.PeriodId=Number(this.periodId);
     
@@ -77,6 +113,8 @@ export class BasicInfoFileComponent implements OnInit {
       this.toastr.success("تم الحفظ");
       this.request=new BasicFileModel();
       this.fileInput.nativeElement.value = '';
+      this.initValue();
+
     });
 
   }

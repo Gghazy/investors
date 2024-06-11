@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductModel } from '../../models/product-model';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { ProductSearch } from '../../models/product-search';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FactoryProductService } from 'src/app/modules/factory-products/factory-product.service';
 import { ProductPeriodActiveModel } from '../../models/product-period-active-model';
 import { CustomsItemsUpdateService } from '../../customs-items-update.service';
@@ -28,6 +28,7 @@ PeriodName!:string
      private factoryProductService: FactoryProductService,
      private customsItemsUpdateService: CustomsItemsUpdateService,
      private toastr: ToastrService,
+     private router: Router,
      private periodService : PeriodService,
 
   ) {
@@ -95,10 +96,16 @@ PeriodName!:string
  
   save(){
     
+    if(this.ProductPeriodActives.length<=0)
+    { this.toastr.error( ' الرجاء إختيار منتج واحد على الأقل ');
+    return;
+    }
       this.customsItemsUpdateService
       .create(this.ProductPeriodActives)
       .subscribe((res: any) => {
         this.toastr.success("تم الحفظ");
+                  this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
       });
     
    

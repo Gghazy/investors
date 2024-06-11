@@ -88,6 +88,8 @@ export class FinancialDetailFormComponent {
       .subscribe((res: any) => {
         this.request=res.Data;
         this.toastr.success("تم الحفظ");
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
       });
     }
     else{
@@ -95,6 +97,8 @@ export class FinancialDetailFormComponent {
       .update(this.request)
       .subscribe((res: any) => {
         this.toastr.success("تم الحفظ");
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
       });
     }
    

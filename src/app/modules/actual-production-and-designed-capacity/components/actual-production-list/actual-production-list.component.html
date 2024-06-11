@@ -30,12 +30,12 @@
                 <td>{{product.Level12ItemName}}({{product.Level12Number}})</td>
                 
                 <td>
-                    {{product.DesignedCapacity !=0? product.DesignedCapacity + product.DesignedCapacityUnitName:""}}
+                    {{product.DesignedCapacity !=0? product.DesignedCapacity +" "+ product.DesignedCapacityUnitName:""}}
                 </td>
                 <td *ngIf="factoryStatus!=3">
-                    {{product.DesignedCapacity !=0?product.ActualProduction + product.ActualProductionUintName:""}}
+                    {{product.DesignedCapacity !=0?product.ActualProduction +" "+ product.ActualProductionUintName:""}}
                 </td>
-                <td *ngIf="factoryStatus!=3"> = </td>
+                <td *ngIf="factoryStatus!=3"> {{product.DesignedCapacity !=0?'=':''}}</td>
                 <td *ngIf="factoryStatus!=3">
                     {{product.ActualProductionWeight !=0?product.ActualProductionWeight + " كغ ":""}}
                 </td>

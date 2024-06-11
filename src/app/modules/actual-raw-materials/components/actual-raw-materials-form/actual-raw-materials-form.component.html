@@ -1,4 +1,6 @@
 <section class="form-panel">
+    <form #actualRawMat="ngForm" (ngSubmit)="save()">
+
     <div class="form-header">
         <h2 class="form-title"> بيانات المواد الأولية ( المواد الخام) الفعلية لشهر {{PeriodName}}</h2>
         <div>
@@ -50,11 +52,19 @@
 
                         <td>
 
-                            <input type="number" noMinus class="form-control" style="max-width: 117px;"
-                                [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)">
-                        </td>
+                            <input type="number" name="CurrentStockQuantity{{j}}" #CurrentStockQuantity="ngModel" min="1" max="1000000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus class="form-control" style="max-width: 117px;"
+                                [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)" required>
+                                <div *ngIf="CurrentStockQuantity.invalid && (CurrentStockQuantity.dirty || CurrentStockQuantity.touched)"
+                                class="validation-error">
+                                <div *ngIf="CurrentStockQuantity.errors?.['required']">الرجاء إدخال كمية المخزون الحالي     </div>
+                                <div *ngIf="CurrentStockQuantity.errors?.['min']" >الرجاء إدخال رقم أكبر من 0   </div>
+                                <div *ngIf="CurrentStockQuantity.errors?.['max']" >الرجاء إدخال رقم أقل من 1000000000000000   </div>
+                                <div *ngIf="CurrentStockQuantity.errors?.['pattern']" >الرجاء إدخال رقم  صحيح   </div>
+        
+                            </div>
+                            </td>
                         <td >
-                            <select class="form-select disabled" [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)" disabled> 
+                            <select  name="StockUnit" class="form-select disabled" [(ngModel)]="material.StockUnitId" (change)="onSelectionChange(material)" disabled> 
                                 <option *ngFor="let item of units" [value]="item.Id">
                                     {{ item.Name }}
                                 </option>
@@ -63,7 +73,7 @@
                         <!-- <td > {{material.AverageWeightKG}} </td> -->
                         <td>
                             <div class="input-group">
-                                <input type="number"  class="form-control" disabled style="max-width: 117px;"
+                                <input name="CurrentStockQuantity_KGN"  type="number"  class="form-control" disabled style="max-width: 117px;"
                                     value="{{material.CurrentStockQuantity_KG}}">
                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled
                                     style="max-width: 40px;">
@@ -71,11 +81,19 @@
                         </td>
                         <td>
 
-                            <input type="number" noMinus class="form-control" [(ngModel)]="material.UsedQuantity"
-                                style="max-width: 117px;" (change)="onSelectionChange(material)">
+                            <input  type="number" #materialF="ngModel" name="materialF{{j}}"  min="1" max="1000000000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus class="form-control" [(ngModel)]="material.UsedQuantity"
+                                style="max-width: 117px;" (change)="onSelectionChange(material)" required>
+                                <div *ngIf="materialF.invalid && (materialF.dirty || materialF.touched)"
+                                class="validation-error">
+                                <div *ngIf="materialF.errors?.['required']">الرجاء إدخال الكمية المستخدمة    </div>
+                                <div *ngIf="materialF.errors?.['min']" >الرجاء إدخال رقم أكبر من 0   </div>
+                                <div *ngIf="materialF.errors?.['max']" >الرجاء إدخال رقم أقل من 1000000000000000   </div>
+                                <div *ngIf="materialF.errors?.['pattern']" >الرجاء إدخال رقم  صحيح   </div>
+        
+                            </div>
                         </td>
                         <td>
-                            <select class="form-select disabled" [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)" disabled>
+                            <select  name="UsageUnitId" class="form-select disabled" [(ngModel)]="material.UsageUnitId" (change)="onSelectionChange(material)" disabled>
                                 <option *ngFor="let item of units" [value]="item.Id">
                                     {{ item.Name }}
                                 </option>
@@ -85,7 +103,7 @@
                         <!-- <td hidden> {{material.AverageWeightKG}} </td> -->
                         <td>
                             <div class="input-group">
-                                <input type="number" class="form-control" value="{{material.UsedQuantity_KG}}" disabled
+                                <input   name="UsedQuantity_KG" type="number" class="form-control" value="{{material.UsedQuantity_KG}}" disabled
                                     style="max-width: 117px;">
                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled
                                     style="max-width: 40px;">
@@ -132,12 +150,15 @@
          
 
             <div class="col-md-6">
-                <label class="form-label">رفع المستند بصيغة PDF</label>
+                <label class="form-label">رفع المستند بصيغة PDF
+                    <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
+                    </span> 
+                </label>
                 <div class="input-group">
                     <input type="file" class="form-control" accept=".pdf" placeholder="" value="" (change)="saveDocs($event)">
                     <button  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
                 </div>
-                <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
+                <div *ngIf="fileError" class="validation-error text-center">{{ fileError }}</div>
             </div>
         </div>
 
@@ -153,7 +174,7 @@
                 <tbody>
                     <tr *ngFor="let file of files let i=index">
                         <td>{{i+1}}</td>
-                        <td> {{file.Extension}}</td>
+                        <td>{{file.Type}} {{file.Extension}}</td>
 
                         <td>
 
@@ -170,8 +191,9 @@
     </div>
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" type="submit" (click)="saveItems()">حفظ</button>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+            <button class="btn btn-primary me-1" [disabled]="actualRawMat.invalid" type="submit">حفظ</button>
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId"  class="btn btn-danger">الغاء</a>
         </div>
     </div>
+</form>
 </section>

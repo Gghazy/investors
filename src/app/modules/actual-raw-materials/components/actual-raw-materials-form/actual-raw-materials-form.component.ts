@@ -48,6 +48,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   PeriodName!: string
   fileError: string | null = null;
   addFileButton: boolean = false
+  fileSelected: boolean = false
 
   constructor(private route: ActivatedRoute, private service: ActualRawMaterialsService,
     private toastr: ToastrService,
@@ -65,6 +66,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     this.getFiles();
     this.getUnits()
     this.getperiod()
+    this.fileSelected=false;
 
     this.dropdownSettings = {
       singleSelection: true,
@@ -99,6 +101,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
         if (this.rawMaterials.length == 0) {
+        
           this.isNewData = true
           this.service
             .getRawMaterial(this.search, this.factoryId)
@@ -127,15 +130,14 @@ export class ActualRawMaterialsFormComponent implements OnInit {
               })
             });
         }
-
+      
+        this.showInput=false;
         this.rawMaterials.forEach((item: any) => {
           this.request.IncreasedUsageReason = item.IncreasedUsageReason
           if (item.IncreasedUsageReason > 0) {
             this.showInput = true
           }
-          else {
-            this.showInput = false
-          }
+       
           this.x.push({
             'Id': item.Id,
             'RawMaterialId': item.RawMaterialId.Id,
@@ -195,12 +197,27 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   }
 
   saveDocs(file: any) {
-    if (file.target.files.length > 0) {
+    const input = file.target as HTMLInputElement;
+   
+    if (!input.files || input.files.length === 0) {
+      this.fileError = 'لم تقم بإختيار ملف';
+      console.error('لم تقم بإختيار ملف');
+      return;
+    }
+    const fileImage = input.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.fileError = ' 5MB حجم الملف أكبر من';
+            console.error(' 5MB حجم الملف أكبر من');
+    }
+    else {
       const file1 = file.target.files[0];
       const fileType = file1.type;
       const validFileTypes = ['application/pdf'];
       if (validFileTypes.includes(fileType)) {
         this.fileError = null;
+        this.fileSelected=true
 
         this.fileService
           .addFile(file.target.files[0])
@@ -219,6 +236,11 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   }
 
   save() {
+    if(!( this.fileSelected))
+      {
+        this.fileError = 'لم تقم بإختيار ملف';
+        return
+      }
     this.requestFile.PeriodId = this.periodId;
     this.requestFile.FactoryId = this.factoryId;
     this.requestFile.Name = '';
@@ -228,8 +250,11 @@ export class ActualRawMaterialsFormComponent implements OnInit {
         this.getFiles();
         this.toastr.success("تم الحفظ");
         this.requestFile = new ActualRawMaterialFile();
+       // this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
 
       });
+      this.saveItems();
 
 
   }
@@ -261,6 +286,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
 
   saveItems() {
+   
     if( this.fileError){
       this.toastr.error("الرجاء التحقق من البيانات المدخلة")
       return
@@ -274,8 +300,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
         this.service
           .create(item)
           .subscribe((res: any) => {
-            // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
             this.toastr.success("تم الحفظ");
+            this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
           });
       })
       
@@ -289,8 +315,9 @@ export class ActualRawMaterialsFormComponent implements OnInit {
         this.service
           .update(item)
           .subscribe((res: any) => {
-            // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
             this.toastr.success("تم الحفظ");
+            this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+
           });
       })
       

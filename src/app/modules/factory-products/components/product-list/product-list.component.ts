@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { ProductModel } from 'src/app/modules/customs-items-update/models/product-model';
 import { ProductSearch } from 'src/app/modules/customs-items-update/models/product-search';
@@ -26,6 +26,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
+
     private factoryProductService: FactoryProductService,
     private fileService: FileService,
     private toastr: ToastrService,
@@ -118,5 +120,7 @@ export class ProductListComponent implements OnInit {
   }
   save() {
     this.toastr.success("تم الحفظ");
+    this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
   }
 }

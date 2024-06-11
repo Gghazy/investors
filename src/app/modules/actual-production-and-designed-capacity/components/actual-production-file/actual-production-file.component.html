@@ -24,7 +24,10 @@
     </div>
     
     <div class="col-md-6">
-        <label class="form-label">رفع المستند بصيغة بصيغة<span class="required">*PDF</span> </label>
+        <label class="form-label">رفع المستند بصيغة بصيغة<span class="required">*PDF</span>
+            <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
+            </span> 
+         </label>
         <div class="input-group">
             <input type="file" #fileInput class="form-control" placeholder="" value="" (change)="saveFile($event)">
             <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>

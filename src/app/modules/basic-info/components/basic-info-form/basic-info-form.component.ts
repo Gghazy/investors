@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { fade } from 'src/app/shared/animation/app.animation';
 import { BasicInfoService } from '../../basic-info.service';
 import { FactoryModel } from 'src/app/modules/factory/models/factory-model';
@@ -17,15 +19,18 @@ import { PeriodService } from 'src/app/modules/period/period.service';
   ]
 })
 export class BasicInfoFormComponent implements OnInit {
+  BasicInfoForm!: FormGroup;
+
   factoryId: any;
   periodId: any;
   request = new FactoryModel();
   search = new FactorySearch();
   PeriodName!:string
   isDisabled!:boolean;
-  inputValue: string = '';
-  isValid: boolean = true;
+  submitted: boolean | undefined;
+
   constructor(
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
      private basicInfoService: BasicInfoService,
      private toastr: ToastrService,
@@ -37,11 +42,21 @@ export class BasicInfoFormComponent implements OnInit {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
-    this.ToggleDisable()
+    this.createBasicInfoForm();
+    this.ToggleDisable();
     this.getBasicInfo();
-    this.getperiod()
-  }
+    this.getperiod();
 
+  }
+  createBasicInfoForm(): void {
+   
+    this.BasicInfoForm = this.formBuilder.group({
+      dataEntryId: ['', [Validators.pattern("^[1-2][0-9]{9}$")]],
+      dataReviewerId: ['', [Validators.pattern("^[1-2][0-9]{9}$")]],
+      dataApproverId: ['', [Validators.pattern("^[1-2][0-9]{9}$")]],
+
+    });
+  }
   getBasicInfo() {
     this.basicInfoService
       .getOne(this.factoryId,this.periodId)
@@ -64,16 +79,44 @@ export class BasicInfoFormComponent implements OnInit {
       this.PeriodName= res.Data.PeriodName;
     });
   }
+  
+   save() {
 
-  save() {
-   
+    
+    this.submitted = true;
+  /*  if ((!this.BasicInfoForm.value.dataEntryId)&&(!this.BasicInfoForm.value.dataReviewerId)&&(!this.BasicInfoForm.value.dataApproverId))
+     {
+      this.toastr.error( 'رجاءا أدخل رقم هوية واحد على الأقل ');
+      return;
+     }*/
+    
+
+    if (this.BasicInfoForm.invalid) {
+      this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
+      return;
+    }
+    if (this.BasicInfoForm.value.dataEntryId)
+    {
+      this.request.DataEntry=this.BasicInfoForm.value.dataEntryId;
+    }
+    if (this.BasicInfoForm.value.dataReviewerId)
+      {
+        this.request.DataReviewer=this.BasicInfoForm.value.dataReviewerId;
+      }
+      if (this.BasicInfoForm.value.dataApproverId)
+        {
+          this.request.DataApprover=this.BasicInfoForm.value.dataApproverId;
+        }
+
+
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
-
-      this.basicInfoService
+     let res= this.basicInfoService
         .update(this.request)
         .subscribe((res: any) => {
+        
           this.toastr.success("تم الحفظ");
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
         });
   }
  

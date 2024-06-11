@@ -67,6 +67,8 @@ PeriodName!:string
       .subscribe((res: any) => {
         this.request=res.Data;
         this.toastr.success("تم الحفظ");
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
       });
     }
     else{
@@ -74,6 +76,8 @@ PeriodName!:string
       .update(this.request)
       .subscribe((res: any) => {
         this.toastr.success("تم الحفظ");
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+
       });
     }
    

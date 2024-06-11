@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit , ViewChild ,ElementRef} from '@angular/core';
 import { LocationFileModel } from '../../models/location-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { FactoryLocationService } from '../../factory-location.service';
@@ -11,12 +11,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./location-file.component.scss']
 })
 export class LocationFileComponent implements OnInit {
+  selectedFirstItem: any = 1; 
+  fileSizeError = false;
+
   factoryId: any;
   periodId: any;
   files: LocationFileModel[] = [];
   request = new LocationFileModel();
   src!: string;
   @Input() factoryLocationId!: number;
+  @ViewChild('fileInputLoc') fileInputLoc!: ElementRef;
+
   fileError: string | null = null;
   addFileButton:boolean= false
   constructor(
@@ -31,9 +36,14 @@ export class LocationFileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFiles();
-    this.request.Type='1'
-  }
+    this.initValue();
 
+    
+  }
+ initValue(){
+  this.request.Type=this.selectedFirstItem;
+  this.fileError = '';
+ }
   getFiles() {
     this.factoryLocationService
       .getAllFiles(this.factoryId,this.periodId)
@@ -41,9 +51,24 @@ export class LocationFileComponent implements OnInit {
         this.files = res.Data;
       });
   }
-
+  
+    
   saveFile(file: any) {
-    if (file.target.files.length > 0) {
+    const input = file.target as HTMLInputElement;
+   
+    if (!input.files || input.files.length === 0) {
+      this.fileError = 'لم تقم بإختيار ملف';
+      console.error('لم تقم بإختيار ملف');
+      return;
+    }
+    const fileImage = input.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.fileError = ' 5MB حجم الملف أكبر من';
+            console.error(' 5MB حجم الملف أكبر من');
+    }
+    else{
       const file1 = file.target.files[0];
       const fileType = file1.type;
 
@@ -63,6 +88,7 @@ export class LocationFileComponent implements OnInit {
       }
     
     }
+    
    
   }
 
@@ -72,6 +98,13 @@ export class LocationFileComponent implements OnInit {
     });
   }
   save(){
+    if(this.fileError!=null)
+      {
+        this.fileError = 'لم تقم بإختيار ملف';
+        return
+      }
+      
+   
     this.request.FactoryLocationId = this.factoryLocationId;
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
@@ -83,6 +116,10 @@ export class LocationFileComponent implements OnInit {
         this.getFiles();
         this.toastr.success("تم الحفظ");
         this.request = new LocationFileModel();
+        this.fileInputLoc.nativeElement.value = '';
+        this.initValue();
+
+
       });
 
   }

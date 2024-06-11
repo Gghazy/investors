@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter,ElementRef,ViewChild, Input, OnInit, Output } from '@angular/core';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { ProductModel } from 'src/app/modules/customs-items-update/models/product-model';
 import { FactoryProductService } from '../../factory-product.service';
@@ -30,6 +30,8 @@ export class ProductFormComponent implements OnInit {
   selectProductId!: any;
   fileError: string | null = null;
   fileErrorPhoto: string | null = null;
+  @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
+  @ViewChild('fileInputPhoto') fileInputPhoto!: ElementRef;
   constructor(
     private factoryProductService: FactoryProductService,
     private lookUpService: LookUpService,
@@ -44,6 +46,7 @@ export class ProductFormComponent implements OnInit {
     else {
       this.getAllProducts();
       this.getUnits()
+      this.selectProductId=[]
     }
 
     this.dropdownSettings = {
@@ -56,7 +59,8 @@ export class ProductFormComponent implements OnInit {
       itemsShowLimit: 2,
       allowSearchFilter: true
     };
-
+    this.fileErrorPhoto=''
+    this.fileError=''
   }
 
 
@@ -99,7 +103,21 @@ export class ProductFormComponent implements OnInit {
       });
   }
   savePaper(file: any) {
-    if (file.target.files.length > 0) {
+    const input = file.target as HTMLInputElement;
+   
+    if (!input.files || input.files.length === 0) {
+      this.fileError = 'لم تقم بإختيار ملف';
+      console.error('لم تقم بإختيار ملف');
+      return;
+    }
+    const fileImage = input.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.fileError = ' 5MB حجم الملف أكبر من';
+            console.error(' 5MB حجم الملف أكبر من');
+    }
+    else {
       const file1 = file.target.files[0];
       const fileType = file1.type;
       const validFileTypes = ['application/pdf'];
@@ -124,7 +142,21 @@ export class ProductFormComponent implements OnInit {
 
   }
   savePhoto(file: any) {
-    if (file.target.files.length > 0) {
+    const input = file.target as HTMLInputElement;
+   
+    if (!input.files || input.files.length === 0) {
+      this.fileErrorPhoto = 'لم تقم بإختيار ملف';
+      console.error('لم تقم بإختيار ملف');
+      return;
+    }
+    const fileImage = input.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.fileErrorPhoto = ' 5MB حجم الملف أكبر من';
+            console.error(' 5MB حجم الملف أكبر من');
+    }
+    else {
       const file1 = file.target.files[0];
       const fileType = file1.type;
 
@@ -158,13 +190,27 @@ export class ProductFormComponent implements OnInit {
 
     }
   }
-  productChanage() {
-    this.request.UnitId = this.products.find(x => x.Id == this.selectProductId[0].Id)?.UnitId;
-    this.request.Level12ItemName = this.products.find(x => x.Id == this.selectProductId[0].Id)?.ProductName;
+  productChanage(item:any) {
+    this.selectProductId.Id=item.Id; 
+    this.request.ProductId= this.products.find(x => x.Id == item.Id)?.ProductId;
+    
+    this.productId=0
+    
+    this.request.UnitId = this.products.find(x => x.Id == item.Id)?.UnitId;
+    this.request.Level12ItemName = this.products.find(x => x.Id == item.Id)?.ProductName;
     this.unitChange();
 
   }
   save() {
+    if(!(this.fileError==null || this.fileError==''))
+      {
+        return
+      }
+      if(!(this.fileErrorPhoto==null || this.fileErrorPhoto==''))
+        {
+          return
+        }
+
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     if (this.fileErrorPhoto || this.fileError) {
@@ -172,17 +218,18 @@ export class ProductFormComponent implements OnInit {
       return
     }
     else {
-      if (this.productId == 0) {
-
-        this.request.ProductId = this.products.find(x => x.Id == this.selectProductId[0].Id)?.ProductId;
-
-      }
+     
       if (this.productId == 0) {
         this.factoryProductService
           .create(this.request)
           .subscribe((res: any) => {
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
+            this.request = new ProductModel();
+            this.fileErrorPhoto = null
+            this.fileError = null
+            this.fileInputPaper.nativeElement.value = '';
+            this.fileInputPhoto.nativeElement.value = '';
           });
       }
       else {
@@ -191,6 +238,11 @@ export class ProductFormComponent implements OnInit {
           .subscribe((res: any) => {
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
+              this.request = new ProductModel();
+            this.fileErrorPhoto = null
+            this.fileError = null
+            this.fileInputPaper.nativeElement.value = '';
+            this.fileInputPhoto.nativeElement.value = '';
           });
       }
     }
