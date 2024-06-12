@@ -24,11 +24,12 @@ PeriodName!:string
   ProductPeriodActives:ProductPeriodActiveModel[]=[];
 
   constructor(
+    private router: Router,
+
     private route: ActivatedRoute,
      private factoryProductService: FactoryProductService,
      private customsItemsUpdateService: CustomsItemsUpdateService,
      private toastr: ToastrService,
-     private router: Router,
      private periodService : PeriodService,
 
   ) {
@@ -41,7 +42,7 @@ PeriodName!:string
   }
 
     isChecked(item: ProductPeriodActiveModel): boolean {
-            let x=this.ProductPeriodActives.filter(x=>x.FactoryProductId==item.FactoryProductId) as ProductPeriodActiveModel[];
+            let x=this.ProductPeriodActives.filter(x=>x.ProductId==item.ProductId) as ProductPeriodActiveModel[];
       return x.length > 0;
     }
 
@@ -51,11 +52,11 @@ PeriodName!:string
       Id:0,
       PeriodId:parseInt(this.periodId),
       FactoryId:parseInt(this.factoryId),
-      FactoryProductId:productId
+      ProductId:productId
     };
     if (this.isChecked(newObject)) {
       // Item is checked, remove it from the list
-      this.ProductPeriodActives = this.ProductPeriodActives.filter(i => i.FactoryProductId !== newObject.FactoryProductId);
+      this.ProductPeriodActives = this.ProductPeriodActives.filter(i => i.ProductId !== newObject.ProductId);
     } else {
       // Item is unchecked, add it to the list
       this.ProductPeriodActives.push(newObject);
@@ -83,7 +84,7 @@ PeriodName!:string
             Id:0,
             PeriodId:parseInt(this.periodId),
             FactoryId:parseInt(this.factoryId),
-            FactoryProductId:obj.Id
+            ProductId:obj.Id
           })
         });        
       });
@@ -104,7 +105,7 @@ PeriodName!:string
       .create(this.ProductPeriodActives)
       .subscribe((res: any) => {
         this.toastr.success("تم الحفظ");
-                  this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
       });
     
