@@ -30,21 +30,21 @@
                 <td>{{product.Level12ItemName}}({{product.Level12Number}})</td>
                 
                 <td>
-                    {{product.DesignedCapacity !=0? product.DesignedCapacity +" "+ product.DesignedCapacityUnitName:""}}
+                    {{product.DesignedCapacity !=null? product.DesignedCapacity +" "+ product.DesignedCapacityUnitName:""}}
                 </td>
                 <td *ngIf="factoryStatus!=3">
-                    {{product.DesignedCapacity !=0?product.ActualProduction +" "+ product.ActualProductionUintName:""}}
+                    {{product.DesignedCapacity !=null?product.ActualProduction +" "+ product.ActualProductionUintName:""}}
                 </td>
                 <td *ngIf="factoryStatus!=3"> {{product.DesignedCapacity !=0?'=':''}}</td>
                 <td *ngIf="factoryStatus!=3">
-                    {{product.ActualProductionWeight !=0?product.ActualProductionWeight + " كغ ":""}}
+                    {{product.ActualProductionWeight !=null?product.ActualProductionWeight + " كغ ":""}}
                 </td>
                 <td>
                     <button
                       class="btn btn-primary"
                       data-bs-toggle="modal"
                       data-bs-target="#addProduct"
-                      (click)="edit(product.ActualProductionAndCapacityId,product.Id)"
+                      (click)="edit(product.ActualProductionAndCapacityId,product.Id,product.ProductId)"
                     >
                       تعديل
                     </button>
@@ -95,6 +95,7 @@ aria-hidden="true"
        [productId]="productId" 
        [factoryStatus]="factoryStatus" 
        [actualCapacityProductId]="actualCapacityProductId"
+       [actualproductId]="actualproductId"
        [factoryId]="factoryId" 
        [periodId]="periodId" 
        (close)="closePopUp()"
