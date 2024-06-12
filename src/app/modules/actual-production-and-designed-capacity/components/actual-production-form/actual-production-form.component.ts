@@ -17,7 +17,7 @@ export class ActualProductionFormComponent implements OnInit {
 @Input()factoryId!:number;
 @Input()factoryStatus!:number;
 @Input()productId!:number;
-@Input()actualproductId!:number | undefined;
+@Input()actualproductId!:number;
 @Input()actualCapacityProductId!:number|undefined;
 @Input()periodId!:number;
 request=new ActualProductModel();
@@ -42,9 +42,8 @@ constructor(
   getOne(){
     
     this.actualProductionAndDesignedCapacityService
-    .getOne(this.actualproductId)
-    .subscribe((res: any) => {
-      
+    .getOne(this.actualCapacityProductId)
+    .subscribe((res: any) => {     
       this.request = res.Data;
 console.log(this.request)
       
@@ -52,7 +51,7 @@ console.log(this.request)
   }
   getProduct(){
     this.factoryProductService
-      .getOne(this.productId)
+      .getOne(this.actualproductId)
       .subscribe((res: any) => {
 
         this.product = res.Data;
