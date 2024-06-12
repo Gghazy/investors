@@ -91,7 +91,7 @@ aria-hidden="true"
     </div>
     <div class="modal-body">
       <app-actual-production-form 
-       *ngIf="productId!=undefined" 
+       *ngIf="productId!=undefined && actualproductId!=undefined" 
        [productId]="productId" 
        [factoryStatus]="factoryStatus" 
        [actualCapacityProductId]="actualCapacityProductId"
