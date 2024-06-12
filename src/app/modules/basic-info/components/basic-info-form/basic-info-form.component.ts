@@ -99,14 +99,18 @@ export class BasicInfoFormComponent implements OnInit {
     {
       this.request.DataEntry=this.BasicInfoForm.value.dataEntryId;
     }
+    else
+    this.request.DataEntry='';
     if (this.BasicInfoForm.value.dataReviewerId)
       {
         this.request.DataReviewer=this.BasicInfoForm.value.dataReviewerId;
       }
+      this.request.DataReviewer='';
       if (this.BasicInfoForm.value.dataApproverId)
         {
           this.request.DataApprover=this.BasicInfoForm.value.dataApproverId;
         }
+        this.request.DataApprover='';
 
 
     this.request.FactoryId = this.factoryId;

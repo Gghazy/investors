@@ -19,6 +19,7 @@ export class ActualProductionListComponent implements OnInit {
   products = new ResultResponse<ActualProductModel>();
   search=new ActualProductSearch();
   actualCapacityProductId!:number |undefined;
+  actualproductId!:number |undefined;
   productId!:number |undefined;
   factoryStatus!:number;
   PeriodName!:string;
@@ -80,9 +81,11 @@ export class ActualProductionListComponent implements OnInit {
         this.factoryStatus = res.Data.Status;
       });
   }
-  edit(id: number,productId:number) {
+  edit(id: number,productId:number,pid:number) {
     this.actualCapacityProductId = id;
     this.productId = productId;
+    this.actualproductId = pid;
+
   }
   closePopUp(){
     this.actualCapacityProductId=undefined

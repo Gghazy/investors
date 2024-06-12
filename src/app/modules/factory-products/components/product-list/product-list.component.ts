@@ -64,7 +64,7 @@ export class ProductListComponent implements OnInit {
     this.search.PeriodId = this.periodId;
     this.search.IsActive = true;
     this.factoryProductService
-      .getAllPagination(this.search)
+      .GetFactoryProduct(this.search)
       .subscribe((res: any) => {
         this.products = res.Data;
         console.log(this.products)
@@ -77,7 +77,9 @@ export class ProductListComponent implements OnInit {
     this.factoryProductService
       .getAddedProducts(this.factoryId)
       .subscribe((res: any) => {
+      
         this.productsAdded = res.Data;
+       // alert(res.Data)
         console.log(this.productsAdded)
       });
   }
