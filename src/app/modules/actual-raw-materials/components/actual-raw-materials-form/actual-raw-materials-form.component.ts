@@ -66,7 +66,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     this.getFiles();
     this.getUnits()
     this.getperiod()
-    this.fileSelected=false;
+    this.fileSelected = false;
 
     this.dropdownSettings = {
       singleSelection: true,
@@ -93,7 +93,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
     this.ActualRawMaterialsearch.FactoryId = this.factoryId;
     this.ActualRawMaterialsearch.PeriodId = this.periodId;
-    this.search.PeriodId =this.periodId;
+    this.search.PeriodId = this.periodId;
     this.x = []
     this.service
       .getAll(this.ActualRawMaterialsearch)
@@ -101,7 +101,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
         if (this.rawMaterials.length == 0) {
-        
+
           this.isNewData = true
           this.service
             .getRawMaterial(this.search, this.factoryId)
@@ -130,14 +130,14 @@ export class ActualRawMaterialsFormComponent implements OnInit {
               })
             });
         }
-      
-        this.showInput=false;
+
+        this.showInput = false;
         this.rawMaterials.forEach((item: any) => {
           this.request.IncreasedUsageReason = item.IncreasedUsageReason
           if (item.IncreasedUsageReason > 0) {
             this.showInput = true
           }
-       
+
           this.x.push({
             'Id': item.Id,
             'RawMaterialId': item.RawMaterialId.Id,
@@ -198,7 +198,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
   saveDocs(file: any) {
     const input = file.target as HTMLInputElement;
-   
+
     if (!input.files || input.files.length === 0) {
       this.fileError = 'لم تقم بإختيار ملف';
       console.error('لم تقم بإختيار ملف');
@@ -209,7 +209,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     if (fileImage.size > maxFileSize) {
       // If the file is larger than 5 MB
       this.fileError = ' 5MB حجم الملف أكبر من';
-            console.error(' 5MB حجم الملف أكبر من');
+      console.error(' 5MB حجم الملف أكبر من');
     }
     else {
       const file1 = file.target.files[0];
@@ -217,7 +217,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       const validFileTypes = ['application/pdf'];
       if (validFileTypes.includes(fileType)) {
         this.fileError = null;
-        this.fileSelected=true
+        this.fileSelected = true
 
         this.fileService
           .addFile(file.target.files[0])
@@ -236,25 +236,30 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   }
 
   save() {
-    if(!( this.fileSelected))
-      {
-        this.fileError = 'لم تقم بإختيار ملف';
-        return
-      }
+    if (!(this.fileSelected)) {
+      this.fileError = 'لم تقم بإختيار ملف';
+      return
+    }
+    if (this.files.length > 10){
+      this.fileError = 'الحد الاقصى للمرفقات 10';
+      return
+    }
     this.requestFile.PeriodId = this.periodId;
     this.requestFile.FactoryId = this.factoryId;
     this.requestFile.Name = '';
-    this.service
-      .AddFile(this.requestFile)
-      .subscribe((res: any) => {
-        this.getFiles();
-        this.toastr.success("تم الحفظ");
-        this.requestFile = new ActualRawMaterialFile();
-       // this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+    if (this.files.length < 10) {
+      this.service
+        .AddFile(this.requestFile)
+        .subscribe((res: any) => {
+          this.getFiles();
+          this.toastr.success("تم الحفظ");
+          this.requestFile = new ActualRawMaterialFile();
+          // this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
 
-      });
-      this.saveItems();
+        });
+    }
+    this.saveItems();
 
 
   }
@@ -286,11 +291,11 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
 
   saveItems() {
-   
-    if( this.fileError){
+
+    if (this.fileError) {
       this.toastr.error("الرجاء التحقق من البيانات المدخلة")
       return
-          }
+    }
     if (this.isNewData == true) {
 
       this.x.forEach((item: any) => {
@@ -304,7 +309,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
             this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
           });
       })
-      
+
       this.request = new ActualRawMaterial();
     }
     else {
@@ -320,7 +325,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
           });
       })
-      
+
       this.request = new ActualRawMaterial();
     }
   }

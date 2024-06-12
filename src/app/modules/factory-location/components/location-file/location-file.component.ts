@@ -103,13 +103,18 @@ export class LocationFileComponent implements OnInit {
         this.fileError = 'لم تقم بإختيار ملف';
         return
       }
-      
+      if (this.files.length > 10){
+        this.fileError = 'الحد الاقصى للمرفقات 10';
+        return
+      }
    
     this.request.FactoryLocationId = this.factoryLocationId;
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     this.request.Name = "";
+
     console.log(this.request)
+    if(this.files.length < 10){
     this.factoryLocationService
       .createFile(this.request)
       .subscribe((res: any) => {
@@ -121,7 +126,7 @@ export class LocationFileComponent implements OnInit {
 
 
       });
-
+    }
   }
 
   deleteFile(id: number){

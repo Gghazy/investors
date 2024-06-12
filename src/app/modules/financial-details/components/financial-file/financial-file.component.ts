@@ -92,12 +92,16 @@ export class FinancialFileComponent implements OnInit {
     window.open(url);
   }
   save(){
-   
+    if (this.files.length > 10){
+      this.fileError = 'الحد الاقصى للمرفقات 10';
+      return
+    }
     this.request.FactoryFinancialId=0;
     this.request.FactoryId=this.factoryId;
     this.request.PeriodId=this.periodId;
     this.request.Name='';
     console.log(this.request)
+    if(this.files.length < 10){
     this.financialDetailService
     .createFile(this.request)
     .subscribe((res: any) => {
@@ -107,7 +111,7 @@ export class FinancialFileComponent implements OnInit {
       this.fileInput.nativeElement.value = '';
 
     });
-
+ }
   }
 
   deleteFile(id:number){

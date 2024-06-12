@@ -98,24 +98,32 @@ export class BasicInfoFileComponent implements OnInit {
   }
 
   save(){
+
     if(this.fileError!=null)
       {
         this.fileError = 'لم تقم بإختيار ملف';
         return
       }
+      if (this.files.length > 10){
+        this.fileError = 'الحد الاقصى للمرفقات 10';
+        return
+      }
     this.request.FactoryId=Number(this.factoryId);
     this.request.PeriodId=Number(this.periodId);
-    
-    this.basicInfoService
-    .create(this.request)
-    .subscribe((res: any) => {
-      this.getFiles();
-      this.toastr.success("تم الحفظ");
-      this.request=new BasicFileModel();
-      this.fileInput.nativeElement.value = '';
-      this.initValue();
-
-    });
+ 
+    if(this.files.length < 10){
+      this.basicInfoService
+      .create(this.request)
+      .subscribe((res: any) => {
+        this.getFiles();
+        this.toastr.success("تم الحفظ");
+        this.request=new BasicFileModel();
+        this.fileInput.nativeElement.value = '';
+        this.initValue();
+  
+      });
+    }
+   
 
   }
 

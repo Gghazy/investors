@@ -37,6 +37,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   ProductName: any;
   ss: any = [];
   data: any = [];
+  products12: any = [];
   ProductNameList: any = [];
   products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
@@ -119,35 +120,16 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       .getRawMaterial(this.searchRawmaterial, this.factoryId)
       .subscribe((res: any) => {
         if (res) {
-          //this.rawMaterials = res.Data.Items;
-          this.data = res.Data.Items;
-console.log(this.data)
-          // this.getProducts()
-          // this.rawMaterials.forEach((item: RawMaterial) => {
-          //   let productId = parseInt(item.CustomItemName)
-          //   let product12 = this.products.find(x => x.Id == productId)?.ProductName;
-          //   // this.data.push({
-            //   'Id': item.Id,
-            //   'Product12': product12,
-            //   'CustomItemName': item.CustomItemName,
-            //   'Name': item.Name,
-            //   'MaximumMonthlyConsumption': item.MaximumMonthlyConsumption,
-            //   'AverageWeightKG': item.AverageWeightKG,
-            //   'Description': item.Description,
-            //   'FactoryId': this.factoryId,
-            //   'PaperId': item.PaperId,
-            //   'PhotoId': item.PhotoId,
-            //   'UnitId': item.UnitId,
-            //   'FactoryProductId': item.FactoryProductId
-            // })
-          // })
 
+          this.data = res.Data.Items;
+          console.log(this.data)
+        
         }
         else {
           console.log('No content returned from server (204)');
         }
       }
-       
+
 
 
       );
@@ -224,7 +206,7 @@ console.log(this.data)
   save() {
 
     this.toastr.success("تم الحفظ");
-    this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+    this.router.navigate(['/pages/factory-landing/' + this.factoryId + '/' + this.periodId]);
 
   }
 
