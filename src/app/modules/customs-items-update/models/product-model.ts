@@ -23,6 +23,10 @@ export class ProductModel {
         IsActive!:boolean;
         Level12ItemName!:string |undefined;
 }
-
+export class NewProductModel {
+        ProductId!:number;
+        FactoryId!:number;
+        PeriodId!:number;
+}
 
        

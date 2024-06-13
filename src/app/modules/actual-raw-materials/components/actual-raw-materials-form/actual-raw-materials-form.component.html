@@ -1,5 +1,5 @@
 <section class="form-panel">
-    <form #actualRawMat="ngForm" (ngSubmit)="save()">
+    <form #actualRawMat="ngForm" (ngSubmit)="saveItems()">
 
     <div class="form-header">
         <h2 class="form-title"> بيانات المواد الأولية ( المواد الخام) الفعلية لشهر {{PeriodName}}</h2>
@@ -17,7 +17,7 @@
     <div class="form-body">
        
                 <div class="table-responsive">
-            <table class="table table-hover table-small-header ">
+            <table class="table table-hover table-small-header text-center">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -30,15 +30,15 @@
                          </span>
                          </th>    
 
-                        <th> كمية المخزون الحالي   <span class="required">*</span></th>
+                        <th>  المخزون  الحالي   <span class="required">*</span></th>
                         <th> وحدة القياس</th>
                         <!-- <th> KG </th> -->
-                        <th> كمية المخزون الحالي بالكيلو جرام</th>
+                        <th > كمية المخزون الحالي <br/> بالكيلو جرام</th>
 
                         <th> الكمية المستخدمة  <span class="required">*</span></th>
                         <th> وحدة القياس</th>
                         <!-- <th>KG</th> -->
-                        <th> الكمية المستخدمة بالكيلو جرام</th>
+                        <th > الكمية المستخدمة <br/> بالكيلو جرام</th>
 
 
                     </tr>

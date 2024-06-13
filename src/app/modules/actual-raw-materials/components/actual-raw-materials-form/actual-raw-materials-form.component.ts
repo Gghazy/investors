@@ -193,6 +193,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       .getFiles(this.factoryId, this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
+          this.requestFile.AttachmentId = res.Data.Id
+            this.requestFile.Path = res.Data.Path
       });
   }
 

@@ -97,7 +97,7 @@
           </td>
           <td>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct"
-              (click)="edit(product.Id)">
+              (click)="edit(product.Id,product.ProductId)">
               تعديل
             </button>
           </td>
@@ -122,7 +122,7 @@
       <div class="col-md-4 show-input" [ngClass]="{ 'd-none': !showInput }">
         <label class="form-label"> <br/></label>
         <div class="form-group">
-          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct" (click)="edit(0)">
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct" (click)="edit(0,0)">
             إضافة منتج
           </button>
         </div>
@@ -152,7 +152,7 @@
           (click)="closePopUp()"></button>
       </div>
       <div class="modal-body">
-        <app-product-form *ngIf="productId!=undefined" [periodId]="periodId" [productId]="productId"
+        <app-product-form *ngIf="productId!=undefined && pId!=undefined" [periodId]="periodId" [productId]="productId" [pId]="pId"
           [factoryId]="factoryId" (close)="closePopUp()"></app-product-form>
       </div>
     </div>
