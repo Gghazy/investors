@@ -90,7 +90,6 @@ export class BasicInfoFormComponent implements OnInit {
       return;
      }*/
     
-
     if (this.BasicInfoForm.invalid) {
       this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
       return;
@@ -101,17 +100,22 @@ export class BasicInfoFormComponent implements OnInit {
     }
     else
     this.request.DataEntry='';
+
     if (this.BasicInfoForm.value.dataReviewerId)
       {
         this.request.DataReviewer=this.BasicInfoForm.value.dataReviewerId;
       }
+      else
       this.request.DataReviewer='';
+
       if (this.BasicInfoForm.value.dataApproverId)
         {
           this.request.DataApprover=this.BasicInfoForm.value.dataApproverId;
         }
+        else
         this.request.DataApprover='';
 
+ 
 
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
