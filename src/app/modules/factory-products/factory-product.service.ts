@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { ProductSearch } from '../customs-items-update/models/product-search';
 import { Observable } from 'rxjs';
 import { ProductModel } from '../customs-items-update/models/product-model';
+import { NewProductModel } from '../customs-items-update/models/product-model';
+
 import { ProductsNotInFactorySearch } from './models/products-not-in-factory-search';
 import { SearchCriteria } from 'src/app/core/models/search-criteria';
 
@@ -31,6 +33,16 @@ export class FactoryProductService {
   getAllProductsNotInFactory(search:ProductsNotInFactorySearch): Observable<any> {
     return this.http.post<any>('Products/getAllProductsNotInFactory',search);
   }
+  GetOneAddedProduct(id:number): Observable<any> {
+    return this.http.get<any>(`Products/GetOneAddedProduct?id=${id}`);
+  }
+  GetOneNewProduct(request: NewProductModel): Observable<any> {
+    return this.http.post<any>('Products/GetOneNewProduct', request);
+
+    //return this.http.get<any>(`Products/GetOneNewProduct?id=${id}`);
+  }
+
+  
   getOne(id:number): Observable<any> {
     return this.http.get<any>('Products/'+id);
   }

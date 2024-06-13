@@ -20,6 +20,8 @@ export class ProductListComponent implements OnInit {
   search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
   productId!: number | undefined;
+  pId!: number | undefined;
+
   PeriodName!: string;
   modalLable!: string;
   @ViewChild('closeModal') Modal!: ElementRef;
@@ -88,7 +90,10 @@ export class ProductListComponent implements OnInit {
     this.getProducts();
 
   }
-  edit(id: number) {
+  edit(id: number,pid:number|undefined) {
+
+    
+    this.pId = pid;
     if (id == 0) {
       this.modalLable = 'إضافة منتج'
     }
@@ -96,10 +101,12 @@ export class ProductListComponent implements OnInit {
       this.modalLable = 'تعديل منتج'
     }
     this.productId = id;
+   
 
   }
   closePopUp() {
     this.productId = undefined
+    this.pId = undefined;
     this.Modal.nativeElement.click()
     this.getProducts();
   }

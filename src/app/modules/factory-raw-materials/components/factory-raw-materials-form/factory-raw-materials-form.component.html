@@ -80,10 +80,17 @@
             <i>؟</i>
         </label>
         <div class="input-group">
-            <input type="number"  name="AverageWeightKG" min="0" max="10000000000" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" step="1" class="form-control" [(ngModel)]="request.AverageWeightKG" noMinus
-                [disabled]="showInput" >
+            <input type="number"  name="AverageWeightKG"  #AverageWeightKG="ngModel" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,5})?" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))" step="1" class="form-control" [(ngModel)]="request.AverageWeightKG" noMinus
+                [disabled]="showInput" required >
             <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
         </div>
+            <div *ngIf="AverageWeightKG.invalid && (AverageWeightKG.dirty || AverageWeightKG.touched)"
+            class="validation-error">
+            <br/>
+            <div *ngIf="AverageWeightKG.errors?.['required']">الرجاء إدخال قيمة الوزن بالكيلوجرام</div>        
+            </div>
+        
+        
     </div>
             <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">تستخدم في أي منتج ؟
@@ -110,7 +117,7 @@
 
     <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">إرفاق صورة المادة
-            الأولية بصيغة jpeg , jpg , png , pdf (ان وجدت)
+            الأولية بصيغة jpeg , jpg , png , pdf (ان وجدت)<br />
             <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
             </span> 
         </label>
@@ -120,7 +127,7 @@
     <div class="col-md-6">
         <label class="form-label" placement="left" title=""
             tooltip="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت" aria-describedby="tooltip617728"> إرفاق ورقة
-            البيانات بصيغة   pdf (ان وجدت)
+            البيانات بصيغة   pdf (ان وجدت) <br />
             <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
             </span> 
             <i>؟</i>

@@ -193,6 +193,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       .getFiles(this.factoryId, this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
+          this.requestFile.AttachmentId = res.Data.Id
+            this.requestFile.Path = res.Data.Path
       });
   }
 
@@ -236,7 +238,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   }
 
   save() {
-    if(!( this.fileSelected))
+    if(!( this.fileSelected ||  this.files.length>0))
       {
         this.fileError = 'لم تقم بإختيار ملف';
         return
@@ -254,7 +256,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
 
       });
-      this.saveItems();
+     // this.saveItems();
 
 
   }

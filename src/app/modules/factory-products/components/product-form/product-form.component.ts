@@ -1,6 +1,8 @@
 import { Component, EventEmitter,ElementRef,ViewChild, Input, OnInit, Output } from '@angular/core';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { ProductModel } from 'src/app/modules/customs-items-update/models/product-model';
+import { NewProductModel } from 'src/app/modules/customs-items-update/models/product-model';
+
 import { FactoryProductService } from '../../factory-product.service';
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { FileService } from 'src/app/core/service/file.service';
@@ -19,8 +21,12 @@ export class ProductFormComponent implements OnInit {
   @Input() productId!: number;
   @Input() factoryId!: number;
   @Input() periodId!: number;
+  @Input() pId!: number;
+
   @Output() close = new EventEmitter<boolean>();
   request = new ProductModel();
+  requestnew = new NewProductModel();
+
   units!: LookUpModel[];
   isDisabled!: boolean;
   products  !: ProductModel[];
@@ -39,14 +45,26 @@ export class ProductFormComponent implements OnInit {
     private toastr: ToastrService,
   ) { }
   ngOnInit(): void {
+   
     if (this.productId != 0) {
-      this.getOne()
-
+    //  this.getOne()
+       this.getAddedProduct()
     }
     else {
+      
+      if(this.pId!=0)
+      {
+      this.requestnew.FactoryId=this.factoryId;
+      this.requestnew.PeriodId=this.periodId;
+      this.requestnew.ProductId=this.pId;
+      
+    this.getNewProduct()
+    }
+        else{
       this.getAllProducts();
       this.getUnits()
       this.selectProductId=[]
+        }
     }
 
     this.dropdownSettings = {
@@ -64,6 +82,29 @@ export class ProductFormComponent implements OnInit {
   }
 
 
+  getAddedProduct() {
+
+    this.factoryProductService
+      .GetOneAddedProduct(this.productId)
+      .subscribe((res: any) => {
+        this.request = res.Data;
+        this.request.ProductName = this.request.Hs12NameAr + (this.request.Hs12Code)
+        this.getUnits()
+        console.log(this.request)
+      });
+  }
+  
+  getNewProduct() {
+
+    this.factoryProductService
+      .GetOneNewProduct(this.requestnew)
+      .subscribe((res: any) => {
+        this.request = res.Data;
+        this.request.ProductName = this.request.Hs12NameAr + (this.request.Hs12Code)
+        this.getUnits()
+        console.log(this.request)
+      });
+  }
   getOne() {
 
     this.factoryProductService
@@ -225,7 +266,7 @@ export class ProductFormComponent implements OnInit {
           .subscribe((res: any) => {
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
-            this.request = new ProductModel();
+           // this.request = new ProductModel();
             this.fileErrorPhoto = null
             this.fileError = null
             this.fileInputPaper.nativeElement.value = '';
@@ -238,7 +279,7 @@ export class ProductFormComponent implements OnInit {
           .subscribe((res: any) => {
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
-              this.request = new ProductModel();
+             // this.request = new ProductModel();
             this.fileErrorPhoto = null
             this.fileError = null
             this.fileInputPaper.nativeElement.value = '';
