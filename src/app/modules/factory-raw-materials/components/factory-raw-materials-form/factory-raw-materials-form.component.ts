@@ -41,6 +41,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   items: any = [];
   periodId: any;
   test: any;
+  lockUploadfile=false;
 
   saveSuccessful: boolean = false;
   productx: any;
@@ -263,11 +264,15 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       if (validFileTypes.includes(fileType)) {
         this.fileError = null;
 
+        this.lockUploadfile=true;
+
         this.fileService
           .addFile(file.target.files[0])
           .subscribe((res: any) => {
             this.request.PaperId = res.Data.Id
-          
+            this.toastr.success("تم حفظ ورقة البيانات  ");
+
+            this.lockUploadfile=false;
           });
       } else {
         this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
@@ -297,11 +302,15 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
       if (fileType === 'image/png' || fileType === 'image/jpeg') {
         this.fileErrorPhoto = null;
+        this.lockUploadfile=true;
 
         this.fileService
           .addFile(file.target.files[0])
           .subscribe((res: any) => {
             this.request.PhotoId = res.Data.Id
+            this.toastr.success("تم حفظ صورة المادة الخام  ");
+
+            this.lockUploadfile=false;
           });
       } else {
         this.fileErrorPhoto = 'الرجاء رفع المستند بالصيغة الموضحة';
@@ -324,6 +333,12 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
         {
           return
         }
+        if(this.lockUploadfile)
+          {
+            this.toastr.error("الرجاء الإنتظار قليلا لأكنمال تحميل الملف المرفق")
+            return
+            
+          }
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     if (this.fileErrorPhoto || this.fileError) {

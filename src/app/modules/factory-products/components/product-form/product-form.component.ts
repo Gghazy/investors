@@ -36,6 +36,7 @@ export class ProductFormComponent implements OnInit {
   selectProductId!: any;
   fileError: string | null = null;
   fileErrorPhoto: string | null = null;
+  lockUploadfile=false;
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
   @ViewChild('fileInputPhoto') fileInputPhoto!: ElementRef;
   constructor(
@@ -165,11 +166,15 @@ export class ProductFormComponent implements OnInit {
       if (validFileTypes.includes(fileType)) {
         this.fileError = null;
 
+        this.lockUploadfile=true;
 
         this.fileService
           .addFile(file.target.files[0])
           .subscribe((res: any) => {
             this.request.PeperId = res.Data.Id
+            this.toastr.success("تم حفظ ورقة البيانات  ");
+            this.lockUploadfile=false;
+
           });
 
 
@@ -203,11 +208,16 @@ export class ProductFormComponent implements OnInit {
 
       if (fileType === 'image/png' || fileType === 'image/jpeg') {
         this.fileErrorPhoto = null;
+    
+        this.lockUploadfile=true;
 
         this.fileService
           .addFile(file.target.files[0])
           .subscribe((res: any) => {
             this.request.PhototId = res.Data.Id
+            this.toastr.success("تم حفظ صورة المنتج ");
+            this.lockUploadfile=false;
+
           });
       } else {
         this.fileErrorPhoto = 'الرجاء رفع المستند بالصيغة الموضحة';
@@ -251,6 +261,12 @@ export class ProductFormComponent implements OnInit {
         {
           return
         }
+        if(this.lockUploadfile)
+          {
+            this.toastr.error("الرجاء الإنتظار قليلا لأكنمال تحميل الملف المرفق")
+            return
+            
+          }
 
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;

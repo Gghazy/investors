@@ -115,8 +115,8 @@ export class ProductListComponent implements OnInit {
   }
 
   getFile(attachmentId: number) {
-    if (attachmentId == null) {
-      this.toastr.error("لا يوجد ملف");
+    if (attachmentId == null || attachmentId == 0) {
+      this.toastr.error("لا يوجد ملف مرفق");
     }
     else {
       this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
