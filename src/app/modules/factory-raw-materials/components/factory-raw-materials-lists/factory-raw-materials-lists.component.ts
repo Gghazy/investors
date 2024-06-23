@@ -84,6 +84,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   edit(id: number) {
     if (id == 0) {
       this.modalLabel = 'إضافة مادة أولية'
+     
     }
     else {
       this.modalLabel = 'تعديل مادة أولية'

@@ -341,7 +341,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
             this.saveSuccessful = true;
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
-          //  this.request = new RawMaterial();
+            this.request = new RawMaterial();
             this.selectedProducts = []
             this.fileErrorPhoto = null
             this.fileError = null
@@ -362,7 +362,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
             this.saveSuccessful = true;
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
-          //  this.request = new RawMaterial();
+            this.request = new RawMaterial();
             this.selectedProducts = []
             this.fileErrorPhoto = null
             this.fileError = null
