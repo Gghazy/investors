@@ -92,7 +92,7 @@ export class FactoryContactFormComponent implements OnInit {
     this.submitted = true;
     if (this.phoneForm.invalid) {
       this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
-      alert(this.phoneForm.errors)
+     // alert(this.phoneForm.errors)
       return;
     }
     this.request = this.phoneForm.value

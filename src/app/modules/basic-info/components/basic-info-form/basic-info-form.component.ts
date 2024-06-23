@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -20,7 +20,7 @@ import { PeriodService } from 'src/app/modules/period/period.service';
 })
 export class BasicInfoFormComponent implements OnInit {
   BasicInfoForm!: FormGroup;
-
+ statusFile!:number;
   factoryId: any;
   periodId: any;
   request = new FactoryModel();
@@ -28,6 +28,7 @@ export class BasicInfoFormComponent implements OnInit {
   PeriodName!:string
   isDisabled!:boolean;
   submitted: boolean | undefined;
+  @Input() fileStatus!:string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -79,7 +80,9 @@ export class BasicInfoFormComponent implements OnInit {
       this.PeriodName= res.Data.PeriodName;
     });
   }
-  
+  public getFilestatus(fileNo: any):void {
+    this.statusFile=fileNo;
+}
    save() {
 
     
@@ -90,10 +93,14 @@ export class BasicInfoFormComponent implements OnInit {
       return;
      }*/
     
-    if (this.BasicInfoForm.invalid) {
+    if (this.BasicInfoForm.invalid && this.statusFile>1) {
       this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
       return;
     }
+    if(this.statusFile<=0)
+      {  this.toastr.error( 'الرجاء إختيار صورة واجهة المصنع');
+        return;
+      }
     if (this.BasicInfoForm.value.dataEntryId)
     {
       this.request.DataEntry=this.BasicInfoForm.value.dataEntryId;

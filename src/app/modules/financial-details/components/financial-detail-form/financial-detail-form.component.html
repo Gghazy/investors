@@ -346,7 +346,7 @@
 
 
 
-            <app-financial-file  [financialId]="request.Id"></app-financial-file>
+            <app-financial-file  [financialId]="request.Id" (fileStatusFin)="getFilestatus($event)" (fileStatusType)="getFilestatusType($event)"></app-financial-file>
 
 
 

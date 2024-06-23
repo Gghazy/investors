@@ -66,10 +66,12 @@
                        
 
                         <td>
-                            <input type="file" class="d-none">
-                            <span data-bs-toggle="modal" data-bs-target="#photoModal">
-                                <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom"
-                                    title="" tooltip=" عرض صورة  المادة" (click)="getImage(material.PhotoId)">
+                            <input  type="file" class="d-none">
+                            
+                            <span *ngIf="!(material.PhotoId==null||material.PhotoId==0)"  data-bs-toggle="modal" data-bs-target="#photoModal" >
+                           
+                                <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom"  title=""
+                                     tooltip=" عرض صورة  المادة" (click)="getImage(material.PhotoId) ">
 
                                     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -93,13 +95,46 @@
                                     </svg>
 
                                 </button>
+                          
+                            </span> 
+                            <span *ngIf="(material.PhotoId==null||material.PhotoId==0)">
+                           
+                                <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom"  title=""
+                                     tooltip=" لم يتم إرفاق صورة"  >
+
+                                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M3 8.976C3 4.05476 4.05476 3 8.976 3H15.024C19.9452 3 21 4.05476 21 8.976V15.024C21 19.9452 19.9452 21 15.024 21H8.976C4.05476 21 3 19.9452 3 15.024V8.976Z"
+                                                stroke="#ffffff" stroke-width="2"></path>
+                                            <path
+                                                d="M17.0045 16.5022L12.7279 12.2256C9.24808 8.74578 7.75642 8.74578 4.27658 12.2256L3 13.5022"
+                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                            <path d="M21 13.6702C18.9068 12.0667 17.4778 12.2919 15.198 14.3459"
+                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                            <path
+                                                d="M17 8C17 8.55228 16.5523 9 16 9C15.4477 9 15 8.55228 15 8C15 7.44772 15.4477 7 16 7C16.5523 7 17 7.44772 17 8Z"
+                                                stroke="#ffffff" stroke-width="2"></path>
+                                        </g>
+                                    </svg>
+
+                                </button>
+                          
                             </span> 
                         </td>
                         <td>
                         <input type="file" class="d-none">
+                       
+                         <span *ngIf="!(material.PaperId==null||material.PaperId==0)">
 
-                        <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
-                            tooltip=" عرض الملف " (click)="getFile(material.PaperId)">
+                       
+                        <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title="" 
+                            tooltip="عرض ورقة البيانات " (click)="getFile(material.PaperId)">
 
                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -117,6 +152,30 @@
                             </svg>
 
                         </button>
+                    </span>
+                    <span *ngIf="(material.PaperId==null||material.PaperId==0)">
+
+                       
+                        <button class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title="" 
+                            tooltip="لا يوجد ورقة بيانات " >
+
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                </g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
+                                    <path d="M12 2L12 15M12 15L9 11.5M12 15L15 11.5" stroke="#ffffff"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
+                                </g>
+                            </svg>
+
+                        </button>
+                    </span>
                     </td>
                         <td *ngIf="material.Id!=undefined" >
                             <button class="btn btn-primary"  data-bs-toggle="modal"  data-bs-target="#addRawMaterial"
@@ -159,15 +218,15 @@
     </div>
 
     <!-- Modal photos-->
-    <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"> صورة المادة الأولية ( المادة الخام)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button"  #myModalClose class="btn-close" data-bs-dismiss="modal" aria-label="Close"  ></button>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="{{src}}" alt="" class="img-fluid">
+                    <img src="{{src}}" alt="" class="img-fluid" >
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit,Output,EventEmitter, ViewChild } from '@angular/core';
 import { FinancialFileModel } from '../../Models/financial-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { FinancialDetailService } from '../../financial-detail.service';
@@ -21,6 +21,8 @@ export class FinancialFileComponent implements OnInit {
   isDisabled:boolean=false;
   @Input() financialId!:number;
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @Output() fileStatusFin = new EventEmitter<any>();
+  @Output() fileStatusType = new EventEmitter<any>();
 
   fileError: string | null = null;
   addFileButton: boolean = false
@@ -39,6 +41,7 @@ export class FinancialFileComponent implements OnInit {
   ngOnInit(): void {
    this.getFiles();
    this.ToggleDisable()
+   
   }
   
   ToggleDisable() {
@@ -56,6 +59,29 @@ export class FinancialFileComponent implements OnInit {
       .getAllFiles(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
+        this.fileStatusFin.emit(this.files.length);
+        let type1=false;
+        let type2=false;
+
+        this.files.forEach(element => {
+        if(element.Type=='zakat')
+          {
+           type1=true
+          }
+        if(element.Type=='FinancialStatement')
+          {
+            type2=true
+
+          }
+
+
+       });
+       if(type1&&type2)
+        this.fileStatusType.emit(true);
+      else
+      this.fileStatusType.emit(false);
+
+
       });
   }
 
@@ -72,6 +98,7 @@ export class FinancialFileComponent implements OnInit {
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
+
           console.log(this.request)
         });
         this.addFileButton = true
@@ -106,6 +133,7 @@ export class FinancialFileComponent implements OnInit {
     .createFile(this.request)
     .subscribe((res: any) => {
       this.getFiles();
+      this.fileStatusFin.emit(this.files.length);
       this.toastr.success("تم الحفظ");
       this.request=new FinancialFileModel();
       this.fileInput.nativeElement.value = '';

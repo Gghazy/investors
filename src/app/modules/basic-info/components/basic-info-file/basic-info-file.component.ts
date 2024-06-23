@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, Output, OnInit, ViewChild ,EventEmitter } from '@angular/core';
 import { BasicFileModel } from '../../models/basic-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { BasicInfoService } from '../../basic-info.service';
@@ -24,6 +24,7 @@ export class BasicInfoFileComponent implements OnInit {
   @Input() factoryId!:string;
   @Input() periodId!:string;
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @Output() fileStatus = new EventEmitter<any>();
   constructor(
     private formBuilder: FormBuilder,
     private fileService:FileService,
@@ -38,6 +39,7 @@ export class BasicInfoFileComponent implements OnInit {
   initValue(){
     this.request.Type=this.selectedFirstItem;
     this.fileError = '';
+
    }
   selectFirstItem(): void {
     this.selectedFileForm = this.formBuilder.group({
@@ -50,6 +52,7 @@ export class BasicInfoFileComponent implements OnInit {
       .getAll(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
+        this.fileStatus.emit(this.files.length);
       });
   }
 
@@ -117,6 +120,8 @@ export class BasicInfoFileComponent implements OnInit {
       .subscribe((res: any) => {
         this.getFiles();
         this.toastr.success("تم الحفظ");
+        this.fileStatus.emit(this.files.length);
+
         this.request=new BasicFileModel();
         this.fileInput.nativeElement.value = '';
         this.initValue();

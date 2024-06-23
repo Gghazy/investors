@@ -85,7 +85,7 @@
 
         </div>
 
-        <app-location-file [factoryLocationId]="request.Id"></app-location-file>
+        <app-location-file [factoryLocationId]="request.Id" (fileStatusLoc)="getFilestatus($event)"></app-location-file>
 
     
     <div class="form-footer">

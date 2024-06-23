@@ -1,4 +1,4 @@
-import { Component, Input, OnInit , ViewChild ,ElementRef} from '@angular/core';
+import { Component, Input, OnInit , ViewChild ,Output,EventEmitter ,ElementRef} from '@angular/core';
 import { LocationFileModel } from '../../models/location-file-model';
 import { FileService } from 'src/app/core/service/file.service';
 import { FactoryLocationService } from '../../factory-location.service';
@@ -21,6 +21,7 @@ export class LocationFileComponent implements OnInit {
   src!: string;
   @Input() factoryLocationId!: number;
   @ViewChild('fileInputLoc') fileInputLoc!: ElementRef;
+  @Output() fileStatusLoc = new EventEmitter<any>();
 
   fileError: string | null = null;
   addFileButton:boolean= false
@@ -49,6 +50,8 @@ export class LocationFileComponent implements OnInit {
       .getAllFiles(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
+        this.fileStatusLoc.emit(this.files.length);
+
       });
   }
   

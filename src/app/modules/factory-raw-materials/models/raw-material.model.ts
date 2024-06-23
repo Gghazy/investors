@@ -10,6 +10,8 @@ export class RawMaterial {
      // AttachmentId !:number
       PaperId!:number;
       PhotoId!:number;
+      PhotoName!:string;
+      PaperName!:string;
       UnitId!:number|undefined;
       FactoryProductId :number[]=[];
       FactoryId !:number;

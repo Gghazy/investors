@@ -40,7 +40,9 @@ constructor(
   }
 
   getOne(){
+   
     
+
     this.actualProductionAndDesignedCapacityService
     .getOne(this.actualCapacityProductId)
     .subscribe((res: any) => {     
@@ -50,8 +52,9 @@ console.log(this.request)
     });
   }
   getProduct(){
+    
     this.factoryProductService
-      .getOne(this.actualproductId)
+      .getOne(this.productId)
       .subscribe((res: any) => {
 
         this.product = res.Data;

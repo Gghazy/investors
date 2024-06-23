@@ -20,6 +20,9 @@ import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-l
 export class FinancialDetailFormComponent {
   factoryId: any;
   periodId: any;
+  statusFile!:number;
+  statusFileType!:boolean;
+
   year!:number;
    isDisabled!:boolean;
   factoryStatus!:number;
@@ -55,7 +58,12 @@ export class FinancialDetailFormComponent {
     });
   }
 
-
+  public getFilestatus(item: any):void {
+    this.statusFile=item;
+}
+public getFilestatusType(item: any):void {
+  this.statusFileType=item;
+}
   ToggleDisable() {
     let userId=  this.sharedService.getUserId()
 
@@ -78,7 +86,11 @@ export class FinancialDetailFormComponent {
       });
   }
   save(){
-    
+
+   if(!this.statusFileType)
+      {  this.toastr.error( 'الرجاء إرفاق الإقرار الزكوي  و القوائم المالية');
+        return;
+      }
     this.request.FactoryId=this.factoryId;
     this.request.Year=this.year;
     this.request.TotalExpenses=this.getTotalExpenses();

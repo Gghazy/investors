@@ -26,6 +26,8 @@ export class FactoryLocationFormComponent {
   factoryId: any;
   periodId: any;
   cityCode: any;
+  statusFileLoc!:number;
+
   PeriodName!: string
   request = new LocationModel();
   cities: LookUpModel[] = [];
@@ -143,6 +145,9 @@ export class FactoryLocationFormComponent {
     alert(r);
     return r;
 	}*/
+  public getFilestatus(item: any):void {
+    this.statusFileLoc=item;
+}
   save() {
    
     this.submitted = true;
@@ -150,6 +155,10 @@ export class FactoryLocationFormComponent {
       this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
       return;
     }
+    if(this.statusFileLoc<=0)
+      {  this.toastr.error( 'الرجاء إختيار صورة مدخل المصنع');
+        return;
+      }
     debugger
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;

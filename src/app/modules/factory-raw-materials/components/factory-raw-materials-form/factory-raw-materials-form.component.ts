@@ -40,12 +40,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   selectedProducts: any[] = [];
   items: any = [];
   periodId: any;
+  test: any;
+
   saveSuccessful: boolean = false;
   productx: any;
   fileError: string | null = null;
   fileErrorPhoto: string | null = null;
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
-  @ViewChild('fileInputPhoto') fileInputPhoto!: ElementRef;
+  @ViewChild('fileInputPhoto',{static:false}) fileInputPhoto!: ElementRef;
 
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private fileService: FileService,
@@ -132,16 +134,21 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     };
     this.fileErrorPhoto=''
     this.fileError=''
+   
     //this.fileInputPaper.nativeElement.value = this.request.PhotoId;
     //this.fileInputPhoto.nativeElement.value = this.request.PaperId;
   }
+  ngAfterViewInit() {
+       this.fileInputPhoto.nativeElement.innerText  = "a.txt";
 
+  }
   getOneRawMaterial(id: number) {
     this.searchValue = true
     this.rawMaterialService
       .getOne(id)
       .subscribe((res: any) => {
         this.request = res.Data;
+      
         console.log(this.request)
         this.productService
           .getAllProducts()
@@ -260,6 +267,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
           .addFile(file.target.files[0])
           .subscribe((res: any) => {
             this.request.PaperId = res.Data.Id
+          
           });
       } else {
         this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
@@ -294,7 +302,6 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
           .addFile(file.target.files[0])
           .subscribe((res: any) => {
             this.request.PhotoId = res.Data.Id
-
           });
       } else {
         this.fileErrorPhoto = 'الرجاء رفع المستند بالصيغة الموضحة';

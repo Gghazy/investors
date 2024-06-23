@@ -22,7 +22,10 @@ import { PeriodService } from 'src/app/modules/period/period.service';
 })
 export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
+  @ViewChild('myModalClose') modalClose!:ElementRef;
   factoryId: any;
+
+  isShow = false;
   periodId: any;
   Id!: number;
   showKG: boolean = false
@@ -62,6 +65,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   ngOnInit() {
     this.getRawMaterial()
+    
     // this.getProducts()
     // this.getUnits();
     // this.getperiod()
@@ -137,8 +141,8 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
   }
   getFile(attachmentId: number) {
-    if (attachmentId == null) {
-      this.toastr.error("لا يوجد ملف");
+    if (attachmentId == null||attachmentId <=0) {
+      this.toastr.error("لم يتم إرفاق ورقة بيانات للمادة الأولية")
     }
     else {
       this.fileService.downloadTempelete(attachmentId).subscribe((res: any) => {
@@ -150,17 +154,24 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
 
   getImage(attachmentId: number) {
-    if (attachmentId == null) {
-      this.toastr.error("لا يوجد ملف");
+  
+    if (attachmentId == null || attachmentId <= 0) {
+      
+      this.isShow=false
+      this.src=''
+      this.toastr.error("لم يتم إرفاق صورة للمادة الأولية")
+     // this.modalClose.nativeElement.click(); // Close the modal
+
     }
     else {
+      this.isShow=true
       this.fileService.getImage(attachmentId).subscribe((res: any) => {
-
         this.src = 'data:image/jpeg;base64,' + res.Image;
       });
     }
 
   }
+ 
   downloadattachment(data: any) {
     const blob = new Blob([data], { type: data.type });
     const url = window.URL.createObjectURL(blob);
@@ -192,6 +203,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
 
   closePopUp() {
+  
     this.Modal.nativeElement.click()
     this.getRawMaterial()
   }

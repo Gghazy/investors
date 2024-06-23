@@ -100,8 +100,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.rawMaterials = res.Data.Items;
         this.materials = res.Data;
+        
         if (this.rawMaterials.length == 0) {
-
           this.isNewData = true
           this.service
             .getRawMaterial(this.search, this.factoryId)
