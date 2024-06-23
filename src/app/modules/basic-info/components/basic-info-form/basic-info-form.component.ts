@@ -92,8 +92,8 @@ export class BasicInfoFormComponent implements OnInit {
       this.toastr.error( 'رجاءا أدخل رقم هوية واحد على الأقل ');
       return;
      }*/
-    
-    if (this.BasicInfoForm.invalid && this.statusFile>1) {
+   
+    if (this.BasicInfoForm.invalid || this.statusFile>1) {
       this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
       return;
     }

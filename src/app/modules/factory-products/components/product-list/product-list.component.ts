@@ -16,7 +16,7 @@ import { PeriodService } from 'src/app/modules/period/period.service';
 export class ProductListComponent implements OnInit {
   factoryId: any;
   periodId: any;
-  productsAdded = new ResultResponse<ProductModel>();
+  productsAdded:  ProductModel[]=[];
   search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
   productId!: number | undefined;
@@ -39,7 +39,7 @@ export class ProductListComponent implements OnInit {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit(): void {
-    this.getProducts();
+   // this.getProducts();
 
     this.getAddedProducts();
     this.getperiod()
@@ -75,9 +75,12 @@ export class ProductListComponent implements OnInit {
 
   getAddedProducts() {
 
+    
     this.search.FactoryId = this.factoryId;
+    this.search.PeriodId = this.periodId;
+    this.search.IsActive = true;
     this.factoryProductService
-      .getAddedProducts(this.factoryId)
+      .getAddedProducts(this.search)
       .subscribe((res: any) => {
       
         this.productsAdded = res.Data;
@@ -108,7 +111,7 @@ export class ProductListComponent implements OnInit {
     this.productId = undefined
     this.pId = undefined;
     this.Modal.nativeElement.click()
-    this.getProducts();
+    this.getAddedProducts();
   }
 
   getFile(attachmentId: number) {

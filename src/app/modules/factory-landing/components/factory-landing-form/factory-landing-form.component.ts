@@ -64,6 +64,7 @@ export class FactoryLandingFormComponent implements OnInit {
       .subscribe((res: any) => {
 
         this.screenStatuse = res.Data
+      
         this.checkAllScreenStatus();
       });
   }
