@@ -36,6 +36,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   units!: LookUpModel[];
   x: any = [];
   src!: string;
+  IsComplete=0;
+  lockSaveItem=false;
   isNewData: boolean = false;
   request = new ActualRawMaterial();
   requestFile = new ActualRawMaterialFile();
@@ -49,6 +51,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   fileError: string | null = null;
   addFileButton: boolean = false
   fileSelected: boolean = false
+  lockUploadfile=false;
 
   constructor(private route: ActivatedRoute, private service: ActualRawMaterialsService,
     private toastr: ToastrService,
@@ -67,7 +70,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
     this.getUnits()
     this.getperiod()
     this.fileSelected = false;
-
+    
     this.dropdownSettings = {
       singleSelection: true,
       idField: 'Id',
@@ -246,22 +249,26 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       this.fileError = 'الحد الاقصى للمرفقات 10';
       return
     }
+  
     this.requestFile.PeriodId = this.periodId;
     this.requestFile.FactoryId = this.factoryId;
     this.requestFile.Name = '';
     if (this.files.length < 10) {
+      this.lockUploadfile=true;
+
       this.service
         .AddFile(this.requestFile)
         .subscribe((res: any) => {
           this.getFiles();
-          this.toastr.success("تم الحفظ");
+          this.lockUploadfile=false;
+          this.toastr.success("تم تحميل المستندات المرفقة");
           this.requestFile = new ActualRawMaterialFile();
           // this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
 
         });
     }
-    this.saveItems();
+  //  this.saveItems();
 
 
   }
@@ -298,36 +305,65 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       this.toastr.error("الرجاء التحقق من البيانات المدخلة")
       return
     }
+    if(this.lockUploadfile)
+      {
+        this.toastr.error("الرجاء الإنتظار قليلا لأكنمال تحميل الملف المرفق")
+        return
+        
+      }
+    if(this.lockSaveItem)
+      {
+          this.toastr.error("عملية حفظ/تعديل المواد الخام الأولية قيد التنفيذ")
+          return
+          
+      }
     if (this.isNewData == true) {
-
+      this.IsComplete=0;
+      this.lockSaveItem=true
+      let count= this.x.length;
       this.x.forEach((item: any) => {
         item.periodId = this.periodId;
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
-
+     
         this.service
           .create(item)
           .subscribe((res: any) => {
-            this.toastr.success("تم الحفظ");
-            this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+            this.IsComplete=this.IsComplete+1;
+            if(this.IsComplete==count)
+              {
+                this.lockSaveItem=false
+              this.toastr.success(" تم تعديل بيانات المواد الخام الأولية بنجاح");
+              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+      
+              }
           });
       })
-
-      this.request = new ActualRawMaterial();
+      
+      
+        this.request = new ActualRawMaterial();
     }
     else {
-
+      this.IsComplete=0;
+      let count= this.x.length;
+      this.lockSaveItem=true;
       this.x.forEach((item: any) => {
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
 
         this.service
           .update(item)
           .subscribe((res: any) => {
-            this.toastr.success("تم الحفظ");
-            this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+            this.IsComplete=this.IsComplete+1;
+            if(this.IsComplete==count)
+              {
+                this.lockSaveItem=false;
+              this.toastr.success(" تم تعديل بيانات المواد الخام الأولية بنجاح");
+              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+      
+              }
 
           });
       })
-
+    
       this.request = new ActualRawMaterial();
     }
   }

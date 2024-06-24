@@ -24,7 +24,7 @@ request=new ActualProductModel();
 units:LookUpModel[]=[];
 @Output()close=new EventEmitter<boolean>();
 product!:ProductModel;
-
+lockSaveItem=false;
 
 constructor(
   private actualProductionAndDesignedCapacityService:ActualProductionAndDesignedCapacityService,
@@ -71,24 +71,33 @@ console.log(this.request)
     });
   }
   save(){
-    
+    if(this.lockSaveItem)
+      {
+          this.toastr.error("عملية حفظ/تعديل كمية الإنتاج الفعلي والطاقة التصميمية قيد التنفيذ")
+          return
+          
+      }
     this.request.FactoryProductId=this.productId;
     this.request.PeriodId=this.periodId;
     this.request.FactoryId=this.factoryId;
     if (this.actualCapacityProductId==0){
+      this.lockSaveItem=true;
       this.actualProductionAndDesignedCapacityService
       .create(this.request)
       .subscribe((res: any) => {
         this.close.emit(true);
-        this.toastr.success("تم الحفظ");
+        this.toastr.success("تم حفظ كمية الإنتاج الفعلي والطاقة التصميمية ");
+        this.lockSaveItem=false
       });
     }
     else{
+      this.lockSaveItem=true;
       this.actualProductionAndDesignedCapacityService
       .update(this.request)
       .subscribe((res: any) => {
         this.close.emit(true);
-        this.toastr.success("تم الحفظ");
+        this.toastr.success("تم تعديل كمية الإنتاج الفعلي والطاقة التصميمية ");
+        this.lockSaveItem=false
       });
     }
   }

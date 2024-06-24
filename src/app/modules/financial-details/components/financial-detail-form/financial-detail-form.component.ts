@@ -22,7 +22,7 @@ export class FinancialDetailFormComponent {
   periodId: any;
   statusFile!:number;
   statusFileType!:boolean;
-
+  lockSaveItem=false;
   year!:number;
    isDisabled!:boolean;
   factoryStatus!:number;
@@ -91,24 +91,37 @@ public getFilestatusType(item: any):void {
       {  this.toastr.error( 'الرجاء إرفاق الإقرار الزكوي  و القوائم المالية');
         return;
       }
+      if(this.lockSaveItem)
+        {
+            this.toastr.error("عملية حفظ/تعديل البيانات المالية  قيد التنفيذ")
+            return
+            
+        }
     this.request.FactoryId=this.factoryId;
     this.request.Year=this.year;
     this.request.TotalExpenses=this.getTotalExpenses();
     if (this.request.Id==0){
+      this.lockSaveItem=true;
       this.financialDetailService
       .create(this.request)
       .subscribe((res: any) => {
         this.request=res.Data;
-        this.toastr.success("تم الحفظ");
+        this.toastr.success("تم حفظ البيانات المالية بنجاح");
+        this.lockSaveItem=false;
+
         this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
       });
     }
     else{
+      this.lockSaveItem=true;
+
       this.financialDetailService
       .update(this.request)
       .subscribe((res: any) => {
-        this.toastr.success("تم الحفظ");
+        this.toastr.success("تم تعديل البيانات المالية بنجاح");
+        this.lockSaveItem=false;
+
         this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
       });

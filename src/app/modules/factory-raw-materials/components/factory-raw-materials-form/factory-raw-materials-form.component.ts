@@ -42,7 +42,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   periodId: any;
   test: any;
   lockUploadfile=false;
-
+  lockSaveItem=false;
   saveSuccessful: boolean = false;
   productx: any;
   fileError: string | null = null;
@@ -334,11 +334,19 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
           return
         }
         if(this.lockUploadfile)
-          {
+        {
             this.toastr.error("الرجاء الإنتظار قليلا لأكنمال تحميل الملف المرفق")
             return
             
+        }
+        if(this.lockSaveItem)
+          {
+              this.toastr.error("عملية حفظ/تعديل المادة الخام قيد التنفيذ")
+              return
+              
           }
+         
+
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     if (this.fileErrorPhoto || this.fileError) {
@@ -349,11 +357,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
 
       if (this.request.Id == undefined) {
+        this.lockSaveItem=true;
         this.rawMaterialService
           .create(this.request)
           .subscribe((res: any) => {
             // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
             this.saveSuccessful = true;
+            this.lockSaveItem=false;
+
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
             this.request = new RawMaterial();
@@ -370,11 +381,13 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       }
       else {
         console.log(this.request)
+        this.lockSaveItem=true;
         this.rawMaterialService
           .update(this.request)
           .subscribe((res: any) => {
             // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
             this.saveSuccessful = true;
+            this.lockSaveItem=false;
             this.close.emit(true);
             this.toastr.success("تم الحفظ");
             this.request = new RawMaterial();

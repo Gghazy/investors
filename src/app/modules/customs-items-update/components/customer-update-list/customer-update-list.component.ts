@@ -22,7 +22,7 @@ export class CustomerUpdateListComponent implements OnInit {
   products = new ResultResponse<ProductModel>();
 PeriodName!:string
   ProductPeriodActives:ProductPeriodActiveModel[]=[];
-
+  lockSaveItem=false;
   constructor(
     private router: Router,
 
@@ -96,15 +96,23 @@ PeriodName!:string
   }
  
   save(){
-    
+   
     if(this.ProductPeriodActives.length<=0)
-    { this.toastr.error( ' الرجاء إختيار منتج واحد على الأقل ');
+    { this.toastr.error( ' الرجاء إختيار بند جمركي واحد على الأقل ');
     return;
     }
+    if(this.lockSaveItem)
+      {
+          this.toastr.error("عملية حفظ/تعديل البند الجمركي قيد التنفيذ")
+          return
+          
+      }
+    this.lockSaveItem=true;
       this.customsItemsUpdateService
       .create(this.ProductPeriodActives)
       .subscribe((res: any) => {
-        this.toastr.success("تم الحفظ");
+        this.lockSaveItem=false
+        this.toastr.success("تم تحديث البند الجمركي بنجاح");
         this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
       });

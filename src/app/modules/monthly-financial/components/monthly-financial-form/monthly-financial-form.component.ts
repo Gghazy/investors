@@ -17,6 +17,7 @@ export class MonthlyFinancialFormComponent implements OnInit {
   periodId: any;
   request = new MonthlyFinancialModel();
 PeriodName!:string
+lockSaveItem=false;
   constructor(
     private route: ActivatedRoute,
      private monthlyFinancialService: MonthlyFinancialService,
@@ -57,25 +58,38 @@ PeriodName!:string
   }
 
   save(){
-    
+    if(this.lockSaveItem)
+      {
+          this.toastr.error("عملية حفظ/تعديل البيانات المالية قيد التنفيذ")
+          return
+          
+      }
     this.request.FactoryId=this.factoryId;
     this.request.PeriodId=this.periodId;
     this.request.TotalExpenses=this.getTotalExpenses();
     if (this.request.Id==0){
+      this.lockSaveItem=true;
+
       this.monthlyFinancialService
       .create(this.request)
       .subscribe((res: any) => {
         this.request=res.Data;
-        this.toastr.success("تم الحفظ");
+        this.toastr.success("تم حفظ البيانات المالية بنجاح");
+        this.lockSaveItem=false;
+
         this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
       });
     }
     else{
+      this.lockSaveItem=true;
+
       this.monthlyFinancialService
       .update(this.request)
       .subscribe((res: any) => {
-        this.toastr.success("تم الحفظ");
+        this.toastr.success("تم تعديل البيانات المالية بنجاح");
+        this.lockSaveItem=false;
+
         this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
       });

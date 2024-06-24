@@ -27,7 +27,7 @@ export class FactoryLocationFormComponent {
   periodId: any;
   cityCode: any;
   statusFileLoc!:number;
-
+  lockSaveItem=false;
   PeriodName!: string
   request = new LocationModel();
   cities: LookUpModel[] = [];
@@ -159,14 +159,22 @@ export class FactoryLocationFormComponent {
       {  this.toastr.error( 'الرجاء إختيار صورة مدخل المصنع');
         return;
       }
+      if(this.lockSaveItem)
+        {
+            this.toastr.error("عملية حفظ/تعديل موقع المصنع قيد التنفيذ")
+            return
+            
+        }
     debugger
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     if (this.request.Id == 0) {
+      this.lockSaveItem=true;
       this.factoryLocationService
         .create(this.request)
         .subscribe((res: any) => {
-          this.toastr.success("تم الحفظ");
+          this.toastr.success("تم حفظ موقع المصنع بنجاح");
+          this.lockSaveItem=false;
           this.getLocation();
           this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
@@ -174,10 +182,12 @@ export class FactoryLocationFormComponent {
         });
     }
     else {
+      this.lockSaveItem=true;
       this.factoryLocationService
         .update(this.request)
         .subscribe((res: any) => {
-          this.toastr.success("تم الحفظ");
+          this.toastr.success("تم تعديل موقع المصنع بنجاح");
+          this.lockSaveItem=false;
           this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
         });

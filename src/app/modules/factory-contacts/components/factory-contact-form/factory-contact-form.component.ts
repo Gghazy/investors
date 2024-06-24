@@ -27,6 +27,7 @@ export class FactoryContactFormComponent implements OnInit {
   defaultPhone:any;
   PeriodName!:string
   separateDialCode = false;
+  lockSaveItem=false;
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
@@ -90,29 +91,40 @@ export class FactoryContactFormComponent implements OnInit {
   }
   save() {
     this.submitted = true;
+    
     if (this.phoneForm.invalid) {
       this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
      // alert(this.phoneForm.errors)
       return;
     }
+    if(this.lockSaveItem)
+      {
+          this.toastr.error("عملية حفظ/تعديل بيانات جهة الاتصال قيد التنفيذ")
+          return
+          
+      }
     this.request = this.phoneForm.value
     this.request.FactoryId = this.factoryId;
     this.request.periodId = this.periodId;
     if (this.request.Id == 0) {
+      this.lockSaveItem=true;
       this.factoryContactService
         .create(this.request)
         .subscribe((res: any) => {
           this.request = res.Data;
-          this.toastr.success("تم الحفظ");
+          this.lockSaveItem=false;
+          this.toastr.success("تم حفظ بيانات جهة الإتصال بنجاح");
           this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
         });
     }
     else {
+      this.lockSaveItem=true
       this.factoryContactService
         .update(this.request)
         .subscribe((res: any) => {
-          this.toastr.success("تم الحفظ");
+          this.toastr.success("تم تعديل بيانات جهة الإتصال بنجاح");
+          this.lockSaveItem=false
           this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 
         });

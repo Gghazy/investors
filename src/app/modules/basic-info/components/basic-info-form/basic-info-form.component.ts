@@ -28,6 +28,7 @@ export class BasicInfoFormComponent implements OnInit {
   PeriodName!:string
   isDisabled!:boolean;
   submitted: boolean | undefined;
+  lockSaveItem=false;
   @Input() fileStatus!:string;
 
   constructor(
@@ -101,6 +102,12 @@ export class BasicInfoFormComponent implements OnInit {
       {  this.toastr.error( 'الرجاء إختيار صورة واجهة المصنع');
         return;
       }
+      if(this.lockSaveItem)
+        {
+            this.toastr.error("عملية حفظ/تعديل البيانات الأساسية قيد التنفيذ")
+            return
+            
+        }
     if (this.BasicInfoForm.value.dataEntryId)
     {
       this.request.DataEntry=this.BasicInfoForm.value.dataEntryId;
@@ -123,14 +130,15 @@ export class BasicInfoFormComponent implements OnInit {
         this.request.DataApprover='';
 
  
-
+    this.lockSaveItem=true;
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
      let res= this.basicInfoService
         .update(this.request)
         .subscribe((res: any) => {
         
-          this.toastr.success("تم الحفظ");
+          this.toastr.success("تم حفظ البيانات الأساسية بنجاح");
+          this.lockSaveItem=false;
           this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
         });
   }

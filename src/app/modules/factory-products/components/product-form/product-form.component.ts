@@ -37,6 +37,7 @@ export class ProductFormComponent implements OnInit {
   fileError: string | null = null;
   fileErrorPhoto: string | null = null;
   lockUploadfile=false;
+  lockSaveItem=false;
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
   @ViewChild('fileInputPhoto') fileInputPhoto!: ElementRef;
   constructor(
@@ -267,6 +268,12 @@ export class ProductFormComponent implements OnInit {
             return
             
           }
+          if(this.lockSaveItem)
+            {
+                this.toastr.error("عملية حفظ/تعديل المنتج قيد التنفيذ")
+                return
+                
+            }
 
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
@@ -277,11 +284,13 @@ export class ProductFormComponent implements OnInit {
     else {
      
       if (this.productId == 0) {
+        this.lockSaveItem=true;
         this.factoryProductService
           .create(this.request)
           .subscribe((res: any) => {
             this.close.emit(true);
-            this.toastr.success("تم الحفظ");
+            this.toastr.success(" تم حفظ بيانات المنتج بنجاح");
+            this.lockSaveItem=false;
            // this.request = new ProductModel();
             this.fileErrorPhoto = null
             this.fileError = null
@@ -290,11 +299,13 @@ export class ProductFormComponent implements OnInit {
           });
       }
       else {
+        this.lockSaveItem=true
         this.factoryProductService
           .update(this.request)
           .subscribe((res: any) => {
             this.close.emit(true);
-            this.toastr.success("تم الحفظ");
+            this.lockSaveItem=false;
+            this.toastr.success("تم تعديل بيانات المنتج بنجاح");
              // this.request = new ProductModel();
             this.fileErrorPhoto = null
             this.fileError = null
