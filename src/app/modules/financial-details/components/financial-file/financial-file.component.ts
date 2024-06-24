@@ -40,7 +40,7 @@ export class FinancialFileComponent implements OnInit {
 
   ngOnInit(): void {
    this.getFiles();
-   this.ToggleDisable()
+  // this.ToggleDisable()
    
   }
   
@@ -98,6 +98,7 @@ export class FinancialFileComponent implements OnInit {
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
+          this.toastr.success("تم تحميل الملف");
 
           console.log(this.request)
         });
@@ -119,6 +120,7 @@ export class FinancialFileComponent implements OnInit {
     window.open(url);
   }
   save(){
+   
     if (this.files.length > 10){
       this.fileError = 'الحد الاقصى للمرفقات 10';
       return
@@ -134,7 +136,7 @@ export class FinancialFileComponent implements OnInit {
     .subscribe((res: any) => {
       this.getFiles();
       this.fileStatusFin.emit(this.files.length);
-      this.toastr.success("تم الحفظ");
+      this.toastr.success("تم ارفاق الملف للبيانات المالية");
       this.request=new FinancialFileModel();
       this.fileInput.nativeElement.value = '';
 

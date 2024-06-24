@@ -52,7 +52,13 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   addFileButton: boolean = false
   fileSelected: boolean = false
   lockUploadfile=false;
-
+  reasonList: any[] = [
+    { Id: "1", Name: ' شراء معدات جديدة' },
+    { Id: "2", Name: 'زيادة خطوط الإنتاج'},
+    { Id: "3", Name: 'زيادة العمالة'},
+    { Id: "4", Name: 'أخرى'}
+];
+selectedReason:any = { Id: "1"} 
   constructor(private route: ActivatedRoute, private service: ActualRawMaterialsService,
     private toastr: ToastrService,
     private router: Router,
@@ -136,7 +142,9 @@ export class ActualRawMaterialsFormComponent implements OnInit {
 
         this.showInput = false;
         this.rawMaterials.forEach((item: any) => {
+         
           this.request.IncreasedUsageReason = item.IncreasedUsageReason
+         // alert(item.IncreasedUsageReason)
           if (item.IncreasedUsageReason > 0) {
             this.showInput = true
           }
@@ -165,9 +173,10 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   onSelectionChange(row: ActualRawMaterial) {
     row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
     row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
-
     if (row.UsedQuantity_KG > row.CurrentStockQuantity_KG) {
       this.showInput = true
+      this.request.IncreasedUsageReason="4"
+     
     } else {
       this.showInput = false
     }
@@ -297,8 +306,12 @@ export class ActualRawMaterialsFormComponent implements OnInit {
         this.getFiles();
       });
   }
-
-
+  setReasonValue(event: Event) {
+    const selectedValue = (event.target as HTMLInputElement).value;
+    this.request.IncreasedUsageReason=selectedValue;
+    
+  }
+  
   saveItems() {
 
     if (this.fileError) {
@@ -317,14 +330,18 @@ export class ActualRawMaterialsFormComponent implements OnInit {
           return
           
       }
+      if(!this.showInput)
+        this.request.IncreasedUsageReason="0";
+    
     if (this.isNewData == true) {
+
       this.IsComplete=0;
       this.lockSaveItem=true
       let count= this.x.length;
       this.x.forEach((item: any) => {
         item.periodId = this.periodId;
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
-     
+    
         this.service
           .create(item)
           .subscribe((res: any) => {
@@ -348,6 +365,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
       this.lockSaveItem=true;
       this.x.forEach((item: any) => {
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
+       
 
         this.service
           .update(item)

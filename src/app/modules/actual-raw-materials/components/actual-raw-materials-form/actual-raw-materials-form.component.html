@@ -129,12 +129,10 @@
             <div class="col-md-6">
                 <label class="form-label"> ما هو سبب زيادة استخدام المواد الأولية ( المواد الخام) عن الاستهلاك الشهري المعتاد؟</label>
 
-                <select class="form-select" [(ngModel)]="request.IncreasedUsageReason">
-                    <option value="1">شراء معدات جديدة</option>
-                    <option value="2">زيادة خطوط الإنتاج</option>
-                    <option value="3">زيادة العمالة</option>
-                    <option value="4">أخرى</option>
-                </select>
+                <select  class="form-select"  (change)="setReasonValue($event)">
+                    <option *ngFor="let reasonValue of reasonList" [value]="reasonValue.Id" [attr.selected]="((reasonValue.Id ==request.IncreasedUsageReason)==false?null:true)">
+                        {{reasonValue.Name}} </option>
+                 </select>
             </div>
         </div>
     </div>
