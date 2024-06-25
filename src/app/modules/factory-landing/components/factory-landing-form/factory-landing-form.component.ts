@@ -35,6 +35,7 @@ export class FactoryLandingFormComponent implements OnInit {
   Year!: number
   periodName!: string
   DataStatus!: number
+  isDisable=true;
   constructor(
     private route: ActivatedRoute,
     private basicInfoService: BasicInfoService,
@@ -75,9 +76,11 @@ export class FactoryLandingFormComponent implements OnInit {
     this.factoryLandingService
       .checkSataus(this.factoryId, this.periodId,userId)
       .subscribe((res: any) => {
-
+       
         this.FactoryStatus=res.Data.StatusButton
         this.DataStatus=res.Data.DataStatus
+        this.isDisable=res.Data.isDisable
+       // alert("--"+ res.Data.isDisable)
       });
   }
 
@@ -132,7 +135,6 @@ export class FactoryLandingFormComponent implements OnInit {
     this.request.FactoryId = this.factoryId
     this.request.PeriodId = this.periodId
     this.request.UpdateStatus = true
-
     if (this.request.Id == 0) {
       this.factoryLandingService
         .create(this.request)
