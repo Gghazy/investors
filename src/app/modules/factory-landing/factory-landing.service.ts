@@ -30,7 +30,7 @@ export class FactoryLandingService {
     return this.http.get<any>(`FactoryUpdateStatuses/StatusByIdentity?factoryId=${factoryId}&&periodId=${periodId}&&userId=${userId}`);
   }
 
-  CheckFactoryUpdateStatus(factoryId:number): Observable<any> {
-    return this.http.get<any>(`FactoryUpdateStatuses/FactoryId?factoryId=${factoryId}`);
+  CheckFactoryUpdateStatus(): Observable<any> {
+    return this.http.get<any>(`FactoryUpdateStatuses/FactoryId`);
   }
 }

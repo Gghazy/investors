@@ -37,26 +37,14 @@ export class FactoryListComponent implements OnInit {
   }
 
   getFactories() {
-
-    this.factoryService
-      .getAllPagination(this.search)
-      .subscribe((res: any) => {
-        this.factories = res.Data;
-        this.factories.Items.forEach(element => {
-          this.getFactoryUpdateStatus(element.Id)
-     
-          });
-      });
-  }
-  getFactoryUpdateStatus(id:number){
     this.factoryLandingService
-      .CheckFactoryUpdateStatus(id)
-      .subscribe((res: any) => {
-        this.factoryUpdateStatus= res.Data;
-        this.dataFactory.push(this.factoryUpdateStatus)
-       console.log(this.dataFactory)
-      });
-  } 
+    .CheckFactoryUpdateStatus()
+    .subscribe((res: any) => {
+      this.dataFactory= res.Data;
+    });
+
+  }
+  
   pageChanged(data: any) {
     this.search.PageNumber = data;
     this.getFactories();
