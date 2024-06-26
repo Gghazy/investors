@@ -23,6 +23,7 @@ export class ProductListComponent implements OnInit {
   pId!: number | undefined;
 
   PeriodName!: string;
+  year!:number;
   modalLable!: string;
   @ViewChild('closeModal') Modal!: ElementRef;
 
@@ -56,7 +57,7 @@ export class ProductListComponent implements OnInit {
     this.periodService
       .getOne(this.periodId)
       .subscribe((res: any) => {
-
+        this.year = res.Data.Year -1;
         this.PeriodName = res.Data.PeriodName;
       });
   }

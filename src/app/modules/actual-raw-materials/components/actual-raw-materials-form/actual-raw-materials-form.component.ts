@@ -48,6 +48,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   selectedX: number = 0;
   sign: string | null = null;
   PeriodName!: string
+  year!:number;
   fileError: string | null = null;
   addFileButton: boolean = false
   fileSelected: boolean = false
@@ -91,7 +92,7 @@ selectedReason:any = { Id: "1"}
     this.periodService
       .getOne(this.periodId)
       .subscribe((res: any) => {
-
+        this.year = res.Data.Year -1;
         this.PeriodName = res.Data.PeriodName;
       });
   }

@@ -29,6 +29,7 @@ export class FactoryLocationFormComponent {
   statusFileLoc!:number;
   lockSaveItem=false;
   PeriodName!: string
+  year!:number;
   request = new LocationModel();
   cities: LookUpModel[] = [];
   industrialAreas: LookUpModel[] = [];
@@ -63,7 +64,7 @@ export class FactoryLocationFormComponent {
     this.periodService
       .getOne(this.periodId)
       .subscribe((res: any) => {
-
+        this.year = res.Data.Year -1;
         this.PeriodName = res.Data.PeriodName;
       });
   }

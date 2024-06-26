@@ -49,6 +49,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   saveSuccessful: boolean = false;
   numRows: number = 0;
   PeriodName!: string;
+  year!:number;
   modalLabel!: string;
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
@@ -68,7 +69,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     
     // this.getProducts()
     // this.getUnits();
-    // this.getperiod()
+     this.getperiod()
   }
 
 
@@ -76,8 +77,9 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     this.periodService
       .getOne(this.periodId)
       .subscribe((res: any) => {
-
+        this.year = res.Data.Year -1;
         this.PeriodName = res.Data.PeriodName;
+        
       });
   }
 

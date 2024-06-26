@@ -26,6 +26,7 @@ export class FactoryContactFormComponent implements OnInit {
   request: any;
   defaultPhone:any;
   PeriodName!:string
+  year!:number;
   separateDialCode = false;
   lockSaveItem=false;
   SearchCountryField = SearchCountryField;
@@ -135,7 +136,7 @@ export class FactoryContactFormComponent implements OnInit {
     this.periodService
     .getOne(this.periodId)
     .subscribe((res: any) => {
-      
+      this.year = res.Data.Year -1;
       this.PeriodName= res.Data.PeriodName;
     });
   }

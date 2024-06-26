@@ -83,7 +83,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   selectedItems2 = [];
 
   dropdownSettings!: IDropdownSettings;
-
+  dropdownSettings2!: IDropdownSettings;
   ngOnChanges(changes: SimpleChanges) {
 
     this.request = new RawMaterial();
@@ -103,6 +103,17 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       this.getUnits();
       this.dropdownSettings = {
         singleSelection: false,
+        idField: 'ProductId',
+        textField: 'ProductName',
+        selectAllText: 'تحديد الكل',
+        unSelectAllText: 'ازالة التحديد',
+        searchPlaceholderText: 'بحث',
+        itemsShowLimit: 2,
+        allowSearchFilter: true
+      };
+
+      this.dropdownSettings2 = {
+        singleSelection: true,
         idField: 'ProductId',
         textField: 'ProductName',
         selectAllText: 'تحديد الكل',
@@ -357,6 +368,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
 
       if (this.request.Id == undefined) {
+        console.log(this.request)
         this.lockSaveItem=true;
         this.rawMaterialService
           .create(this.request)

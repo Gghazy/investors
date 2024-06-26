@@ -21,6 +21,7 @@ export class CustomerUpdateListComponent implements OnInit {
   search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
 PeriodName!:string
+year!:number;
   ProductPeriodActives:ProductPeriodActiveModel[]=[];
   lockSaveItem=false;
   constructor(
@@ -66,7 +67,7 @@ PeriodName!:string
     this.periodService
     .getOne(this.periodId)
     .subscribe((res: any) => {
-      
+      this.year = res.Data.Year -1;
       this.PeriodName= res.Data.PeriodName;
     });
   }

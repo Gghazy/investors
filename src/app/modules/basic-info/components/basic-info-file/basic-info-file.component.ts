@@ -76,7 +76,7 @@ export class BasicInfoFileComponent implements OnInit {
       const file1 = file.target.files[0];
       const fileType = file1.type;
 
-      if (fileType === 'image/png' || fileType === 'image/jpeg') {
+      if (fileType === 'image/png' || fileType === 'image/jpeg' ||fileType === 'application/pdf') {
         this.fileError = null;
 
         this.fileService

@@ -12,13 +12,12 @@
              <span class="required">*</span>
         </label>
 
-        <!-- <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="filterData(searchTerm)"> -->
-        <!-- <select  class="form-select" *ngIf="searchValue" [(ngModel)]="request.CustomItemName" (change)="onSelectionChange()">
-          <option *ngFor="let item of filteredData" [value]="item.Id"> -->
-           <!-- {{ item.Hs12NameAr }} ({{item. Hs12Code}})
-          </option>
-        </select> -->
-
+        <!-- <div class="multiselect-parent">
+            <ng-multiselect-dropdown [placeholder]="'أختر'" name="CustomItemName" [settings]="dropdownSettings2" [data]="products12"
+                [(ngModel)]="request.CustomItemName" (onSelect)="onSelectionChange()"
+              required>
+            </ng-multiselect-dropdown>
+        </div> -->
       
         <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName" name="CustomItemName" required>
             <option *ngFor="let item of products12" [value]="item.Id">

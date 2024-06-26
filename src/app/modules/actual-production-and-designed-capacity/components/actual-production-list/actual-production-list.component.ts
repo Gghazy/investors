@@ -23,6 +23,7 @@ export class ActualProductionListComponent implements OnInit {
   productId!:number |undefined;
   factoryStatus!:number;
   PeriodName!:string;
+  year!:number;
   @ViewChild('closeModal') Modal!: ElementRef;
   showReason: boolean = false
   constructor(
@@ -65,7 +66,7 @@ export class ActualProductionListComponent implements OnInit {
     this.periodService
     .getOne(this.periodId)
     .subscribe((res: any) => {
-      
+      this.year = res.Data.Year -1;
       this.PeriodName= res.Data.PeriodName;
     });
   } 

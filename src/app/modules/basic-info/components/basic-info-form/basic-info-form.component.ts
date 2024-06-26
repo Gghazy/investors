@@ -26,6 +26,7 @@ export class BasicInfoFormComponent implements OnInit {
   request = new FactoryModel();
   search = new FactorySearch();
   PeriodName!:string
+  year!:number;
   isDisabled!:boolean;
   submitted: boolean | undefined;
   lockSaveItem=false;
@@ -77,7 +78,7 @@ export class BasicInfoFormComponent implements OnInit {
     this.periodService
     .getOne(this.periodId)
     .subscribe((res: any) => {
-      
+      this.year = res.Data.Year -1;
       this.PeriodName= res.Data.PeriodName;
     });
   }
