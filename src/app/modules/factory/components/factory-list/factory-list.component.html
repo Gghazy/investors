@@ -2,9 +2,9 @@
 
     <div class="form-body row">
         <ul class="d-flex license">
-            <li class="col-12 col-xl-4 col-lg-6 col-md-6 col-sm-12" *ngFor="let factory of factories.Items">
+            <li class="col-12 col-xl-4 col-lg-6 col-md-6 col-sm-12" *ngFor="let factory of dataFactory">
                 <div class="license-container">
-                    <a [routerLink]="'/pages/period/'+factory.Id+'/Investor'">
+                    <a [routerLink]="'/pages/period/'+factory.FactoryId+'/Investor'">
                         <div class="license-info">
                             <div>
 
@@ -13,7 +13,7 @@
                                     <span>{{factory.NameAr}}</span>
                                 </p>
                                 <p>
-                                    <span class="fw-bold m-1">السجل التجاري:</span>
+                                    <span class="fw-bold m-1" >السجل التجاري:</span>
                                     <span>{{factory.CommercialRegister}}</span>
                                 </p>
                                 <p>
@@ -24,6 +24,7 @@
                             </div>
                             <div><img src="assets/images/logo-min.png" alt=""></div>
                         </div>
+                        <div *ngIf="!factory.FactoryUpdateStatus">
                         <div  class="license-footer">
                             <span class="btn btn-warning">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -34,21 +35,24 @@
                                     </path>
                                 </svg>
                                 لم يتم التحديث</span>
-                                <span>15/10/2021</span>
+                                <span> {{factory.UpdatedDate | date: 'dd/MM/yyyy'}}</span>
                         </div>
-                       
-                        <div  class="license-footer">
+                    </div>
+                       <div *ngIf="factory.FactoryUpdateStatus">
+                        
+                      
+                      <div  class="license-footer">
                             <span class="btn btn-primary">
                                 <svg fill="none" height="24" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2">
                                     <path d="M22 11.07V12a10 10 0 1 1-5.93-9.14"></path>
                                     <polyline points="23 3 12 14 9 11"></polyline>
                                 </svg>
                                 تم التحديث من قبل</span>
-                            <span>15/10/2021</span>
-                        </div>
-                    
+                            <span> {{factory.UpdatedDate | date: 'dd/MM/yyyy'}}</span> 
+                        </div> 
+                    </div>
                     </a>
-                </div>
+                 </div>
             </li>
         </ul>
         <app-pagination (changePage)="pageChanged($event)" [pageSize]="factories.PageSize"

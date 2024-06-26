@@ -41,14 +41,14 @@
                 
             </div>
             <div class="col-md-12 mt-3">
-                <h3> بيانات المدخلين والمعتمدين</h3>
+                <h3> هويات المخولين من المصنع بالإدخال والمراجعة والإعتماد </h3>
                 
             </div>
           
         <form  [formGroup]="BasicInfoForm" class="row">
 
             <div for="dataEntryId" class="col-md-4">
-                <label class="form-label"> هوية مدخل البيانات (رقم الهوية الوطنية) </label>
+                <label class="form-label"> هوية مدخل البيانات (رقم الهوية الوطنية / الإقامة) </label>
                 <input type="text" class="form-control"  formControlName="dataEntryId" id="dataEntryId" #DataEntry name="DataEntry" 
                 [(ngModel)]="request.DataEntry" >
                   <span  class="text-danger" *ngIf="submitted && (BasicInfoForm.get('dataEntryId')?.errors?.['pattern'])">
@@ -61,14 +61,14 @@
            
             </div>
             <div class="col-md-4">
-                <label for="dataReviewerId" class="form-label">  هوية مراجع البيانات (رقم الهوية الوطنية) </label>
+                <label for="dataReviewerId" class="form-label">  هوية مراجع البيانات (رقم الهوية الوطنية/ الإقامة) </label>
                 <input type="text" class="form-control" formControlName="dataReviewerId"  id="dataReviewerId"  [(ngModel)]="request.DataReviewer">
                 <span  class="text-danger" *ngIf="submitted && BasicInfoForm.get('dataReviewerId')?.errors?.['pattern']">
             الرجاء ادخال رقم هوية صحيح [يحتوي على ارقام صحيحة من 10 خانات]   
         </span>
             </div>
             <div class="col-md-4">
-                <label for="dataApproverId" class="form-label">  هوية معتمد البيانات (رقم الهوية الوطنية) </label>
+                <label for="dataApproverId" class="form-label">  هوية معتمد البيانات (رقم الهوية الوطنية/ الإقامة) </label>
                 <input type="text" class="form-control" formControlName="dataApproverId" id="dataApproverId"  [(ngModel)]="request.DataApprover">
                 <span  class="text-danger" *ngIf="submitted && ( BasicInfoForm.get('dataApproverId')?.errors?.['pattern'])">
             الرجاء ادخال رقم هوية صحيح [يحتوي على ارقام صحيحة من 10 خانات]   
