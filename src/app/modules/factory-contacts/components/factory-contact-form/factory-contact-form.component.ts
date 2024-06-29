@@ -19,7 +19,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 })
 export class FactoryContactFormComponent implements OnInit {
   submitted: boolean | undefined;
-
+  contactId=0;
   isDisabled!:boolean;
   factoryId: any;
   periodId: any;
@@ -75,6 +75,7 @@ export class FactoryContactFormComponent implements OnInit {
         debugger
         // this.request = res.Data;
         // this.phoneForm.setValue(res.Data);
+        this.contactId=res.Data.Id;
         this.phoneForm.controls.OfficerPhone.setValue(res.Data.OfficerPhone.Number);
         this.phoneForm.controls.FinanceManagerPhone.setValue(res.Data.FinanceManagerPhone.Number);
         this.phoneForm.controls.ProductionManagerPhone.setValue(res.Data.ProductionManagerPhone.Number);
@@ -107,6 +108,7 @@ export class FactoryContactFormComponent implements OnInit {
     this.request = this.phoneForm.value
     this.request.FactoryId = this.factoryId;
     this.request.periodId = this.periodId;
+    this.request.Id=this.contactId
     if (this.request.Id == 0) {
       this.lockSaveItem=true;
       this.factoryContactService
