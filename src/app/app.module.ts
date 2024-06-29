@@ -13,7 +13,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 
-
 export let InjectorInstance: Injector;
 
 
@@ -21,7 +20,7 @@ export let InjectorInstance: Injector;
   declarations: [
     AppComponent,
     LoginComponent,
-    RecoverPasswordComponent,   
+    RecoverPasswordComponent,
   ],
   imports: [
     AppRoutingModule,

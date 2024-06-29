@@ -20,6 +20,8 @@ import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-l
 export class FinancialDetailFormComponent {
   factoryId: any;
   periodId: any;
+  approveStatus:boolean;
+  approveStatusText:any;
   statusFile!:number;
   statusFileType!:boolean;
   lockSaveItem=false;
@@ -41,6 +43,9 @@ export class FinancialDetailFormComponent {
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
+    this.approveStatusText=completeStatus;
   }
   ngOnInit(): void {
     this.ToggleDisable()
@@ -109,7 +114,7 @@ public getFilestatusType(item: any):void {
         this.toastr.success("تم حفظ البيانات المالية بنجاح");
         this.lockSaveItem=false;
 
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
       });
     }
@@ -122,7 +127,7 @@ public getFilestatusType(item: any):void {
         this.toastr.success("تم تعديل البيانات المالية بنجاح");
         this.lockSaveItem=false;
 
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
       });
     }

@@ -2,7 +2,7 @@
     <div class="form-header">
         <h2 class="form-title"> موقع المصنع لشهر {{PeriodName}}  -عام  {{year}} </h2>
         <div>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -85,14 +85,14 @@
 
         </div>
 
-        <app-location-file [factoryLocationId]="request.Id" (fileStatusLoc)="getFilestatus($event)"></app-location-file>
+        <app-location-file  [approvedStatus]="approveStatusText" [factoryLocationId]="request.Id" (fileStatusLoc)="getFilestatus($event)"></app-location-file>
 
     
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1"  type="submit">حفظ</button>
+            <button class="btn btn-primary me-1"[disabled]="approveStatus"  type="submit">حفظ</button>
 
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="btn btn-danger">الغاء</a>
         </div>
     </div>
 </form>

@@ -2,7 +2,7 @@
     <div class="form-header">
         <h2 class="form-title"> البيانات المالية لشهر {{PeriodName}}</h2>
         <div>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -26,7 +26,7 @@
                     </label>
                     <div class="input-group">
                         <input type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"  noMinus #WaterExpenses="ngModel" required class="form-control "
-                            name="WaterExpenses" [(ngModel)]="request.WaterExpenses" [disabled]="isDisabled">
+                            name="WaterExpenses" [(ngModel)]="request.WaterExpenses" [disabled]="approveStatus">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
                     </div>
@@ -51,7 +51,7 @@
                     </label>
                     <div class="input-group">
                         <input type="number"  min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus #ElectricityExpenses="ngModel" required class="form-control "
-                            name="ElectricityExpenses" [(ngModel)]="request.ElectricityExpenses" [disabled]="isDisabled">
+                            name="ElectricityExpenses" [(ngModel)]="request.ElectricityExpenses" [disabled]="approveStatus">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
                     </div>
@@ -76,7 +76,7 @@
                     </label>
                     <div class="input-group">
                         <input type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"  step="1"  noMinus #FuelExpenses="ngModel" required class="form-control "
-                            name="FuelExpenses" [(ngModel)]="request.FuelExpenses" [disabled]="isDisabled">
+                            name="FuelExpenses" [(ngModel)]="request.FuelExpenses" [disabled]="approveStatus">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
                     </div>
@@ -101,7 +101,7 @@
                     </label>
                     <div class="input-group">
                         <input type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"  step="1"  noMinus #RawMterialExpenses="ngModel" required class="form-control "
-                            name="RawMterialExpenses" [(ngModel)]="request.RawMterialExpenses" [disabled]="isDisabled">
+                            name="RawMterialExpenses" [(ngModel)]="request.RawMterialExpenses" [disabled]="approveStatus">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
                     </div>
@@ -126,7 +126,7 @@
                     </label>
                     <div class="input-group">
                         <input type="number" min="1" max="10000000000"  pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus #EmploymentExpenses="ngModel" required class="form-control "
-                            name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses" [disabled]="isDisabled">
+                            name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses" [disabled]="approveStatus">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
                     </div>
@@ -152,7 +152,7 @@
                     </label>
                     <div class="input-group">
                         <input type="number"  min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus #OtherOperatingExpenses="ngModel" required class="form-control "
-                            name="OtherOperatingExpenses" [(ngModel)]="request.OtherOperatingExpenses" [disabled]="isDisabled">
+                            name="OtherOperatingExpenses" [(ngModel)]="request.OtherOperatingExpenses" [disabled]="approveStatus">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
                     </div>
@@ -186,8 +186,8 @@
             </div>
             <div class="form-footer">
                 <div class="col-12">
-                    <button class="btn btn-primary me-1" [disabled]="myForm.invalid" type="submit">حفظ</button>
-                    <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+                    <button class="btn btn-primary me-1" [disabled]="myForm.invalid || approveStatus" type="submit">حفظ</button>
+                    <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="btn btn-danger">الغاء</a>
                 </div>
             </div>
         </form>

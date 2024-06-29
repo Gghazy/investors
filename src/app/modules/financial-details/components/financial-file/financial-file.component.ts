@@ -20,9 +20,13 @@ export class FinancialFileComponent implements OnInit {
   src!:string;
   isDisabled:boolean=false;
   @Input() financialId!:number;
+
+  @Input() approveStatus!:boolean;
   @ViewChild('fileInput') fileInput!: ElementRef;
   @Output() fileStatusFin = new EventEmitter<any>();
   @Output() fileStatusType = new EventEmitter<any>();
+
+  
 
   fileError: string | null = null;
   addFileButton: boolean = false
@@ -36,6 +40,7 @@ export class FinancialFileComponent implements OnInit {
     ){
       this.factoryId = this.route.snapshot.paramMap.get('id');
       this.periodId = this.route.snapshot.paramMap.get('periodid');
+      
     }
 
   ngOnInit(): void {

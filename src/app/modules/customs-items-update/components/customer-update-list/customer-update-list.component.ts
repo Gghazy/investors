@@ -18,6 +18,8 @@ export class CustomerUpdateListComponent implements OnInit {
 
   factoryId: any;
   periodId: any;
+  approveStatus:boolean;
+  approveStatusText:any;
   search = new ProductSearch();
   products = new ResultResponse<ProductModel>();
 PeriodName!:string
@@ -36,6 +38,9 @@ year!:number;
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
+    this.approveStatusText=completeStatus;
   }
   ngOnInit() {
     this.getProducts()
@@ -114,7 +119,7 @@ year!:number;
       .subscribe((res: any) => {
         this.lockSaveItem=false
         this.toastr.success("تم تحديث البند الجمركي بنجاح");
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
       });
     

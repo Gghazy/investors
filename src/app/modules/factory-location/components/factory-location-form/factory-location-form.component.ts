@@ -30,6 +30,8 @@ export class FactoryLocationFormComponent {
   lockSaveItem=false;
   PeriodName!: string
   year!:number;
+  approveStatus:boolean;
+  approveStatusText:any;
   request = new LocationModel();
   cities: LookUpModel[] = [];
   industrialAreas: LookUpModel[] = [];
@@ -49,6 +51,9 @@ export class FactoryLocationFormComponent {
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
+    this.approveStatusText=completeStatus;
   }
   ngOnInit(): void {
     this.ToggleDisable()
@@ -58,6 +63,7 @@ export class FactoryLocationFormComponent {
     this.getFactoryEntities();
     this.getperiod()
     this.createfactoryLocationForm();
+    
 
   }
   getperiod() {
@@ -133,10 +139,10 @@ export class FactoryLocationFormComponent {
   createfactoryLocationForm(): void {
    
     this.factoryLocForm = this.formBuilder.group({
-      factoryEntityId: ['', [Validators.required]],
-      cityId: ['', [Validators.required]],
-      industrialAreaId: ['', [Validators.required]],
-      webSiteUrl:  ['https://www.google.com/maps', Validators.compose([Validators.required,Validators.pattern("https://www.google.com/maps.+")])],
+      factoryEntityId: [{value:'',disabled: this.approveStatus}, [Validators.required]],
+      cityId: [{value:'',disabled: this.approveStatus}, [Validators.required]],
+      industrialAreaId: [{value:'',disabled: this.approveStatus}, [Validators.required]],
+      webSiteUrl:  [{value:'https://www.google.com/maps',disabled: this.approveStatus}, Validators.compose([Validators.required,Validators.pattern("https://www.google.com/maps.+")])],
 
     });
   }
@@ -177,7 +183,7 @@ export class FactoryLocationFormComponent {
           this.toastr.success("تم حفظ موقع المصنع بنجاح");
           this.lockSaveItem=false;
           this.getLocation();
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
         
         });
@@ -189,7 +195,7 @@ export class FactoryLocationFormComponent {
         .subscribe((res: any) => {
           this.toastr.success("تم تعديل موقع المصنع بنجاح");
           this.lockSaveItem=false;
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
         });
     }

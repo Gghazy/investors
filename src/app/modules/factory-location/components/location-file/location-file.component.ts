@@ -20,6 +20,8 @@ export class LocationFileComponent implements OnInit {
   request = new LocationFileModel();
   src!: string;
   @Input() factoryLocationId!: number;
+  @Input() approvedStatus!:string;
+  approveStatus:boolean=false;
   @ViewChild('fileInputLoc') fileInputLoc!: ElementRef;
   @Output() fileStatusLoc = new EventEmitter<any>();
 
@@ -42,8 +44,10 @@ export class LocationFileComponent implements OnInit {
     
   }
  initValue(){
+  this.approveStatus=this.approvedStatus!.toLocaleLowerCase()==="true"?true:false;
   this.request.Type=this.selectedFirstItem;
   this.fileError = '';
+
  }
   getFiles() {
     this.factoryLocationService

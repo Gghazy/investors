@@ -27,7 +27,7 @@
     
     <div class="col-md-6">
         <label class="form-label" > نوع المستند <span class="required">*</span></label>
-        <select name="Type" id="Type" [(ngModel)]="request.Type" class="form-select">
+        <select [disabled]="approveStatus" name="Type" id="Type" [(ngModel)]="request.Type" class="form-select">
             <option [ngValue]="0">الإقرار الزكوي </option>
             <option [ngValue]="1">القوائم المالية</option>
         </select>
@@ -38,10 +38,10 @@
             <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
             </span>  </label>
         <div class="input-group">
-            <input type="file" #fileInput class="form-control" placeholder="" value="" 
+            <input [disabled]="approveStatus" type="file" #fileInput class="form-control" placeholder="" value="" 
             accept=".pdf"
             (change)="saveFile($event)">
-            <button class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+            <button [disabled]="approveStatus" class="btn btn-primary" type="button" (click)="save()">اضافة </button>
         </div>
         <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
     </div>
@@ -66,7 +66,7 @@
                 عرض
 
             </span>
-                <span (click)="deleteFile(file.Id)" class="btn btn-danger" *ngIf="!isDisabled" >حذف</span>
+                <button type="button" [disabled]="approveStatus" (click)="deleteFile(file.Id)" class="btn btn-danger" *ngIf="!isDisabled" >حذف</button>
      
            
         </td>

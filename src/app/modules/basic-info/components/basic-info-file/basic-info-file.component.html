@@ -23,7 +23,7 @@
 
     
     <label class="form-label" > نوع المستند <span class="required">*</span></label>
-    <select name="Type"  #Type="ngModel" required  id="Type"  [(ngModel)]="request.Type" class="form-select"  required>
+    <select [disabled]="approveStatus"  name="Type"  #Type="ngModel" required  id="Type"  [(ngModel)]="request.Type" class="form-select"  required>
         <option [ngValue]="0" selected>صورة واجهة المصنع</option>
     </select>
 
@@ -35,9 +35,9 @@
         </span> 
         <span class="required">*</span>   </label>
     <div class="input-group">
-        <input type="file" #fileInput  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
+        <input  [disabled]="approveStatus"  type="file" #fileInput  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
        
-        <button  class="btn btn-primary" type="submit" >اضافة </button>
+        <button  [disabled]="approveStatus" class="btn btn-primary" type="submit" >اضافة </button>
     </div>
     <div *ngIf="fileError" class="validation-error text-center">{{ fileError }}</div>
 
@@ -62,7 +62,7 @@
                 عرض
 
             </a>
-            <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
+            <button type="button" (click)="(file.Id)"   [disabled]="approveStatus" class="btn btn-danger">حذف</button>
         </td>
       </tr>
     </ng-template>

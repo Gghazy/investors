@@ -51,10 +51,10 @@
                 <td *ngIf="InspectorRole" class="text-danger">لم يتم الاعتماد</td>
                 
                 <td>
-                    <a  *ngIf="!InspectorRole" (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                    <a  *ngIf="!InspectorRole" (click)="navigateToDetails(period.Id,period.Status)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                         عرض
                     </a>
-                    <a *ngIf="InspectorRole" (click)="navigateToDetails(period.Id)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                    <a *ngIf="InspectorRole" (click)="navigateToDetails(period.Id,period.Status)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                 عرض
                     </a>
                 </td>

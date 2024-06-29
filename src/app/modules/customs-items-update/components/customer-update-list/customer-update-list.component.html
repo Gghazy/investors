@@ -2,7 +2,7 @@
     <div class="form-header">
       <h2 class="form-title"> بيانات تحديث البند الجمركي لشهر {{PeriodName}}  -عام  {{year}} </h2>
       <div>
-        <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
+        <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="back-link">
           رجوع
           <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -35,7 +35,7 @@
               <td>{{i+1}}</td>
               <td>
                 <div class="form-check">
-                  <input [checked]="product.IsActive"  class="form-check-input" type="checkbox" value="" id=""
+                  <input [disabled]="approveStatus" [checked]="product.IsActive"  class="form-check-input" type="checkbox" value="" id=""
                     (change)="handleCheckboxChange(product.Id)" />
                 </div>
               </td>
@@ -50,8 +50,8 @@
     </div>
     <div class="form-footer">
       <div class="col-12">
-          <button class="btn btn-primary me-1" (click)="save()">حفظ</button>
-          <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+          <button  [disabled]="approveStatus" class="btn btn-primary me-1" (click)="save()">حفظ</button>
+          <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="btn btn-danger">الغاء</a>
       </div>
   </div>
   </section>

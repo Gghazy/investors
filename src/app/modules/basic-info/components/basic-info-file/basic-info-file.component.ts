@@ -21,8 +21,11 @@ export class BasicInfoFileComponent implements OnInit {
   src!:string;
   fileError: string | null = null;
   addFileButton:boolean= false
+  approveStatus:boolean=false;
   @Input() factoryId!:string;
   @Input() periodId!:string;
+  @Input() approvedStatus!:string;
+
   @ViewChild('fileInput') fileInput!: ElementRef;
   @Output() fileStatus = new EventEmitter<any>();
   constructor(
@@ -35,10 +38,13 @@ export class BasicInfoFileComponent implements OnInit {
   ngOnInit(): void {
    this.getFiles();
    this.initValue();
+
   }
   initValue(){
     this.request.Type=this.selectedFirstItem;
     this.fileError = '';
+    this.approveStatus=this.approvedStatus!.toLocaleLowerCase()==="true"?true:false;
+
 
    }
   selectFirstItem(): void {

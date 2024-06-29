@@ -15,6 +15,8 @@ export class MonthlyFinancialFormComponent implements OnInit {
   isDisabled!:boolean;
   factoryId: any;
   periodId: any;
+  approveStatus:boolean;
+  approveStatusText:any;
   request = new MonthlyFinancialModel();
 PeriodName!:string
 lockSaveItem=false;
@@ -29,6 +31,9 @@ lockSaveItem=false;
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
+    this.approveStatusText=completeStatus;
   }
   ngOnInit(): void {
     this.ToggleDisable()
@@ -77,7 +82,7 @@ lockSaveItem=false;
         this.toastr.success("تم حفظ البيانات المالية بنجاح");
         this.lockSaveItem=false;
 
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
       });
     }
@@ -90,7 +95,7 @@ lockSaveItem=false;
         this.toastr.success("تم تعديل البيانات المالية بنجاح");
         this.lockSaveItem=false;
 
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
       });
     }

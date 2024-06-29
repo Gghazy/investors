@@ -2,7 +2,7 @@
     <div class="form-header">
         <h2 class="form-title"> البيانات المالية لعام {{year}}</h2>
         <div>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -31,7 +31,7 @@
 
                     <div class="input-group">
 
-                        <input type="number"  max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"  noMinus #Revenues="ngModel" required class="form-control" name="Revenues"
+                        <input [disabled]="approveStatus" type="number"  max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"  noMinus #Revenues="ngModel" required class="form-control" name="Revenues"
                             [(ngModel)]="request.Revenues"  min="10000" [disabled]="isDisabled" >
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -63,7 +63,7 @@
                         <i>؟</i>
                     </label>
                     <div class="input-group">
-                        <input type="number" noMinus #WaterExpenses="ngModel" required class="form-control " min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))" 
+                        <input [disabled]="approveStatus" type="number" noMinus #WaterExpenses="ngModel" required class="form-control " min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))" 
                             name="WaterExpenses" [(ngModel)]="request.WaterExpenses"  [disabled]="isDisabled">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -88,7 +88,7 @@
                         <i>؟</i>
                     </label>
                     <div class="input-group">
-                        <input type="number" noMinus #ElectricityExpenses="ngModel" required class="form-control " min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))" 
+                        <input [disabled]="approveStatus" type="number" noMinus #ElectricityExpenses="ngModel" required class="form-control " min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))" 
                             name="ElectricityExpenses" [(ngModel)]="request.ElectricityExpenses" [disabled]="isDisabled">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -113,8 +113,8 @@
 
                         <i>؟</i>
                     </label>
-                    <div class="input-group">
-                        <input type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   snoMinus #FuelExpenses="ngModel" required class="form-control "
+                    <div  class="input-group">
+                        <input [disabled]="approveStatus" type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   snoMinus #FuelExpenses="ngModel" required class="form-control "
                             name="FuelExpenses" [(ngModel)]="request.FuelExpenses" [disabled]="isDisabled">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -139,7 +139,7 @@
                         <i>؟</i>
                     </label>
                     <div class="input-group">
-                        <input type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"  noMinus #RawMterialExpenses="ngModel" required class="form-control "
+                        <input [disabled]="approveStatus" type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"  noMinus #RawMterialExpenses="ngModel" required class="form-control "
                             name="RawMterialExpenses" [(ngModel)]="request.RawMterialExpenses" [disabled]="isDisabled">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -165,7 +165,7 @@
                         <i>؟</i>
                     </label>
                     <div class="input-group">
-                        <input type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus #EmploymentExpenses="ngModel" required class="form-control "
+                        <input [disabled]="approveStatus" type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus #EmploymentExpenses="ngModel" required class="form-control "
                             value="5000" name="EmploymentExpenses" [(ngModel)]="request.EmploymentExpenses" [disabled]="isDisabled">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -192,7 +192,7 @@
                         <i>؟</i>
                     </label>
                     <div class="input-group">
-                        <input type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus #OtherOperatingExpenses="ngModel" required class="form-control "
+                        <input [disabled]="approveStatus" type="number" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus #OtherOperatingExpenses="ngModel" required class="form-control "
                             name="OtherOperatingExpenses" [(ngModel)]="request.OtherOperatingExpenses" [disabled]="isDisabled">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -222,7 +222,7 @@
                         <i>؟</i>
                     </label>
                     <div class="input-group">
-                        <input type="number"   step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus class="form-control " name="TotalExpenses"
+                        <input [disabled]="approveStatus" type="number"   step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus class="form-control " name="TotalExpenses"
                             [ngModel]="getTotalExpenses()" disabled min="10000" max="50000000000">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -245,7 +245,7 @@
                         <i>؟</i>
                     </label>
                     <div class="input-group">
-                        <input type="number" min="1" max="100000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus #Assets="ngModel" required class="form-control " name="Assets"
+                        <input [disabled]="approveStatus" type="number" min="1" max="100000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus #Assets="ngModel" required class="form-control " name="Assets"
                             [(ngModel)]="request.Assets"  [disabled]="isDisabled">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -269,7 +269,7 @@
                         <i>؟</i>
                     </label>
                     <div class="input-group">
-                        <input type="number"   min="1"  pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"  noMinus #NonCurrentAssets="ngModel" required class="form-control "
+                        <input  [disabled]="approveStatus" type="number"   min="1"  pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"  noMinus #NonCurrentAssets="ngModel" required class="form-control "
                             name="NonCurrentAssets" [(ngModel)]="request.NonCurrentAssets" max="100000000000" [disabled]="isDisabled">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -299,7 +299,7 @@
                         <i>؟</i>
                     </label>
                     <div class="input-group">
-                        <input type="number"  min="1"  pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))" noMinus #CurrentLiabilities="ngModel" required class="form-control "
+                        <input [disabled]="approveStatus" type="number"  min="1"  pattern="[0-9]+([\.,][0-9]{1,3})?" step="1.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))" noMinus #CurrentLiabilities="ngModel" required class="form-control "
                             name="CurrentLiabilities" [(ngModel)]="request.CurrentLiabilities" max="100000000000" [disabled]="isDisabled">
                         <input type="text" class="form-control " placeholder="" value="ريال سعودي" disabled
                             style="max-width: 117px;">
@@ -346,14 +346,14 @@
 
 
 
-            <app-financial-file  [financialId]="request.Id" (fileStatusFin)="getFilestatus($event)" (fileStatusType)="getFilestatusType($event)"></app-financial-file>
+            <app-financial-file [approveStatus]="approveStatus"  [financialId]="request.Id" (fileStatusFin)="getFilestatus($event)" (fileStatusType)="getFilestatusType($event)"></app-financial-file>
 
 
 
             <div class="form-footer">
                 <div class="col-12">
-                    <button class="btn btn-primary me-1" [disabled]="myForm.invalid" type="submit">حفظ</button>
-                    <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+                    <button class="btn btn-primary me-1" [disabled]="myForm.invalid || approveStatus" type="submit">حفظ</button>
+                    <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="btn btn-danger">الغاء</a>
                 </div>
             </div>
         </form>

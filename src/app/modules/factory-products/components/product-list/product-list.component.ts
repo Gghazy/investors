@@ -25,8 +25,10 @@ export class ProductListComponent implements OnInit {
   PeriodName!: string;
   year!:number;
   modalLable!: string;
+  approveStatus:boolean;
+  approveStatusText:any;
   @ViewChild('closeModal') Modal!: ElementRef;
-
+ 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -38,6 +40,9 @@ export class ProductListComponent implements OnInit {
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
+    this.approveStatusText=completeStatus;
   }
   ngOnInit(): void {
    // this.getProducts();
@@ -133,7 +138,7 @@ export class ProductListComponent implements OnInit {
   }
   save() {
     this.toastr.success("تم الحفظ");
-    this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+    this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
   }
 }

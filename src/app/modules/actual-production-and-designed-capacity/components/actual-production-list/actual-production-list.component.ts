@@ -16,6 +16,8 @@ import { ToastrService } from 'ngx-toastr';
 export class ActualProductionListComponent implements OnInit {
   factoryId:any;
   periodId:any;
+  approveStatus:boolean;
+  approveStatusText:any;
   products = new ResultResponse<ActualProductModel>();
   search=new ActualProductSearch();
   actualCapacityProductId!:number |undefined;
@@ -36,6 +38,9 @@ export class ActualProductionListComponent implements OnInit {
     ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
+    this.approveStatusText=completeStatus;
   }
   ngOnInit(): void {
     this.getLevel12Product();
@@ -96,7 +101,7 @@ export class ActualProductionListComponent implements OnInit {
   }
 save(){
   this.toastr.success("تم الحفظ");
-  this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+  this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
 }
 }

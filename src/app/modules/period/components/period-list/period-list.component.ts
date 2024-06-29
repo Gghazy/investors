@@ -57,13 +57,18 @@ this.InspectorRole =this.router.url.includes('Inspector')
     this.getPeriods();
 
   }
-  navigateToDetails(periodId: number) {
+  navigateToDetails(periodId: number,status: string) {
+    let completeStatus=false;
+    if(status=='3')
+       completeStatus=true;
+
     if(this.router.url.includes('Inspector')){
       this.router.navigate(['/pages/Inspector/visit-landing', this.factoryId, periodId]);
     
     }
     if(this.router.url.includes('Investor')){
-      this.router.navigate(['/pages/factory-landing', this.factoryId, periodId]);
+    
+      this.router.navigate(['/pages/factory-landing', this.factoryId, periodId,completeStatus]);
     
     }
       

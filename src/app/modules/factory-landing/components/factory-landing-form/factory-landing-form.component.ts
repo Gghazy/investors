@@ -23,6 +23,8 @@ export class FactoryLandingFormComponent implements OnInit {
   isChecked: boolean = false;
   factoryId: any;
   periodId: any;
+  completeStatus:any;
+
   factoryName!: string;
   periodStartDate!: string;
   periodMonth!: number;
@@ -47,6 +49,8 @@ export class FactoryLandingFormComponent implements OnInit {
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    this.completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+
 
   }
 

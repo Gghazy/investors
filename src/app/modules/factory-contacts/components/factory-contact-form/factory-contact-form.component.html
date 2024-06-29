@@ -2,7 +2,7 @@
   <div class="form-header">
     <h2 class="form-title">بيانات جهة الإتصال  لشهر {{PeriodName}}  -عام  {{year}} </h2>
     <div>
-      <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
+      <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="back-link">
         رجوع
         <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -42,7 +42,8 @@
                     formControlName="OfficerPhone"
                     [enablePlaceholder]="true"
                     [customPlaceholder]="defaultPhone"
-                    [disabled]="isDisabled"
+                    [disabled]="approveStatus"
+                   [value]="'officerPhoneValue'"
                    >
                   </ngx-intl-tel-input>
                 
@@ -59,10 +60,10 @@
                     <input
                       type="email"
                       class="form-control"
-                 
+                      [value]="contactDetails.OfficerEmail" 
                       name="OfficerEmail"
                       formControlName="OfficerEmail"
-                      [disabled]="isDisabled"
+                      [disabled]="approveStatus"
                     />
                   </div>
                   <div class="text-danger" *ngIf="submitted && phoneForm.get('OfficerEmail')?.errors">
@@ -95,7 +96,7 @@
                     formControlName="ProductionManagerPhone"
                     [enablePlaceholder]="true"
                     [customPlaceholder]="defaultPhone"
-                    [disabled]="isDisabled"
+                    [disabled]="approveStatus"
                   >
                   </ngx-intl-tel-input>
                   <div class="text-danger" *ngIf="submitted && phoneForm.get('ProductionManagerPhone')?.errors">
@@ -111,10 +112,10 @@
                     <input
                       type="email"
                       class="form-control"
-                      
+                      [value]="contactDetails.ProductionManagerEmail"
                       name="ProductionManagerEmail"
                       formControlName="ProductionManagerEmail"
-                      [disabled]="isDisabled"
+                      [disabled]="approveStatus"
                     />
                   </div>
                   <div class="text-danger" *ngIf="submitted && phoneForm.get('ProductionManagerEmail')?.errors">
@@ -147,7 +148,7 @@
                     formControlName="FinanceManagerPhone"
                     [enablePlaceholder]="true"
                     [customPlaceholder]="defaultPhone"
-                    [disabled]="isDisabled"
+                    [disabled]="approveStatus"
                   >
                   </ngx-intl-tel-input>
                   <div class="text-danger" *ngIf="submitted && phoneForm.get('FinanceManagerPhone')?.errors">
@@ -165,7 +166,8 @@
                       class="form-control"
                       name="FinanceManagerEmail"
                       formControlName="FinanceManagerEmail"
-                      [disabled]="isDisabled"
+                      [disabled]="approveStatus"
+                      [value]="contactDetails.FinanceManagerEmail"
                     />
                   </div>
                   <div class="text-danger" *ngIf="submitted && phoneForm.get('FinanceManagerEmail')?.errors">
@@ -177,8 +179,8 @@
               </div>
               <div class="form-footer">
                 <div class="col-12">
-                  <button class="btn btn-primary me-1" type="submit">حفظ</button>
-                  <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+                  <button class="btn btn-primary me-1" type="submit" [disabled]="approveStatus">حفظ</button>
+                  <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="btn btn-danger">الغاء</a>
                 </div>
               </div>
             </form> 

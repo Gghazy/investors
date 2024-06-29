@@ -23,6 +23,9 @@ export class BasicInfoFormComponent implements OnInit {
  statusFile!:number;
   factoryId: any;
   periodId: any;
+  approveStatus:boolean;
+  approveStatusText:any;
+
   request = new FactoryModel();
   search = new FactorySearch();
   PeriodName!:string
@@ -43,6 +46,9 @@ export class BasicInfoFormComponent implements OnInit {
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
+    this.approveStatusText=completeStatus;
   }
   ngOnInit(): void {
     this.createBasicInfoForm();
@@ -54,9 +60,9 @@ export class BasicInfoFormComponent implements OnInit {
   createBasicInfoForm(): void {
    
     this.BasicInfoForm = this.formBuilder.group({
-      dataEntryId: ['', [Validators.pattern("^[1-2][0-9]{9}$")]],
-      dataReviewerId: ['', [Validators.pattern("^[1-2][0-9]{9}$")]],
-      dataApproverId: ['', [Validators.pattern("^[1-2][0-9]{9}$")]],
+      dataEntryId: [{value:'',disabled: this.approveStatus}, [Validators.pattern("^[1-2][0-9]{9}$")]],
+      dataReviewerId: [{value:'',disabled: this.approveStatus}, [Validators.pattern("^[1-2][0-9]{9}$")]],
+      dataApproverId: [{value:'',disabled: this.approveStatus}, [Validators.pattern("^[1-2][0-9]{9}$")]],
 
     });
   }
@@ -140,7 +146,7 @@ export class BasicInfoFormComponent implements OnInit {
         
           this.toastr.success("تم حفظ البيانات الأساسية بنجاح");
           this.lockSaveItem=false;
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
         });
   }
  

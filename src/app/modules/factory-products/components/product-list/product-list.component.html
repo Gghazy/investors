@@ -2,7 +2,7 @@
   <div class="form-header">
     <h2 class="form-title">بيانات المنتجات  لشهر {{PeriodName}}  -عام  {{year}} </h2>
     <div>
-      <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
+      <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="back-link">
         رجوع
         <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -96,7 +96,7 @@
             </button>
           </td>
           <td>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct"
+            <button [disabled]="approveStatus" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct"
               (click)="edit(product.Id,product.ProductId)">
               تعديل
             </button>
@@ -114,7 +114,7 @@
          
         </label>
 
-        <select class="form-select if-yes" (change)="handleSelectChange($event)">
+        <select [disabled]="approveStatus" class="form-select if-yes" (change)="handleSelectChange($event)">
           <option value="yes">نعم</option>
           <option value="no" selected>لا</option>
         </select>
@@ -122,7 +122,7 @@
       <div class="col-md-4 show-input" [ngClass]="{ 'd-none': !showInput }">
         <label class="form-label"> <br/></label>
         <div class="form-group">
-          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct" (click)="edit(0,0)">
+          <button [disabled]="approveStatus" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct" (click)="edit(0,0)">
             إضافة منتج
           </button>
         </div>
@@ -132,8 +132,8 @@
   </div>
   <div class="form-footer">
     <div class="col-12">
-      <button  class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-      <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+      <button [disabled]="approveStatus" class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
+      <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="btn btn-danger">الغاء</a>
     </div>
   </div>
 </section>

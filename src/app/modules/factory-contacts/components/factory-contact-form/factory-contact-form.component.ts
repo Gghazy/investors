@@ -19,6 +19,13 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 })
 export class FactoryContactFormComponent implements OnInit {
   submitted: boolean | undefined;
+  phoneForm!: FormGroup;
+  officerPhoneValue:any;
+  financeManagerPhoneValue:any;
+  productionManagerPhoneValue:any;
+
+
+contactDetails=new FactoryContactModel();
   contactId=0;
   isDisabled!:boolean;
   factoryId: any;
@@ -27,25 +34,15 @@ export class FactoryContactFormComponent implements OnInit {
   defaultPhone:any;
   PeriodName!:string
   year!:number;
+  approveStatus:boolean;
+  approveStatusText:any;
   separateDialCode = false;
   lockSaveItem=false;
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
-  phoneForm = new FormGroup({
-    OfficerPhone: new FormControl(null, [Validators.required, this.saPhoneNumberValidator]),
-    OfficerEmail: new FormControl(null, [Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
-    ProductionManagerPhone: new FormControl(null, [Validators.required, this.saPhoneNumberValidator]),
-    ProductionManagerEmail: new FormControl(null, [Validators.required,    Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
-    ]),                                                                                                           
-    FinanceManagerPhone: new FormControl(null, [Validators.required, this.saPhoneNumberValidator]),
-    FinanceManagerEmail: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
-    ]),
-    Id: new FormControl(0),
-    FactoryId: new FormControl(undefined)
-
-  });
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -57,16 +54,54 @@ export class FactoryContactFormComponent implements OnInit {
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
+    this.approveStatusText=completeStatus;
 
   }
   ngOnInit(): void {
+    this.createContactForm();
+
     this.ToggleDisable()
     this.getContact();
     this.getperiod()
     this.defaultPhone="0xxxxxxxxx";
+   
+
 
   }
+  updateContactForm(): void {
+   
+    this.phoneForm = new FormGroup({
+      OfficerPhone: new FormControl({value:this.officerPhoneValue,disabled: 
+        this.approveStatus}, 
+        [Validators.required, this.saPhoneNumberValidator]),
+      ProductionManagerPhone: new FormControl({value:this.productionManagerPhoneValue,
+        disabled: this.approveStatus},
+         [Validators.required, this.saPhoneNumberValidator]),                                                                                                       
+      FinanceManagerPhone: new FormControl({value:this.financeManagerPhoneValue,
+        disabled: this.approveStatus}, [Validators.required,
+           this.saPhoneNumberValidator]),
 
+    });
+  }
+createContactForm(): void {
+  this.financeManagerPhoneValue=this.financeManagerPhoneValue!=null?this.financeManagerPhoneValue:null
+   this.phoneForm = new FormGroup({
+    OfficerPhone: new FormControl({value:this.officerPhoneValue,disabled: this.approveStatus}, [Validators.required, this.saPhoneNumberValidator]),
+    OfficerEmail: new FormControl({value:null,disabled: this.approveStatus}, [Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
+    ProductionManagerPhone: new FormControl({value:this.productionManagerPhoneValue,disabled: this.approveStatus}, [Validators.required, this.saPhoneNumberValidator]),
+    ProductionManagerEmail: new FormControl({value:null,disabled: this.approveStatus}, [Validators.required,    Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
+    ]),                                                                                                           
+    FinanceManagerPhone: new FormControl({value:this.financeManagerPhoneValue,disabled: this.approveStatus}, [Validators.required, this.saPhoneNumberValidator]),
+    FinanceManagerEmail: new FormControl({value:null,disabled: this.approveStatus}, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
+    ]),
+    FactoryId: new FormControl(undefined)
+
+  });
+    
+  }
+  
   getContact() {
 
     this.factoryContactService
@@ -76,19 +111,26 @@ export class FactoryContactFormComponent implements OnInit {
         // this.request = res.Data;
         // this.phoneForm.setValue(res.Data);
         this.contactId=res.Data.Id;
-        this.phoneForm.controls.OfficerPhone.setValue(res.Data.OfficerPhone.Number);
-        this.phoneForm.controls.FinanceManagerPhone.setValue(res.Data.FinanceManagerPhone.Number);
-        this.phoneForm.controls.ProductionManagerPhone.setValue(res.Data.ProductionManagerPhone.Number);
+        this.contactDetails=res.Data
+        this.officerPhoneValue=res.Data.OfficerPhone.Number;
+        this.financeManagerPhoneValue=res.Data.FinanceManagerPhone.Number;
+        this.productionManagerPhoneValue=res.Data.ProductionManagerPhone.Number;
+        this.updateContactForm();
+
+
+       // this.phoneForm.controls.OfficerPhone.value=res.Data.OfficerPhone.Number;
+        //this.phoneForm.controls.FinanceManagerPhone.setValue(res.Data.FinanceManagerPhone.Number);
+        //this.phoneForm.controls.ProductionManagerPhone.setValue(res.Data.ProductionManagerPhone.Number);
         
-        this.phoneForm.controls.OfficerEmail.setValue(res.Data.OfficerEmail);
-        this.phoneForm.controls.FinanceManagerEmail.setValue(res.Data.FinanceManagerEmail);
-        this.phoneForm.controls.ProductionManagerEmail.setValue(res.Data.ProductionManagerEmail);
+       // this.phoneForm.controls.OfficerEmail.setValue(res.Data.OfficerEmail);
+       // this.phoneForm.controls.FinanceManagerEmail.setValue(res.Data.FinanceManagerEmail);
+     //   this.phoneForm.controls.ProductionManagerEmail.setValue(res.Data.ProductionManagerEmail);
       });
   }
   ToggleDisable() {
     let userId=  this.sharedService.getUserId()
 
-   this.isDisabled= this.sharedService.toggleDisable(this.factoryId,this.periodId,userId)
+   //this.isDisabled= this.sharedService.toggleDisable(this.factoryId,this.periodId,userId)
   
   }
   save() {
@@ -117,7 +159,7 @@ export class FactoryContactFormComponent implements OnInit {
           this.request = res.Data;
           this.lockSaveItem=false;
           this.toastr.success("تم حفظ بيانات جهة الإتصال بنجاح");
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
         });
     }
@@ -128,7 +170,7 @@ export class FactoryContactFormComponent implements OnInit {
         .subscribe((res: any) => {
           this.toastr.success("تم تعديل بيانات جهة الإتصال بنجاح");
           this.lockSaveItem=false
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
+          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
 
         });
     }

@@ -4,7 +4,7 @@
     <div class="form-header">
         <h2 class="form-title"> بيانات المواد الأولية ( المواد الخام) الفعلية لشهر {{PeriodName}}  -عام  {{year}} </h2>
         <div>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -52,7 +52,7 @@
 
                         <td>
 
-                            <input type="number" name="CurrentStockQuantity{{j}}" #CurrentStockQuantity="ngModel" min="1" max="1000000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus class="form-control" style="max-width: 117px;"
+                            <input [disabled]="approveStatus" type="number" name="CurrentStockQuantity{{j}}" #CurrentStockQuantity="ngModel" min="1" max="1000000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus class="form-control" style="max-width: 117px;"
                                 [(ngModel)]="material.CurrentStockQuantity" (change)="onSelectionChange(material)" required>
                                 <div *ngIf="CurrentStockQuantity.invalid && (CurrentStockQuantity.dirty || CurrentStockQuantity.touched)"
                                 class="validation-error">
@@ -73,7 +73,7 @@
                         <!-- <td > {{material.AverageWeightKG}} </td> -->
                         <td>
                             <div class="input-group">
-                                <input name="CurrentStockQuantity_KGN"  type="number"  class="form-control" disabled style="max-width: 117px;"
+                                <input [disabled]="approveStatus" name="CurrentStockQuantity_KGN"  type="number"  class="form-control" disabled style="max-width: 117px;"
                                     value="{{material.CurrentStockQuantity_KG}}">
                                 <input type="text" class="form-control px-1 text-center" value="كغ" disabled
                                     style="max-width: 40px;">
@@ -81,7 +81,7 @@
                         </td>
                         <td>
 
-                            <input  type="number" #materialF="ngModel" name="materialF{{j}}"  min="1" max="1000000000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus class="form-control" [(ngModel)]="material.UsedQuantity"
+                            <input [disabled]="approveStatus" type="number" #materialF="ngModel" name="materialF{{j}}"  min="1" max="1000000000000000" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"   noMinus class="form-control" [(ngModel)]="material.UsedQuantity"
                                 style="max-width: 117px;" (change)="onSelectionChange(material)" required>
                                 <div *ngIf="materialF.invalid && (materialF.dirty || materialF.touched)"
                                 class="validation-error">
@@ -129,7 +129,7 @@
             <div class="col-md-6">
                 <label class="form-label"> ما هو سبب زيادة استخدام المواد الأولية ( المواد الخام) عن الاستهلاك الشهري المعتاد؟</label>
 
-                <select  class="form-select"  (change)="setReasonValue($event)">
+                <select [disabled]="approveStatus"  class="form-select"  (change)="setReasonValue($event)">
                     <option *ngFor="let reasonValue of reasonList" [value]="reasonValue.Id" [attr.selected]="((reasonValue.Id ==request.IncreasedUsageReason)==false?null:true)">
                         {{reasonValue.Name}} </option>
                  </select>
@@ -153,8 +153,8 @@
                     </span> 
                 </label>
                 <div class="input-group">
-                    <input type="file" class="form-control" accept=".pdf" placeholder="" value="" (change)="saveDocs($event)">
-                    <button  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+                    <input [disabled]="approveStatus" type="file" class="form-control" accept=".pdf" placeholder="" value="" (change)="saveDocs($event)">
+                    <button [disabled]="approveStatus" class="btn btn-primary" type="button" (click)="save()">اضافة </button>
                 </div>
                 <div *ngIf="fileError" class="validation-error text-center">{{ fileError }}</div>
             </div>
@@ -178,7 +178,7 @@
 
                             <a class="btn btn-primary px-2 py-1 mx-1" type="button" placement="bottom" title=""
                                 tooltip=" تحميل الملف " (click)="getFile(file.AttachmentId)"> عرض </a>
-                            <a (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
+                            <button [disabled]="approveStatus"  type="button" (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</button>
                         </td>
                     </tr>
 
@@ -189,8 +189,8 @@
     </div>
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" [disabled]="actualRawMat.invalid" type="submit">حفظ</button>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId"  class="btn btn-danger">الغاء</a>
+            <button   class="btn btn-primary me-1" [disabled]="actualRawMat.invalid||approveStatus" type="submit">حفظ</button>
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText"  class="btn btn-danger">الغاء</a>
         </div>
     </div>
 </form>

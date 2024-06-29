@@ -5,7 +5,7 @@
            <!-- <span class="custom-badge">شهري</span> -->
           </h2>
         <div>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId" class="back-link">
+            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
             </a>
@@ -41,10 +41,10 @@
                     {{product.ActualProductionWeight !=null?product.ActualProductionWeight + " كغ ":""}}
                 </td>
                 <td>
-                    <button
+                    <button [disabled]="approveStatus"
                       class="btn btn-primary"
                       data-bs-toggle="modal"
-                      data-bs-target="#addProduct"
+                      data-bs-target="#addProduct" 
                       (click)="edit(product.ActualProductionAndCapacityId,product.Id,product.ProductId)"
                     >
                       تعديل
@@ -53,16 +53,16 @@
               </tr>
             </ng-template>
         </app-list>
-        <app-pagination (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
+        <app-pagination  (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
        <div *ngIf="showReason">
-        <app-reason *ngIf="factoryStatus!=3" [periodId]="periodId" [factoryId]="factoryId"></app-reason>
+        <app-reason *ngIf="factoryStatus!=3" [approveSatus]="approveStatus" [periodId]="periodId" [factoryId]="factoryId"></app-reason>
        
        </div>
     </div>
     <div class="form-footer">
       <div class="col-12">
-          <button  class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-          <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId"  class="btn btn-danger">الغاء</a>
+          <button [disabled]="approveStatus"  class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
+          <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText"  class="btn btn-danger">الغاء</a>
       </div>
   </div>
 </section>
@@ -81,7 +81,7 @@ aria-hidden="true"
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLabel">تعديل منتج</h5>
-      <button
+      <button [disabled]="approveStatus" 
         type="button"
         class="btn-close"
         data-bs-dismiss="modal"

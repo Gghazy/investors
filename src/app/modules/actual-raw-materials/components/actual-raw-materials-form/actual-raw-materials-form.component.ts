@@ -53,6 +53,8 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   addFileButton: boolean = false
   fileSelected: boolean = false
   lockUploadfile=false;
+  approveStatus:boolean;
+  approveStatusText:any;
   reasonList: any[] = [
     { Id: "1", Name: ' شراء معدات جديدة' },
     { Id: "2", Name: 'زيادة خطوط الإنتاج'},
@@ -67,6 +69,9 @@ selectedReason:any = { Id: "1"}
     private lookUpService: LookUpService, private fileService: FileService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
+    this.approveStatusText=completeStatus;
   }
 
 
@@ -351,7 +356,7 @@ selectedReason:any = { Id: "1"}
               {
                 this.lockSaveItem=false
               this.toastr.success(" تم تعديل بيانات المواد الخام الأولية بنجاح");
-              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId,this.approveStatusText]);
       
               }
           });
@@ -376,7 +381,7 @@ selectedReason:any = { Id: "1"}
               {
                 this.lockSaveItem=false;
               this.toastr.success(" تم تعديل بيانات المواد الخام الأولية بنجاح");
-              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
+              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId,this.approveStatusText]);
       
               }
 

@@ -14,6 +14,7 @@ export class ReasonComponent implements OnInit, OnChanges {
 
   @Input() periodId!: number;
   @Input() factoryId!: number;
+  @Input() approveSatus!: boolean;
   reasonses: LookUpModel[] = [];
   request = new ReasonModel();
 

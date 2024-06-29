@@ -20,7 +20,7 @@
 
     <div class="col-md-6">
         <label class="form-label"> نوع المستند <span class="required">*</span></label>
-        <select name="Type" #Type="ngModel" required id="Type" [(ngModel)]="request.Type" class="form-select">
+        <select [disabled]="approveStatus" name="Type" #Type="ngModel" required id="Type" [(ngModel)]="request.Type" class="form-select">
             <option [ngValue]="1" >صورة مَدخل المصنع </option>
         </select>
        
@@ -34,8 +34,8 @@
             </span> 
              <span class="required">*</span></label>
         <div class="input-group">
-            <input type="file"  #fileInputLoc name="fileN"  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
-            <button [disabled]="fileError"  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+            <input [disabled]="approveStatus" type="file"  #fileInputLoc name="fileN"  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
+            <button  [disabled]="fileError ||approveStatus"  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
         </div>
     
     <div *ngIf="fileError" class="text-center">
@@ -65,7 +65,8 @@
                     عرض
 
                 </a>
-                <a  name="deleteFileN" (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</a>
+                <button type="button" [disabled]="approveStatus"  name="deleteFileN"
+                 (click)="deleteFile(file.Id)" class="btn btn-danger">حذف</button>
             </td>
         </tr>
     </ng-template>
