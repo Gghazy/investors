@@ -38,9 +38,11 @@ export class ActualProductionListComponent implements OnInit {
     ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
-    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
-    this.approveStatusText=completeStatus;
+    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
+    if(this.approveStatusText=='3')
+      this.approveStatus=true;
+    else
+    this.approveStatus=false;
   }
   ngOnInit(): void {
     this.getLevel12Product();
@@ -54,10 +56,14 @@ export class ActualProductionListComponent implements OnInit {
     this.ActualProductionService
     .getAllPagination(this.search)
     .subscribe((res: any) => {
+      
       this.products = res.Data;
       console.log(this.products)
       this.showReason = false;
+      //alert()
       this.products.Items.forEach((element:any) => {
+       // alert(element.DesignedCapacityUnitId)
+      // alert(element.FactoryProductId)
         if (element.ActualProduction > element.DesignedCapacity){
       
           this.showReason = true
@@ -91,7 +97,7 @@ export class ActualProductionListComponent implements OnInit {
     this.actualCapacityProductId = id;
     this.productId = productId;
     this.actualproductId = pid;
-
+   
   }
   closePopUp(){
     this.actualCapacityProductId=undefined

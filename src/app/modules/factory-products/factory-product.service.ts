@@ -24,6 +24,12 @@ export class FactoryProductService {
   getAllProducts(): Observable<any> {
     return this.http.get<any>('Products/AllProducts');
   }
+  AllProductsListToRaw(search: any): Observable<any> {
+    return this.http.post<any>('Products/AllProductsListToRaw', search);
+  }
+  getAllProductsList(search: any): Observable<any> {
+    return this.http.post<any>('Products/AllProductsList', search);
+  }
   getAll(factoryId:number): Observable<any> {
     return this.http.get<any>(`Products/GetAll?factoryId=${factoryId}`);
   }

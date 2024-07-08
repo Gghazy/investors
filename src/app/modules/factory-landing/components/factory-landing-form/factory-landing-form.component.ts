@@ -37,6 +37,7 @@ export class FactoryLandingFormComponent implements OnInit {
   Year!: number
   periodName!: string
   DataStatus!: number
+  periodStatus:any;
   isDisable=true;
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +50,11 @@ export class FactoryLandingFormComponent implements OnInit {
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.periodStatus = this.route.snapshot.paramMap.get('isApproveStatus');
+    if(this.periodStatus=='3')
+      this.completeStatus=true;
+    else
+    this.completeStatus=false;
 
 
   }

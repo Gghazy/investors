@@ -36,17 +36,21 @@ constructor(
   ngOnInit(): void {
    this.getOne();
    this.getunits();
-   this.getProduct();
+   //this.getProduct();
   }
 
   getOne(){
    
-    
+    //alert(this.actualCapacityProductId)
 
     this.actualProductionAndDesignedCapacityService
     .getOne(this.actualCapacityProductId)
     .subscribe((res: any) => {     
       this.request = res.Data;
+      this.request.DesignedCapacityUnitId=res.Data.DesignedCapacityUnitId;
+      this.request.ActualProductionUintId==res.Data.ActualProductionUintId;
+    //  alert(res.Data.DesignedCapacityUnitId)
+
 console.log(this.request)
       
     });
@@ -80,7 +84,8 @@ console.log(this.request)
     this.request.FactoryProductId=this.productId;
     this.request.PeriodId=this.periodId;
     this.request.FactoryId=this.factoryId;
-    if (this.actualCapacityProductId==0){
+    //this.request.ActualProductionWeight=
+    /*if (this.actualCapacityProductId==0){
       this.lockSaveItem=true;
       this.actualProductionAndDesignedCapacityService
       .create(this.request)
@@ -89,9 +94,11 @@ console.log(this.request)
         this.toastr.success("تم حفظ كمية الإنتاج الفعلي والطاقة التصميمية ");
         this.lockSaveItem=false
       });
-    }
-    else{
+    }*/
+   // else{
       this.lockSaveItem=true;
+      this.request.FactoryProductId=this.productId,
+      // alert(this.request.FactoryProductId)
       this.actualProductionAndDesignedCapacityService
       .update(this.request)
       .subscribe((res: any) => {
@@ -99,7 +106,7 @@ console.log(this.request)
         this.toastr.success("تم تعديل كمية الإنتاج الفعلي والطاقة التصميمية ");
         this.lockSaveItem=false
       });
-    }
+    //}
   }
 
 }

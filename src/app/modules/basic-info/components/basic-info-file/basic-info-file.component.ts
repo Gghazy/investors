@@ -24,7 +24,7 @@ export class BasicInfoFileComponent implements OnInit {
   approveStatus:boolean=false;
   @Input() factoryId!:string;
   @Input() periodId!:string;
-  @Input() approvedStatus!:string;
+  @Input() approveStatusText!:string;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   @Output() fileStatus = new EventEmitter<any>();
@@ -43,8 +43,12 @@ export class BasicInfoFileComponent implements OnInit {
   initValue(){
     this.request.Type=this.selectedFirstItem;
     this.fileError = '';
-    this.approveStatus=this.approvedStatus!.toLocaleLowerCase()==="true"?true:false;
-
+   // this.approveStatus=this.approvedStatus!.toLocaleLowerCase()==="true"?true:false;
+    //this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
+    if(this.approveStatusText=='3')
+      this.approveStatus=true;
+    else
+    this.approveStatus=false;
 
    }
   selectFirstItem(): void {

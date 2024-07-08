@@ -58,9 +58,9 @@ this.InspectorRole =this.router.url.includes('Inspector')
 
   }
   navigateToDetails(periodId: number,status: string) {
-    let completeStatus=false;
+    let completeStatus='0';
     if(status=='3')
-       completeStatus=true;
+       completeStatus=status;
 
     if(this.router.url.includes('Inspector')){
       this.router.navigate(['/pages/Inspector/visit-landing', this.factoryId, periodId]);

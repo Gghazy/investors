@@ -27,8 +27,8 @@
             </ng-template>
             <ng-template #body>
               <tr *ngFor="let product of products.Items let i=index">
-                <td>{{i+1}}</td>
-                <td>{{product.Level12ItemName}}({{product.Level12Number}})</td>
+                <td >{{i+1}}</td>
+                <td>{{product.ProductName}})</td>
                 
                 <td>
                     {{product.DesignedCapacity !=null? product.DesignedCapacity +" "+ product.DesignedCapacityUnitName:""}}
@@ -38,14 +38,14 @@
                 </td>
                 <td *ngIf="factoryStatus!=3"> {{product.DesignedCapacity !=0?'=':''}}</td>
                 <td *ngIf="factoryStatus!=3">
-                    {{product.ActualProductionWeight !=null?product.ActualProductionWeight + " كغ ":""}}
+                    {{product.ActualProductionWeight !=null||product.ActualProductionWeight>0?product.ActualProductionWeight + " كغ ":""}}
                 </td>
                 <td>
-                    <button [disabled]="approveStatus"
+                    <button [disabled]="approveStatus||product.Kilograms_Per_Unit==0"
                       class="btn btn-primary"
                       data-bs-toggle="modal"
                       data-bs-target="#addProduct" 
-                      (click)="edit(product.ActualProductionAndCapacityId,product.Id,product.ProductId)"
+                      (click)="edit(product.Id,product.FactoryProductId,product.Id)"
                     >
                       تعديل
                     </button>

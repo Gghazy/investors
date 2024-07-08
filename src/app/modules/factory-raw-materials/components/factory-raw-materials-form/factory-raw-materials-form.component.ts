@@ -33,6 +33,9 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   filteredData: any[] = [];
   products  !: ProductModel[];
   products12  !: ProductModel[];
+  products12All  !: ProductModel[];
+
+  
   showInput: boolean = false
   units!: LookUpModel[];
   request = new RawMaterial();
@@ -40,6 +43,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   selectedProducts: any[] = [];
   items: any = [];
   periodId: any;
+  productNameSelected: any;
+
   test: any;
   lockUploadfile=false;
   lockSaveItem=false;
@@ -85,19 +90,30 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   dropdownSettings!: IDropdownSettings;
   dropdownSettings2!: IDropdownSettings;
   ngOnChanges(changes: SimpleChanges) {
-
     this.request = new RawMaterial();
     if (changes['Id']) {
       this.selectedProducts = []
       this.selectedItems1 = []
+     
       if (this.Id != 0) {
+        this.request.Name=" ";
+        this.request.MaximumMonthlyConsumption=0;
+        this.request.AverageWeightKG=0;
+        this.showInput=false;
         this.getOneRawMaterial(this.Id)
 
       }
       else {
-
+        const inputElement = document.getElementById('productName')  as HTMLInputElement;
+       //inputElement.value=""
+        this.request.Name=" ";
+    this.request.MaximumMonthlyConsumption=0;
+    this.request.AverageWeightKG=0;
+    this.showInput = false
+    this.selectedProducts = []
+this.getProducts();
       }
-      this.getProducts();
+      
 
 
       this.getUnits();
@@ -128,6 +144,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   ngOnInit() {
 
     this.request = new RawMaterial();
+    this.request.Name="";
+    this.request.MaximumMonthlyConsumption=0;
     this.selectedProducts = []
     this.fileErrorPhoto = null
     this.fileError = null
@@ -151,7 +169,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     //this.fileInputPhoto.nativeElement.value = this.request.PaperId;
   }
   ngAfterViewInit() {
-       this.fileInputPhoto.nativeElement.innerText  = "a.txt";
+    //   this.fileInputPhoto.nativeElement.innerText  = "a.txt";
 
   }
   getOneRawMaterial(id: number) {
@@ -160,21 +178,28 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       .getOne(id)
       .subscribe((res: any) => {
         this.request = res.Data;
-      
+          let CurrentselectedValue: any = this.units.find(option => option.Id == res.Data.UnitId);
+          if (CurrentselectedValue?.Name == 'kilograms') {
+            this.request.AverageWeightKG = 1
+            this.showInput = true
+          }
         console.log(this.request)
         this.productService
           .getAllProducts()
           .subscribe((res: any) => {
             this.products12 = res.Data;
-
+            this.products12All = res.Data;
+           
             this.request.FactoryProductId.forEach(element => {
               debugger
-              let ProductNamex = this.products12.find(x => x.ProductId == element)?.ProductName;
+              let ProductNamex = this.products12All.find(x => x.ProductId == element)?.ProductName;
+           
 
               this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductNamex })
               this.selectedProducts = this.selectedItems1
             });
-            this.getProducts();
+          
+           
 
           })
 
@@ -190,8 +215,10 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
 
   onSelectionChange() {
-
-
+ 
+    let ProductNamex = this.products12.find(x => x.ProductId+"" == this.request.CustomItemName)?.ProductName;
+    this.productNameSelected=ProductNamex;
+    
     this.request.UnitId = this.products12.find(item => item.Id == this.products12[0].Id)?.UnitId;
     let selectedValue: any = this.units.find(option => option.Id == this.request.UnitId);
     if (selectedValue?.Name == 'kilograms') {
@@ -209,11 +236,28 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.searchproduct.FactoryId = this.factoryId;
     this.searchproduct.PeriodId = parseInt(this.periodId);
     this.productService
-      .getAllProducts()
+      .AllProductsListToRaw(this.searchproduct)
       .subscribe((res: any) => {
         this.products12 = res.Data;
         // this.filteredData =res.Data;
       });
+      this.productService
+      .getAllProducts()
+      .subscribe((res: any) => {
+      
+        this.products12All = res.Data;
+       
+        this.request.FactoryProductId.forEach(element => {
+          debugger
+          let ProductNamex = this.products12All.find(x => x.ProductId == element)?.ProductName;
+          this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductNamex })
+          this.selectedProducts = this.selectedItems1
+        });
+
+      })
+
+
+ 
 
   }
 
@@ -356,8 +400,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
               return
               
           }
-         
-
+          var nameProdct=this.request.Name;
+          nameProdct = nameProdct.trim().replace(/\\s+/g, "\\n");
+          if(nameProdct=="")
+            {
+                this.toastr.error(" الرجاء إدخال إسم المادة الأولية")
+                return
+                
+            }
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     if (this.fileErrorPhoto || this.fileError) {
@@ -367,9 +417,12 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     else {
 
 
-      if (this.request.Id == undefined) {
+      if (this.request.Id == undefined|| this.request.Id==0) {
         console.log(this.request)
         this.lockSaveItem=true;
+        this.request.RawMaterialName=this.productNameSelected
+        
+
         this.rawMaterialService
           .create(this.request)
           .subscribe((res: any) => {
@@ -377,14 +430,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
             this.saveSuccessful = true;
             this.lockSaveItem=false;
 
-            this.close.emit(true);
-            this.toastr.success("تم الحفظ");
-            this.request = new RawMaterial();
-            this.selectedProducts = []
+            this.toastr.success("تمت إضافة مادة أولية بنجاح");
+           // this.request = new RawMaterial();
+          
             this.fileErrorPhoto = null
             this.fileError = null
             this.fileInputPaper.nativeElement.value = '';
             this.fileInputPhoto.nativeElement.value = '';
+            this.close.emit(true);
 
 
           });
@@ -400,14 +453,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
             // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
             this.saveSuccessful = true;
             this.lockSaveItem=false;
-            this.close.emit(true);
-            this.toastr.success("تم الحفظ");
-            this.request = new RawMaterial();
-            this.selectedProducts = []
+         
+            this.toastr.success("تم تعديل مادة الأولية بنجاح");
+          
             this.fileErrorPhoto = null
             this.fileError = null
             this.fileInputPaper.nativeElement.value = '';
             this.fileInputPhoto.nativeElement.value = '';
+            this.close.emit(true);
           });
       }
 

@@ -19,9 +19,10 @@ export class FinancialFileComponent implements OnInit {
   request=new FinancialFileModel();
   src!:string;
   isDisabled:boolean=false;
-  @Input() financialId!:number;
+  approveStatus!:boolean;
 
-  @Input() approveStatus!:boolean;
+  @Input() financialId!:number;
+  @Input() approveStatusText!:string;
   @ViewChild('fileInput') fileInput!: ElementRef;
   @Output() fileStatusFin = new EventEmitter<any>();
   @Output() fileStatusType = new EventEmitter<any>();
@@ -45,6 +46,11 @@ export class FinancialFileComponent implements OnInit {
 
   ngOnInit(): void {
    this.getFiles();
+   if(this.approveStatusText=='3')
+    this.approveStatus=true;
+  else
+  this.approveStatus=false;
+
   // this.ToggleDisable()
    
   }

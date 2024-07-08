@@ -34,7 +34,7 @@ contactDetails=new FactoryContactModel();
   defaultPhone:any;
   PeriodName!:string
   year!:number;
-  approveStatus:boolean;
+  approveStatus=false;
   approveStatusText:any;
   separateDialCode = false;
   lockSaveItem=false;
@@ -54,9 +54,10 @@ contactDetails=new FactoryContactModel();
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
-    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
-    this.approveStatusText=completeStatus;
+    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
+    if(this.approveStatusText=='3')
+      this.approveStatus=true;
+
 
   }
   ngOnInit(): void {

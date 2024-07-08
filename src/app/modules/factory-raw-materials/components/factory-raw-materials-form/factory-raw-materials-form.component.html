@@ -19,7 +19,7 @@
             </ng-multiselect-dropdown>
         </div> -->
       
-        <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName" name="CustomItemName" required>
+        <select [disabled]="Id>0" class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName" name="CustomItemName" required>
             <option *ngFor="let item of products12" [value]="item.Id">
                 {{ item.Hs12NameAr }} ({{item. Hs12Code}})
 
@@ -34,8 +34,8 @@
             <i>؟</i>
         </label>
 
-        <input type="text" class="form-control" value="" name="productName" #productName="ngModel" [(ngModel)]="request.Name" required>
-        <div *ngIf="productName.invalid && (productName.dirty || productName.touched)"
+        <input type="text" class="form-control" value="" id="productName" name="productName" #productName="ngModel" [(ngModel)]="request.Name" required>
+        <div *ngIf="productName.invalid && (productName.dirty && productName.touched)"
         class="validation-error">
         <div *ngIf="productName.errors?.['required']">الرجاء إدخال إسم المادة الأولية </div>        
     </div>
@@ -48,10 +48,9 @@
             <i>؟</i>
         </label>
         <input type="number" name="MaximumMonthlyConsump" #MaximumMonthlyConsump="ngModel"  min="1" max="1000000000000" pattern="[0-9]+([\.,][0-9]{1,5})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"    class="form-control" noMinus [(ngModel)]="request.MaximumMonthlyConsumption" required>
-        <div *ngIf="MaximumMonthlyConsump.invalid && (MaximumMonthlyConsump.dirty || MaximumMonthlyConsump.touched)"
+        <div *ngIf="MaximumMonthlyConsump.invalid && (MaximumMonthlyConsump.dirty && MaximumMonthlyConsump.touched)"
         class="validation-error">
         <div *ngIf="MaximumMonthlyConsump.errors?.['required']"> الرجاء إدخال قيمة أقصى إستهلاك شهري </div>
-        <div *ngIf="MaximumMonthlyConsump.errors?.['min']" >الرجاء إدخال رقم أكبر من 0   </div>
         <div *ngIf="MaximumMonthlyConsump.errors?.['max']" >الرجاء إدخال رقم أقل من 1000000000000   </div>
         <div *ngIf="MaximumMonthlyConsump.errors?.['pattern']" >الرجاء إدخال رقم  صحيح   </div>
         
@@ -98,7 +97,7 @@
         </label>
 
        <div class="multiselect-parent">
-            <ng-multiselect-dropdown [placeholder]="'أختر'" name="FactoryProductId" [settings]="dropdownSettings" [data]="products12"
+            <ng-multiselect-dropdown [placeholder]="'أختر'" name="FactoryProductId" [settings]="dropdownSettings" [data]="products12All"
                 [(ngModel)]="selectedProducts" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
                 (onSelectAll)="onSelectAll($event)" required>
             </ng-multiselect-dropdown>

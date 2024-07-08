@@ -38,9 +38,11 @@ year!:number;
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
-    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
-    this.approveStatusText=completeStatus;
+    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
+    if(this.approveStatusText=='3')
+      this.approveStatus=true;
+    else
+    this.approveStatus=false;
   }
   ngOnInit() {
     this.getProducts()

@@ -8,6 +8,7 @@ import { LookUpService } from 'src/app/core/service/look-up.service';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastrService } from 'ngx-toastr';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { ProductsFactorySearch } from '../../models/products-not-in-factory-search';
 import { ProductsNotInFactorySearch } from '../../models/products-not-in-factory-search';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { PeriodService } from 'src/app/modules/period/period.service';
@@ -32,6 +33,8 @@ export class ProductFormComponent implements OnInit {
   products  !: ProductModel[];
   dropdownSettings!: IDropdownSettings;
   search = new ProductsNotInFactorySearch();
+  factoryPeriod = new ProductsFactorySearch();
+
   isLoading = false;
   selectProductId!: any;
   fileError: string | null = null;
@@ -131,8 +134,11 @@ export class ProductFormComponent implements OnInit {
   getAllProducts() {
     this.isLoading = true;
     this.search.FactoryId = this.factoryId;
+    this.factoryPeriod.FactoryId=this.factoryId;
+    this.factoryPeriod.PeriodId=this.periodId;
     this.factoryProductService
-      .getAllProducts()
+      //.getAllProducts()
+     .getAllProductsList(this.factoryPeriod)
       .subscribe((res: any) => {
          this.products = res.Data
         // console.log(this.products)

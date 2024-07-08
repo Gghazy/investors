@@ -23,7 +23,8 @@ export class BasicInfoFormComponent implements OnInit {
  statusFile!:number;
   factoryId: any;
   periodId: any;
-  approveStatus:boolean;
+  approveStatusNumber:any;
+  approveStatus=false;
   approveStatusText:any;
 
   request = new FactoryModel();
@@ -46,10 +47,15 @@ export class BasicInfoFormComponent implements OnInit {
      ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
+    //this.approveStatusNumber = this.route.snapshot.paramMap.get('isApproveStatus');
+    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
+    if(this.approveStatusText=='3')
+      this.approveStatus=true;
+
+   /* this.approveStatusText=completeStatus;
     let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
     this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
-    this.approveStatusText=completeStatus;
-  }
+    this.approveStatusText=completeStatus;*/  }
   ngOnInit(): void {
     this.createBasicInfoForm();
     this.ToggleDisable();
@@ -60,9 +66,9 @@ export class BasicInfoFormComponent implements OnInit {
   createBasicInfoForm(): void {
    
     this.BasicInfoForm = this.formBuilder.group({
-      dataEntryId: [{value:'',disabled: this.approveStatus}, [Validators.pattern("^[1-2][0-9]{9}$")]],
-      dataReviewerId: [{value:'',disabled: this.approveStatus}, [Validators.pattern("^[1-2][0-9]{9}$")]],
-      dataApproverId: [{value:'',disabled: this.approveStatus}, [Validators.pattern("^[1-2][0-9]{9}$")]],
+      dataEntryId: [{value:'',disabled: this.approveStatus}, Validators.compose([Validators.required, Validators.pattern("^[1-2][0-9]{9}$")])],
+      dataReviewerId: [{value:'',disabled: this.approveStatus}, Validators.compose([Validators.required, Validators.pattern("^[1-2][0-9]{9}$")])],
+      dataApproverId: [{value:'',disabled: this.approveStatus}, Validators.compose([Validators.required, Validators.pattern("^[1-2][0-9]{9}$")])],
 
     });
   }
@@ -77,7 +83,7 @@ export class BasicInfoFormComponent implements OnInit {
   ToggleDisable() {
     let userId=  this.sharedService.getUserId()
 
-   this.isDisabled= this.sharedService.toggleDisable(this.factoryId,this.periodId,userId)
+   //this.isDisabled= this.sharedService.toggleDisable(this.factoryId,this.periodId,userId)
   
   }
   getperiod(){
@@ -95,13 +101,13 @@ export class BasicInfoFormComponent implements OnInit {
 
     
     this.submitted = true;
-  /*  if ((!this.BasicInfoForm.value.dataEntryId)&&(!this.BasicInfoForm.value.dataReviewerId)&&(!this.BasicInfoForm.value.dataApproverId))
-     {
-      this.toastr.error( 'رجاءا أدخل رقم هوية واحد على الأقل ');
-      return;
-     }*/
+    if (this.BasicInfoForm.invalid || this.statusFile<1) {
+      if ((!this.BasicInfoForm.value.dataEntryId)||(!this.BasicInfoForm.value.dataReviewerId)||(!this.BasicInfoForm.value.dataApproverId))
+        {
+         this.toastr.error( 'الرجاء إكمال بيانات ارقام الهوية ');
+         return;
+        }
    
-    if (this.BasicInfoForm.invalid || this.statusFile>1) {
       this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
       return;
     }

@@ -69,9 +69,11 @@ selectedReason:any = { Id: "1"}
     private lookUpService: LookUpService, private fileService: FileService) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
-    let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
-    this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
-    this.approveStatusText=completeStatus;
+    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
+    if(this.approveStatusText=='3')
+      this.approveStatus=true;
+    else
+    this.approveStatus=false;
   }
 
 
@@ -177,8 +179,14 @@ selectedReason:any = { Id: "1"}
 
 
   onSelectionChange(row: ActualRawMaterial) {
-    row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
-    row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
+   // alert(row.UsedQuantity+"--"+row.AverageWeightKG+ "++"+row.CurrentStockQuantity)
+   if (row.AverageWeightKG==0)
+   { 
+    this.toastr.error("الرجاء التاكد من معلومات المادة الأولية في شاشة بيانات المواد الأولية");
+   
+  }
+   row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
+   row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
     if (row.UsedQuantity_KG > row.CurrentStockQuantity_KG) {
       this.showInput = true
       this.request.IncreasedUsageReason="4"
@@ -347,7 +355,9 @@ selectedReason:any = { Id: "1"}
       this.x.forEach((item: any) => {
         item.periodId = this.periodId;
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
-    
+        if(item.AverageWeightKG==0)
+          count--;
+        else
         this.service
           .create(item)
           .subscribe((res: any) => {
@@ -369,10 +379,12 @@ selectedReason:any = { Id: "1"}
       this.IsComplete=0;
       let count= this.x.length;
       this.lockSaveItem=true;
+     
       this.x.forEach((item: any) => {
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
-       
-
+        if(item.AverageWeightKG==0)
+          count--;
+        else
         this.service
           .update(item)
           .subscribe((res: any) => {
