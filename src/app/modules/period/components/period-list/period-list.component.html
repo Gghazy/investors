@@ -48,15 +48,17 @@
                 <td *ngIf="period.Status=='2' &&  !InspectorRole" class="text-warning">تمت المراجعة</td>
                 <td *ngIf="period.Status=='3' &&  !InspectorRole" class="text-success">تم الاعتماد</td>
                 <td *ngIf="period.Status=='0' &&  !InspectorRole" class="text-danger">لم يتم الإدخال</td>
-                <td *ngIf="InspectorRole" class="text-danger">لم يتم الاعتماد</td>
-                
+                <td *ngIf="InspectorRole &&period.Status=='3'" class="text-danger">لم يتم التدقيق </td>
+                <td *ngIf="InspectorRole &&period.Status!='3'" class="text-danger">لم يتم إعتماد المسح  </td>
+
                 <td>
-                    <a  *ngIf="!InspectorRole" (click)="navigateToDetails(period.Id,period.Status)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                    <button  *ngIf="!InspectorRole" (click)="navigateToDetails(period.Id,period.Status)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                         عرض
-                    </a>
-                    <a *ngIf="InspectorRole" (click)="navigateToDetails(period.Id,period.Status)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
-                عرض
-                    </a>
+                    </button>
+                    <button *ngIf="InspectorRole" [disabled]="period.Status!='3'"  (click)="navigateToDetails(period.Id,period.Status)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                بدء التدقيق
+                    </button>
+                    
                 </td>
 
               </tr>

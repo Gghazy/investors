@@ -5,25 +5,25 @@
             <h1>مرحبا بكم فى <br />نظام مسح وجمع بيانات المنشآت الصناعية</h1>
         </header>
         <div class="login-form">
-            <form class="needs-validation" novalidate>
-                <h2>تسجيل الدخول</h2>
-                <div class="form-floating mb-4">
+            
+               
+                <!--<div class="form-floating mb-4">
                     <input type="text" class="form-control" id="floatingInput" placeholder="   الهوية الوطنية" name="userId" [(ngModel)]="request.userId" required />
                     <label for="floatingInput"> الهوية الوطنية  </label>
                 </div>
                 <div class="form-floating mb-4">
                     <input type="password" class="form-control" id="floatingPassword" placeholder="كلمة المرور" name="password" [(ngModel)]="request.password" required />
                     <label for="floatingPassword">كلمة المرور</label>
+                </div>-->
+                <div class="d-grid mb-6">
+                    <button class="btn btn-primary login-btn" (click)="login()">تسجيل الدخول عبر نفاد</button>
                 </div>
-                <div class="d-grid mb-4">
-                    <button class="btn btn-primary login-btn" (click)="login()">تسجيل الدخول</button>
-                </div>
-            </form>
-            <div class="separator"></div>
+           
+            <!--<div class="separator"></div>
             <div class="form-footer text-center">
                 <a routerLink="/recover-password" class="center-hover"> نسيت كلمة المرور ؟</a>
                 
-            </div>
+            </div>-->
         </div>
         <footer class="text-center">جميع الحقوق محفوظة لنظام مسح وجمع بيانات المنشآت الصناعية</footer>
     </div>

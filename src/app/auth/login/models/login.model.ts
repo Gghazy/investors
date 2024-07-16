@@ -1,5 +1,5 @@
 export class LoginModel {
-    userId!:string;
-    password!:string;
-    userRole!:string;
+    token!:string;
+    signature!:string;
+    uuid!:string;
 }
