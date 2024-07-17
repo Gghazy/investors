@@ -40,22 +40,21 @@
             </ng-template>
             <ng-template #body>
               <tr *ngFor="let period of periods.Items let i=index">
-                <td>{{i+1}}</td>
-                <td>  {{period.PeriodName}}</td>
-                <td>  {{period.PeriodStartDate}}</td>
-                <td>{{period.PeriodEndDate}}</td>
+                <td *ngIf="InspectorRole &&period.Status=='3' || !InspectorRole">{{i+1}}</td>
+                <td *ngIf="InspectorRole &&period.Status=='3' || !InspectorRole">  {{period.PeriodName}}</td>
+                <td *ngIf="InspectorRole &&period.Status=='3' || !InspectorRole">  {{period.PeriodStartDate}}</td>
+                <td *ngIf="InspectorRole &&period.Status=='3' || !InspectorRole">{{period.PeriodEndDate}}</td>
                 <td *ngIf="period.Status=='1' &&  !InspectorRole" class="text-warning">تم الادخال</td>
                 <td *ngIf="period.Status=='2' &&  !InspectorRole" class="text-warning">تمت المراجعة</td>
                 <td *ngIf="period.Status=='3' &&  !InspectorRole" class="text-success">تم الاعتماد</td>
                 <td *ngIf="period.Status=='0' &&  !InspectorRole" class="text-danger">لم يتم الإدخال</td>
                 <td *ngIf="InspectorRole &&period.Status=='3'" class="text-danger">لم يتم التدقيق </td>
-                <td *ngIf="InspectorRole &&period.Status!='3'" class="text-danger">لم يتم إعتماد المسح  </td>
 
-                <td>
+                <td *ngIf="InspectorRole &&period.Status=='3' || !InspectorRole">
                     <button  *ngIf="!InspectorRole" (click)="navigateToDetails(period.Id,period.Status)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                         عرض
                     </button>
-                    <button *ngIf="InspectorRole" [disabled]="period.Status!='3'"  (click)="navigateToDetails(period.Id,period.Status)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
+                    <button *ngIf="InspectorRole &&period.Status=='3'"  (click)="navigateToDetails(period.Id,period.Status)" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#photoModal">
                 بدء التدقيق
                     </button>
                     
