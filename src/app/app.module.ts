@@ -31,7 +31,6 @@ export let InjectorInstance: Injector;
 
   ],
   providers: [  
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
 
 
   ],
