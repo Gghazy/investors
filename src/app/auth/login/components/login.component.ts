@@ -51,18 +51,7 @@ else
 
     });
 }
-    
-
-    /*console.log(this.request)
-    this.sharedService.setUserId(this.request.userId);
-    if(this.request.userId=='admin'){
-      this.router.navigate(['/pages/Admin/inspectors-list']);
-    }
-    else{
-      this.router.navigate(['/pages/factories-list']);
-    }*/
-
-    
+      
 
   }
 

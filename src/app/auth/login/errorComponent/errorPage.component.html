@@ -1,0 +1,50 @@
+<section class="user-area" >
+    <div class="login d-flex flex-column align-items-center justify-content-center" @fade>
+        <header class="text-center">
+            <a href=""><img src="assets/images/login-logo.png" width="300" height="86" alt="وزارة الصناعة والثروة المعدنية" /></a>
+            <h1>نظام مسح وجمع بيانات المنشآت الصناعية</h1>
+            <br />
+            <br />
+            <h4 class="text-danger">
+                {{this.ErrorMsg}}
+            </h4>
+
+
+        </header>
+        <div >
+
+           
+            <div  *ngIf="redirectTologin" >
+                <a class="back-link"  (click)="backTologin()">
+                    العودة للشاشة الرئيسية 
+                    <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0h48v48h-48z" fill="none"></path>
+                        <path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
+                            style="fill: #666;"></path>
+                    </svg>
+                </a>
+            </div>
+              <br />
+              <br />
+              <br />
+              <br />
+                <!--<div class="form-floating mb-4">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="   الهوية الوطنية" name="userId" [(ngModel)]="request.userId" required />
+                    <label for="floatingInput"> الهوية الوطنية  </label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="كلمة المرور" name="password" [(ngModel)]="request.password" required />
+                    <label for="floatingPassword">كلمة المرور</label>
+                </div>-->
+               
+                
+           
+            <!--<div class="separator"></div>
+            <div class="form-footer text-center">
+                <a routerLink="/recover-password" class="center-hover"> نسيت كلمة المرور ؟</a>
+                
+            </div>-->
+        </div>
+        <footer class="text-center">جميع الحقوق محفوظة لنظام مسح وجمع بيانات المنشآت الصناعية</footer>
+    </div>
+</section>

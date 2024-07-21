@@ -9,7 +9,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/interceptor/token.interceptor';
 
 
 
@@ -29,7 +30,11 @@ export let InjectorInstance: Injector;
     BrowserAnimationsModule,
 
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [  
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+
+
+  ],
   bootstrap: [AppComponent]
 })
 

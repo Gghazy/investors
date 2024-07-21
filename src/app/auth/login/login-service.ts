@@ -10,7 +10,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   Externallogin(): Observable<any> {
-    return this.http.get<any>(`Sso`);
+    return this.http.get<any>(`Sso/loginbynafathData`);
 
   }
 }

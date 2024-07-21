@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FactoriesListService } from '../../factories-list.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-factories-list-form',
@@ -13,12 +14,22 @@ userId:any
 InspectorFactory:any
   constructor(private factoryService :FactoriesListService,
     private shared: SharedService,
+    private route: ActivatedRoute
   ){
 
   }
 
   ngOnInit(): void {
-   this.userId= this.shared.getUserId()
+   
+      this.route.queryParams.subscribe(params => {
+        const token = params['token'];
+        if (token) {
+          localStorage.setItem('authToken', token);
+
+        }
+      });
+      this.userId= this.shared.getUserId()
+
     this.getInspectorFactories();
      
    } 
