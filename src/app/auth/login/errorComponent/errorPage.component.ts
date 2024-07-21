@@ -31,9 +31,15 @@ export class ErrorPageComponent implements OnInit {
       }
       else
       {
-        this.ErrorMsg=" عذرا ، لا تملك صلاحيات للدخول لمنصة المسح الصناعي"
-        this.redirectTologin=false;
-       
+          if (errorM==2) {
+          this.ErrorMsg=" عذرا ، لا تملك صلاحيات للدخول لمنصة المسح الصناعي"
+          this.redirectTologin=false;
+          }
+          else
+          {
+            this.ErrorMsg=" عذرا ، يوجد خطأ في تسجيل الدخول"
+            this.redirectTologin=false;
+          }
 
       }
     });
