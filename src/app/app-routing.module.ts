@@ -17,7 +17,9 @@ const routes: Routes = [
   },
   {
     path: 'errorPage', component: ErrorPageComponent 
- }
+ },
+ { path: '**', redirectTo: 'errorPage', pathMatch: 'full' } // Wildcard route for a 404 page
+
 ];
 
 @NgModule({
