@@ -46,7 +46,8 @@ else
       this.request = res.Data;
 
       let externallogin='https://mim.gov.sa/sso/'+this.request.uuid+'/login?token='+this.request.token+'&signature='+this.request.signature;
-      window.location.href=externallogin;
+     // window.location.href="http://localhost:8080/api/sso?url=test";
+       window.location.href=externallogin;
       
        });
 }
