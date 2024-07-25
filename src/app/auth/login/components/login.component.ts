@@ -28,30 +28,19 @@ locklogin=false;
 
   }
 
+  Investor()
+  {
+    this.router.navigate(['/pages/factories-list']);
 
+  }
+  Inspector()
+  {
+    this.router.navigate(['/pages/Inspector/factories-list']);
 
-
-  login() {
-   if(this.locklogin)
-   {
-    this.toastr.info( 'عملية تسجيل الدخول قيد التنفيذ');
-   } 
-else
-{
-  this.locklogin=true
-  this.loginService
-    .Externallogin()
-    .subscribe((res: any) => {
-      this.locklogin=false
-      this.request = res.Data;
-
-      let externallogin='https://mim.gov.sa/sso/'+this.request.uuid+'/login?token='+this.request.token+'&signature='+this.request.signature;
-     // window.location.href="http://localhost:8080/api/sso?url=test";
-       window.location.href=externallogin;
-      
-       });
-}
-      
+  }
+  Admin()
+  {
+    this.router.navigate(['/pages/Admin/inspectors-list']);
 
   }
 

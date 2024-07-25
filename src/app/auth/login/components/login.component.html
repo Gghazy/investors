@@ -4,26 +4,27 @@
             <a href=""><img src="assets/images/login-logo.png" width="300" height="86" alt="وزارة الصناعة والثروة المعدنية" /></a>
             <h1>مرحبا بكم فى <br />نظام مسح وجمع بيانات المنشآت الصناعية</h1>
         </header>
-        <div class="login-form">
-            
-               
-                <!--<div class="form-floating mb-4">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="   الهوية الوطنية" name="userId" [(ngModel)]="request.userId" required />
-                    <label for="floatingInput"> الهوية الوطنية  </label>
-                </div>
-                <div class="form-floating mb-4">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="كلمة المرور" name="password" [(ngModel)]="request.password" required />
-                    <label for="floatingPassword">كلمة المرور</label>
-                </div>-->
-                <div class="d-grid mb-6">
-                    <button class="btn btn-primary login-btn" (click)="login()">تسجيل الدخول عبر نفاذ</button>
-                </div>
+        <div class="breadcrumb-bar d-flex align-items-center justify-content-between">
            
-            <!--<div class="separator"></div>
-            <div class="form-footer text-center">
-                <a routerLink="/recover-password" class="center-hover"> نسيت كلمة المرور ؟</a>
-                
-            </div>-->
+
+                <table class="table table-hover table-small-header">
+                <tr>
+                    <td >
+                        
+                    <button class="btn btn-default" (click)="Investor()">المستثمرين</button>
+                    </td>
+
+                <!--
+                <td>
+                    <button class="btn btn-default" (click)="Inspector()">المدققين</button>
+                </td>
+                <td>
+                    <button class="btn btn-default" (click)="Admin()">مدير النظام</button>
+                    </td>
+                    -->
+                </tr>
+            </table>
+          
         </div>
         <footer class="text-center">جميع الحقوق محفوظة لنظام مسح وجمع بيانات المنشآت الصناعية</footer>
     </div>
