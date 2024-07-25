@@ -6,7 +6,7 @@ import { ErrorPageComponent } from './auth/login/errorComponent/errorPage.compon
 
 const routes: Routes = [
   
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'pages', pathMatch: 'full' },
   {
     path: 'pages',
     loadChildren: () =>
@@ -15,10 +15,7 @@ const routes: Routes = [
   {
      path: 'login', component: LoginComponent 
   },
-  {
-    path: 'errorPage', component: ErrorPageComponent 
- },
- { path: '**', redirectTo: 'errorPage', pathMatch: 'full' } // Wildcard route for a 404 page
+ 
 
 ];
 
