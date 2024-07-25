@@ -11,6 +11,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/interceptor/token.interceptor';
+import { UnloadService } from './auth/interceptor/unload.service';
+
 
 
 
@@ -30,8 +32,13 @@ export let InjectorInstance: Injector;
     BrowserAnimationsModule,
 
   ],
-  providers: [  
-
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    UnloadService,
 
   ],
   bootstrap: [AppComponent]

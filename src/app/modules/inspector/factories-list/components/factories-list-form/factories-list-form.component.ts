@@ -24,7 +24,10 @@ InspectorFactory:any
       this.route.queryParams.subscribe(params => {
         const token = params['token'];
         if (token) {
-          localStorage.setItem('authToken', token);
+          alert(params['token'])
+          localStorage.setItem('user', JSON.stringify(params));
+          alert( "usr"+ localStorage.getItem('user'));
+         
 
         }
       });

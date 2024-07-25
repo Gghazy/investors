@@ -7,6 +7,7 @@ import { ResultResponse } from 'src/app/core/models/result-response';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-landing.service';
 import { Observable, forkJoin } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-factory-list',
@@ -27,6 +28,7 @@ export class FactoryListComponent implements OnInit {
   constructor(private factoryService: FactoryService,
     private factoryLandingService: FactoryLandingService,
     private shared: SharedService,
+    private route: ActivatedRoute
   ) {
 
   }
@@ -34,6 +36,15 @@ export class FactoryListComponent implements OnInit {
   ngOnInit(): void {
     this.getFactories();
     this.shared.setUserRole('Investor');
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];
+      if (token) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(params));
+       // this.userSubject.next(user);
+
+      }
+    });
   }
 
   getFactories() {

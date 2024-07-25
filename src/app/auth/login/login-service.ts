@@ -13,4 +13,9 @@ export class LoginService {
     return this.http.get<any>(`Sso/loginbynafathData`);
 
   }
+  clearToken(): void {
+    localStorage.removeItem('user');
+  }
+  
+  
 }
