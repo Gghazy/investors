@@ -86,10 +86,8 @@
               "browserTarget": "fui-investors:build:development"
             }
           },
-          "defaultConfiguration": "development",
-          "options": {
-            "ssl": false
-        }
+          "defaultConfiguration": "development"
+          
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

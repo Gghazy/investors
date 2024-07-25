@@ -31,7 +31,7 @@ export let InjectorInstance: Injector;
 
   ],
   providers: [  
-
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
 
   ],
   bootstrap: [AppComponent]
