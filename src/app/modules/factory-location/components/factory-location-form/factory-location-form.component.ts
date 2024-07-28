@@ -141,12 +141,17 @@ export class FactoryLocationFormComponent {
       });
   }
   createfactoryLocationForm(): void {
-   
+   // Define your patterns
+const pattern1 = '^https://www\\.google\\.com/maps.+$';
+const pattern2 = '^https://maps\\.app\\.goo\\.gl/.+$';
+// Combine the patterns using the OR operator
+const combinedPattern = `${pattern1}|${pattern2}`;
+//"https://www.google.com/maps.+"
     this.factoryLocForm = this.formBuilder.group({
       factoryEntityId: [{value:'',disabled: this.approveStatus}, [Validators.required]],
       cityId: [{value:'',disabled: this.approveStatus}, [Validators.required]],
       industrialAreaId: [{value:'',disabled: this.approveStatus}, [Validators.required]],
-      webSiteUrl:  [{value:'https://www.google.com/maps',disabled: this.approveStatus}, Validators.compose([Validators.required,Validators.pattern("https://www.google.com/maps.+")])],
+      webSiteUrl:  [{value:'https://www.google.com/maps',disabled: this.approveStatus}, Validators.compose([Validators.required,Validators.pattern(combinedPattern)])],
 
     });
   }

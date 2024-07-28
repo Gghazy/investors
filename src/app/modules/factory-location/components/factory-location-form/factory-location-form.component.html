@@ -77,7 +77,8 @@
                 <input type="url" id="webSiteUrl"  formControlName="webSiteUrl" name="WebSite"   class="form-control " [(ngModel)]="request.WebSite" placeholder="https://www.google.com/maps"    >
                 <span  class="text-danger" *ngIf="submitted && (factoryLocForm.get('webSiteUrl')?.errors?.['pattern'] || factoryLocForm.get('webSiteUrl')?.errors?.['required'])">
 
-                  الرجاء تحديد رابط موقع المصنع يبدأ ب https://www.google.com/maps
+                    رابط موقع المصنع يبدأ ب https://www.google.com/maps <br>
+                     أو  /https://maps.app.goo.gl 
 
                 </span>
             </div>
