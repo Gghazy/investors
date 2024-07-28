@@ -34,10 +34,10 @@
             <i>؟</i>
         </label>
 
-        <input type="text" class="form-control" value="" id="productName" name="productName" #productName="ngModel" [(ngModel)]="request.Name" required>
+        <input type="text"  (change)="changeName()" class="form-control" value="" id="productName" name="productName" #productName="ngModel" [(ngModel)]="request.Name" required>
         <div *ngIf="productName.invalid && (productName.dirty && productName.touched)"
         class="validation-error">
-        <div *ngIf="productName.errors?.['required']">الرجاء إدخال إسم المادة الأولية </div>        
+        <div *ngIf="productName.errors?.['required'] && isOpen ">الرجاء إدخال إسم المادة الأولية </div>        
     </div>
     </div>
     <div class="col-md-3">

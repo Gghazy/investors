@@ -54,6 +54,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   fileError: string | null = null;
   fileErrorPhoto: string | null = null;
   isLoadingProgress=false;
+  isOpen=false
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
   @ViewChild('fileInputPhoto',{static:false}) fileInputPhoto!: ElementRef;
 
@@ -93,14 +94,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   dropdownSettings!: IDropdownSettings;
   dropdownSettings2!: IDropdownSettings;
   ngOnChanges(changes: SimpleChanges) {
-  
+    this.isOpen=false
     this.request = new RawMaterial();
     if (changes['Id']) {
       this.selectedProducts = []
       this.selectedItems1 = []
      
       if (this.Id != 0) {
-        this.request.Name=" ";
+        this.request.Name="";
         this.request.MaximumMonthlyConsumption=0;
         this.request.AverageWeightKG=0;
         this.showInput=false;
@@ -110,7 +111,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       else {
         const inputElement = document.getElementById('productName')  as HTMLInputElement;
        //inputElement.value=""
-        this.request.Name=" ";
+        this.request.Name="";
     this.request.MaximumMonthlyConsumption=0;
     this.request.AverageWeightKG=0;
     this.showInput = false
@@ -170,12 +171,18 @@ this.getProducts();
     this.fileErrorPhoto=''
     this.fileError=''
    
+    
     //this.fileInputPaper.nativeElement.value = this.request.PhotoId;
     //this.fileInputPhoto.nativeElement.value = this.request.PaperId;
   }
   ngAfterViewInit() {
+   
     //   this.fileInputPhoto.nativeElement.innerText  = "a.txt";
 
+  }
+  changeName()
+  {
+    this.isOpen=true;
   }
   getOneRawMaterial(id: number) {
     this.isLoadingProgress=true;
