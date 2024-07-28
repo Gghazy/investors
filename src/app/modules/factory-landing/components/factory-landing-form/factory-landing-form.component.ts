@@ -89,7 +89,7 @@ export class FactoryLandingFormComponent implements OnInit {
         this.FactoryStatus=res.Data.StatusButton
         this.DataStatus=res.Data.DataStatus
         this.isDisable=res.Data.isDisable
-       // alert("--"+ res.Data.isDisable)
+     
       });
   }
 

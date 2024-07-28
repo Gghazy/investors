@@ -60,10 +60,9 @@ export class ActualProductionListComponent implements OnInit {
       this.products = res.Data;
       console.log(this.products)
       this.showReason = false;
-      //alert()
+      
       this.products.Items.forEach((element:any) => {
-       // alert(element.DesignedCapacityUnitId)
-      // alert(element.FactoryProductId)
+       
         if (element.ActualProduction > element.DesignedCapacity){
       
           this.showReason = true

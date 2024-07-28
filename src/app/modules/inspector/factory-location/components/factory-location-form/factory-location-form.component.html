@@ -36,6 +36,9 @@
                 name="FactoryEntityId" [(ngModel)]="requestFactory.NewFactoryEntityId" (change)="onEntitySelect(requestFactory.NewFactoryEntityId)">
                     <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">{{factoryEntity.NameAr}} </option>
                 </select>
+                <span  class="text-danger" *ngIf="submitted && requestFactory.NewFactoryEntityId==-1">
+                    الرجاء إختيار  الجهة التي يتبع لها المصنع 
+                </span>
             </div>
         </div>
 
@@ -50,7 +53,7 @@
                 </select>
                
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" >
                 <label class="form-label"> هل المدينة صحيحة؟</label>
                 <select class="form-select" [(ngModel)]="requestFactory.IsCityCorrect" (change)="onInputChange($event)">
                     <option [ngValue]="true" selected>نعم</option>
@@ -62,7 +65,9 @@
                 <select class="form-select" #NewCityId="ngModel" required  
                 name="NewCityId" [(ngModel)]="requestFactory.NewCityId" (change)="onCitySelect(requestFactory.NewCityId)">
                     <option *ngFor="let city of Newcities" [ngValue]="city.Id">{{city.NameAr}} </option>
-
+                    <span  class="text-danger" *ngIf="submitted && requestFactory.NewCityId==-1">
+                    الرجاء إختيار  المدينة الصحيحة
+                </span>
                 </select>
                
             </div>
@@ -89,6 +94,9 @@
                 [(ngModel)]="requestFactory.NewIndustrialAreaId" >
                     <option *ngFor="let industrialArea of NewindustrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
                 </select>
+                <span  class="text-danger" *ngIf="submitted && requestFactory.NewIndustrialAreaId==-1">
+                    الرجاء إختيار  المنطقة الصناعية الصحيحة
+                </span>
             </div>
         </div>
         <div class="row">

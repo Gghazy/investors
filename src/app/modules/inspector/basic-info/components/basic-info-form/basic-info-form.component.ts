@@ -25,6 +25,7 @@ export class BasicInfoFormComponent implements OnInit {
   periodId: any;
   requestFactory = new BasicInfoModel();
   PeriodName!:string
+  submitted=false;
   constructor(
     private route: ActivatedRoute,
     private shared: SharedService,
@@ -44,6 +45,8 @@ export class BasicInfoFormComponent implements OnInit {
     this.getBasicInfo();
     this.getFiles();
     this.getperiod()
+    this.submitted=false;
+    
   }
   onInputChange(event: Event): void {
     console.log('test')
@@ -112,6 +115,40 @@ export class BasicInfoFormComponent implements OnInit {
   }
 
   save() {
+    this.submitted=true;
+    if(!this.requestFactory.IsFactNameCorrect&&!this.requestFactory.IsFactStatusCorrect)
+    {
+      if(this.requestFactory.CorrectFactoryName==""&&this.requestFactory.CorrectFactoryStatus==-1)
+      {
+        this.toastr.error("الرجاء إدخال إسم المصنع والحالة الصحيحين")
+      return   
+      }
+
+    }
+    if(this.requestFactory.IsFactNameCorrect)
+      this.requestFactory.CorrectFactoryName=""
+    else
+    {
+
+      if(this.requestFactory.CorrectFactoryName=="")
+      {
+        this.toastr.error("الرجاء إدخال إسم المصنع ")
+        return   
+
+      }
+    }
+    if(this.requestFactory.IsFactStatusCorrect)
+      this.requestFactory.CorrectFactoryStatus= -1
+    else
+    {
+
+      if(this.requestFactory.CorrectFactoryStatus==-1)
+      {
+        this.toastr.error("الرجاء إختيار حالة المصنع ")
+        return   
+      }
+    }
+   
     this.requestFactory.FactoryId = this.factoryId;
     this.requestFactory.PeriodId = this.periodId;
     console.log(this.request)

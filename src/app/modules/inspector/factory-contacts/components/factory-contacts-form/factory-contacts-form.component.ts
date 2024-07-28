@@ -100,6 +100,23 @@ this.getperiod()
   }
 
   save() {
+    if(this.request.IsOfficerMailCorrect)
+      this.request.NewOfficerEmail=""
+    else
+    {
+
+      if(this.request.NewOfficerEmail=="")
+        return   
+    }
+    if(this.request.IsOfficerPhoneCorrect)
+      this.request.NewOfficerPhoneId=""
+    else
+    {
+
+      if(this.request.NewOfficerPhoneId=="")
+        return   
+    }
+    
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     console.log(this.request)

@@ -11,6 +11,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/interceptor/token.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -28,6 +29,9 @@ export let InjectorInstance: Injector;
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
+    NgxSpinnerModule,
+
+    //NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }) // optional global configuration
 
   ],
   providers: [  

@@ -28,6 +28,9 @@
             <div class="col-md-5" *ngIf="requestFactory.IsFactNameCorrect == false">
                 <label class="form-label">أدخل اسم المصنع الصحيح<span class="required">*</span></label>
                 <input type="text" class="form-control" [(ngModel)]="requestFactory.CorrectFactoryName">
+                <span  class="text-danger" *ngIf="submitted && requestFactory.CorrectFactoryName==''">
+                    الرجاء إدخال إسم المصنع الصحيح
+            </span>
             </div>
         </div>
 
@@ -60,6 +63,9 @@
                     <option [ngValue]="4">ملغي</option>
                     
                 </select>
+                <span  class="text-danger" *ngIf="submitted && requestFactory.CorrectFactoryStatus==-1">
+                        الرجاء إختيار حالة المصنع الصحيحة
+                </span>
             </div>
         </div>
 

@@ -41,7 +41,7 @@ constructor(
 
   getOne(){
    
-    //alert(this.actualCapacityProductId)
+    
 
     this.actualProductionAndDesignedCapacityService
     .getOne(this.actualCapacityProductId)
@@ -49,7 +49,7 @@ constructor(
       this.request = res.Data;
       this.request.DesignedCapacityUnitId=res.Data.DesignedCapacityUnitId;
       this.request.ActualProductionUintId==res.Data.ActualProductionUintId;
-    //  alert(res.Data.DesignedCapacityUnitId)
+   
 
 console.log(this.request)
       
@@ -98,7 +98,7 @@ console.log(this.request)
    // else{
       this.lockSaveItem=true;
       this.request.FactoryProductId=this.productId,
-      // alert(this.request.FactoryProductId)
+      
       this.actualProductionAndDesignedCapacityService
       .update(this.request)
       .subscribe((res: any) => {

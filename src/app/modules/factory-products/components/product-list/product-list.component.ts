@@ -92,7 +92,7 @@ export class ProductListComponent implements OnInit {
       .subscribe((res: any) => {
       
         this.productsAdded = res.Data;
-       // alert(res.Data)
+      
         console.log(this.productsAdded)
       });
   }

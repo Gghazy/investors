@@ -13,6 +13,7 @@ import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductSearch } from 'src/app/modules/customs-items-update/models/product-search';
 import { SearchCriteria } from 'src/app/core/models/search-criteria';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-factory-raw-materials-form',
@@ -52,6 +53,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   productx: any;
   fileError: string | null = null;
   fileErrorPhoto: string | null = null;
+  isLoadingProgress=false;
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
   @ViewChild('fileInputPhoto',{static:false}) fileInputPhoto!: ElementRef;
 
@@ -61,7 +63,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     private lookUpService: LookUpService,
     private productService: FactoryProductService,
     private toastr: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) {
 
     this.periodId = this.route.snapshot.paramMap.get('periodid');
@@ -90,6 +93,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   dropdownSettings!: IDropdownSettings;
   dropdownSettings2!: IDropdownSettings;
   ngOnChanges(changes: SimpleChanges) {
+  
     this.request = new RawMaterial();
     if (changes['Id']) {
       this.selectedProducts = []
@@ -142,7 +146,7 @@ this.getProducts();
 
   }
   ngOnInit() {
-
+  /*
     this.request = new RawMaterial();
     this.request.Name="";
     this.request.MaximumMonthlyConsumption=0;
@@ -162,6 +166,7 @@ this.getProducts();
       itemsShowLimit: 2,
       allowSearchFilter: true
     };
+  */
     this.fileErrorPhoto=''
     this.fileError=''
    
@@ -173,6 +178,9 @@ this.getProducts();
 
   }
   getOneRawMaterial(id: number) {
+    this.isLoadingProgress=true;
+    this.spinner.show("rawMat");
+   
     this.searchValue = true
     this.rawMaterialService
       .getOne(id)
@@ -198,8 +206,9 @@ this.getProducts();
               this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductNamex })
               this.selectedProducts = this.selectedItems1
             });
-          
-           
+            
+            this.spinner.hide("rawMat");
+            this.isLoadingProgress=false; 
 
           })
 
@@ -233,6 +242,8 @@ this.getProducts();
     this.close.emit(true);
   }
   getProducts() {
+    this.isLoadingProgress=true;
+    this.spinner.show("rawMat");
     this.searchproduct.FactoryId = this.factoryId;
     this.searchproduct.PeriodId = parseInt(this.periodId);
     this.productService
@@ -253,6 +264,8 @@ this.getProducts();
           this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductNamex })
           this.selectedProducts = this.selectedItems1
         });
+        this.spinner.hide("rawMat");
+        this.isLoadingProgress=false;
 
       })
 

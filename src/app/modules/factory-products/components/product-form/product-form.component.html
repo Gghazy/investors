@@ -1,6 +1,6 @@
 
     <form #productForm="ngForm" (ngSubmit)="save()" class="row">
-
+      
     <div *ngIf="productId==0" class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
         في حال عدم وجود اسم المنتج المراد اضافته ضمن القائمة الخاصة بإسم المنتج حسب البند الجمركي على المستوى 12 ، الرجاء التواصل مع الجهة المختصة بوزارة الصناعة ورفع طلب بذلك .
     </div>
@@ -96,4 +96,14 @@
 
     </div>
     </form>
+    <ngx-spinner
+*ngIf="isLoadingPro"
+bdColor="rgba(0, 0, 0, 0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+[fullScreen]="true"
+name="prod">
+<p style="color: white" >  جاري التحميل ... </p>
+</ngx-spinner>
    

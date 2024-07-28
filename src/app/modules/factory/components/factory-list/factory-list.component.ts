@@ -7,6 +7,7 @@ import { ResultResponse } from 'src/app/core/models/result-response';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-landing.service';
 import { Observable, forkJoin } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-factory-list',
@@ -27,20 +28,36 @@ export class FactoryListComponent implements OnInit {
   constructor(private factoryService: FactoryService,
     private factoryLandingService: FactoryLandingService,
     private shared: SharedService,
+    private spinner: NgxSpinnerService
   ) {
 
   }
 
   ngOnInit(): void {
+    
     this.getFactories();
     this.shared.setUserRole('Investor');
+   
+   /* setTimeout(() => {
+      this.spinner.hide();
+    }, 5000); // hides the spinner after 5 seconds*/
+  
+    
+  }
+  showSpinner() {
+    this.spinner.show("list");
   }
 
+  hideSpinner() {
+    this.spinner.hide("list");
+  }
   getFactories() {
+    this.showSpinner();
     this.factoryLandingService
     .CheckFactoryUpdateStatus()
     .subscribe((res: any) => {
       this.dataFactory= res.Data;
+      this.hideSpinner();
     });
 
   }

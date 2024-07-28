@@ -139,7 +139,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
           this.data = res.Data;
         //  this.materialsList=res.Data.items;
-        // alert(this.materialsList)
+       
           console.log(this.data)
         
         }

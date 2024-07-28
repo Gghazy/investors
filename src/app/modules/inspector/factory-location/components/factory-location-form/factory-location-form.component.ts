@@ -31,6 +31,7 @@ export class FactoryLocationFormComponent implements OnInit {
   FactoryEntityName:any;
   IndusterialName:any;
 PeriodName!:string
+submitted=false;
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -131,6 +132,7 @@ PeriodName!:string
     if (this.requestFactory.IsFactoryEntityCorrect == false) {
       this.requestFactory.IsCityCorrect = false
       this.requestFactory.IsIndustrialAreaCorrect = false
+
     } 
     if (this.requestFactory.IsFactoryEntityCorrect == true) {
       this.requestFactory.NewCityId = -1
@@ -158,6 +160,15 @@ PeriodName!:string
   }
 
   save() {
+    this.submitted=true;
+   /* if(this.requestFactory.NewFactoryEntityId ==-1 ||this.requestFactory.NewCityId==-1 || this.requestFactory.NewIndustrialAreaId ==-1)
+   {
+        this.toastr.error("الرجاء التأكد من صحة البيانات المدخلة ")
+        return   
+
+     
+    }*/
+
     this.requestFactory.FactoryId = this.factoryId;
     this.requestFactory.PeriodId = this.periodId;
     this.requestFactory.WebSite = this.requestFactory.WebSite;

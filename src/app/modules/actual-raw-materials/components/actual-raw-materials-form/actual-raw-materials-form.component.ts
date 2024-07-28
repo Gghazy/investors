@@ -152,7 +152,7 @@ selectedReason:any = { Id: "1"}
         this.rawMaterials.forEach((item: any) => {
          
           this.request.IncreasedUsageReason = item.IncreasedUsageReason
-         // alert(item.IncreasedUsageReason)
+         
           if (item.IncreasedUsageReason > 0) {
             this.showInput = true
           }
@@ -179,12 +179,14 @@ selectedReason:any = { Id: "1"}
 
 
   onSelectionChange(row: ActualRawMaterial) {
-   // alert(row.UsedQuantity+"--"+row.AverageWeightKG+ "++"+row.CurrentStockQuantity)
+   
    if (row.AverageWeightKG==0)
    { 
     this.toastr.error("الرجاء التاكد من معلومات المادة الأولية في شاشة بيانات المواد الأولية");
    
   }
+  else
+  {
    row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
    row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
     if (row.UsedQuantity_KG > row.CurrentStockQuantity_KG) {
@@ -194,6 +196,7 @@ selectedReason:any = { Id: "1"}
     } else {
       this.showInput = false
     }
+  }
 
 
 

@@ -93,7 +93,8 @@ export class BasicInfoFileComponent implements OnInit {
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
-         
+         // this.toastr.success("تم حفظ الملف ");
+
         });
         this.addFileButton =true
       } else {
@@ -129,7 +130,7 @@ export class BasicInfoFileComponent implements OnInit {
       .create(this.request)
       .subscribe((res: any) => {
         this.getFiles();
-        this.toastr.success("تم الحفظ");
+        this.toastr.success("تم ارفاق الملف");
         this.fileStatus.emit(this.files.length);
 
         this.request=new BasicFileModel();
@@ -143,6 +144,7 @@ export class BasicInfoFileComponent implements OnInit {
   }
 
   deleteFile(id:number){
+    
     this.basicInfoService
     .delete(id)
     .subscribe((res: any) => {

@@ -156,3 +156,14 @@
         <a data-bs-dismiss="modal" class="btn btn-danger">الغاء</a>
     </div>
 </div>
+<ngx-spinner
+*ngIf="isLoadingProgress"
+bdColor="rgba(0, 0, 0, 0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+[fullScreen]="true"
+name="rawMat"
+>
+<p style="color: white" > جاري التحميل ...</p>
+</ngx-spinner>

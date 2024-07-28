@@ -41,7 +41,7 @@ export class ReasonComponent implements OnInit, OnChanges {
       .getAllReasons()
       .subscribe((res: any) => {
         this.reasonses = res.Data;
-       // alert(res.Data.length)
+      
       });
   }
 

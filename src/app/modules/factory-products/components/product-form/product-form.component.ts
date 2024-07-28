@@ -12,6 +12,7 @@ import { ProductsFactorySearch } from '../../models/products-not-in-factory-sear
 import { ProductsNotInFactorySearch } from '../../models/products-not-in-factory-search';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-product-form',
@@ -41,6 +42,7 @@ export class ProductFormComponent implements OnInit {
   fileErrorPhoto: string | null = null;
   lockUploadfile=false;
   lockSaveItem=false;
+  isLoadingPro=false;
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
   @ViewChild('fileInputPhoto') fileInputPhoto!: ElementRef;
   constructor(
@@ -48,6 +50,7 @@ export class ProductFormComponent implements OnInit {
     private lookUpService: LookUpService,
     private fileService: FileService,
     private toastr: ToastrService,
+     private spinner: NgxSpinnerService
   ) { }
   ngOnInit(): void {
    
@@ -132,6 +135,9 @@ export class ProductFormComponent implements OnInit {
       });
   }
   getAllProducts() {
+    this.isLoadingPro=true;
+    this.spinner.show("prod");
+
     this.isLoading = true;
     this.search.FactoryId = this.factoryId;
     this.factoryPeriod.FactoryId=this.factoryId;
@@ -141,6 +147,11 @@ export class ProductFormComponent implements OnInit {
      .getAllProductsList(this.factoryPeriod)
       .subscribe((res: any) => {
          this.products = res.Data
+
+     
+         this.spinner.hide("prod");
+         this.isLoadingPro=false;
+         
         // console.log(this.products)
         // this.products.PageCount = res.Data.PageCount;
         // this.products.TotalCount = res.Data.TotalCount;

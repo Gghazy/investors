@@ -153,7 +153,7 @@ export class FactoryLocationFormComponent {
   /*get cityId() {
 		let r= this.BasicInfoForm.get('cityId');
     if(r==null)
-    alert(r);
+   
     return r;
 	}*/
   public getFilestatus(item: any):void {

@@ -1,5 +1,5 @@
 <section class="form-panel">
-    <form #actualRawMat="ngForm" (ngSubmit)="saveItems()">
+    <form #actualRawMat="ngForm">
 
     <div class="form-header">
         <h2 class="form-title"> بيانات المواد الأولية ( المواد الخام) الفعلية لشهر {{PeriodName}}  -عام  {{year}} </h2>
@@ -191,7 +191,7 @@
     </div>
     <div class="form-footer">
         <div class="col-12">
-            <button   class="btn btn-primary me-1" [disabled]="actualRawMat.invalid||approveStatus" type="submit">حفظ</button>
+            <button   class="btn btn-primary me-1" [disabled]="actualRawMat.invalid||approveStatus" type="button" (click)='saveItems()'>حفظ</button>
             <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText"  class="btn btn-danger">الغاء</a>
         </div>
     </div>
