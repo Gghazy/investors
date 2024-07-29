@@ -20,8 +20,16 @@
          [data]="products"
          [(ngModel)]="selectProductId"
          (onSelect)="productChanage($event)"
+         id="prodName"
+         name="prodName"
+        #prodName="ngModel"
+        required
          >
         </ng-multiselect-dropdown>
+        <div *ngIf="prodName.invalid && (prodName.dirty && prodName.touched)"
+        class="validation-error">
+        <div *ngIf="prodName.errors?.['required']  ">الرجاء إختيار  اسم المنتج (حسب البند الجمركي على مستوى 12)</div>        
+    </div>
     </div>
     
     <div class="col-md-6">

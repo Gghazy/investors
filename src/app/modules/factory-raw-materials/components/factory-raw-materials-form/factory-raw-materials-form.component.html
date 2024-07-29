@@ -6,25 +6,54 @@
         في حال عدم وجود اسم المادة الأولية - المادة الخام- المراد اضافتها ضمن القائمة الخاصة بإسم البند الجمركي   (رقم البند الجمركي على مستوى 12) ، الرجاء التواصل مع الجهة المختصة بوزارة الصناعة ورفع طلب بذلك .
     </div>
     <div class="col-md-6">
-        <label class="form-label" placement="left" title="" tooltip="شرح الحقل" disabled> 
+        <!--<label class="form-label" placement="left" title="" tooltip="شرح الحقل" disabled> 
             اسم البند الجمركي
             (رقم البند الجمركي على مستوى 12)
              <span class="required">*</span>
-        </label>
+        </label>-->
 
+        
         <!-- <div class="multiselect-parent">
             <ng-multiselect-dropdown [placeholder]="'أختر'" name="CustomItemName" [settings]="dropdownSettings2" [data]="products12"
                 [(ngModel)]="request.CustomItemName" (onSelect)="onSelectionChange()"
               required>
             </ng-multiselect-dropdown>
         </div> -->
-      
-        <select [disabled]="Id>0" class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName" name="CustomItemName" required>
+        <div  *ngIf="Id>0">
+            <label class="form-label">  اسم البند الجمركي
+                (رقم البند الجمركي على مستوى 12)
+             <span class="required">*</span></label>
+            <input disabled  type="text" name="ProductName" class="form-control"  [(ngModel)]="request.RawMaterialName">
+          </div>
+       <div  *ngIf="Id<=0">
+        <label for="" class="form-label">   اسم البند الجمركي
+            (رقم البند الجمركي على مستوى 12)
+           <span class="required">*</span></label>
+        <ng-multiselect-dropdown
+         [placeholder]="'أختر'" 
+         (keyup)="onSearch($event)"
+         [settings]="dropdownSettingsRaw"
+         [data]="products12"
+         [(ngModel)]="selectProductId"
+         (onSelect)="productChanage($event)"
+         id="rawName"
+         name="rawName"
+        #rawName="ngModel"
+        required
+         >
+        </ng-multiselect-dropdown>
+        <div *ngIf="rawName.invalid && (rawName.dirty && rawName.touched)"
+        class="validation-error">
+        <div *ngIf="rawName.errors?.['required']">الرجاء إختيار  البند الجمركي</div>        
+    </div>
+    </div>
+       <!-- <select [disabled]="Id>0" class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.CustomItemName" name="CustomItemName" required>
             <option *ngFor="let item of products12" [value]="item.Id">
                 {{ item.Hs12NameAr }} ({{item. Hs12Code}})
 
             </option>
-        </select>
+        </select>-->
+
     </div>
     <div class="col-md-3">
         <label class="form-label" placement="left" title="" tooltip="الاسم المتداول في السوق "> 
@@ -97,11 +126,19 @@
         </label>
 
        <div class="multiselect-parent">
-            <ng-multiselect-dropdown [placeholder]="'أختر'" name="FactoryProductId" [settings]="dropdownSettings" [data]="products12All"
+            <ng-multiselect-dropdown [placeholder]="'أختر'"  [settings]="dropdownSettings" [data]="products12All"
                 [(ngModel)]="selectedProducts" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
-                (onSelectAll)="onSelectAll($event)" required>
+                (onSelectAll)="onSelectAll($event)"
+                id="FactoryProductId"
+                name="FactoryProductId"
+               #FactoryProductId="ngModel"
+                 required>
             </ng-multiselect-dropdown>
         </div>
+        <span *ngIf="FactoryProductId.invalid && (FactoryProductId.dirty && FactoryProductId.touched)"
+        class="validation-error">
+        <span *ngIf="FactoryProductId.errors?.['required'] ">الرجاء إختيار  المنتج</span> 
+            </span>
        <!-- <select class="form-select" (change)="onSelectionChange()" [(ngModel)]="request.FactoryProductId" name="CustomItemName" required>
             <option *ngFor="let item of products12" [value]="item.Id">
                 {{ item.Hs12NameAr }} ({{item. Hs12Code}})

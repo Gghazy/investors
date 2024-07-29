@@ -38,7 +38,7 @@
                 </td>
                 <td *ngIf="factoryStatus!=3"> {{product.DesignedCapacity !=0?'=':''}}</td>
                 <td *ngIf="factoryStatus!=3">
-                    {{product.ActualProductionWeight !=null||product.ActualProductionWeight>0?product.ActualProductionWeight + " كغ ":""}}
+                    {{product.ActualProductionWeight !=null&&product.ActualProductionWeight>0?product.ActualProductionWeight + " كغ ":""}}
                 </td>
                 <td>
                     <button [disabled]="approveStatus||product.Kilograms_Per_Unit==0"

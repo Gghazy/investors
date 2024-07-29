@@ -43,6 +43,7 @@ export class ProductFormComponent implements OnInit {
   lockUploadfile=false;
   lockSaveItem=false;
   isLoadingPro=false;
+  isOpen=false
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
   @ViewChild('fileInputPhoto') fileInputPhoto!: ElementRef;
   constructor(
@@ -53,7 +54,7 @@ export class ProductFormComponent implements OnInit {
      private spinner: NgxSpinnerService
   ) { }
   ngOnInit(): void {
-   
+    this.isOpen=false
     if (this.productId != 0) {
     //  this.getOne()
        this.getAddedProduct()

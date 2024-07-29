@@ -36,6 +36,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   products  !: ProductModel[];
   products12  !: ProductModel[];
   products12All  !: ProductModel[];
+  selectProductId!: any;
 
   
   showInput: boolean = false
@@ -56,6 +57,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   fileErrorPhoto: string | null = null;
   isLoadingProgress=false;
   isOpen=false
+  isDisabled!: boolean;
+
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
   @ViewChild('fileInputPhoto',{static:false}) fileInputPhoto!: ElementRef;
 
@@ -94,6 +97,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   dropdownSettings!: IDropdownSettings;
   dropdownSettings2!: IDropdownSettings;
+  dropdownSettingsRaw!: IDropdownSettings;
+
   ngOnChanges(changes: SimpleChanges) {
    
     this.isOpen=false
@@ -118,6 +123,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.request.AverageWeightKG=0;
     this.showInput = false
     this.selectedProducts = []
+    this.selectProductId=[]
 this.getProducts();
       }
       
@@ -145,8 +151,51 @@ this.getProducts();
         itemsShowLimit: 2,
         allowSearchFilter: true
       };
+
+      this.dropdownSettingsRaw = {
+        singleSelection: true,
+        enableCheckAll: false,
+        idField: 'Id',
+        textField: 'ProductName',
+        unSelectAllText: 'ازالة التحديد',
+        searchPlaceholderText: 'بحث',
+        itemsShowLimit: 2,
+        allowSearchFilter: true
+      };
     }
 
+  }
+  onSearch(event: Event) {
+  }
+  productChanage(item:any) {
+  
+    this.selectProductId.Id=item.Id; 
+    this.request.ProductId= this.products12.find(x => x.Id == item.Id)?.ProductId;
+    this.request.CustomItemName=item.Id+"";
+
+    this.request.UnitId = this.products12.find(x => x.Id == item.Id)?.UnitId;
+    
+    let ProductNamex = this.products12.find(x => x.Id == item.Id)?.ProductName;
+    this.productNameSelected=ProductNamex;
+    this.request.RawMaterialName=this.productNameSelected;
+
+    this.unitChange();
+
+  }
+  unitChange() {
+    const selectedOption = this.units.find(option => option.Id === this.request.UnitId);
+    if (selectedOption?.Name == 'kilograms') {
+      this.request.AverageWeightKG = 1;
+      this.isDisabled = true;
+    }
+    else if (selectedOption?.Name == 'طن بريطاني') {
+      this.request.AverageWeightKG = 1000;
+      this.isDisabled = true;
+    }
+    else {
+      this.isDisabled = false;
+
+    }
   }
   ngOnInit() {
    
@@ -260,6 +309,8 @@ this.getProducts();
       .AllProductsListToRaw(this.searchproduct)
       .subscribe((res: any) => {
         this.products12 = res.Data;
+        this.spinner.hide("rawMat");
+        this.isLoadingProgress=false;
         // this.filteredData =res.Data;
       });
       this.productService
@@ -274,8 +325,7 @@ this.getProducts();
           this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductNamex })
           this.selectedProducts = this.selectedItems1
         });
-        this.spinner.hide("rawMat");
-        this.isLoadingProgress=false;
+       
 
       })
 
@@ -316,6 +366,7 @@ this.getProducts();
       .getAllUnits()
       .subscribe((res: any) => {
         this.units = res.Data;
+        this.unitChange();
       });
   }
 
@@ -444,8 +495,7 @@ this.getProducts();
         console.log(this.request)
         this.lockSaveItem=true;
         this.request.RawMaterialName=this.productNameSelected
-        
-
+       
         this.rawMaterialService
           .create(this.request)
           .subscribe((res: any) => {
