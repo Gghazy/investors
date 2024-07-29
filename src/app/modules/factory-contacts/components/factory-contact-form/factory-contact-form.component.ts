@@ -83,6 +83,12 @@ contactDetails=new FactoryContactModel();
       FinanceManagerPhone: new FormControl({value:this.financeManagerPhoneValue,
         disabled: this.approveStatus}, [Validators.required,
            this.saPhoneNumberValidator]),
+       OfficerEmail: new FormControl({value:this.contactDetails.OfficerEmail,disabled: this.approveStatus}, [Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
+       ProductionManagerEmail: new FormControl({value:this.contactDetails.ProductionManagerEmail,disabled: this.approveStatus}, [Validators.required,    Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
+       ]),                                                                                                           
+       FinanceManagerEmail: new FormControl({value:this.contactDetails.FinanceManagerEmail,disabled: this.approveStatus}, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)
+       ]),
+   
 
     });
   }
@@ -109,7 +115,8 @@ createContactForm(): void {
       .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         debugger
-        // this.request = res.Data;
+       
+
         // this.phoneForm.setValue(res.Data);
         this.contactId=res.Data.Id;
         this.contactDetails=res.Data
@@ -152,6 +159,7 @@ createContactForm(): void {
     this.request.FactoryId = this.factoryId;
     this.request.periodId = this.periodId;
     this.request.Id=this.contactId
+   
     if (this.request.Id == 0) {
       this.lockSaveItem=true;
       this.factoryContactService
@@ -165,6 +173,10 @@ createContactForm(): void {
         });
     }
     else {
+      
+      this.request.OfficerEmail=this.contactDetails.OfficerEmail;
+      this.request.FinanceManagerEmail=this.contactDetails.FinanceManagerEmail;
+      this.request.ProductionManagerEmail=this.contactDetails.ProductionManagerEmail;
       this.lockSaveItem=true
       this.factoryContactService
         .update(this.request)

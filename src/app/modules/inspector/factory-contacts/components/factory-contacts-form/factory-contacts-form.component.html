@@ -62,6 +62,9 @@
                 placeholder="example@mail.com"
                 [(ngModel)]="request.NewOfficerEmail"
               />
+              <span  class="text-danger" *ngIf="submitted && request.NewOfficerEmail==''">
+                الرجاء إدخال البريد الإلكتروني
+        </span>
           </div>
           <!-- <div class="input-group mb-3">
             <input

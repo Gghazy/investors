@@ -22,11 +22,12 @@ export class FactoryContactsFormComponent implements OnInit {
   userId!: string;
   PeriodName!:string
   separateDialCode = false;
+  submitted=false;
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
- 
+
   phoneForm = new FormGroup({
     NewOfficerPhoneId: new FormControl(undefined, [Validators.required, this.saPhoneNumberValidator]),
     NewOfficerEmail: new FormControl(undefined, [Validators.required,this.isValidEmail])
@@ -100,13 +101,18 @@ this.getperiod()
   }
 
   save() {
+    this.submitted=true
     if(this.request.IsOfficerMailCorrect)
       this.request.NewOfficerEmail=""
     else
     {
 
       if(this.request.NewOfficerEmail=="")
+      {
+        this.toastr.error("الرجاء إدخال البريد الإلكتروني ")
+
         return   
+      }
     }
     if(this.request.IsOfficerPhoneCorrect)
       this.request.NewOfficerPhoneId=""
@@ -114,7 +120,12 @@ this.getperiod()
     {
 
       if(this.request.NewOfficerPhoneId=="")
-        return   
+      {
+        this.toastr.error("الرجاء إدخال رقم الجوال ")
+
+        return
+      }
+           
     }
     
     this.request.FactoryId = this.factoryId;
