@@ -24,7 +24,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   @ViewChild('myModalClose') modalClose!:ElementRef;
   factoryId: any;
-
+  isClosed=false;
   isShow = false;
   periodId: any;
   Id!: number;
@@ -101,6 +101,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
       this.modalLabel = 'تعديل مادة أولية'
     }
     this.Id = id
+    this.isClosed=false;
   }
 
 
@@ -217,7 +218,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
 
   closePopUp() {
-  
+   this.isClosed=true;
     this.Modal.nativeElement.click()
     this.getRawMaterial()
   }

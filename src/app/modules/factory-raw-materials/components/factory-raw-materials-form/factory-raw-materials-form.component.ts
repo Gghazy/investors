@@ -27,6 +27,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   @ViewChild('closeModal') Modal!: ElementRef;
   @Input() factoryId!: number;
   @Input() Id!: number;
+  @Input() closed!: boolean;
   @Output() close = new EventEmitter<boolean>();
   searchproduct = new ProductSearch();
   searchValue: boolean = false;
@@ -94,6 +95,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   dropdownSettings!: IDropdownSettings;
   dropdownSettings2!: IDropdownSettings;
   ngOnChanges(changes: SimpleChanges) {
+   
     this.isOpen=false
     this.request = new RawMaterial();
     if (changes['Id']) {
@@ -147,6 +149,7 @@ this.getProducts();
 
   }
   ngOnInit() {
+   
   /*
     this.request = new RawMaterial();
     this.request.Name="";

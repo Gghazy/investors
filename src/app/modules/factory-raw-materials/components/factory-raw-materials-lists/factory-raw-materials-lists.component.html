@@ -239,12 +239,12 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{{modalLabel}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        #closeModal></button>
+                        #closeModal (click)="closePopUp()"></button>
                 </div>
                 <div class="modal-body">
-                    <app-factory-raw-materials-form  *ngIf="Id!=undefined" [factoryId]="factoryId" [Id]="Id"
+                    <app-factory-raw-materials-form  *ngIf="Id!=undefined && !isClosed" [closed]="isClosed" [factoryId]="factoryId" [Id]="Id"
                         (close)="closePopUp()"></app-factory-raw-materials-form>
-                        <app-factory-raw-materials-form  *ngIf="Id==undefined" [factoryId]="factoryId" 
+                        <app-factory-raw-materials-form  *ngIf="Id==undefined && !isClosed" [closed]="isClosed" [factoryId]="factoryId" 
                         (close)="closePopUp()"></app-factory-raw-materials-form>
                
                 </div>
