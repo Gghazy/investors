@@ -25,6 +25,7 @@ export class FactoryProductsFormComponent implements OnInit {
   Factoryproducts = new ProductModel();
   request:FactoryProductsModel [] = []
   PeriodName!:string
+  validProductList=true;
   constructor(
     private route: ActivatedRoute,
     private InspectorService: FactoryProductsService,
@@ -93,10 +94,14 @@ console.log(type)
         
           if (type == 'photo') {
             this.request[i].NewProductPhotoId = res.Data.Id
+            this.toastr.success( " تم إرفاق صورة المنتج"+"("+this.request[i].ProductName+")");
           } else if (type == 'paper') {
             this.request[i].NewProductPaperId = res.Data.Id
+            this.toastr.success( " تم إرفاق ورقة البيانات للمنتج"+"("+this.request[i].ProductName+")");
           }
+        
 
+          this.Valid()
         });
     }
   }
@@ -121,32 +126,74 @@ this.request.forEach(element => {
       this.PeriodName= res.Data.PeriodName;
     });
   }
+  create(element:any,count:number)
+  {
+    this.InspectorService
+    .create(element)
+    .subscribe((res: any) => {
+      count--;
+     
+    });
+  }
+  NotValid()
+  {
+    this.validProductList=false;
+  }
+  Valid()
+  {
+    this.validProductList=true;
+  }
   save(){
+
+    if(!this.validProductList)
+    {
+      this.toastr.error("الرجاء التأكد من صحة البيانات المدخلة ")
+      return
+    }
   console.log(this.request)
- 
+  let count=this.request.length;
+ let newProduct:FactoryProductsModel [] = []
+ let UpdateProduct:FactoryProductsModel [] = []
+
+
   this.request.forEach(element => {
-    if(element.Id ==0){
+    
     element.Comments=  this.request[0].Comments
+    if(element.IsProductPhotoCorrect)
+    {
+      element.NewProductPaperId=0
+      element.NewProductPhotoId=0
+    }
+    if(element.Id ==0)
+    {
+    
       this.InspectorService
       .create(element)
       .subscribe((res: any) => {
-        this.toastr.success("تم الحفظ");
-        this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+        count--;
+        if(count<=0)
+          {
+            this.toastr.success(" تم حفظ بيانات المنتجات بنجاح");
+            this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+          }
       });
-    
-  }
+    }
+
   else {
     element.Comments=  this.request[0].Comments
     this.InspectorService
     .update(element)
     .subscribe((res: any) => {
-      this.toastr.success("تم الحفظ");
-      this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+     count--;
+     if(count<=0)
+      {
+        this.toastr.success(" تم حفظ بيانات المنتجات بنجاح");
+        this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+      }
     });
      
   }
 });
-
 
     
   }
@@ -155,15 +202,18 @@ this.request.forEach(element => {
 deleteImage(product:FactoryProductsModel,i:number){
 console.log(product)
 this.request[i].NewProductPhotoId=0
-this.toastr.success("تم الحذف  ");  
+this.toastr.success( " تم حذف  صورة المنتج"+"("+ product.ProductName+")");
+
 }
 
 deleteFile(product:FactoryProductsModel,i:number){
   console.log(product)
   this.request[i].NewProductPaperId=0
-  this.toastr.success("تم الحذف  ");  
-  }
+  this.toastr.success( " تم حذف ورقة بيانات المنتج"+"("+ product.ProductName+")");
+}
   onInputChange(event: Event): void {
+    this.validProductList=true;
+    
       //     if (target.value === 'no') {
       //   showInputElement.classList.remove('d-none');
       // } else {

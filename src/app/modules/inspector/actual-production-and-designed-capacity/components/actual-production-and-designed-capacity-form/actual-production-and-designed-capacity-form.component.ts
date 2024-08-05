@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ActualProductionAndDesignedCapacityService } from 'src/app/modules/actual-production-and-designed-capacity/actual-production-and-designed-capacity.service';
 import { ActualProductSearch } from 'src/app/modules/actual-production-and-designed-capacity/models/actual-product-search';
 import { ActualProductModel } from 'src/app/modules/actual-production-and-designed-capacity/models/actual-product-model';
@@ -28,6 +28,8 @@ export class ActualProductionAndDesignedCapacityFormComponent {
   reasons = new ReasonModel();
   Allreasons:any=[]
   PeriodName!:string
+  reasonProduct=0;
+  validProductList=true;
   constructor(
     private route: ActivatedRoute,
     private shared: SharedService,
@@ -37,6 +39,8 @@ export class ActualProductionAndDesignedCapacityFormComponent {
     private lookUpService: LookUpService,
     private reasonService: ReasonService,
     private periodService : PeriodService,
+    private router: Router,
+
 
     ){
     this.factoryId = this.route.snapshot.paramMap.get('id');
@@ -67,18 +71,37 @@ export class ActualProductionAndDesignedCapacityFormComponent {
         this.Allreasons = res.Data;
       });
   }
-
+  NotValid()
+  {
+    this.validProductList=false;
+  }
+  Valid()
+  {
+    this.validProductList=true;
+  }
   getOne() {
     this.reasonService
       .getOne(this.periodId,this.factoryId)
       .subscribe((res: any) => {
-      
+       if(res.Data.ReasonId!=null)
+       {
+        this.reasonProduct= res.Data.ReasonId
         this.products[0].IncreaseReasonId = res.Data.ReasonId;
+       }
+       else
+        this.products[0].IncreaseReasonId = 0;
+     
         console.log(this.products[0].IncreaseReasonId)
       });
   }
-  onInputChange(event: Event): void {
-    const target = event.target as HTMLInputElement;
+  onInputChange(product: Event): void {
+    if(this.products[0].IsIncreaseReasonCorrect)
+     { 
+       this.products[0].IncreaseReasonCorrect=0
+       this.Valid();
+
+      }
+    /*const target = event.target as HTMLInputElement;
     const closestRow = target.closest('.row');
 
     const showInputElement = closestRow?.querySelector('.show-input');
@@ -89,7 +112,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
       } else {
         showInputElement.classList.add('d-none');
       }
-    }
+    }*/
   }
   getperiod(){
     this.periodService
@@ -99,11 +122,31 @@ export class ActualProductionAndDesignedCapacityFormComponent {
       this.PeriodName= res.Data.PeriodName;
     });
   }
+  changereason(){
+   
+    this.reasonProduct=this.products[0].IncreaseReasonId
+    this.Valid();
+  }
   save(){
-    
+    if(!this.validProductList)
+      {
+        this.toastr.error("الرجاء التأكد من صحة البيانات المدخلة ")
+        return
+      }
     console.log(this.request)
-
+    let count=this.products.length;
     this.products.forEach(element => {
+      if(element.IsDesignedCapacityCorrect)
+        {
+          element.CorrectDesignedCapacity=0
+ 
+        }
+        if(element.IsActualProductionCorrect)
+          {
+            element.CorrectActualProduction=0
+   
+          }
+
 
       if(element.Id ==0){
         console.log(element)
@@ -114,7 +157,12 @@ export class ActualProductionAndDesignedCapacityFormComponent {
         this.FormService
         .create(element)
         .subscribe((res: any) => {
-          this.toastr.success("تم الحفظ");
+          count--;
+          if(count<=0)
+            {
+            this.toastr.success("تم الحفظ");
+            this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+            }
         });
       }
       else{
@@ -126,7 +174,12 @@ export class ActualProductionAndDesignedCapacityFormComponent {
       this.FormService
       .update(element)
       .subscribe((res: any) => {
-        this.toastr.success("تم الحفظ");
+        count--;
+        if(count<=0)
+          {
+          this.toastr.success("تم الحفظ");
+          this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+          }
       });
     }  
   });

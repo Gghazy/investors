@@ -3,6 +3,8 @@ import { FileService } from 'src/app/core/service/file.service';
 import { InspectorFactoryLocationService } from '../../factory-location.service';
 import { FactoryLocationFileModel } from '../../models/factory-location-file-model.model';
 import { FactoryLocationService } from 'src/app/modules/factory-location/factory-location.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-factory-location-file',
@@ -21,16 +23,28 @@ export class FactoryLocationFileComponent implements OnInit {
   Inspectorsfiles!: any
   request = new FactoryLocationFileModel()
   @ViewChild('fileInput') fileInput!: ElementRef;
+  selectedFirstItem: any = 1; 
+
   constructor(private fileService: FileService,
     private InspectorService: InspectorFactoryLocationService,
     private factoryLocationService: FactoryLocationService,
+    private toastr: ToastrService
+
   ) {
 
   }
   ngOnInit(): void {
     this.getFiles();
     this.getInspectorsFiles()
+    this.initValue();
+
   }
+  initValue(){
+    this.request.Type=this.selectedFirstItem;
+    this.fileError = '';
+   
+
+   }
   getFiles() {
     this.request.FactoryId = parseInt(this.factoryId)
     this.request.PeriodId = parseInt(this.periodId)
@@ -51,22 +65,52 @@ export class FactoryLocationFileComponent implements OnInit {
       });
   }
   save() {
+    if(this.fileError!=null)
+      {
+        this.fileError = 'لم تقم بإختيار ملف';
+        return
+      }
+      if (this.files.length > 10){
+        this.fileError = 'الحد الاقصى للمرفقات 10';
+        return
+      }
+
     this.request.FactoryId = parseInt(this.factoryId)
     this.request.PeriodId = parseInt(this.periodId)
-    this.request.Name=''
-    console.log(this.request)
+    if(this.files.length < 10){
+    this.request.Name =''
     this.InspectorService
       .CreateFiles(this.request)
       .subscribe((res: any) => {
         this.getInspectorsFiles()
+        this.toastr.success("تم ارفاق الملف");
+        // this.fileStatus.emit(this.files.length);
+         this.request=new FactoryLocationFileModel()
+         this.fileInput.nativeElement.value = '';
+         this.initValue();
       });
+    }
 
     this.request = new FactoryLocationFileModel()
     this.fileInput.nativeElement.value = '';
   }
   saveFile(file: any) {
 
-    if (file.target.files.length > 0) {
+    const input = file.target as HTMLInputElement;
+   
+    if (!input.files || input.files.length === 0) {
+      this.fileError = 'لم تقم بإختيار ملف';
+      console.error('لم تقم بإختيار ملف');
+      return;
+    }
+    const fileImage = input.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.fileError = ' الرجاء رفع مستند بحجم أقل من  5MB  ';
+            console.error(' 5MB حجم الملف أكبر من');
+    }
+    else  {
       const file1 = file.target.files[0];
       const fileType = file1.type;
 
@@ -78,13 +122,14 @@ export class FactoryLocationFileComponent implements OnInit {
           .subscribe((res: any) => {
             this.request.AttachmentId = res.Data.Id
           });
+          this.addFileButton = true
       }
-      this.addFileButton = true
-    } else {
+     else {
       this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
 
     }
   }
+}
   getFile(attachmentId: number) {
     this.fileService.getImage(attachmentId).subscribe((res: any) => {
       this.src = 'data:image/jpeg;base64,' + res.Image;

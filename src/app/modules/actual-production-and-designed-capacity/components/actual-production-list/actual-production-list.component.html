@@ -56,7 +56,7 @@
         <app-pagination  (changePage)="pageChanged($event)" [pageSize]="products.PageSize" [pageNumber]="products.PageNumber" [totalCount]="products.TotalCount"></app-pagination>
        <div *ngIf="showReason">
         <app-reason *ngIf="factoryStatus!=3" [approveSatus]="approveStatus" [periodId]="periodId" [factoryId]="factoryId"></app-reason>
-       
+      
        </div>
     </div>
     <div class="form-footer">

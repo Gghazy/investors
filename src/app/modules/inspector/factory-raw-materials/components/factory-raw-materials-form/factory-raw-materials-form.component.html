@@ -26,7 +26,7 @@
                             <label class="form-label"> صورة المادة الاولية </label>
                             <div class="input-group">
                                 <div data-bs-toggle="modal" data-bs-target="#photoModal">
-                                    <button class="btn btn-primary" type="button" (click)="getImage(material.PhotoId)"
+                                    <button [disabled]="material.PhotoId<=0"  class="btn btn-primary" type="button" (click)="getImage(material.PhotoId)"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                         data-bs-original-title=" عرض الصورة الحالية للمادة الاولية">
 
@@ -58,32 +58,28 @@
 
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label"> ورقة بيانات المادة الاولية </label>
+                            <label class="form-label"> ورقة البيانات الحالية   </label>
                             <div class="input-group">
                               
-                                <button class="btn btn-primary" type="button" (click)="getFile(material.PaperId)"
+                                <button  [disabled]="material.PaperId<=0" class="btn btn-warning px-2 py-1 mx-1" type="button" (click)="getFile(material.PaperId)"
                                     data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                     data-bs-original-title=" عرض الصورة الحالية للمادة الاولية">
 
                                     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
-                                        </g>
-                                        <g id="SVGRepo_iconCarrier">
-                                            <path
-                                                d="M3 8.976C3 4.05476 4.05476 3 8.976 3H15.024C19.9452 3 21 4.05476 21 8.976V15.024C21 19.9452 19.9452 21 15.024 21H8.976C4.05476 21 3 19.9452 3 15.024V8.976Z"
-                                                stroke="#ffffff" stroke-width="2"></path>
-                                            <path
-                                                d="M17.0045 16.5022L12.7279 12.2256C9.24808 8.74578 7.75642 8.74578 4.27658 12.2256L3 13.5022"
-                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
-                                            <path d="M21 13.6702C18.9068 12.0667 17.4778 12.2919 15.198 14.3459"
-                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"></path>
-                                            <path
-                                                d="M17 8C17 8.55228 16.5523 9 16 9C15.4477 9 15 8.55228 15 8C15 7.44772 15.4477 7 16 7C16.5523 7 17 7.44772 17 8Z"
-                                                stroke="#ffffff" stroke-width="2"></path>
-                                        </g>
-                                    </svg>
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                    </g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
+                                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                                        <path d="M12 2L12 15M12 15L9 11.5M12 15L15 11.5" stroke="#ffffff"
+                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                    </g>
+                                </svg>
 
                                 </button>
 
@@ -113,9 +109,8 @@
 
                                 <div class="col-md-6">
                                     <label class="form-label" data-bs-toggle="tooltip" data-bs-placement="right"
-                                        title=""   tooltip=" صيغة jpeg , jpg , png , pdf">إرفاق صورة المنتج
-                                        <span class="required">*</span>
-                                        <i>؟</i>
+                                        title=""   tooltip=" صيغة jpeg , jpg , png , pdf">إرفاق صورة المادة الأولية
+                                       
                                      
                                     </label>
                                     <div class="input-group">
@@ -124,7 +119,7 @@
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
                                         </button>
                                         <span data-bs-toggle="modal" data-bs-target="#photoModal">
-                                            <button class="btn btn-warning px-2 py-1 mx-1" type="button"
+                                            <button  [disabled]="material.CorrectPhotoId<=0" class="btn btn-warning px-2 py-1 mx-1" type="button"
                                                 data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                                 data-bs-original-title=" عرض صورة  المادة"
                                                 (click)="getImage(material.CorrectPhotoId)">
@@ -154,10 +149,11 @@
 
                                             </button>
                                         </span>
-                                        <a class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
+                                        <button [disabled]="material.CorrectPhotoId<=0" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
                                             data-bs-placement="bottom" title=""
                                             data-bs-original-title=" حذف صورة المادة" (click)="deleteImage(material)"><i
-                                                class="icon-delete"></i></a>
+                                                class="icon-delete"></i></button>
+                                              
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -166,8 +162,7 @@
                                         data-bs-original-title="إرفاق ورقة البيانات أو دليل/ معايير البيانات إن وجدت"
                                         tooltip="صيغة jpeg , jpg , png , pdf">
                                     إرفاق ورقة البيانات
-                                    <span class="required">*</span>
-                                    <i>؟</i>
+                                   
                                     </label>
                                     <div class="input-group">
                                         <input type="file" #fileInput2 style="display: none;" (change)="saveFile($event,i)" />
@@ -182,7 +177,7 @@
                                                 stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
                                         </button>
 
-                                        <button class="btn btn-warning px-2 py-1 mx-1" type="button"
+                                        <button  [disabled]="material.CorrectPaperId<=0" class="btn btn-warning px-2 py-1 mx-1" type="button"
                                             data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                             data-bs-original-title=" تحميل الملف " 
                                             (click)="getFile(material.CorrectPaperId)">
@@ -206,11 +201,16 @@
 
                                         </button>
 
-                                        <a class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
+                                        <button [disabled]="material.CorrectPaperId<=0" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
                                             data-bs-placement="bottom" title="" data-bs-original-title=" حذف الملف"
-                                            (click)="deleteFile(material)"><i class="icon-delete"></i></a>
+                                            (click)="deleteFile(material)"><i class="icon-delete"></i></button>
 
                                     </div>
+                                </div>
+                                <div class="text-danger" *ngIf="(material.CorrectPhotoId==0||material.CorrectPhotoId==null)&&(material.CorrectPaperId==0||material.CorrectPaperId==null)">
+                                    الرجاء إرفاق صورة المادة الأولية أو ورقة البيانات الصحيحة
+                                    {{ NotValid() }}
+                       
                                 </div>
                             </div>
                         </div>
@@ -262,7 +262,7 @@
     <div class="form-footer">
         <div class="col-12">
             <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-            <a href="" class="btn btn-danger">الغاء</a>
+            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
         </div>
     </div>
     <!-- Modal photos-->

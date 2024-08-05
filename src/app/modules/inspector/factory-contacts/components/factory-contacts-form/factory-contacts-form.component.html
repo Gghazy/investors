@@ -19,6 +19,8 @@
         </a>
       </div>
     </div>
+    <form [formGroup]="phoneForm">
+
     <div class="form-body">
       <div class="col-md-12">
         <h3>التحقق من صحة معلومات جهة الاتصال​</h3>
@@ -35,8 +37,10 @@
                 type="email"
                 class="form-control"
                 placeholder="example@mail.com"
+                name="OldOfficerEmail"
+                formControlName="OldOfficerEmail"
                 [(ngModel)]="request.OldOfficerEmail"
-                disabled
+                [disabled]="true"
               />
           </div>
 
@@ -46,6 +50,7 @@
               class="form-select"
               (change)="onInputChange($event)"
               [(ngModel)]="request.IsOfficerMailCorrect"
+              formControlName="IsOfficerMailCorrect"
             >
               <option [ngValue]="true" selected>نعم</option>
               <option [ngValue]="false">لا</option>
@@ -61,10 +66,14 @@
                 class="form-control"
                 placeholder="example@mail.com"
                 [(ngModel)]="request.NewOfficerEmail"
+                formControlName="NewOfficerEmail"
+                required=""
               />
-              <span  class="text-danger" *ngIf="submitted && request.NewOfficerEmail==''">
-                الرجاء إدخال البريد الإلكتروني
-        </span>
+              <div class="text-danger" *ngIf="submitted && request.NewOfficerEmail==''">الرجاء إدخال البريد الإلكتروني   </div>
+              <div class="text-danger" *ngIf="submitted && phoneForm.get('NewOfficerEmail')?.errors">
+                <div *ngIf="phoneForm.get('NewOfficerEmail')?.hasError('pattern')">الرجاء إدخال بريد إلكتروني  صالح</div>
+              </div>
+             
           </div>
           <!-- <div class="input-group mb-3">
             <input
@@ -88,7 +97,9 @@
             type="tel"
             class="form-control"
             [(ngModel)]="request.OldOfficerPhoneId"
-            disabled
+            formControlName="OldOfficerPhoneId"
+
+            [disabled]="true"
           />
         
           </div>
@@ -100,6 +111,7 @@
               class="form-select"
               (change)="onInputChange($event)"
               [(ngModel)]="request.IsOfficerPhoneCorrect"
+              formControlName="IsOfficerPhoneCorrect"
             >
               <option [ngValue]="true" selected>نعم</option>
               <option [ngValue]="false">لا</option>
@@ -109,44 +121,48 @@
           <div class="col-md-5" *ngIf="request.IsOfficerPhoneCorrect == false">
             <label class="form-label"> أدخل رقم الجوال الصحيح <span class="required">*</span></label>
            
-          <ngx-intl-tel-input
-                    [cssClass]="'form-control'"
-                    [preferredCountries]="preferredCountries"
-                    [enableAutoCountrySelect]="true"
-                    [enablePlaceholder]="true"
-                    [searchCountryFlag]="true"
-                    [searchCountryField]="[
-                      SearchCountryField.Iso2,
-                      SearchCountryField.Name
-                    ]"
-                    [selectFirstCountry]="false"
-                    [selectedCountryISO]="CountryISO.SaudiArabia"
-                    [maxLength]="15"
-                    [phoneValidation]="true"
-                    [separateDialCode]="separateDialCode"
-                    [numberFormat]="PhoneNumberFormat.National"
-                    name="NewOfficerPhoneId"
-                    formControlName="NewOfficerPhoneId"
-
-                  >
-                  </ngx-intl-tel-input>
-                  <div style="color: #F00;" *ngIf="phoneForm.get('NewOfficerPhoneId')?.errors && phoneForm.get('NewOfficerPhoneId')?.touched">
-                    <div *ngIf="phoneForm.get('NewOfficerPhoneId')?.hasError('required')">هذا الحقل مطلوب</div>
-                    <div *ngIf="phoneForm.get('NewOfficerPhoneId')?.hasError('saPhoneNumber')">الرجاء إدخال رقم هاتف سعودي صالح</div>
+            <ngx-intl-tel-input
+            [cssClass]="'form-control'"
+            [onlyCountries]="[CountryISO.SaudiArabia]"
+            [enableAutoCountrySelect]="true"
+            [enablePlaceholder]="false"
+            [searchCountryFlag]="false"
+            [searchCountryField]="[
+              SearchCountryField.Iso2,
+              SearchCountryField.Name
+            ]"
+            [selectFirstCountry]="false"
+            [selectedCountryISO]="CountryISO.SaudiArabia"
+            [maxLength]="15"
+            [phoneValidation]="true"
+            [separateDialCode]="separateDialCode"
+            [numberFormat]="PhoneNumberFormat.National"
+            name="NewOfficerPhoneId"
+            formControlName="NewOfficerPhoneId"
+            [enablePlaceholder]="true"
+            required=""
+            
+          >
+          </ngx-intl-tel-input>
+        
+                  <div class="text-danger" *ngIf="submitted && phoneForm.get('NewOfficerPhoneId')?.errors">
+                    <div *ngIf="phoneForm.get('NewOfficerPhoneId')?.hasError('required')">الرجاء إدخال رقم الجوال  </div>
+                    <div *ngIf="phoneForm.get('NewOfficerPhoneId')?.hasError('saPhoneNumber')">الرجاء إدخال رقم جوال سعودي صالح</div>
                   </div>
           </div>
         </div>
 
         <div class="col-md-12">
           <label class="form-label"> تعليقات </label>
-          <textarea rows="3" class="form-control"  [(ngModel)]="request.Comments"></textarea>
+          <textarea rows="3" class="form-control"   name="Comments" formControlName="Comments"  [(ngModel)]="request.Comments"></textarea>
       </div>
     </div>
 
     <div class="form-footer">
       <div class="col-12">
         <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-        <a href="" class="btn btn-danger">الغاء</a>
+        <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
       </div>
     </div>
+    </form>
   </section>

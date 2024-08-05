@@ -26,10 +26,11 @@
                 </select>
             </div>
             <div class="col-md-5" *ngIf="requestFactory.IsFactNameCorrect == false">
-                <label class="form-label">أدخل اسم المصنع الصحيح<span class="required">*</span></label>
+                <label class="form-label"> اسم المصنع الصحيح<span class="required">*</span></label>
                 <input type="text" class="form-control" [(ngModel)]="requestFactory.CorrectFactoryName">
-                <span  class="text-danger" *ngIf="submitted && requestFactory.CorrectFactoryName==''">
+                <span  class="text-danger" *ngIf="requestFactory.CorrectFactoryName==''||requestFactory.CorrectFactoryName==null">
                     الرجاء إدخال إسم المصنع الصحيح
+                    {{NotValid()}}
             </span>
             </div>
         </div>
@@ -54,8 +55,8 @@
                 </select>
             </div>
             <div class="col-md-5 " *ngIf="requestFactory.IsFactStatusCorrect == false">
-                <label class="form-label"> أختر الحالة الحالية الصحيحة<span class="required">*</span></label>
-                <select class="form-select" [(ngModel)]="requestFactory.CorrectFactoryStatus">
+                <label class="form-label">  الحالة الحالية الصحيحة<span class="required">*</span></label>
+                <select class="form-select" (change)="Valid()" [(ngModel)]="requestFactory.CorrectFactoryStatus">
                     <option [ngValue]="0">منتج</option>
                     <option [ngValue]="1">تحت التأسيس </option>
                     <option [ngValue]="2">متوقف</option>
@@ -63,8 +64,9 @@
                     <option [ngValue]="4">ملغي</option>
                     
                 </select>
-                <span  class="text-danger" *ngIf="submitted && requestFactory.CorrectFactoryStatus==-1">
+                <span  class="text-danger" *ngIf="requestFactory.CorrectFactoryStatus==-1||requestFactory.CorrectFactoryStatus==null">
                         الرجاء إختيار حالة المصنع الصحيحة
+                        {{NotValid()}}
                 </span>
             </div>
         </div>
@@ -80,7 +82,7 @@
     <div class="form-footer">
         <div class="col-12">
             <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-            <a href="" class="btn btn-danger">الغاء</a>
+            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
         </div>
         </div>
     <!-- Modal photos-->

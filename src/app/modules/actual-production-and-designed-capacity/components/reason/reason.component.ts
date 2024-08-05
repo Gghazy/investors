@@ -58,6 +58,7 @@ export class ReasonComponent implements OnInit, OnChanges {
     
     this.request.PeriodId=this.periodId;
     this.request.FactoryId=this.factoryId;
+    
     if (this.request.Id == 0 || this.request.Id ==undefined) {
       this.reasonService
         .create(this.request)

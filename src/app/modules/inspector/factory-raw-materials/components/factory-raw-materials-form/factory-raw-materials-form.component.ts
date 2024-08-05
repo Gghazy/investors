@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ResolveStart } from '@angular/router';
+import { ActivatedRoute, ResolveStart,Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from 'src/app/core/service/file.service';
 import { RawMaterialSearch } from 'src/app/modules/factory-raw-materials/models/raw-material-search.model';
@@ -23,6 +23,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   searchRawmaterial = new RawMaterialSearch();
   request: any[] = [];
   PeriodName!:string
+  validProductList=true;
+
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -31,6 +33,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     private fileService: FileService,
     private shared: SharedService,
     private periodService : PeriodService,
+    private router: Router,
+
 
   ) {
     this.factoryId = this.route.snapshot.paramMap.get('id');
@@ -87,12 +91,16 @@ console.log(this.materials)
   deleteImage(material: any) {
     console.log(material)
     material.CorrectPhotoId = 0
+    this.toastr.success( " تم حذف صورة المادة الأولية"+"("+ material.RawMaterialName+")");
+
 
   }
 
   deleteFile(material: any) {
     console.log(material)
     material.CorrectPaperId = 0
+    this.toastr.success( " تم حذف ورقة بيانات المادة الأولية"+"("+ material.RawMaterialName+")");
+
 
   }
   savePhoto(file: any,i:number) {
@@ -101,8 +109,10 @@ console.log(this.materials)
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.materials[i].CorrectPhotoId = res.Data.Id
-          console.log(this.materials)
+          this.toastr.success( " تم إرفاق صورة المادة الأولية"+"("+ this.materials[i].RawMaterialName+")");
 
+          console.log(this.materials)
+          this.Valid()
         });
     }
   }
@@ -113,29 +123,60 @@ console.log(this.materials)
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.materials[i].CorrectPaperId = res.Data.Id
+          this.toastr.success( " تم إرفاق ورقة بيانات المادة الأولية"+"("+ this.materials[i].RawMaterialName+")");
           console.log(this.materials)
-
+          this.Valid()
         });
     }
   }
+  NotValid()
+  {
+    this.validProductList=false;
+  }
+  Valid()
+  {
+    this.validProductList=true;
+  }
   save() {
-    
+    if(!this.validProductList)
+      {
+        this.toastr.error("الرجاء التأكد من صحة البيانات المدخلة ")
+        return
+      }
+
+    let count=this.materials.length
     this.materials.forEach(element => {
       console.log(element)
 
-element.Comment=      this.materials[0].Comment 
+       element.Comment=  this.materials[0].Comment 
+       if(element.IsImageClear)
+        {
+          element.CorrectPaperId=0
+          element.CorrectPhotoId=0
+        }
+
       if (element.Id == 0) {
         this.service
           .create(element)
           .subscribe((res: any) => {
-            this.toastr.success("تم الحفظ");
+            count--;
+        if(count<=0)
+          {
+            this.toastr.success(" تم حفظ بيانات المواد الأولية بنجاح");
+            this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+          }
           });
       }
       else {
         this.service
           .update(element)
           .subscribe((res: any) => {
-            this.toastr.success("تم الحفظ");
+            count--;
+        if(count<=0)
+          {
+            this.toastr.success(" تم حفظ بيانات المواد الأولية بنجاح");
+          this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+          }
           });
       }
 
@@ -151,7 +192,7 @@ element.Comment=      this.materials[0].Comment
     });
   }
   onInputChange(event: Event): void {
-    
+    this.Valid();
 
   }
 }

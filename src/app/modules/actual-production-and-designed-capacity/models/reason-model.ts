@@ -5,4 +5,9 @@ export class ReasonModel {
     ReasonId!: number;
 }
 
-
+export class ReasonModelDto {
+   
+    PeriodId!: number;
+    FactoryId!: number;
+   
+}

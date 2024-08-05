@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReasonModel } from './models/reason-model';
+import { ReasonModelDto } from './models/reason-model';
+
 import { ActualProductionFileModel } from './models/actual-production-file-model';
 
 @Injectable({
@@ -19,6 +21,9 @@ export class ReasonService {
   }
   update(request: ReasonModel): Observable<any> {
     return this.http.put<any>('IncreaseActualProductions', request);
+  }
+  removeByperiod(request: ReasonModelDto): Observable<any> {
+    return this.http.post<any>('IncreaseActualProductions/removeReason', request);
   }
 
   getAllFiles(factoryId:number,periodId:number): Observable<any> {

@@ -26,6 +26,7 @@ export class BasicInfoFormComponent implements OnInit {
   requestFactory = new BasicInfoModel();
   PeriodName!:string
   submitted=false;
+  validbasicInfo=true;
   constructor(
     private route: ActivatedRoute,
     private shared: SharedService,
@@ -49,6 +50,7 @@ export class BasicInfoFormComponent implements OnInit {
     
   }
   onInputChange(event: Event): void {
+   this.Valid();
     console.log('test')
     const target = event.target as HTMLInputElement;
     const closestRow = target.closest('.row');
@@ -88,6 +90,14 @@ export class BasicInfoFormComponent implements OnInit {
         });
     }
   }
+  NotValid()
+  {
+    this.validbasicInfo=false;
+  }
+  Valid()
+  {
+    this.validbasicInfo=true;
+  }
   getperiod(){
     this.periodService
     .getOne(this.periodId)
@@ -116,6 +126,21 @@ export class BasicInfoFormComponent implements OnInit {
 
   save() {
     this.submitted=true;
+
+    if(this.validbasicInfo)
+    {
+      if(this.requestFactory.IsFactNameCorrect)
+        this.requestFactory.CorrectFactoryName=""
+      if(this.requestFactory.IsFactStatusCorrect)
+        this.requestFactory.CorrectFactoryStatus=-1
+    }
+    else
+    {
+      this.toastr.error("الرجاء التأكد من صحة البيانات المدخلة ")
+      return
+    }
+
+/*
     if(!this.requestFactory.IsFactNameCorrect&&!this.requestFactory.IsFactStatusCorrect)
     {
       if(this.requestFactory.CorrectFactoryName==""&&this.requestFactory.CorrectFactoryStatus==-1)
@@ -148,7 +173,8 @@ export class BasicInfoFormComponent implements OnInit {
         return   
       }
     }
-   
+  */
+
     this.requestFactory.FactoryId = this.factoryId;
     this.requestFactory.PeriodId = this.periodId;
     console.log(this.request)
@@ -156,6 +182,8 @@ export class BasicInfoFormComponent implements OnInit {
       this.inspectorService
         .create(this.requestFactory)
         .subscribe((res: any) => {
+          this.toastr.success(" تم حفظ البيانات الأساسية بنجاح");
+          this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
 
         });
     }
@@ -163,11 +191,12 @@ export class BasicInfoFormComponent implements OnInit {
       this.inspectorService
         .update(this.requestFactory)
         .subscribe((res: any) => {
+          this.toastr.success(" تم حفظ البيانات الأساسية بنجاح");
+          this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
 
         });
     }
-    this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
-    this.toastr.success("تم الحفظ");
-    // 
+   
+  
   }
 }

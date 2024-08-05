@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { FactoryContactModel } from 'src/app/modules/factory-contacts/models/factory-contact-model';
+
+import { FactoryContactModel, phoneModel } from 'src/app/modules/factory-contacts/models/factory-contact-model';
 import { FactoryContactsModel } from '../../models/factory-contacts.model';
 import { InspectorFactoryContactsService } from '../../factory-contacts.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
@@ -17,6 +18,7 @@ import { PeriodService } from 'src/app/modules/period/period.service';
 export class FactoryContactsFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
+  phoneForm!: FormGroup;
   request = new FactoryContactsModel()
   requestContact = new FactoryContactModel()
   userId!: string;
@@ -27,12 +29,8 @@ export class FactoryContactsFormComponent implements OnInit {
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
-
-  phoneForm = new FormGroup({
-    NewOfficerPhoneId: new FormControl(undefined, [Validators.required, this.saPhoneNumberValidator]),
-    NewOfficerEmail: new FormControl(undefined, [Validators.required,this.isValidEmail])
-
-  });
+newphone!:phoneModel
+  
   constructor(
     private route: ActivatedRoute,
     private inspectorContactService: InspectorFactoryContactsService,
@@ -46,6 +44,7 @@ export class FactoryContactsFormComponent implements OnInit {
     this.periodId = this.route.snapshot.paramMap.get('periodid');
   }
   ngOnInit() {
+    this.createContactForm()
     this.userId = this.shared.getUserId();
     this.getContact()
 this.getperiod()
@@ -58,7 +57,23 @@ this.getperiod()
       .subscribe((res: any) => {
         this.request = res.Data;
         console.log(this.request)
-      });
+        this.phoneForm.get('NewOfficerPhoneId')?.setValue(this.request.NewOfficerPhoneId);
+
+        if(this.request.IsOfficerMailCorrect)
+        {
+          
+          this.phoneForm.get('NewOfficerEmail')?.setErrors(null);
+          
+        }
+        if(this.request.IsOfficerPhoneCorrect)
+        {
+          
+        this.phoneForm.get('NewOfficerPhoneId')?.setErrors(null);
+       
+        }
+
+
+          });
   }
   getperiod(){
     this.periodService
@@ -73,14 +88,18 @@ this.getperiod()
 
     if (this.request.IsOfficerMailCorrect == true) {
       this.request.NewOfficerEmail = ''
+      this.phoneForm.get('NewOfficerEmail')?.setErrors(null);
+      
+
     }
     if (this.request.IsOfficerPhoneCorrect == true) {
+      this.phoneForm.get('NewOfficerPhoneId')?.setValue('');
+      this.phoneForm.get('NewOfficerPhoneId')?.setErrors(null);
       this.request.NewOfficerPhoneId = ''
     }
 
   }
-
-  saPhoneNumberValidator(control: FormControl): ValidationErrors | null {
+   saPhoneNumberValidator(control: FormControl): ValidationErrors | null {
     const phoneNumber = control.value?.number;
     if (phoneNumber != null) {
       const saPhoneNumberPattern = /^(05\d{8})$/; // Saudi Arabian phone number pattern without country code
@@ -91,6 +110,8 @@ this.getperiod()
     return null;
   }
 
+ 
+
   isValidEmail(control: FormControl): ValidationErrors | null {
     let email = control.value;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -99,35 +120,45 @@ this.getperiod()
     return isvalid ? null : { isValidEmail: true };
 
   }
-
+  createContactForm(): void {
+   
+     this.phoneForm = new FormGroup({       
+      OldOfficerEmail:  new FormControl({ value: '', disabled: true }), 
+      OldOfficerPhoneId:  new FormControl({ value: '', disabled: true }),   
+      IsOfficerMailCorrect:  new FormControl(''),   
+      IsOfficerPhoneCorrect:  new FormControl(''), 
+      Comments:  new FormControl(''),                                                        
+      NewOfficerPhoneId: new FormControl( '',
+         [Validators.required, this.saPhoneNumberValidator]), 
+      NewOfficerEmail: new FormControl('', 
+        [ Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/),
+         
+      ]),
+     
+  
+    });
+      
+    }
   save() {
+
     this.submitted=true
-    if(this.request.IsOfficerMailCorrect)
-      this.request.NewOfficerEmail=""
-    else
-    {
 
-      if(this.request.NewOfficerEmail=="")
-      {
-        this.toastr.error("الرجاء إدخال البريد الإلكتروني ")
-
-        return   
-      }
-    }
-    if(this.request.IsOfficerPhoneCorrect)
-      this.request.NewOfficerPhoneId=""
-    else
-    {
-
-      if(this.request.NewOfficerPhoneId=="")
-      {
-        this.toastr.error("الرجاء إدخال رقم الجوال ")
-
-        return
-      }
-           
-    }
     
+    if (this.phoneForm.invalid) {
+      
+        
+      this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المدخلة');
+     
+      return;
+    }
+  
+
+    this.newphone=this.phoneForm.get('NewOfficerPhoneId')?.value;
+    if(this.newphone.number==undefined)
+      this.request.NewOfficerPhoneId=''
+    else
+    this.request.NewOfficerPhoneId=this.newphone.number
+ 
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     console.log(this.request)
@@ -139,6 +170,8 @@ this.getperiod()
       this.inspectorContactService
         .create(this.request)
         .subscribe((res: any) => {
+          this.toastr.success(" تم حفظ بيانات جهة الإتصال بنجاح");
+
           this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
 
         });
@@ -148,11 +181,11 @@ this.getperiod()
       this.inspectorContactService
         .update(this.request)
         .subscribe((res: any) => {
+          this.toastr.success(" تم حفظ بيانات جهة الإتصال بنجاح");
           this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
 
 
         });
-      this.toastr.success("تم الحفظ");
 
     }
   }

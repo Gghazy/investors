@@ -7,6 +7,9 @@ import { ActualProductSearch } from '../../models/actual-product-search';
 import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
 import { PeriodService } from 'src/app/modules/period/period.service';
 import { ToastrService } from 'ngx-toastr';
+import { ReasonService } from '../../reason.service';
+import { ReasonModelDto } from '../../models/reason-model';
+
 
 @Component({
   selector: 'app-actual-production-list',
@@ -33,6 +36,8 @@ export class ActualProductionListComponent implements OnInit {
     private ActualProductionService: ActualProductionAndDesignedCapacityService,
     private basicInfoService: BasicInfoService,
     private toastr: ToastrService,
+    private reasonService: ReasonService,
+
     private router: Router,
     private periodService : PeriodService, 
     ){
@@ -72,6 +77,7 @@ export class ActualProductionListComponent implements OnInit {
      
     });
   }
+  
   getperiod(){
     this.periodService
     .getOne(this.periodId)
@@ -105,8 +111,27 @@ export class ActualProductionListComponent implements OnInit {
     this.getLevel12Product();
   }
 save(){
-  this.toastr.success("تم الحفظ");
-  this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+  
+  if(this.showReason)
+  {
+    this.toastr.success("تم حفظ بيانات كمية الإنتاج الفعلي والطاقة التصميمية " );
+    this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+  
+  }else
+  {
+   let  reasonModelDto=new ReasonModelDto();
+   reasonModelDto.FactoryId=this.factoryId;
+   reasonModelDto.PeriodId=this.periodId;
 
+    this.reasonService
+    .removeByperiod(reasonModelDto)
+    .subscribe((res: any) => {
+      this.toastr.success("تم حفظ بيانات كمية الإنتاج الفعلي والطاقة التصميمية " );
+      this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+
+    });
 }
+  }
+ 
+
 }
