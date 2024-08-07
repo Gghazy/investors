@@ -6,7 +6,7 @@
    
     <div class="col-md-6">
         <label class="form-label"> ما هو سبب زيادة الإنتاج الفعلي عن الطاقة التصميمية؟</label>
-        <select [disabled]="approveSatus" name="ReasonId" (change)="save()" class="form-select" [(ngModel)]="request.ReasonId">
+        <select [disabled]="approveStatus" name="ReasonId" (change)="save()" class="form-select" [(ngModel)]="request.ReasonId">
             <option *ngFor="let reason of reasonses" [ngValue]="reason.Id">{{reason.Name}}</option>
         </select>
     </div>

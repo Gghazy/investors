@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { FactorySearch } from 'src/app/modules/factory/models/factory-search';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-basic-info-form',
@@ -44,13 +45,18 @@ export class BasicInfoFormComponent implements OnInit {
      private router: Router,
      private sharedService: SharedService,
      private periodService : PeriodService,
+     private paramService: ParamService
+
      ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
+    /*this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
     //this.approveStatusNumber = this.route.snapshot.paramMap.get('isApproveStatus');
     this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
     if(this.approveStatusText=='3')
-      this.approveStatus=true;
+      this.approveStatus=true;*/
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.approveStatus=paramService.getstatus()
 
    /* this.approveStatusText=completeStatus;
     let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');

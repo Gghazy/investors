@@ -4,6 +4,7 @@ import { FileService } from 'src/app/core/service/file.service';
 import { FactoryLocationService } from '../../factory-location.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-location-file',
@@ -31,10 +32,14 @@ export class LocationFileComponent implements OnInit {
     private route: ActivatedRoute,
     private fileService: FileService,
     private factoryLocationService: FactoryLocationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private paramService: ParamService,
+
   ){ 
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.approveStatus=paramService.getstatus()
+
   }
 
   ngOnInit(): void {
@@ -44,10 +49,7 @@ export class LocationFileComponent implements OnInit {
     
   }
  initValue(){
-   if(this.approveStatusText=='3')
-      this.approveStatus=true;
-    else
-    this.approveStatus=false;
+  
   this.request.Type=this.selectedFirstItem;
   this.fileError = '';
 

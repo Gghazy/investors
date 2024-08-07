@@ -7,6 +7,7 @@ import { FactoryProductService } from '../../factory-product.service';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-product-list',
@@ -37,14 +38,12 @@ export class ProductListComponent implements OnInit {
     private fileService: FileService,
     private toastr: ToastrService,
     private periodService: PeriodService,
+    private paramService: ParamService,
+
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
-    if(this.approveStatusText=='3')
-      this.approveStatus=true;
-    else
-    this.approveStatus=false;
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.approveStatus=paramService.getstatus()
   }
   ngOnInit(): void {
    // this.getProducts();

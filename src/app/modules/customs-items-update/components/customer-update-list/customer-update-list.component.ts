@@ -8,6 +8,7 @@ import { ProductPeriodActiveModel } from '../../models/product-period-active-mod
 import { CustomsItemsUpdateService } from '../../customs-items-update.service';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-customer-update-list',
@@ -34,15 +35,13 @@ year!:number;
      private customsItemsUpdateService: CustomsItemsUpdateService,
      private toastr: ToastrService,
      private periodService : PeriodService,
+     private paramService: ParamService,
+
 
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
-    if(this.approveStatusText=='3')
-      this.approveStatus=true;
-    else
-    this.approveStatus=false;
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.approveStatus=paramService.getstatus()
   }
   ngOnInit() {
     this.getProducts()

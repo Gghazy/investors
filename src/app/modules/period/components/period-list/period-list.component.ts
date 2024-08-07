@@ -68,15 +68,15 @@ this.InspectorRole =this.router.url.includes('Inspector')
     }
   }
   navigateToDetails(periodId: number,status: string) {
-    let completeStatus='0';
+    let completeStatus=false;
     if(status=='3')
-       completeStatus=status;
+       completeStatus=true;
     this.paramService.setperiodId(periodId);
     this.paramService.setstatus(completeStatus);
    
     if(this.router.url.includes('Investor')){
     
-      this.router.navigate(['/pages/factory-landing', this.factoryId, periodId,completeStatus]);
+      this.router.navigate(['/pages/factory-landing']);
     
     }
       

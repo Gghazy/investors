@@ -4,6 +4,8 @@ import { FileService } from 'src/app/core/service/file.service';
 import { BasicInfoService } from '../../basic-info.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {ParamService}from 'src/app/core/service/paramService'
+
 
 @Component({
   selector: 'app-basic-info-file',
@@ -24,7 +26,6 @@ export class BasicInfoFileComponent implements OnInit {
   approveStatus:boolean=false;
   @Input() factoryId!:string;
   @Input() periodId!:string;
-  @Input() approveStatusText!:string;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   @Output() fileStatus = new EventEmitter<any>();
@@ -32,8 +33,13 @@ export class BasicInfoFileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private fileService:FileService,
     private basicInfoService:BasicInfoService,
-    private toastr: ToastrService
-    ){}
+    private toastr: ToastrService,
+    private paramService: ParamService
+
+    ){
+      this.approveStatus=paramService.getstatus()
+
+    }
 
   ngOnInit(): void {
    this.getFiles();
@@ -45,10 +51,10 @@ export class BasicInfoFileComponent implements OnInit {
     this.fileError = '';
    // this.approveStatus=this.approvedStatus!.toLocaleLowerCase()==="true"?true:false;
     //this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
-    if(this.approveStatusText=='3')
+   /* if(this.approveStatusText=='3')
       this.approveStatus=true;
     else
-    this.approveStatus=false;
+    this.approveStatus=false;*/
 
    }
   selectFirstItem(): void {

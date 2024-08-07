@@ -8,6 +8,7 @@ import { FactoryLandingService } from '../../factory-landing.service';
 import { ScreenStatusModel } from '../../models/screen-status-model';
 import { FactoryStatus } from '../../models/factory-status.model';
 import { ToastrService } from 'ngx-toastr';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-factory-landing-form',
@@ -46,16 +47,23 @@ export class FactoryLandingFormComponent implements OnInit {
     public sharedService: SharedService,
     public factoryLandingService: FactoryLandingService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private paramService: ParamService
+
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
+
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.completeStatus=paramService.getstatus()
+    
+  /*  this.factoryId = this.route.snapshot.paramMap.get('id');
     this.periodId = this.route.snapshot.paramMap.get('periodid');
     this.periodStatus = this.route.snapshot.paramMap.get('isApproveStatus');
     if(this.periodStatus=='3')
       this.completeStatus=true;
     else
     this.completeStatus=false;
-
+*/
 
   }
 

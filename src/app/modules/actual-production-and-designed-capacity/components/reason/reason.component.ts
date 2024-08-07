@@ -4,6 +4,7 @@ import { ReasonService } from '../../reason.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { ReasonModel } from '../../models/reason-model';
 import { ToastrService } from 'ngx-toastr';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-reason',
@@ -14,15 +15,21 @@ export class ReasonComponent implements OnInit, OnChanges {
 
   @Input() periodId!: number;
   @Input() factoryId!: number;
-  @Input() approveSatus!: boolean;
+  approveStatus:boolean;
   reasonses: LookUpModel[] = [];
   request = new ReasonModel();
 
   constructor(
     private lookUpService: LookUpService,
     private reasonService: ReasonService,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService,
+    private paramService: ParamService,
+
+  ) {  
+     this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.approveStatus=paramService.getstatus()
+  }
   ngOnChanges(changes: SimpleChanges): void {
     
     if (changes["monthId"]) {

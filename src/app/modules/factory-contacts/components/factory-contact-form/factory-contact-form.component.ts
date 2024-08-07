@@ -8,6 +8,7 @@ import { FactoryContactService } from '../../factory-contact.service';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodService } from 'src/app/modules/period/period.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-factory-contact-form',
@@ -50,13 +51,14 @@ contactDetails=new FactoryContactModel();
     private toastr: ToastrService,
     private router: Router,
     private periodService : PeriodService,
-    private sharedService:SharedService
+    private sharedService:SharedService,
+    private paramService: ParamService,
+
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
-    if(this.approveStatusText=='3')
-      this.approveStatus=true;
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.approveStatus=paramService.getstatus()
+
 
 
   }

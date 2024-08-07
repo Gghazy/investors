@@ -14,6 +14,7 @@ import { ProductSearch } from 'src/app/modules/customs-items-update/models/produ
 import { SearchCriteria } from 'src/app/core/models/search-criteria';
 import { RawMaterialSearch } from '../../models/raw-material-search.model';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-factory-raw-materials-lists',
@@ -62,14 +63,12 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-    private periodService: PeriodService) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
-    if(this.approveStatusText=='3')
-      this.approveStatus=true;
-    else
-    this.approveStatus=false;
+    private paramService: ParamService,
+    private periodService: PeriodService) 
+    {
+      this.factoryId = paramService.getfactoryId();
+      this.periodId = paramService.getperiodId();
+      this.approveStatus=paramService.getstatus()
 
   }
 

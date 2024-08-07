@@ -15,6 +15,7 @@ import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ActualRawMaterialSearch } from '../../models/actualRawMaterialSearch.model';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-actual-raw-materials-form',
@@ -66,14 +67,12 @@ selectedReason:any = { Id: "1"}
     private toastr: ToastrService,
     private router: Router,
     private periodService: PeriodService,
+    private paramService: ParamService,
+
     private lookUpService: LookUpService, private fileService: FileService) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
-    if(this.approveStatusText=='3')
-      this.approveStatus=true;
-    else
-    this.approveStatus=false;
+      this.factoryId = paramService.getfactoryId();
+      this.periodId = paramService.getperiodId();
+      this.approveStatus=paramService.getstatus()
   }
 
 

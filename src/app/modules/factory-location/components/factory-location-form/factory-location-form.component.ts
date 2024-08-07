@@ -10,6 +10,7 @@ import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { PeriodService } from 'src/app/modules/period/period.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-factory-location-form',
@@ -47,15 +48,13 @@ export class FactoryLocationFormComponent {
     private toastr: ToastrService,
     private router: Router,
     private periodService: PeriodService,
-    private sharedService:SharedService
+    private sharedService:SharedService,
+    private paramService: ParamService,
+
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
-    if(this.approveStatusText=='3')
-      this.approveStatus=true;
-    else
-    this.approveStatus=false;
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.approveStatus=paramService.getstatus()
 
 
   }

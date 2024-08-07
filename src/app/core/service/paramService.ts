@@ -33,7 +33,11 @@ export class ParamService {
   }
 
   getstatus(): any {
-    return sessionStorage.getItem(this.status);
+    let value= sessionStorage.getItem(this.status)?.toString().toLowerCase();
+    if(value === 'true')
+      return true
+    else
+    return false
   }
   setInspectorStatus(InspectorStatus: any) {
     sessionStorage.setItem(this.InspectorStatus, InspectorStatus);

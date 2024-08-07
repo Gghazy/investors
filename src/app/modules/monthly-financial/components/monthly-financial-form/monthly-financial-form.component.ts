@@ -5,6 +5,7 @@ import { PeriodService } from 'src/app/modules/period/period.service';
 import { ToastrService } from 'ngx-toastr';
 import { MonthlyFinancialModel } from '../../models/monthly-financial-model';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-monthly-financial-form',
@@ -27,15 +28,13 @@ lockSaveItem=false;
      private toastr: ToastrService,
      private sharedService: SharedService,
      private router: Router,
+     private paramService: ParamService,
+
 
      ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
-    if(this.approveStatusText=='3')
-      this.approveStatus=true;
-    else
-    this.approveStatus=false;
+      this.factoryId = paramService.getfactoryId();
+      this.periodId = paramService.getperiodId();
+      this.approveStatus=paramService.getstatus()
   }
   ngOnInit(): void {
     this.ToggleDisable()

@@ -8,6 +8,7 @@ import { PeriodService } from 'src/app/modules/period/period.service';
 import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-landing.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-financial-detail-form',
@@ -40,14 +41,12 @@ export class FinancialDetailFormComponent {
      private basicInfoService: BasicInfoService,
      private sharedService: SharedService,
      public factoryLandingService: FactoryLandingService,
+     private paramService: ParamService,
+
      ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
-    this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
-    if(this.approveStatusText=='3')
-      this.approveStatus=true;
-    else
-    this.approveStatus=false;
+      this.factoryId = paramService.getfactoryId();
+      this.periodId = paramService.getperiodId();
+      this.approveStatus=paramService.getstatus()
 
   }
   ngOnInit(): void {

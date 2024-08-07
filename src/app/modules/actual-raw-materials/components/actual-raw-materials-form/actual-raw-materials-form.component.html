@@ -4,7 +4,7 @@
     <div class="form-header">
         <h2 class="form-title"> بيانات المواد الأولية ( المواد الخام) الفعلية لشهر {{PeriodName}}  -عام  {{year}} </h2>
         <div>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText" class="back-link">
+            <a [routerLink]="'/pages/factory-landing'" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -192,7 +192,7 @@
     <div class="form-footer">
         <div class="col-12">
             <button   class="btn btn-primary me-1" [disabled]="actualRawMat.invalid||approveStatus" type="button" (click)='saveItems()'>حفظ</button>
-            <a [routerLink]="'/pages/factory-landing/'+factoryId+'/'+periodId+'/'+approveStatusText"  class="btn btn-danger">الغاء</a>
+            <a [routerLink]="'/pages/factory-landing'"  class="btn btn-danger">الغاء</a>
         </div>
     </div>
 </form>

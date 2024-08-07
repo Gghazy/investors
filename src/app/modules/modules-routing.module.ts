@@ -8,23 +8,23 @@ const routes: Routes = [
     component: ModulesComponent,
     children: [
       {
-        path: 'actual-production-and-designed-capacity/:id/:periodid/:isApproveStatus',
+        path: 'actual-production-and-designed-capacity',
         loadChildren: () =>
           import('../modules/actual-production-and-designed-capacity/actual-production-and-designed-capacity.module').then((m) => m.ActualProductionAndDesignedCapacityModule)
       },
       {
-        path: 'actual-raw-materials/:id/:periodid/:isApproveStatus',
+        path: 'actual-raw-materials',
         loadChildren: () =>
           import('../modules/actual-raw-materials/actual-raw-materials.module').then((m) => m.ActualRawMaterialsModule)
       },
       {
-        path: 'basic-info/:id/:periodid/:isApproveStatus',
+        path: 'basic-info',
         loadChildren: () =>
           import('../modules/basic-info/basic-info.module').then((m) => m.BasicInfoModule)
       },
 
       {
-        path: 'customs-items-update/:id/:periodid/:isApproveStatus',
+        path: 'customs-items-update',
         loadChildren: () =>
           import('../modules/customs-items-update/customs-items-update.module').then((m) => m.CustomsItemsUpdateModule)
       },
@@ -36,37 +36,37 @@ const routes: Routes = [
           import('../modules/factory/factory.module').then((m) => m.FactoryModule)
       },
       {
-        path: 'factory-contacts/:id/:periodid/:isApproveStatus',
+        path: 'factory-contacts',
         loadChildren: () =>
           import('../modules/factory-contacts/factory-contacts.module').then((m) => m.FactoryContactsModule)
       },
       {
-        path: 'factory-landing/:id/:periodid/:isApproveStatus',
+        path: 'factory-landing',
         loadChildren: () =>
           import('../modules/factory-landing/factory-landing.module').then((m) => m.FactoryLandingModule)
       },
       {
-        path: 'factory-location/:id/:periodid/:isApproveStatus',
+        path: 'factory-location',
         loadChildren: () =>
           import('../modules/factory-location/factory-location.module').then((m) => m.FactoryLocationModule)
       },
       {
-        path: 'factory-products/:id/:periodid/:isApproveStatus',
+        path: 'factory-products',
         loadChildren: () =>
           import('../modules/factory-products/factory-products.module').then((m) => m.FactoryProductsModule)
       },
       {
-        path: 'factory-raw-materials/:id/:periodid/:isApproveStatus',
+        path: 'factory-raw-materials',
         loadChildren: () =>
           import('../modules/factory-raw-materials/factory-raw-materials.module').then((m) => m.FactoryRawMaterialsModule)
       },
       {
-        path: 'financial-details/:id/:periodid/:isApproveStatus',
+        path: 'financial-details',
         loadChildren: () =>
           import('../modules/financial-details/financial-details.module').then((m) => m.FinancialDetailsModule)
       },
       {
-        path: 'monthlyfinancial/:id/:periodid/:isApproveStatus',
+        path: 'monthlyfinancial',
         loadChildren: () =>
           import('../modules/monthly-financial/monthly-financial.module').then((m) => m.MonthlyFinancialModule)
       },

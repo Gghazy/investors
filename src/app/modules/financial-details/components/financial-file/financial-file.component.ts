@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-landing.service';
+import {ParamService}from 'src/app/core/service/paramService'
+
 
 @Component({
   selector: 'app-financial-file',
@@ -22,7 +24,6 @@ export class FinancialFileComponent implements OnInit {
   approveStatus!:boolean;
 
   @Input() financialId!:number;
-  @Input() approveStatusText!:string;
   @ViewChild('fileInput') fileInput!: ElementRef;
   @Output() fileStatusFin = new EventEmitter<any>();
   @Output() fileStatusType = new EventEmitter<any>();
@@ -38,18 +39,18 @@ export class FinancialFileComponent implements OnInit {
     private toastr: ToastrService,
     private sharedService: SharedService,
     public factoryLandingService: FactoryLandingService,
+    private paramService: ParamService,
+
     ){
-      this.factoryId = this.route.snapshot.paramMap.get('id');
-      this.periodId = this.route.snapshot.paramMap.get('periodid');
+      this.factoryId = paramService.getfactoryId();
+      this.periodId = paramService.getperiodId();
+      this.approveStatus=paramService.getstatus()
       
     }
 
   ngOnInit(): void {
    this.getFiles();
-   if(this.approveStatusText=='3')
-    this.approveStatus=true;
-  else
-  this.approveStatus=false;
+   
 
   // this.ToggleDisable()
    
