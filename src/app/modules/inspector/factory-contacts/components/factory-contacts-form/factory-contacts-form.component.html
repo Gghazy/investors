@@ -2,7 +2,7 @@
     <div class="form-header">
       <h2 class="form-title">بيانات جهة الإتصال لشهر {{PeriodName}} </h2>
       <div>
-        <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
+        <a [routerLink]="'/pages/Inspector/visit-landing'" class="back-link">
           رجوع
           <svg
             height="25"
@@ -72,6 +72,9 @@
               <div class="text-danger" *ngIf="submitted && request.NewOfficerEmail==''">الرجاء إدخال البريد الإلكتروني   </div>
               <div class="text-danger" *ngIf="submitted && phoneForm.get('NewOfficerEmail')?.errors">
                 <div *ngIf="phoneForm.get('NewOfficerEmail')?.hasError('pattern')">الرجاء إدخال بريد إلكتروني  صالح</div>
+              </div>
+              <div class="text-danger" *ngIf="!phoneForm.get('NewOfficerEmail')?.errors">
+               {{ onValidNewOfficerEmail()}}
               </div>
              
           </div>
@@ -149,6 +152,9 @@
                     <div *ngIf="phoneForm.get('NewOfficerPhoneId')?.hasError('required')">الرجاء إدخال رقم الجوال  </div>
                     <div *ngIf="phoneForm.get('NewOfficerPhoneId')?.hasError('saPhoneNumber')">الرجاء إدخال رقم جوال سعودي صالح</div>
                   </div>
+                  <div class="text-danger" *ngIf="!phoneForm.get('NewOfficerPhoneId')?.errors">
+                    {{onValidNewOfficerPhoneId()}}
+                  </div>
           </div>
         </div>
 
@@ -160,8 +166,8 @@
 
     <div class="form-footer">
       <div class="col-12">
-        <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-        <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+        <button [disabled]="inspectorApproved" class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
+        <a [routerLink]="'/pages/Inspector/visit-landing'" class="btn btn-danger">الغاء</a>
       </div>
     </div>
     </form>

@@ -2,7 +2,7 @@
     <div class="form-header">
         <h2 class="form-title"> المواد الأولية ( المواد الخام)  لشهر {{PeriodName}}</h2>
         <div>
-            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
+            <a [routerLink]="'/pages/Inspector/visit-landing'" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-md-3">
                             <label class="form-label"> هل صورة/ ورقة بيانات المادة الاولية صحيحة ؟</label>
-                            <select class="form-select" (change)="onInputChange($event)"
+                            <select [disabled]="inspectorApproved" class="form-select" (change)="onInputChange($event)"
                                 [(ngModel)]="material.IsImageClear">
                                 <option [ngValue]="true" selected>نعم</option>
                                 <option [ngValue]="false">لا</option>
@@ -115,7 +115,7 @@
                                     </label>
                                     <div class="input-group">
                                         <input type="file" #fileInput style="display: none;" (change)="savePhoto($event,i)" />
-                                        <button class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
+                                        <button [disabled]="inspectorApproved" class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
                                         </button>
                                         <span data-bs-toggle="modal" data-bs-target="#photoModal">
@@ -149,7 +149,7 @@
 
                                             </button>
                                         </span>
-                                        <button [disabled]="material.CorrectPhotoId<=0" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
+                                        <button [disabled]="material.CorrectPhotoId<=0 ||inspectorApproved" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
                                             data-bs-placement="bottom" title=""
                                             data-bs-original-title=" حذف صورة المادة" (click)="deleteImage(material)"><i
                                                 class="icon-delete"></i></button>
@@ -166,7 +166,7 @@
                                     </label>
                                     <div class="input-group">
                                         <input type="file" #fileInput2 style="display: none;" (change)="saveFile($event,i)" />
-                                        <button class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput2.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
+                                        <button  [disabled]="inspectorApproved" class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput2.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" 
                                             xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0">
                                             </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
@@ -201,7 +201,7 @@
 
                                         </button>
 
-                                        <button [disabled]="material.CorrectPaperId<=0" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
+                                        <button [disabled]="material.CorrectPaperId<=0||inspectorApproved" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
                                             data-bs-placement="bottom" title="" data-bs-original-title=" حذف الملف"
                                             (click)="deleteFile(material)"><i class="icon-delete"></i></button>
 
@@ -255,14 +255,14 @@
 
         <div class="col-md-12">
             <label class="form-label"> تعليقات </label>
-            <textarea rows="3" class="form-control"  [(ngModel)]="materials[0].Comment"></textarea>
+            <textarea [disabled]="inspectorApproved" rows="3" class="form-control"  [(ngModel)]="materials[0].Comment"></textarea>
         </div>
 
     </div>
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+            <button [disabled]="inspectorApproved" class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
+            <a [routerLink]="'/pages/Inspector/visit-landing'" class="btn btn-danger">الغاء</a>
         </div>
     </div>
     <!-- Modal photos-->

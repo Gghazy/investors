@@ -4,7 +4,7 @@
                     <h2 class="form-title">           بيانات كمية الإنتاج الفعلي والطاقة التصميمية  لشهر {{PeriodName}}  </h2>
                     
                     <div>
-                        <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
+                        <a [routerLink]="'/pages/Inspector/visit-landing'" class="back-link">
                             رجوع
                             <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
                         </a>
@@ -37,7 +37,7 @@
 
                                             
                                                 <label class="form-label"> هل الطاقة التصميمة الشهرية صحيحة ؟</label>
-                                                <select class="form-select" 
+                                                <select   [disabled]="inspectorApproved" class="form-select" 
                                                 name="IsDesignedCapacityCorrect{{i+1}}" [(ngModel)]="product.IsDesignedCapacityCorrect" (change)="onInputChange($event)">
                                                     <option [ngValue]="true" >نعم</option>
                                                     <option [ngValue]="false">لا</option>
@@ -51,11 +51,11 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="input-group">
-                                                    <input  type="number" min="1" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"
+                                                    <input  [disabled]="inspectorApproved"  type="number" min="1" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"
                                                     name="CorrectDesignedCapacity{{i+1}}" class="form-control"
                                                      [(ngModel)]="product.CorrectDesignedCapacity"
                                                     #CorrectDesignedCapacity="ngModel" required>
-                                                    <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
+                                                    <input  type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
                                                 </div>
                                                 <div *ngIf="CorrectDesignedCapacity.invalid && (CorrectDesignedCapacity.dirty || CorrectDesignedCapacity.touched)"
                                             class="validation-error">
@@ -75,16 +75,16 @@
                                         <div class="col-md-4">
                                             <label class="form-label">   الإنتاج الفعلي​ الشهري	</label>
                                             <div class="input-group">                                                  
-                                                <input type="number" name="ActualProduction{{i+1}}"
+                                                <input   type="number" name="ActualProduction{{i+1}}"
                                                 class="form-control" [(ngModel)]="product.ActualProduction" disabled>
-                                                <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
+                                                <input   type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
 
                                             
                                                 <label class="form-label"> هل الإنتاج الفعلي​ الشهري صحيح ؟</label>
-                                                <select class="form-select" 
+                                                <select  [disabled]="inspectorApproved" class="form-select" 
                                                 name="IsActualProductionCorrect{{i+1}}"
                                                 [(ngModel)]="product.IsActualProductionCorrect" (change)="onInputChange($event)">
                                                     <option [ngValue]="true" >نعم</option>
@@ -99,7 +99,7 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="input-group">    
-                                                    <input  type="number" min="1" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"
+                                                    <input  [disabled]="inspectorApproved"  type="number" min="1" pattern="[0-9]+([\.,][0-9]{1,3})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"
                                                      name="CorrectActualProduction{{i+1}}" class="form-control"
                                                      class="form-control" [(ngModel)]="product.CorrectActualProduction"
                                                      #CorrectActualProduction="ngModel" required>
@@ -121,7 +121,7 @@
                                 <div class="col-md-4">
                                     <label class="form-label">الوزن الفعلي​</label>
                                     <div class="input-group">                                                  
-                                        <input type="number" name="ActualProductionWeight{{i+1}}"
+                                        <input  type="number" name="ActualProductionWeight{{i+1}}"
                                          class="form-control" value="{{product.ActualProductionWeight*product.ActualProduction}}" disabled>
                                         <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
                                                
@@ -134,7 +134,7 @@
                                 <div class="col-md-4" *ngIf="product.IsActualProductionCorrect == false">
                                     <label class="form-label"> الوزن الفعلي​ الصحيح</label>
                                     <div class="input-group">                                                  
-                                        <input type="number"
+                                        <input  [disabled]="inspectorApproved" type="number"
                                         name="CorrectActualProduction{{i+1}}"
                                          class="form-control" value="{{product.ActualProductionWeight*product.CorrectActualProduction}}" disabled>
                                         <input type="text" class="form-control px-1 text-center" value="كغ" disabled style="max-width: 50px;">
@@ -163,7 +163,7 @@
                         <div class="col-md-4">
                             <label class="form-label">   سبب زيادة الإنتاج الفعلي عن الطاقة التصميمية؟
                             </label>
-                            <select name="ReasonId"  class="form-select" [(ngModel)]="products[0].IncreaseReasonId" disabled>
+                            <select  [disabled]="inspectorApproved" name="ReasonId"  class="form-select" [(ngModel)]="products[0].IncreaseReasonId" disabled>
                                 <option [ngValue]="null"></option>
                                 <option *ngFor="let reason of Allreasons" [ngValue]="reason.Id">{{reason.Name}}</option>
                             </select>
@@ -172,7 +172,7 @@
 
                             
                                 <label class="form-label" > هل سبب الزيادة صحيح ؟</label>
-                                <select class="form-select" 
+                                <select   [disabled]="inspectorApproved" class="form-select" 
                                 name="IsIncreaseReasonCorrect"
                                 (change)="onInputChange($event)" [(ngModel)]="products[0].IsIncreaseReasonCorrect">
                                     <option [ngValue]="true" selected>نعم</option>
@@ -187,7 +187,7 @@
                                     <span class="required">*</span>
                                 </label>
 
-                                <select name="IncreaseReasonCorrect"
+                                <select  [disabled]="inspectorApproved" name="IncreaseReasonCorrect"
                                  (change)="changereason()" class="form-select" [(ngModel)]="products[0].IncreaseReasonCorrect">
                                     <option *ngFor="let reason of Allreasons" [ngValue]="reason.Id">{{reason.Name}}</option>
                                 </select>
@@ -212,7 +212,7 @@
 
                     <div class="col-md-12">
                         <label class="form-label"> تعليقات </label>
-                        <textarea  rows="3" name="Comments"
+                        <textarea   [disabled]="inspectorApproved" rows="3" name="Comments"
                         class="form-control" [(ngModel)]="products[0].Comments"></textarea>
                     </div>
 
@@ -220,8 +220,8 @@
                 </div>
                 <div class="form-footer">
                     <div class="col-12">
-                        <button class="btn btn-primary me-1" type="submit" [disabled]="actualProduction.invalid">حفظ</button>
-                        <a  [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+                        <button  [disabled]="inspectorApproved || actualProduction.invalid" class="btn btn-primary me-1" type="submit">حفظ</button>
+                        <a  [routerLink]="'/pages/Inspector/visit-landing'" class="btn btn-danger">الغاء</a>
                     </div>
                 </div>
             </form>

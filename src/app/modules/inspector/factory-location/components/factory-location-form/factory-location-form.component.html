@@ -2,7 +2,7 @@
     <div class="form-header">
         <h2 class="form-title">    موقع المصنع لشهر {{PeriodName}}</h2>
         <div>
-            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
+            <a [routerLink]="'/pages/Inspector/visit-landing'" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
             </a>
@@ -56,7 +56,7 @@
            
             <div class="col-md-4">
                 <label class="form-label"> المدينة</label>
-                <select class="form-select" formControlName="CityId"   [disabled]="true"
+                <select class="form-select" formControlName="CityId" 
                 name="CityId" [(ngModel)]="requestFactory.CityId">
                     <option *ngFor="let city of cities" [ngValue]="city.Id">{{city.NameAr}} </option>
                 </select>
@@ -74,7 +74,7 @@
             </div>
             <div class="col-md-5" *ngIf="requestFactory.IsCityCorrect == false">
                 <label class="form-label"> أختر  المدينة الصحيحة</label> 
-                <select class="form-select" formControlName="NewCityId"   required=""
+                <select class="form-select" formControlName="NewCityId"   
                 name="NewCityId" [(ngModel)]="requestFactory.NewCityId" (change)="onCitySelect(requestFactory.NewCityId)">
                     <option *ngFor="let city of Newcities" [ngValue]="city.Id">{{city.NameAr}} </option>
 
@@ -104,11 +104,11 @@
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
-            <div class="col-md-5" *ngIf="requestFactory.IsIndustrialAreaCorrect == false">
+            <div class="col-md-5"  *ngIf="requestFactory.IsIndustrialAreaCorrect == false">
                 <label class="form-label"> أختر المنطقة الصناعية الصحيحة</label>
-                <select class="form-select" name="NewIndustrialAreaId" 
+                <select  class="form-select" name="NewIndustrialAreaId" 
                 formControlName="NewIndustrialAreaId"
-                [(ngModel)]="requestFactory.NewIndustrialAreaId" required="" >
+                [(ngModel)]="requestFactory.NewIndustrialAreaId"  >
                     <option *ngFor="let industrialArea of NewindustrialAreas" [ngValue]="industrialArea.Id" >{{industrialArea.NameAr}} </option>
                 </select>
                 <span  class="text-danger" *ngIf="submitted && requestFactory.IsIndustrialAreaCorrect == false && requestFactory.NewIndustrialAreaId==-1">
@@ -161,14 +161,14 @@
         </div>
 
           
-        <app-factory-location-file [factoryId]="factoryId" [periodId]="periodId"></app-factory-location-file>
+        <app-factory-location-file   [factoryId]="factoryId" [periodId]="periodId"></app-factory-location-file>
    
 
     </div>
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+            <button [disabled]="inspectorApproved" class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
+            <a [routerLink]="'/pages/Inspector/visit-landing'" class="btn btn-danger">الغاء</a>
         </div>
     </div>
 </form>

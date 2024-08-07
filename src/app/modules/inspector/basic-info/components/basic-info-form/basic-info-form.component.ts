@@ -9,6 +9,7 @@ import { FileService } from 'src/app/core/service/file.service';
 import { BasicFileModel } from 'src/app/modules/basic-info/models/basic-file-model';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-basic-info-form',
@@ -27,6 +28,7 @@ export class BasicInfoFormComponent implements OnInit {
   PeriodName!:string
   submitted=false;
   validbasicInfo=true;
+  inspectorApproved=false;
   constructor(
     private route: ActivatedRoute,
     private shared: SharedService,
@@ -36,10 +38,15 @@ export class BasicInfoFormComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private periodService : PeriodService,
+    private paramService: ParamService
+
 
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.inspectorApproved=paramService.getInspectorStatus()
+  
+   
   }
   ngOnInit() {
     this.userId = this.shared.getUserId();
@@ -52,7 +59,7 @@ export class BasicInfoFormComponent implements OnInit {
   onInputChange(event: Event): void {
    this.Valid();
     console.log('test')
-    const target = event.target as HTMLInputElement;
+    /*const target = event.target as HTMLInputElement;
     const closestRow = target.closest('.row');
 
     const showInputElement = closestRow?.querySelector('.show-input');
@@ -63,7 +70,7 @@ export class BasicInfoFormComponent implements OnInit {
       } else {
         showInputElement.classList.add('d-none');
       }
-    }
+    }*/
   }
   deleteFile(id: number) {
     this.basicInfoService
@@ -127,6 +134,7 @@ export class BasicInfoFormComponent implements OnInit {
   save() {
     this.submitted=true;
 
+   
     if(this.validbasicInfo)
     {
       if(this.requestFactory.IsFactNameCorrect)
@@ -136,6 +144,7 @@ export class BasicInfoFormComponent implements OnInit {
     }
     else
     {
+
       this.toastr.error("الرجاء التأكد من صحة البيانات المدخلة ")
       return
     }
@@ -183,7 +192,7 @@ export class BasicInfoFormComponent implements OnInit {
         .create(this.requestFactory)
         .subscribe((res: any) => {
           this.toastr.success(" تم حفظ البيانات الأساسية بنجاح");
-          this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
+          this.router.navigate(['/pages/Inspector/visit-landing']);
 
         });
     }
@@ -192,7 +201,7 @@ export class BasicInfoFormComponent implements OnInit {
         .update(this.requestFactory)
         .subscribe((res: any) => {
           this.toastr.success(" تم حفظ البيانات الأساسية بنجاح");
-          this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
+          this.router.navigate(['/pages/Inspector/visit-landing']);
 
         });
     }

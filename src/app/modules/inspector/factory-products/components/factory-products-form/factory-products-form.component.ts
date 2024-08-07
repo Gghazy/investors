@@ -10,6 +10,7 @@ import { FactoryProductsModel } from '../../models/factory-products.model';
 import { FactoryProductsService } from '../../factory-products.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-factory-products-form',
@@ -26,6 +27,7 @@ export class FactoryProductsFormComponent implements OnInit {
   request:FactoryProductsModel [] = []
   PeriodName!:string
   validProductList=true;
+  inspectorApproved=false;
   constructor(
     private route: ActivatedRoute,
     private InspectorService: FactoryProductsService,
@@ -34,10 +36,13 @@ export class FactoryProductsFormComponent implements OnInit {
      private toastr: ToastrService,
      private router: Router,
      private periodService : PeriodService,
+     private paramService: ParamService
+
 
      ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
+      this.factoryId = paramService.getfactoryId();
+      this.periodId = paramService.getperiodId();
+      this.inspectorApproved=paramService.getInspectorStatus()
   }
   ngOnInit() {
     this.userId = this.shared.getUserId();
@@ -174,7 +179,7 @@ this.request.forEach(element => {
         if(count<=0)
           {
             this.toastr.success(" تم حفظ بيانات المنتجات بنجاح");
-            this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+            this.router.navigate(['/pages/Inspector/visit-landing']);
           }
       });
     }
@@ -188,7 +193,7 @@ this.request.forEach(element => {
      if(count<=0)
       {
         this.toastr.success(" تم حفظ بيانات المنتجات بنجاح");
-        this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+        this.router.navigate(['/pages/Inspector/visit-landing']);
       }
     });
      

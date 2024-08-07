@@ -4,6 +4,7 @@ import { BasicInfoFileModel } from '../../models/basic-info-file-model.model';
 import { InspectorBasicInfoService } from '../../basic-info.service';
 import { BasicInfoService } from 'src/app/modules/basic-info/basic-info.service';
 import { ToastrService } from 'ngx-toastr';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-basic-info-file-form',
@@ -21,16 +22,20 @@ export class BasicInfoFileFormComponent implements OnInit {
   request =new BasicInfoFileModel()
   @ViewChild('fileInput') fileInput!: ElementRef;
   selectedFirstItem: any = 0; 
+  inspectorApproved=false;
 
 constructor(  private fileService:FileService,
   private basicInfoService:InspectorBasicInfoService,
   private FactoryService:BasicInfoService,
-  private toastr: ToastrService
+  private toastr: ToastrService,
+  private paramService: ParamService
 
   
 ){
+  this.inspectorApproved=paramService.getInspectorStatus()
 
-}ngOnInit(): void {
+}
+ngOnInit(): void {
   this.getFiles();
   this.getInspectorsFiles()
   this.initValue();

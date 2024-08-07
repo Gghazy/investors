@@ -9,6 +9,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-factory-contacts-form',
@@ -30,6 +31,7 @@ export class FactoryContactsFormComponent implements OnInit {
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
 newphone!:phoneModel
+inspectorApproved=false
   
   constructor(
     private route: ActivatedRoute,
@@ -38,10 +40,14 @@ newphone!:phoneModel
     private toastr: ToastrService,
     private router: Router,
     private periodService : PeriodService,
+    private paramService: ParamService
+
 
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.inspectorApproved=paramService.getInspectorStatus()
+  
   }
   ngOnInit() {
     this.createContactForm()
@@ -99,6 +105,15 @@ this.getperiod()
     }
 
   }
+  onValidNewOfficerEmail()
+  {
+    this.phoneForm.get('NewOfficerEmail')?.setErrors(null);
+
+  }
+  onValidNewOfficerPhoneId()
+  {
+    this.phoneForm.get('NewOfficerPhoneId')?.setErrors(null);
+  }
    saPhoneNumberValidator(control: FormControl): ValidationErrors | null {
     const phoneNumber = control.value?.number;
     if (phoneNumber != null) {
@@ -125,12 +140,12 @@ this.getperiod()
      this.phoneForm = new FormGroup({       
       OldOfficerEmail:  new FormControl({ value: '', disabled: true }), 
       OldOfficerPhoneId:  new FormControl({ value: '', disabled: true }),   
-      IsOfficerMailCorrect:  new FormControl(''),   
-      IsOfficerPhoneCorrect:  new FormControl(''), 
-      Comments:  new FormControl(''),                                                        
-      NewOfficerPhoneId: new FormControl( '',
+      IsOfficerMailCorrect:  new FormControl({ value: '', disabled: this.inspectorApproved }),   
+      IsOfficerPhoneCorrect:  new FormControl({ value: '', disabled: this.inspectorApproved }), 
+      Comments:  new FormControl({ value: '', disabled: this.inspectorApproved }),                                                        
+      NewOfficerPhoneId: new FormControl({ value: '', disabled: this.inspectorApproved },
          [Validators.required, this.saPhoneNumberValidator]), 
-      NewOfficerEmail: new FormControl('', 
+      NewOfficerEmail: new FormControl({ value: '', disabled: this.inspectorApproved }, 
         [ Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/),
          
       ]),
@@ -172,7 +187,7 @@ this.getperiod()
         .subscribe((res: any) => {
           this.toastr.success(" تم حفظ بيانات جهة الإتصال بنجاح");
 
-          this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
+          this.router.navigate(['/pages/Inspector/visit-landing']);
 
         });
 
@@ -182,7 +197,7 @@ this.getperiod()
         .update(this.request)
         .subscribe((res: any) => {
           this.toastr.success(" تم حفظ بيانات جهة الإتصال بنجاح");
-          this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
+          this.router.navigate(['/pages/Inspector/visit-landing']);
 
 
         });

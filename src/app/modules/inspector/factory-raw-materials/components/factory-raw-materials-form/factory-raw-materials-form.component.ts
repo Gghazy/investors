@@ -7,6 +7,7 @@ import { FactoryRawMaterialService } from 'src/app/modules/factory-raw-materials
 import { FactoryRawMaterialsService } from '../../factory-raw-materials.service';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 
 @Component({
@@ -24,7 +25,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   request: any[] = [];
   PeriodName!:string
   validProductList=true;
-
+  inspectorApproved=false;
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -34,11 +35,14 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     private shared: SharedService,
     private periodService : PeriodService,
     private router: Router,
+    private paramService: ParamService
+
 
 
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.inspectorApproved=paramService.getInspectorStatus()
   }
   ngOnInit() {
     this.userId = this.shared.getUserId();
@@ -163,7 +167,7 @@ console.log(this.materials)
         if(count<=0)
           {
             this.toastr.success(" تم حفظ بيانات المواد الأولية بنجاح");
-            this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+            this.router.navigate(['/pages/Inspector/visit-landing']);
           }
           });
       }
@@ -175,7 +179,7 @@ console.log(this.materials)
         if(count<=0)
           {
             this.toastr.success(" تم حفظ بيانات المواد الأولية بنجاح");
-          this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+          this.router.navigate(['/pages/Inspector/visit-landing']);
           }
           });
       }

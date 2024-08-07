@@ -6,6 +6,7 @@ import { PeriodSearch } from '../../models/period-search';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { FactoryLandingService } from 'src/app/modules/factory-landing/factory-landing.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-period-list',
@@ -27,9 +28,10 @@ export class PeriodListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private shared: SharedService,
+    private paramService: ParamService
     ){
       this.factoryId = this.route.snapshot.paramMap.get('id');
-    
+      this.paramService.setfactoryId(this.factoryId);
       this.currentUrl = this.router.url
     }
   ngOnInit(): void {
@@ -57,15 +59,21 @@ this.InspectorRole =this.router.url.includes('Inspector')
     this.getPeriods();
 
   }
+  navigateToDetailsInspector(periodId: number,InspectorStatus: boolean) {
+    this.paramService.setperiodId(periodId);
+    this.paramService.setInspectorStatus(InspectorStatus);
+    
+    if(this.router.url.includes('Inspector')){
+      this.router.navigate(['/pages/Inspector/visit-landing']);
+    }
+  }
   navigateToDetails(periodId: number,status: string) {
     let completeStatus='0';
     if(status=='3')
        completeStatus=status;
-
-    if(this.router.url.includes('Inspector')){
-      this.router.navigate(['/pages/Inspector/visit-landing', this.factoryId, periodId]);
-    
-    }
+    this.paramService.setperiodId(periodId);
+    this.paramService.setstatus(completeStatus);
+   
     if(this.router.url.includes('Investor')){
     
       this.router.navigate(['/pages/factory-landing', this.factoryId, periodId,completeStatus]);

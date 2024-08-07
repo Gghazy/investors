@@ -2,7 +2,7 @@
     <div class="form-header">
         <h2 class="form-title">     البيانات الأساسية  لشهر{{PeriodName}}</h2>
         <div>
-            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
+            <a [routerLink]="'/pages/Inspector/visit-landing'" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"></path><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z" style="fill: #666;"></path></svg>
             </a>
@@ -20,17 +20,20 @@
             </div>
             <div class="col-md-2">
                 <label class="form-label"> هل الاسم صحيح؟</label>
-                <select class="form-select" (change)="onInputChange($event)" [(ngModel)]="requestFactory.IsFactNameCorrect">
+                <select [disabled]="inspectorApproved" class="form-select" (change)="onInputChange($event)" [(ngModel)]="requestFactory.IsFactNameCorrect">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
             <div class="col-md-5" *ngIf="requestFactory.IsFactNameCorrect == false">
                 <label class="form-label"> اسم المصنع الصحيح<span class="required">*</span></label>
-                <input type="text" class="form-control" [(ngModel)]="requestFactory.CorrectFactoryName">
+                <input  [disabled]="inspectorApproved" type="text" class="form-control" [(ngModel)]="requestFactory.CorrectFactoryName">
                 <span  class="text-danger" *ngIf="requestFactory.CorrectFactoryName==''||requestFactory.CorrectFactoryName==null">
                     الرجاء إدخال إسم المصنع الصحيح
                     {{NotValid()}}
+            </span>
+            <span  class="text-danger" *ngIf="!(requestFactory.CorrectFactoryName==''||requestFactory.CorrectFactoryName==null)">
+                {{Valid()}}
             </span>
             </div>
         </div>
@@ -39,7 +42,7 @@
            
             <div class="col-md-5">
                 <label class="form-label">الحالة الحالية</label>
-                <select class="form-select disabled" [(ngModel)]="requestFactory.FactoryStatus"  disabled>
+                <select  class="form-select disabled" [(ngModel)]="requestFactory.FactoryStatus"  disabled>
                     <option [ngValue]="0">منتج</option>
                     <option [ngValue]="1">تحت التأسيس </option>
                     <option [ngValue]="2">متوقف</option>
@@ -48,15 +51,15 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label class="form-label"> هل الحالة صحيحة؟</label>
-                <select class="form-select if-no" (change)="onInputChange($event)" [(ngModel)]="requestFactory.IsFactStatusCorrect">
+                <label  class="form-label"> هل الحالة صحيحة؟</label>
+                <select  [disabled]="inspectorApproved" class="form-select if-no" (change)="onInputChange($event)" [(ngModel)]="requestFactory.IsFactStatusCorrect">
                     <option [ngValue]="true" selected>نعم</option>
                     <option [ngValue]="false">لا</option>
                 </select>
             </div>
             <div class="col-md-5 " *ngIf="requestFactory.IsFactStatusCorrect == false">
                 <label class="form-label">  الحالة الحالية الصحيحة<span class="required">*</span></label>
-                <select class="form-select" (change)="Valid()" [(ngModel)]="requestFactory.CorrectFactoryStatus">
+                <select  [disabled]="inspectorApproved" class="form-select" (change)="Valid()" [(ngModel)]="requestFactory.CorrectFactoryStatus">
                     <option [ngValue]="0">منتج</option>
                     <option [ngValue]="1">تحت التأسيس </option>
                     <option [ngValue]="2">متوقف</option>
@@ -68,12 +71,13 @@
                         الرجاء إختيار حالة المصنع الصحيحة
                         {{NotValid()}}
                 </span>
+                
             </div>
         </div>
 
         <div class="col-md-12">
             <label class="form-label"> تعليقات </label>
-            <textarea  rows="3" class="form-control" [(ngModel)]="requestFactory.Comments"></textarea>
+            <textarea  [disabled]="inspectorApproved" rows="3" class="form-control" [(ngModel)]="requestFactory.Comments"></textarea>
         </div>
       
         <app-basic-info-file-form [factoryId]="factoryId" [periodId]="periodId"></app-basic-info-file-form>
@@ -81,8 +85,8 @@
     </div>
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+            <button  [disabled]="inspectorApproved" class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
+            <a [routerLink]="'/pages/Inspector/visit-landing'" class="btn btn-danger">الغاء</a>
         </div>
         </div>
     <!-- Modal photos-->

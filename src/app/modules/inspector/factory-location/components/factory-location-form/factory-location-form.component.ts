@@ -10,6 +10,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 import { PeriodService } from 'src/app/modules/period/period.service';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { invalid } from 'moment';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-factory-location-form',
@@ -37,6 +38,7 @@ submitted=false;
 FactoryLocForm!: FormGroup;
 combinedPattern="";
 isSelectedNew=false;
+inspectorApproved=false;
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -47,11 +49,13 @@ isSelectedNew=false;
     private lookUpService: LookUpService,
     private periodService : PeriodService,
     private formBuilder: FormBuilder,
+    private paramService: ParamService
 
 
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.inspectorApproved=paramService.getInspectorStatus()
   }
   ngOnInit() {
   
@@ -62,6 +66,7 @@ isSelectedNew=false;
     this.getCities();
     this.getIndustrialAreas();
    this.getperiod()
+   
    //
    
 
@@ -77,19 +82,19 @@ isSelectedNew=false;
      this.FactoryLocForm = new FormGroup({  
       
        FactoryEntityId: new FormControl ({ value: '', disabled: true }),
-       IsFactoryEntityCorrect:new FormControl(''),
-       NewFactoryEntityId: new FormControl([{value:-1}]),
+       IsFactoryEntityCorrect:new FormControl({ value: '', disabled: this.inspectorApproved }),
+       NewFactoryEntityId: new FormControl([{value:-1, disabled: this.inspectorApproved }]),
        CityId:  new FormControl ({ value: '', disabled: true }),
-       IsCityCorrect:new FormControl(''),
-       NewCityId:new FormControl([{value:-1}]),
+       IsCityCorrect:new FormControl({ value: '', disabled: this.inspectorApproved }),
+       NewCityId:new FormControl([{value:-1,disabled: this.inspectorApproved}]),
        IndustrialAreaId:  new FormControl ({ value: '', disabled: true }),
-       IsIndustrialAreaCorrect:new FormControl(''),
-       NewIndustrialAreaId:new FormControl([{value:-1}]),
+       IsIndustrialAreaCorrect:new FormControl({ value: '', disabled: this.inspectorApproved }),
+       NewIndustrialAreaId:new FormControl([{value:-1, disabled: this.inspectorApproved }]),
        WebSite :  new FormControl ({ value: '', disabled: true }),
-       IsWebSiteCorrect :new FormControl(''),
-       NewWebSite: new FormControl ('',
+       IsWebSiteCorrect :new FormControl({ value: '', disabled: this.inspectorApproved }),
+       NewWebSite: new FormControl ({ value: '', disabled: this.inspectorApproved },
          Validators.compose([Validators.required,Validators.pattern(combinedPattern)])),
-         Comment:new FormControl(''),
+         Comment:new FormControl({ value: '', disabled: this.inspectorApproved }),
  
      });
    }
@@ -102,7 +107,13 @@ isSelectedNew=false;
         this.requestFactory = res.Data;
         if(this.FactoryLocForm.get('NewWebSite')?.errors!=null)
         this.FactoryLocForm.get('NewWebSite')?.setErrors(null);
-      
+        if(this.inspectorApproved)
+        {
+          this.FactoryLocForm.get('NewFactoryEntityId')?.disable(); 
+          this.FactoryLocForm.get('NewCityId')?.disable(); 
+          this.FactoryLocForm.get('NewIndustrialAreaId')?.disable(); 
+          this.FactoryLocForm.get('NewWebSite')?.disable(); 
+        }
         console.log(this.requestFactory)
       });
   }
@@ -271,6 +282,12 @@ isSelectedNew=false;
       this.onCitySelect(this.requestFactory.NewCityId)
 
       this.requestFactory.IsIndustrialAreaCorrect = false
+      if(this.isSelectedNew==false)
+        {
+          
+          this.requestFactory.NewIndustrialAreaId = -1
+        
+        }
     } 
     if (this.requestFactory.IsIndustrialAreaCorrect == true) {
       this.requestFactory.NewCityId = -1
@@ -355,7 +372,7 @@ isSelectedNew=false;
         .create(this.requestFactory)
         .subscribe((res: any) => {
           this.toastr.success("تم حفظ بيانات موقع المصنع");
-          this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
+          this.router.navigate(['/pages/Inspector/visit-landing']);
 
         });
     }
@@ -364,7 +381,7 @@ isSelectedNew=false;
         .update(this.requestFactory)
         .subscribe((res: any) => {
           this.toastr.success("تم حفظ بيانات موقع المصنع");
-          this.router.navigate(['/pages/Inspector/visit-landing/' + this.factoryId + '/' + this.periodId]);
+          this.router.navigate(['/pages/Inspector/visit-landing']);
 
       
         });

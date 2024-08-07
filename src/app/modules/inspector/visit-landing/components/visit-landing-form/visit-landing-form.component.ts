@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { VisitLandingService } from '../../visit-landing.service';
 import { InspectorScreenStatusModel } from '../../models/inspector-screen-status-model.model';
 import { ToastrService } from 'ngx-toastr';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-visit-landing-form',
@@ -12,20 +13,23 @@ import { ToastrService } from 'ngx-toastr';
 export class VisitLandingFormComponent implements OnInit  {
   factoryId: any;
   periodId: any;
+  approveStatus:any;
   allScreenStatus:Boolean=false;
   screenStatuse = new InspectorScreenStatusModel();
   isChecked: boolean = false;
+  inspectorApproved=false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
    private visitLandingService: VisitLandingService,
+   private paramService: ParamService
 
   ) {
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
-
-
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.inspectorApproved=paramService.getInspectorStatus()
+   
   }
 
   ngOnInit(): void {
@@ -56,8 +60,8 @@ save(){
     .create(this.screenStatuse)
     .subscribe((res: any) => {
       console.log(this.screenStatuse)
-    this.router.navigate(['/pages/Inspector/factories-list']);
-      this.toastr.success("تم الحفظ");
+      this.router.navigate(['/pages/period/'+this.factoryId+'/Inspector']);
+      this.toastr.success("تم إعتماد بيانات الزيارة وارسالها");
     });
   }
   else if(this.screenStatuse.Id!=0){
@@ -65,8 +69,8 @@ save(){
     .update(this.screenStatuse)
     .subscribe((res: any) => {
       console.log(this.screenStatuse)
-      this.router.navigate(['/pages/Inspector/factories-list']);
-      this.toastr.success("تم الحفظ");
+      this.router.navigate(['/pages/period/'+this.factoryId+'/Inspector']);
+      this.toastr.success("تم إعتماد بيانات الزيارة وارسالها");
     });
   }
 }

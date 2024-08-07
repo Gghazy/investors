@@ -12,6 +12,7 @@ import { LookUpService } from 'src/app/core/service/look-up.service';
 import { ReasonService } from 'src/app/modules/actual-production-and-designed-capacity/reason.service';
 import { ReasonModel } from 'src/app/modules/actual-production-and-designed-capacity/models/reason-model';
 import { PeriodService } from 'src/app/modules/period/period.service';
+import {ParamService}from 'src/app/core/service/paramService'
 
 @Component({
   selector: 'app-actual-production-and-designed-capacity-form',
@@ -30,6 +31,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
   PeriodName!:string
   reasonProduct=0;
   validProductList=true;
+  inspectorApproved=false;
   constructor(
     private route: ActivatedRoute,
     private shared: SharedService,
@@ -40,11 +42,13 @@ export class ActualProductionAndDesignedCapacityFormComponent {
     private reasonService: ReasonService,
     private periodService : PeriodService,
     private router: Router,
+    private paramService: ParamService
 
 
     ){
-    this.factoryId = this.route.snapshot.paramMap.get('id');
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
+   this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+    this.inspectorApproved=paramService.getInspectorStatus()
   }
   ngOnInit(): void {
     this.userId = this.shared.getUserId();
@@ -154,6 +158,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
         element.IncreaseReason = this.products[0].IncreaseReason
         element.IncreaseReasonCorrect = this.products[0].IncreaseReasonCorrect
         element.IncreaseReasonId = this.products[0].IncreaseReasonId
+        element.IsIncreaseReasonCorrect= this.products[0].IsIncreaseReasonCorrect
         this.FormService
         .create(element)
         .subscribe((res: any) => {
@@ -161,7 +166,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
           if(count<=0)
             {
             this.toastr.success("تم الحفظ");
-            this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+            this.router.navigate(['/pages/Inspector/visit-landing']);
             }
         });
       }
@@ -170,6 +175,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
         element.IncreaseReason = this.products[0].IncreaseReason
         element.IncreaseReasonCorrect = this.products[0].IncreaseReasonCorrect
         element.IncreaseReasonId = this.products[0].IncreaseReasonId
+        element.IsIncreaseReasonCorrect= this.products[0].IsIncreaseReasonCorrect
         console.log(element)
       this.FormService
       .update(element)
@@ -178,7 +184,7 @@ export class ActualProductionAndDesignedCapacityFormComponent {
         if(count<=0)
           {
           this.toastr.success("تم الحفظ");
-          this.router.navigate(['/pages/Inspector/visit-landing/'+this.factoryId+'/'+this.periodId]);
+          this.router.navigate(['/pages/Inspector/visit-landing']);
           }
       });
     }  

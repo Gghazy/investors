@@ -1,9 +1,10 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild ,Output,EventEmitter} from '@angular/core';
 import { FileService } from 'src/app/core/service/file.service';
 import { InspectorFactoryLocationService } from '../../factory-location.service';
 import { FactoryLocationFileModel } from '../../models/factory-location-file-model.model';
 import { FactoryLocationService } from 'src/app/modules/factory-location/factory-location.service';
 import { ToastrService } from 'ngx-toastr';
+import {ParamService}from 'src/app/core/service/paramService'
 
 
 @Component({
@@ -23,14 +24,21 @@ export class FactoryLocationFileComponent implements OnInit {
   Inspectorsfiles!: any
   request = new FactoryLocationFileModel()
   @ViewChild('fileInput') fileInput!: ElementRef;
+  
+  @ViewChild('photoModal') Modal!: ElementRef;
+  @Output() close = new EventEmitter<boolean>(); 
+
   selectedFirstItem: any = 1; 
+  inspectorApproved=false;
 
   constructor(private fileService: FileService,
     private InspectorService: InspectorFactoryLocationService,
     private factoryLocationService: FactoryLocationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private paramService: ParamService
 
   ) {
+    this.inspectorApproved=paramService.getInspectorStatus()
 
   }
   ngOnInit(): void {
@@ -131,12 +139,22 @@ export class FactoryLocationFileComponent implements OnInit {
   }
 }
   getFile(attachmentId: number) {
+    
     this.fileService.getImage(attachmentId).subscribe((res: any) => {
-      this.src = 'data:image/jpeg;base64,' + res.Image;
+     if(res==null)
+     {
+     
+     }
+
+      else
+     this.src = 'data:image/jpeg;base64,' + res.Image;
     });
   }
 
-
+  closePopUp() {
+    this.Modal.nativeElement.click()
+    this.close.emit(true);
+  }
   deleteFile(id: number) {
     this.InspectorService
       .deleteFile(id)

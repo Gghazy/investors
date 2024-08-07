@@ -2,7 +2,7 @@
     <div class="form-header">
         <h2 class="form-title"> المنتجات لشهر{{PeriodName}}</h2>
         <div>
-            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="back-link">
+            <a [routerLink]="'/pages/Inspector/visit-landing'" class="back-link">
                 رجوع
                 <svg height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="col-md-3">
                         <label class="form-label"> هل صورة/ ورقة بيانات المنتج صحيحة ؟</label>
-                        <select class="form-select" (change)="onInputChange($event)"
+                        <select  [disabled]="inspectorApproved" class="form-select" (change)="onInputChange($event)"
                             [(ngModel)]="product.IsProductPhotoCorrect">
                             <option [ngValue]="true" selected>نعم</option>
                             <option [ngValue]="false">لا</option>
@@ -121,8 +121,8 @@
                                 </label>
                                
                                 <div class="input-group">
-                                    <input type="file" #fileInput2 style="display: none;" (change)="saveAttachment($event,i,'photo')" />
-                                    <button class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput2.click()"
+                                    <input  type="file" #fileInput2 style="display: none;" (change)="saveAttachment($event,i,'photo')" />
+                                    <button  [disabled]="inspectorApproved" class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput2.click()"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                         data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
                                         <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
@@ -170,7 +170,7 @@
                                         </button>
                                     </span>
 
-                                    <button [disabled]="product.NewProductPhotoId<=0" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
+                                    <button [disabled]="product.NewProductPhotoId<=0||inspectorApproved" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
                                         data-bs-placement="bottom" title="" data-bs-original-title=" حذف صورة المادة"
                                         (click)="deleteImage(product,i)"><i class="icon-delete"></i></button>
 
@@ -186,8 +186,8 @@
                                 </label>
                                 <div class="input-group">
                                   
-                                    <input type="file" #fileInput style="display: none;" (change)="saveAttachment($event,i,'paper')" />
-                                        <button class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
+                                    <input  type="file" #fileInput style="display: none;" (change)="saveAttachment($event,i,'paper')" />
+                                        <button   [disabled]="inspectorApproved" class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" 
                                             xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0">
                                             </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
@@ -222,7 +222,7 @@
 
                                     </button>
 
-                                    <button [disabled]="product.NewProductPaperId<=0" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
+                                    <button [disabled]="product.NewProductPaperId<=0 ||inspectorApproved" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
                                         data-bs-placement="bottom" title="" data-bs-original-title=" حذف صورة المادة"
                                         (click)="deleteFile(product,i)"><i class="icon-delete"></i></button>
 
@@ -243,14 +243,14 @@
 
         <div class="col-md-12">
             <label class="form-label"> تعليقات </label>
-            <textarea rows="3" class="form-control" [(ngModel)]="request[0].Comments"></textarea>
+            <textarea [disabled]="inspectorApproved" rows="3" class="form-control" [(ngModel)]="request[0].Comments"></textarea>
         </div>
 
     </div>
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
-            <a [routerLink]="'/pages/Inspector/visit-landing/'+factoryId+'/'+periodId" class="btn btn-danger">الغاء</a>
+            <button [disabled]="inspectorApproved" class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
+            <a [routerLink]="'/pages/Inspector/visit-landing'" class="btn btn-danger">الغاء</a>
         </div>
     </div>
 

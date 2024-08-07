@@ -82,17 +82,17 @@ const routes: Routes = [
           import('../modules/Admin/admin/inspector-lists/inspector-lists/inspector-lists.module').then((m) => m.InspectorListsModule)
       },
       {
-        path: 'Inspector/visit-landing/:id/:periodid',
+        path: 'Inspector/visit-landing',
         loadChildren: () =>
           import('../modules/inspector/visit-landing/visit-landing.module').then((m) => m.VisitLandingModule)
       },
       {
-        path: 'Inspector/basic-info/:id/:periodid',
+        path: 'Inspector/basic-info',
         loadChildren: () =>
           import('../modules/inspector/basic-info/basic-info.module').then((m) => m.BasicInfoModule)
       },
       {
-        path: 'Inspector/actual-production-and-designed-capacity/:id/:periodid',
+        path: 'Inspector/actual-production-and-designed-capacity',
         loadChildren: () =>
           import('../modules/inspector/actual-production-and-designed-capacity/actual-production-and-designed-capacity.module').then((m) => m.ActualProductionAndDesignedCapacityModule)
       },
@@ -103,22 +103,22 @@ const routes: Routes = [
           import('../modules/inspector/factories-list/factories-list.module').then((m) => m.FactoriesListModule)
       },
       {
-        path: 'Inspector/factory-contacts/:id/:periodid',
+        path: 'Inspector/factory-contacts',
         loadChildren: () =>
           import('../modules/inspector/factory-contacts/factory-contacts.module').then((m) => m.FactoryContactsModule)
       },
       {
-        path: 'Inspector/factory-location/:id/:periodid',
+        path: 'Inspector/factory-location',
         loadChildren: () =>
           import('../modules/inspector/factory-location/factory-location.module').then((m) => m.FactoryLocationModule)
       },
       {
-        path: 'Inspector/factory-products/:id/:periodid',
+        path: 'Inspector/factory-products',
         loadChildren: () =>
           import('../modules/inspector/factory-products/factory-products.module').then((m) => m.FactoryProductsModule)
       },
       {
-        path: 'Inspector/factory-raw-materials/:id/:periodid',
+        path: 'Inspector/factory-raw-materials',
         loadChildren: () =>
           import('../modules/inspector/factory-raw-materials/factory-raw-materials.module').then((m) => m.FactoryRawMaterialsModule)
       },

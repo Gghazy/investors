@@ -5,5 +5,7 @@ PeriodName!:string;
 PeriodStartDate!:string;
 Status!:string;
 PeriodEndDate!:string;
+ InspectorStatus!:boolean;
+
 }
 
