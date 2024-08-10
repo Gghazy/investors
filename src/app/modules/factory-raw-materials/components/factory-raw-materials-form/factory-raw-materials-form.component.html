@@ -30,12 +30,14 @@
             (رقم البند الجمركي على مستوى 12)
            <span class="required">*</span></label>
         <ng-multiselect-dropdown
+            #rawNameDropdown
          [placeholder]="'أختر'" 
-         (keyup)="onSearch($event)"
+         (onFilterChange)="onSearch($event)"
          [settings]="dropdownSettingsRaw"
          [data]="products12"
          [(ngModel)]="selectProductId"
          (onSelect)="productChanage($event)"
+       
          id="rawName"
          name="rawName"
         #rawName="ngModel"
@@ -126,9 +128,15 @@
         </label>
 
        <div class="multiselect-parent">
-            <ng-multiselect-dropdown [placeholder]="'أختر'"  [settings]="dropdownSettings" [data]="products12All"
-                [(ngModel)]="selectedProducts" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
-                (onSelectAll)="onSelectAll($event)"
+            <ng-multiselect-dropdown 
+            #productNameDropdown
+            [placeholder]="'أختر'" 
+             [settings]="dropdownSettings" 
+             [data]="products12All"
+             (onFilterChange)="onSearchProduct($event)"
+                [(ngModel)]="selectedProducts"
+                 (onSelect)="onItemSelect($event)"
+                  (onDeSelect)="onItemDeSelect($event)"
                 id="FactoryProductId"
                 name="FactoryProductId"
                #FactoryProductId="ngModel"

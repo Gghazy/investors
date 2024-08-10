@@ -13,8 +13,23 @@ export class RawMaterial {
       PhotoName!:string;
       PaperName!:string;
       UnitId!:number|undefined;
-      FactoryProductId :number[]=[];
+      FactoryProductId :FactoryProductInRaw[]=[];
       FactoryId !:number;
 PeriodId!:number;
 RawMaterialName!:string;
+}
+export class FactoryProductInRaw
+{
+       ProductNameInRaw !:string;
+      ProductId  !:number;
+}
+
+export class ProductSearchModel
+{
+      FactoryId !:number;
+      PeriodId!:number;
+      CurrentPage!:number;
+      PageSize!:number;
+      SearchText!:string;
+
 }

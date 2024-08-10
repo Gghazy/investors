@@ -1,9 +1,12 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild ,AfterViewInit} from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { FactoryRawMaterialService } from '../../factory-raw-material.service';
 import { ToastrService } from 'ngx-toastr';
 import { RawMaterial } from '../../models/raw-material.model';
+import { ProductSearchModel } from '../../models/raw-material.model';
+import { FactoryProductInRaw } from '../../models/raw-material.model';
+
 import { FileService } from 'src/app/core/service/file.service';
 import { RawMaterialSearch } from '../../models/raw-material-search.model';
 import { FactoryProductService } from 'src/app/modules/factory-products/factory-product.service';
@@ -14,6 +17,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductSearch } from 'src/app/modules/customs-items-update/models/product-search';
 import { SearchCriteria } from 'src/app/core/models/search-criteria';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {ParamService}from 'src/app/core/service/paramService'
+import { SelectItem, PrimeNGConfig } from "primeng/api"; 
+
 
 @Component({
   selector: 'app-factory-raw-materials-form',
@@ -23,7 +29,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
     fade
   ]
 })
-export class FactoryRawMaterialsFormComponent implements OnInit {
+export class FactoryRawMaterialsFormComponent implements OnInit ,AfterViewInit{
   @ViewChild('closeModal') Modal!: ElementRef;
   @Input() factoryId!: number;
   @Input() Id!: number;
@@ -37,11 +43,15 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   products12  !: ProductModel[];
   products12All  !: ProductModel[];
   selectProductId!: any;
-
+  geeks!: SelectItem[]; 
   
   showInput: boolean = false
   units!: LookUpModel[];
   request = new RawMaterial();
+  requestToSearch = new ProductSearchModel();
+  requestProductToSearch = new ProductSearchModel();
+  factoryProductinRaw=new FactoryProductInRaw();
+  searchPlaceholderT='أكتب هنا إسم المادة الأولية'
   search = new SearchCriteria();
   selectedProducts: any[] = [];
   items: any = [];
@@ -58,9 +68,19 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   isLoadingProgress=false;
   isOpen=false
   isDisabled!: boolean;
-
+  searchName = '';
+  currentPage = 0;
+  pageSize = 100;
+  currentPageProduct = 0;
+  pageSizeProduct = 100;
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
   @ViewChild('fileInputPhoto',{static:false}) fileInputPhoto!: ElementRef;
+ // @ViewChild('dropdownListRaw', { static: true }) dropdownScroll!: ElementRef;
+  @ViewChild('dropdownListRaw', { read: ElementRef }) dropdownListRaw!: ElementRef;
+  @ViewChild('rawNameDropdown', { read: ElementRef,static: false }) dropdown!: ElementRef;
+  @ViewChild('productNameDropdown', { read: ElementRef,static: false }) dropdownProduct!: ElementRef;
+
+
 
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private fileService: FileService,
@@ -68,11 +88,15 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     private lookUpService: LookUpService,
     private productService: FactoryProductService,
     private toastr: ToastrService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute,   
+     private paramService: ParamService,
+
     private spinner: NgxSpinnerService
   ) {
 
-    this.periodId = this.route.snapshot.paramMap.get('periodid');
+    this.factoryId = paramService.getfactoryId();
+    this.periodId = paramService.getperiodId();
+  //  this.approveStatus=paramService.getstatus()
   }
   handleUploadClick(event: Event) {
     const targetButton = event.target as HTMLButtonElement;
@@ -89,7 +113,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
 
 
-
+  dropdownSettingsNew = {};
   dropdownList: any[] = [];
 
   selectedItems1: any[] = [];
@@ -97,7 +121,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
 
   dropdownSettings!: IDropdownSettings;
   dropdownSettings2!: IDropdownSettings;
-  dropdownSettingsRaw!: IDropdownSettings;
+  dropdownSettingsRaw: IDropdownSettings = {};
 
   ngOnChanges(changes: SimpleChanges) {
    
@@ -136,9 +160,13 @@ this.getProducts();
         textField: 'ProductName',
         selectAllText: 'تحديد الكل',
         unSelectAllText: 'ازالة التحديد',
-        searchPlaceholderText: 'بحث',
-        itemsShowLimit: 2,
-        allowSearchFilter: true
+        searchPlaceholderText: ' أكتب هنا إسم المنتج',
+        noDataAvailablePlaceholderText: 'لا يوجد بيانات مطابقة ',
+        clearSearchFilter: true,
+        noFilteredDataAvailablePlaceholderText:'لا يوجد بيانات مطابقة للبحث',
+        itemsShowLimit: 6,
+        allowSearchFilter: true,
+        
       };
 
       this.dropdownSettings2 = {
@@ -149,24 +177,31 @@ this.getProducts();
         unSelectAllText: 'ازالة التحديد',
         searchPlaceholderText: 'بحث',
         itemsShowLimit: 2,
-        allowSearchFilter: true
+        allowSearchFilter: true,
       };
-
       this.dropdownSettingsRaw = {
         singleSelection: true,
         enableCheckAll: false,
         idField: 'Id',
         textField: 'ProductName',
         unSelectAllText: 'ازالة التحديد',
-        searchPlaceholderText: 'بحث',
-        itemsShowLimit: 2,
-        allowSearchFilter: true
+        searchPlaceholderText: ' أكتب هنا إسم البند الجمركي',
+        noDataAvailablePlaceholderText: 'لا يوجد بيانات مطابقة ',
+        clearSearchFilter: true,
+        noFilteredDataAvailablePlaceholderText:'لا يوجد بيانات مطابقة للبحث',
+
+      //  enableCheckAll: false,
+     // noDataAvailablePlaceholderText: 'No data available',
+    //  searchPlaceholderText: 'Search',
+    //  scrollToEnd: true // Enable scroll to end
+        itemsShowLimit: 6,
+        allowSearchFilter: true,
       };
+    
     }
 
   }
-  onSearch(event: Event) {
-  }
+  
   productChanage(item:any) {
   
     this.selectProductId.Id=item.Id; 
@@ -197,8 +232,201 @@ this.getProducts();
 
     }
   }
+  
+  loadInitialProduct() {
+   
+    this.requestProductToSearch.PeriodId=this.periodId;
+    this.requestProductToSearch.FactoryId=this.factoryId;
+    this.requestProductToSearch.CurrentPage=this.currentPageProduct;
+    this.requestProductToSearch.PageSize=this.pageSizeProduct;
+    this.requestProductToSearch.SearchText='';
+   
+    this.productService
+      .getItemsAllProduct(this.requestProductToSearch)
+      .subscribe((res: any) => {
+        this.products12All = res.Data;
+       
+       
+    });
+  
+  }
+  loadInitialRawMaterial() {
+   
+    this.requestToSearch.PeriodId=this.periodId;
+    this.requestToSearch.FactoryId=this.factoryId;
+    this.requestToSearch.CurrentPage=this.currentPage;
+    this.requestToSearch.PageSize=this.pageSize;
+    this.requestToSearch.SearchText='';
+    this.productService
+      .getItemsProduct(this.requestToSearch)
+      .subscribe((res: any) => {
+        this.products12 = res.Data;
+     
+       
+    });
+  
+  }
+ 
+
+
+  onScroll(event: any) {
+   
+    const element = event.target;
+    if (element.scrollTop === 0) {
+    //  this.onScrollTo(true);
+     // this.setCursorToStart(element);
+    }
+    if (element.scrollHeight - element.scrollTop - element.clientHeight <= 30) {
+      this.onScrollTo();
+    }
+  }
+  onScrollProduct(event: any) {
+  
+    const element = event.target;
+    if (element.scrollTop === 0) {
+    //  this.onScrollTo(true);
+     // this.setCursorToStart(element);
+    }
+    if (element.scrollHeight - element.scrollTop - element.clientHeight <= 30) {
+      this.onScrollToProduct();
+    }
+  }
+  setCursorToStart(inputElement: HTMLInputElement) {
+    setTimeout(() => {
+      inputElement.focus();
+      inputElement.setSelectionRange(0, 0); // تعيين المؤشر في بداية النص
+    }, 0);
+  }
+  onScrollToProduct(): void  {
+  
+    this.requestProductToSearch.PeriodId=this.periodId;
+    this.requestProductToSearch.FactoryId=this.factoryId;
+    this.currentPageProduct++;
+    this.requestProductToSearch.CurrentPage=this.currentPageProduct;
+    this.requestProductToSearch.PageSize=this.pageSizeProduct;
+  //  this.requestProductToSearch.SearchText='';
+   
+    this.productService
+      .getItemsAllProduct(this.requestProductToSearch)
+      .subscribe((res: any) => {
+        this.products12All  =[...this.products12All, ...res.Data];
+       
+       
+    });
+  
+  }
+  onScrollTo(): void  {
+  
+    this.requestToSearch.PeriodId=this.periodId;
+    this.requestToSearch.FactoryId=this.factoryId;
+    this.requestToSearch.PageSize=this.pageSize;
+    this.currentPage++;
+    this.requestToSearch.CurrentPage=this.currentPage;
+
+    this.productService
+      .getItemsProduct(this.requestToSearch)
+      .subscribe((res: any) => {
+        this.products12 =[...this.products12, ...res.Data];
+    });
+  }
+  onSearch(event: any) {
+
+    const searchTerm = event.toLowerCase();
+
+    //const searchTerm = event.target.value;
+  
+    if (searchTerm) 
+      {
+        this.requestToSearch.PeriodId=this.periodId;
+        this.requestToSearch.FactoryId=this.factoryId;
+        this.requestToSearch.CurrentPage=this.currentPage;
+        this.requestToSearch.PageSize=this.pageSize;
+        this.requestToSearch.SearchText=searchTerm;
+        this.productService
+          .getItemsProduct(this.requestToSearch)
+          .subscribe((res: any) => {
+          
+            if(res.Data!=null && res.Data.length>0)
+            {
+               this.products12=res.Data;
+               this.currentPage=0
+            }
+            else
+            {
+        
+             // this.toastr.error("الرجاء تعديل نص البحث ، لا يوجد بيانات مطابقة"+searchTerm)
+              //const searchInput = event.target as HTMLInputElement;
+             // searchInput.value=''
+              this.currentPage=0
+              //const event2 = new Event('input', { bubbles: true });
+              //searchInput.dispatchEvent(event2); 
+              this.loadInitialRawMaterial();
+             
+            }
+
+        });
+    } 
+    else 
+    {
+     
+      this.loadInitialRawMaterial();
+    }
+  }
+  onSearchProduct(event: any) {
+   
+   
+    const searchTerm = event.toLowerCase();
+
+    if (searchTerm) 
+      {
+        this.requestProductToSearch.PeriodId=this.periodId;
+        this.requestProductToSearch.FactoryId=this.factoryId;
+        this.requestProductToSearch.CurrentPage=this.currentPageProduct;
+        this.requestProductToSearch.PageSize=this.pageSizeProduct;
+        this.requestProductToSearch.SearchText=searchTerm;
+        this.productService
+          .getItemsAllProduct(this.requestProductToSearch)
+          .subscribe((res: any) => {
+          
+            if(res.Data!=null && res.Data.length>0)
+            {
+               this.products12All=res.Data;
+               this.currentPage=0
+            }
+            else
+            {
+             
+             // const searchInput = event.target as HTMLInputElement;
+             // searchInput.value=''
+             this.currentPageProduct=0
+             // const event2 = new Event('input', { bubbles: true });
+             //  searchInput.dispatchEvent(event2); 
+              this.loadInitialProduct();
+             
+            }
+
+        });
+    } 
+    else 
+    {
+     
+      this.loadInitialProduct();
+    }
+  }
+  
   ngOnInit() {
    
+    this.geeks = []; 
+  
+    for (let i = 0; i < 10000; i++) { 
+        this.geeks.push( 
+            {  
+                label: 'Item ' + i,  
+                value: 'Item ' + i  
+            } 
+        ); 
+    } 
+  
   /*
     this.request = new RawMaterial();
     this.request.Name="";
@@ -222,23 +450,76 @@ this.getProducts();
   */
     this.fileErrorPhoto=''
     this.fileError=''
-   
     
+  
     //this.fileInputPaper.nativeElement.value = this.request.PhotoId;
     //this.fileInputPhoto.nativeElement.value = this.request.PaperId;
   }
-  ngAfterViewInit() {
-   
-    //   this.fileInputPhoto.nativeElement.innerText  = "a.txt";
 
+  ngAfterViewInit() {
+    
+    this.currentPage=0
+    this.currentPageProduct=0
+    this.searchName=''
+    this.requestToSearch = new ProductSearchModel();
+    this.requestProductToSearch = new ProductSearchModel();
+    if(this.dropdown!=null)
+    {
+       const dropdownRef = this.dropdown.nativeElement;
+      const scrollingContainerRef =  dropdownRef.querySelector('.item2') as HTMLElement;
+      scrollingContainerRef.addEventListener('scroll', this.onScroll.bind(this));
+    }
+   
+   
+    if(this.dropdownProduct!=null)
+      {
+        const dropdownRef2 = this.dropdownProduct.nativeElement;
+  
+ 
+        const scrollingContainerRef2 =  dropdownRef2.querySelector('.item2') as HTMLElement;
+        scrollingContainerRef2.addEventListener('scroll', this.onScrollProduct.bind(this));
+       
+
+      }
+   
+    /*const observer = new MutationObserver((mutations) => {
+      mutations.forEach(() => {
+        const scrollingContainerRef =  dropdownRef.querySelector('.item2') as HTMLElement;
+       
+        if (scrollingContainerRef) {
+          scrollingContainerRef.addEventListener('scroll', this.onScroll.bind(this));
+          observer.disconnect(); // Stop observing once the element is found
+        }
+      });
+    });
+
+    observer.observe(dropdownRef, { childList: true, subtree: true });*/
+  }
+  onScroll2(event: any) {
+    const scrollTop = event.target.scrollTop;
+    const scrollHeight = event.target.scrollHeight;
+    const offsetHeight = event.target.offsetHeight;
+
+    console.log('Scroll Top:', scrollTop);
+    console.log('Scroll Height:', scrollHeight);
+  
+
+    if (scrollTop + offsetHeight >= scrollHeight) {
+      console.log('Reached the end of the dropdown');
+      this.loadMoreItems();
+    }
+  }
+
+  loadMoreItems() {
+    // Logic to load more items
+    console.log('Load more items');
   }
   changeName()
   {
     this.isOpen=true;
   }
   getOneRawMaterial(id: number) {
-    this.isLoadingProgress=true;
-    this.spinner.show("rawMat");
+  
    
     this.searchValue = true
     this.rawMaterialService
@@ -251,18 +532,27 @@ this.getProducts();
             this.showInput = true
           }
         console.log(this.request)
+
+        this.requestProductToSearch.PeriodId=this.periodId;
+        this.requestProductToSearch.FactoryId=this.factoryId;
+        this.requestProductToSearch.CurrentPage=0;
+        this.requestProductToSearch.PageSize=this.pageSizeProduct;
+        this.requestProductToSearch.SearchText='';
+        this.isLoadingProgress=true;
+        this.spinner.show("rawMat");
         this.productService
-          .getAllProducts()
-          .subscribe((res: any) => {
-            this.products12 = res.Data;
+        .getItemsAllProduct(this.requestProductToSearch)
+        .subscribe((res: any) => {
+          
+          //  this.products12 = res.Data;
             this.products12All = res.Data;
-           
+            
             this.request.FactoryProductId.forEach(element => {
               debugger
-              let ProductNamex = this.products12All.find(x => x.ProductId == element)?.ProductName;
+            //  let ProductNamex = this.products12All.find(x => x.ProductId == element)?.ProductName;
            
 
-              this.selectedItems1.push({ 'ProductId': element, 'ProductName': ProductNamex })
+              this.selectedItems1.push({ 'ProductId': element.ProductId, 'ProductName': element.ProductNameInRaw })
               this.selectedProducts = this.selectedItems1
             });
             
@@ -301,11 +591,12 @@ this.getProducts();
     this.close.emit(true);
   }
   getProducts() {
-    this.isLoadingProgress=true;
-    this.spinner.show("rawMat");
+  //  this.isLoadingProgress=true;
+  //  this.spinner.show("rawMat");
     this.searchproduct.FactoryId = this.factoryId;
     this.searchproduct.PeriodId = parseInt(this.periodId);
-    this.productService
+    this.loadInitialRawMaterial();
+  /*  this.productService
       .AllProductsListToRaw(this.searchproduct)
       .subscribe((res: any) => {
         this.products12 = res.Data;
@@ -327,8 +618,36 @@ this.getProducts();
         });
        
 
-      })
+      })*/
+        this.isLoadingProgress=true;
+        this.requestProductToSearch.PeriodId=this.periodId;
+        this.requestProductToSearch.FactoryId=this.factoryId;
+        this.requestProductToSearch.CurrentPage=0;
+        this.requestProductToSearch.PageSize=this.pageSizeProduct;
+        this.requestProductToSearch.SearchText='';
+        this.spinner.show("rawMat");
+        this.productService
+        .getItemsAllProduct(this.requestProductToSearch)
+        .subscribe((res: any) => {
+          
+          //  this.products12 = res.Data;
+            this.products12All = res.Data;
+            
+            this.request.FactoryProductId.forEach(element => {
+              debugger
+            //  let ProductNamex = this.products12All.find(x => x.ProductId == element)?.ProductName;
+           
 
+              this.selectedItems1.push({ 'ProductId': element.ProductId, 'ProductName': element.ProductNameInRaw })
+              this.selectedProducts = this.selectedItems1
+            });
+            
+            this.spinner.hide("rawMat");
+            this.isLoadingProgress=false; 
+
+
+
+      });
 
  
 
@@ -345,7 +664,11 @@ this.getProducts();
     // });
   }
   onItemSelect(item: any) {
-    this.request.FactoryProductId.push(item.ProductId)
+    let factoryProinRaw=new FactoryProductInRaw();
+    factoryProinRaw.ProductId=item.ProductId,
+    factoryProinRaw.ProductNameInRaw=item.ProductName
+
+    this.request.FactoryProductId.push(factoryProinRaw)
   }
 
 

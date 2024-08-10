@@ -27,6 +27,20 @@ export class FactoryProductService {
   AllProductsListToRaw(search: any): Observable<any> {
     return this.http.post<any>('Products/AllProductsListToRaw', search);
   }
+
+  getItemsProduct(search: any): Observable<any> {
+    return this.http.post<any>('Products/GetProductsList', search);
+  }
+  getItemsAllProduct(search: any): Observable<any> {
+    return this.http.post<any>('Products/GetAllProductsList', search);
+  }
+  getSearchProduct(search: any): Observable<any> {
+    return this.http.post<any>('Products/GetProductsList', search);
+  }
+  searchInProduct(searchName: string): Observable<any> {
+    return this.http.post<any>('Products/AllProductsListToRaw', searchName);
+  }
+  
   getAllProductsList(search: any): Observable<any> {
     return this.http.post<any>('Products/AllProductsList', search);
   }
