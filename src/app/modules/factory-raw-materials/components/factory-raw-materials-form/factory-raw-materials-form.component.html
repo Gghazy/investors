@@ -37,7 +37,7 @@
          [data]="products12"
          [(ngModel)]="selectProductId"
          (onSelect)="productChanage($event)"
-       
+          (onDropDownClose)="clearFilter()"
          id="rawName"
          name="rawName"
         #rawName="ngModel"
@@ -140,6 +140,7 @@
                 id="FactoryProductId"
                 name="FactoryProductId"
                #FactoryProductId="ngModel"
+                 (onDropDownClose)="clearProductFilter()"
                  required>
             </ng-multiselect-dropdown>
         </div>

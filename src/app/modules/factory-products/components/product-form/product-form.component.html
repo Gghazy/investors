@@ -14,12 +14,14 @@
       <div class="col-md-6" *ngIf="productId==0 && this.pId==0">
         <label for="" class="form-label"> اسم المنتج (حسب البند الجمركي على مستوى 12)<span class="required">*</span></label>
         <ng-multiselect-dropdown
+        #dropdownProduct
          [placeholder]="'أختر'" 
-         (keyup)="onSearch($event)"
+         (onFilterChange)="onSearch($event)"
          [settings]="dropdownSettings"
          [data]="products"
          [(ngModel)]="selectProductId"
          (onSelect)="productChanage($event)"
+         (onDropDownClose)="clearFilter()"
          id="prodName"
          name="prodName"
         #prodName="ngModel"

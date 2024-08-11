@@ -44,6 +44,11 @@ year!:number;
     this.approveStatus=paramService.getstatus()
   }
   ngOnInit() {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.getProducts()
     this.getperiod()
   }
@@ -120,7 +125,7 @@ year!:number;
       .subscribe((res: any) => {
         this.lockSaveItem=false
         this.toastr.success("تم تحديث البند الجمركي بنجاح");
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+        this.router.navigate(['/pages/factory-landing']);
 
       });
     

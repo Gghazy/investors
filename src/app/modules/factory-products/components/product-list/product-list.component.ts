@@ -47,7 +47,11 @@ export class ProductListComponent implements OnInit {
   }
   ngOnInit(): void {
    // this.getProducts();
-
+   if( this.factoryId==null||this.periodId==null)
+    {
+      this.router.navigate(['error']);
+      return
+    }
     this.getAddedProducts();
     this.getperiod()
   }
@@ -139,7 +143,7 @@ export class ProductListComponent implements OnInit {
   }
   save() {
     this.toastr.success("تم الحفظ");
-    this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+    this.router.navigate(['/pages/factory-landing']);
 
   }
 }

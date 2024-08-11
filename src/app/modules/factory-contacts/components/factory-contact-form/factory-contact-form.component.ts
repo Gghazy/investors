@@ -63,6 +63,12 @@ contactDetails=new FactoryContactModel();
 
   }
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
+
     this.createContactForm();
 
     this.ToggleDisable()
@@ -76,6 +82,7 @@ contactDetails=new FactoryContactModel();
   updateContactForm(): void {
    
     this.phoneForm = new FormGroup({
+     
       OfficerPhone: new FormControl({value:this.officerPhoneValue,disabled: 
         this.approveStatus}, 
         [Validators.required, this.saPhoneNumberValidator]),
@@ -95,7 +102,9 @@ contactDetails=new FactoryContactModel();
     });
   }
 createContactForm(): void {
-  this.financeManagerPhoneValue=this.financeManagerPhoneValue!=null?this.financeManagerPhoneValue:null
+  this.financeManagerPhoneValue=this.financeManagerPhoneValue!=null?this.financeManagerPhoneValue:''
+  this.officerPhoneValue=this.officerPhoneValue!=null?this.officerPhoneValue:''
+  this.productionManagerPhoneValue=this.productionManagerPhoneValue!=null?this.productionManagerPhoneValue:''
    this.phoneForm = new FormGroup({
     OfficerPhone: new FormControl({value:this.officerPhoneValue,disabled: this.approveStatus}, [Validators.required, this.saPhoneNumberValidator]),
     OfficerEmail: new FormControl({value:null,disabled: this.approveStatus}, [Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
@@ -170,7 +179,7 @@ createContactForm(): void {
           this.request = res.Data;
           this.lockSaveItem=false;
           this.toastr.success("تم حفظ بيانات جهة الإتصال بنجاح");
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+          this.router.navigate(['/pages/factory-landing']);
 
         });
     }
@@ -185,7 +194,7 @@ createContactForm(): void {
         .subscribe((res: any) => {
           this.toastr.success("تم تعديل بيانات جهة الإتصال بنجاح");
           this.lockSaveItem=false
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+          this.router.navigate(['/pages/factory-landing']);
 
         });
     }

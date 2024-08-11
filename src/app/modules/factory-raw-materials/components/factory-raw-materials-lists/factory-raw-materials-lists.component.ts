@@ -73,6 +73,11 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.getRawMaterial()
     
     // this.getProducts()
@@ -232,7 +237,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   save() {
 
     this.toastr.success("تم الحفظ");
-    this.router.navigate(['/pages/factory-landing/' + this.factoryId + '/' + this.periodId+ '/' + this.approveStatusText]);
+    this.router.navigate(['/pages/factory-landing']);
 
   }
 

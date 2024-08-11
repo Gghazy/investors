@@ -50,6 +50,11 @@ inspectorApproved=false
   
   }
   ngOnInit() {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.createContactForm()
     this.userId = this.shared.getUserId();
     this.getContact()

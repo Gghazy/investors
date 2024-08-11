@@ -36,6 +36,10 @@ constructor(  private fileService:FileService,
 
 }
 ngOnInit(): void {
+  if( this.factoryId==null||this.periodId==null)
+    {
+      return
+    }
   this.getFiles();
   this.getInspectorsFiles()
   this.initValue();

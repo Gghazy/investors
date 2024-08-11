@@ -63,6 +63,11 @@ export class BasicInfoFormComponent implements OnInit {
     this.approveStatus=completeStatus!.toLocaleLowerCase()==="true"?true:false;
     this.approveStatusText=completeStatus;*/  }
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.createBasicInfoForm();
     this.ToggleDisable();
     this.getBasicInfo();
@@ -158,7 +163,7 @@ export class BasicInfoFormComponent implements OnInit {
         
           this.toastr.success("تم حفظ البيانات الأساسية بنجاح");
           this.lockSaveItem=false;
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+          this.router.navigate(['/pages/factory-landing']);
         });
   }
  

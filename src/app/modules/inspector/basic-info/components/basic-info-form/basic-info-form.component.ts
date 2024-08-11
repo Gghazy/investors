@@ -49,6 +49,11 @@ export class BasicInfoFormComponent implements OnInit {
    
   }
   ngOnInit() {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.userId = this.shared.getUserId();
     this.getBasicInfo();
     this.getFiles();

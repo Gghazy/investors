@@ -51,6 +51,11 @@ export class ActualProductionAndDesignedCapacityFormComponent {
     this.inspectorApproved=paramService.getInspectorStatus()
   }
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.userId = this.shared.getUserId();
     this.getProduct();
    this.getperiod()

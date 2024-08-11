@@ -49,6 +49,11 @@ export class ActualProductionListComponent implements OnInit {
       this.approveStatus=paramService.getstatus()
   }
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.getLevel12Product();
     this.getBasicInfo();
     this.getperiod()
@@ -114,7 +119,7 @@ save(){
   if(this.showReason)
   {
     this.toastr.success("تم حفظ بيانات كمية الإنتاج الفعلي والطاقة التصميمية " );
-    this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+    this.router.navigate(['/pages/factory-landing']);
   
   }else
   {
@@ -126,7 +131,7 @@ save(){
     .removeByperiod(reasonModelDto)
     .subscribe((res: any) => {
       this.toastr.success("تم حفظ بيانات كمية الإنتاج الفعلي والطاقة التصميمية " );
-      this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+      this.router.navigate(['/pages/factory-landing']);
 
     });
 }

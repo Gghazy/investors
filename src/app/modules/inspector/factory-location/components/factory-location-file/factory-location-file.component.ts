@@ -42,6 +42,10 @@ export class FactoryLocationFileComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        return
+      }
     this.getFiles();
     this.getInspectorsFiles()
     this.initValue();

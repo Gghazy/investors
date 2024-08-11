@@ -59,6 +59,11 @@ export class FactoryLocationFormComponent {
 
   }
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.ToggleDisable()
     this.getLocation();
     this.getCities();
@@ -191,7 +196,7 @@ const combinedPattern = `${pattern1}|${pattern2}`;
           this.toastr.success("تم حفظ موقع المصنع بنجاح");
           this.lockSaveItem=false;
           this.getLocation();
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+          this.router.navigate(['/pages/factory-landing']);
 
         
         });
@@ -203,7 +208,7 @@ const combinedPattern = `${pattern1}|${pattern2}`;
         .subscribe((res: any) => {
           this.toastr.success("تم تعديل موقع المصنع بنجاح");
           this.lockSaveItem=false;
-          this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+          this.router.navigate(['/pages/factory-landing']);
 
         });
     }

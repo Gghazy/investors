@@ -78,6 +78,11 @@ selectedReason:any = { Id: "1"}
 
 
   ngOnInit() {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.getRawMaterial();
     this.getFiles();
     this.getUnits()
@@ -368,7 +373,7 @@ selectedReason:any = { Id: "1"}
               {
                 this.lockSaveItem=false
               this.toastr.success(" تم تعديل بيانات المواد الخام الأولية بنجاح");
-              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId,this.approveStatusText]);
+              this.router.navigate(['/pages/factory-landing']);
       
               }
           });
@@ -395,7 +400,7 @@ selectedReason:any = { Id: "1"}
               {
                 this.lockSaveItem=false;
               this.toastr.success(" تم تعديل بيانات المواد الخام الأولية بنجاح");
-              this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId,this.approveStatusText]);
+              this.router.navigate(['/pages/factory-landing']);
       
               }
 

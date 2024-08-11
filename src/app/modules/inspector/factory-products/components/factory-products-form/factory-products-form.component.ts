@@ -45,6 +45,11 @@ export class FactoryProductsFormComponent implements OnInit {
       this.inspectorApproved=paramService.getInspectorStatus()
   }
   ngOnInit() {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.userId = this.shared.getUserId();
     this.getProducts()
     this.getperiod()

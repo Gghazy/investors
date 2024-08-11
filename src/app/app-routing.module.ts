@@ -15,6 +15,12 @@ const routes: Routes = [
   {
      path: 'login', component: LoginComponent 
   },
+  {
+    path: 'error', component: ErrorPageComponent 
+ },
+ {
+  path: '**', redirectTo: 'error', pathMatch: 'full'
+},
  
 
 ];

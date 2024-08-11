@@ -45,6 +45,11 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.inspectorApproved=paramService.getInspectorStatus()
   }
   ngOnInit() {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.userId = this.shared.getUserId();
     this.getRawMaterial()
     this.getperiod()

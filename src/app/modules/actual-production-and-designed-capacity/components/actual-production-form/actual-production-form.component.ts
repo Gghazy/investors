@@ -34,6 +34,10 @@ constructor(
   ){}
 
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        return
+      }
    this.getOne();
    this.getunits();
    //this.getProduct();

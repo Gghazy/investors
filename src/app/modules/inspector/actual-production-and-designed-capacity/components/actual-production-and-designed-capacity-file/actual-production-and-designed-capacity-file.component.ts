@@ -29,6 +29,10 @@ export class ActualProductionAndDesignedCapacityFileComponent implements OnInit 
   ) {
 
   } ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        return
+      }
     this.userId = this.shared.getUserId();
     this.getFiles();
     this.getInspectorsFiles()

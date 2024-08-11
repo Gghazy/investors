@@ -13,6 +13,7 @@ import { ProductsNotInFactorySearch } from '../../models/products-not-in-factory
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { PeriodService } from 'src/app/modules/period/period.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ProductSearchModel } from 'src/app/modules/factory-raw-materials/models/raw-material.model';
 
 @Component({
   selector: 'app-product-form',
@@ -35,6 +36,8 @@ export class ProductFormComponent implements OnInit {
   dropdownSettings!: IDropdownSettings;
   search = new ProductsNotInFactorySearch();
   factoryPeriod = new ProductsFactorySearch();
+  @ViewChild('dropdownProduct', { read: ElementRef,static: false }) dropdown!: ElementRef;
+  requestToSearch = new ProductSearchModel();
 
   isLoading = false;
   selectProductId!: any;
@@ -44,6 +47,8 @@ export class ProductFormComponent implements OnInit {
   lockSaveItem=false;
   isLoadingPro=false;
   isOpen=false
+  currentPage = 0;
+  pageSize = 100;
   @ViewChild('fileInputPaper') fileInputPaper!: ElementRef;
   @ViewChild('fileInputPhoto') fileInputPhoto!: ElementRef;
   constructor(
@@ -54,13 +59,18 @@ export class ProductFormComponent implements OnInit {
      private spinner: NgxSpinnerService
   ) { }
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        return
+      }
     this.isOpen=false
+   
     if (this.productId != 0) {
     //  this.getOne()
        this.getAddedProduct()
     }
     else {
-      
+    
       if(this.pId!=0)
       {
       this.requestnew.FactoryId=this.factoryId;
@@ -70,7 +80,7 @@ export class ProductFormComponent implements OnInit {
     this.getNewProduct()
     }
         else{
-      this.getAllProducts();
+      this.loadInitialproduct();
       this.getUnits()
       this.selectProductId=[]
         }
@@ -82,15 +92,54 @@ export class ProductFormComponent implements OnInit {
       idField: 'Id',
       textField: 'ProductName',
       unSelectAllText: 'ازالة التحديد',
-      searchPlaceholderText: 'بحث',
       itemsShowLimit: 2,
-      allowSearchFilter: true
+      allowSearchFilter: true,
+      searchPlaceholderText: ' أكتب هنا إسم المنتج',
+      noDataAvailablePlaceholderText: 'لا يوجد بيانات مطابقة ',
+      clearSearchFilter: true,
+      noFilteredDataAvailablePlaceholderText:'لا يوجد بيانات مطابقة للبحث',
+
     };
     this.fileErrorPhoto=''
     this.fileError=''
   }
+  ngAfterViewInit() {
+    
+    this.currentPage=0
+    
+    this.requestToSearch = new ProductSearchModel();
+    if(this.dropdown!=null)
+    {
+       const dropdownRef = this.dropdown.nativeElement;
+      const scrollingContainerRef =  dropdownRef.querySelector('.item2') as HTMLElement;
+      scrollingContainerRef.addEventListener('scroll', this.onScroll.bind(this));
+    }
+  }
+  onScroll(event: any) {
+   
+    const element = event.target;
+    if (element.scrollTop === 0) {
+    //  this.onScrollTo(true);
+     // this.setCursorToStart(element);
+    }
+    if (element.scrollHeight - element.scrollTop - element.clientHeight <= 30) {
+      this.onScrollTo();
+    }
+  }
+  onScrollTo(): void  {
+  
+    this.requestToSearch.PeriodId=this.periodId;
+    this.requestToSearch.FactoryId=this.factoryId;
+    this.requestToSearch.PageSize=this.pageSize;
+    this.currentPage++;
+    this.requestToSearch.CurrentPage=this.currentPage;
 
-
+    this.factoryProductService
+      .getAllProductsLists(this.requestToSearch)
+      .subscribe((res: any) => {
+        this.products =[...this.products, ...res.Data];
+    });
+  }
   getAddedProduct() {
 
     this.factoryProductService
@@ -143,9 +192,16 @@ export class ProductFormComponent implements OnInit {
     this.search.FactoryId = this.factoryId;
     this.factoryPeriod.FactoryId=this.factoryId;
     this.factoryPeriod.PeriodId=this.periodId;
+
+    this.requestToSearch.PeriodId=this.periodId;
+    this.requestToSearch.FactoryId=this.factoryId;
+    this.requestToSearch.CurrentPage=this.currentPage;
+    this.requestToSearch.PageSize=this.pageSize;
+    this.requestToSearch.SearchText='';
+    
     this.factoryProductService
       //.getAllProducts()
-     .getAllProductsList(this.factoryPeriod)
+     .getAllProductsLists(this.requestToSearch)
       .subscribe((res: any) => {
          this.products = res.Data
 
@@ -333,7 +389,7 @@ export class ProductFormComponent implements OnInit {
       }
     }
   }
-  onSearch(event: Event) {
+  //onSearch(event: Event) {
     //   this.search.TxtSearch= (event.target as HTMLInputElement).value;
     // //  this.search.PageNumber=1;
     //   this.products=[];
@@ -345,6 +401,70 @@ export class ProductFormComponent implements OnInit {
     //       this.isLoading = false;
     //     });
 
+  //}
+  onSearch(event: any) {
+
+    const searchTerm = event.toLowerCase();
+
+    //const searchTerm = event.target.value;
+  
+    if (searchTerm) 
+      {
+        this.requestToSearch.PeriodId=this.periodId;
+        this.requestToSearch.FactoryId=this.factoryId;
+        this.requestToSearch.CurrentPage=this.currentPage;
+        this.requestToSearch.PageSize=this.pageSize;
+        this.requestToSearch.SearchText=searchTerm;
+        this.factoryProductService
+          .getAllProductsLists(this.requestToSearch)
+          .subscribe((res: any) => {
+          
+            if(res.Data!=null && res.Data.length>0)
+            {
+               this.products=res.Data;
+               this.currentPage=0
+            }
+            else
+            {
+        
+             // this.toastr.error("الرجاء تعديل نص البحث ، لا يوجد بيانات مطابقة"+searchTerm)
+              //const searchInput = event.target as HTMLInputElement;
+             // searchInput.value=''
+              this.currentPage=0
+              //const event2 = new Event('input', { bubbles: true });
+              //searchInput.dispatchEvent(event2); 
+              this.loadInitialproduct();
+             
+            }
+
+        });
+    } 
+    else 
+    {
+     
+      this.loadInitialproduct();
+    }
+  }
+  clearFilter()
+  {
+    this.currentPage=0;
+    this.loadInitialproduct();
+  }
+  loadInitialproduct() {
+   
+    this.requestToSearch.PeriodId=this.periodId;
+    this.requestToSearch.FactoryId=this.factoryId;
+    this.requestToSearch.CurrentPage=this.currentPage;
+    this.requestToSearch.PageSize=this.pageSize;
+    this.requestToSearch.SearchText='';
+    this.factoryProductService
+      .getAllProductsLists(this.requestToSearch)
+      .subscribe((res: any) => {
+        this.products = res.Data;
+     
+       
+    });
+  
   }
   onDropdownScroll(event: Event) {
     const target = event.target as HTMLElement;

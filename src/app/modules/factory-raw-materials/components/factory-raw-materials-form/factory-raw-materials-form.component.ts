@@ -237,7 +237,7 @@ this.getProducts();
    
     this.requestProductToSearch.PeriodId=this.periodId;
     this.requestProductToSearch.FactoryId=this.factoryId;
-    this.requestProductToSearch.CurrentPage=this.currentPageProduct;
+    this.requestProductToSearch.CurrentPage=0;
     this.requestProductToSearch.PageSize=this.pageSizeProduct;
     this.requestProductToSearch.SearchText='';
    
@@ -254,7 +254,7 @@ this.getProducts();
    
     this.requestToSearch.PeriodId=this.periodId;
     this.requestToSearch.FactoryId=this.factoryId;
-    this.requestToSearch.CurrentPage=this.currentPage;
+    this.requestToSearch.CurrentPage=0;
     this.requestToSearch.PageSize=this.pageSize;
     this.requestToSearch.SearchText='';
     this.productService
@@ -416,17 +416,10 @@ this.getProducts();
   
   ngOnInit() {
    
-    this.geeks = []; 
-  
-    for (let i = 0; i < 10000; i++) { 
-        this.geeks.push( 
-            {  
-                label: 'Item ' + i,  
-                value: 'Item ' + i  
-            } 
-        ); 
-    } 
-  
+    if( this.factoryId==null||this.periodId==null)
+      {
+        return
+      }
   /*
     this.request = new RawMaterial();
     this.request.Name="";
@@ -585,6 +578,18 @@ this.getProducts();
       this.showInput = true
     }
 
+  }
+  clearFilter()
+  {
+    this.searchName=''
+    this.currentPage=0;
+    this.loadInitialRawMaterial();
+  }
+  clearProductFilter()
+  {
+    this.searchName=''
+    this.currentPageProduct=0;
+    this.loadInitialProduct();
   }
   closePopUp() {
     this.Modal.nativeElement.click()

@@ -47,10 +47,16 @@ export class FinancialDetailFormComponent {
       this.factoryId = paramService.getfactoryId();
       this.periodId = paramService.getperiodId();
       this.approveStatus=paramService.getstatus()
-
+     
   }
   ngOnInit(): void {
-    this.ToggleDisable()
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
+   
+  //  this.ToggleDisable()
     this.getperiod()
     this.getBasicInfo()
   }
@@ -116,7 +122,7 @@ public getFilestatusType(item: any):void {
         this.toastr.success("تم حفظ البيانات المالية بنجاح");
         this.lockSaveItem=false;
 
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+        this.router.navigate(['/pages/factory-landing']);
 
       });
     }
@@ -129,7 +135,7 @@ public getFilestatusType(item: any):void {
         this.toastr.success("تم تعديل البيانات المالية بنجاح");
         this.lockSaveItem=false;
 
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+        this.router.navigate(['/pages/factory-landing']);
 
       });
     }

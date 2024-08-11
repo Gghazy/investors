@@ -37,6 +37,11 @@ lockSaveItem=false;
       this.approveStatus=paramService.getstatus()
   }
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.ToggleDisable()
     this.getFinancial()
     this.getperiod()
@@ -83,7 +88,7 @@ lockSaveItem=false;
         this.toastr.success("تم حفظ البيانات المالية بنجاح");
         this.lockSaveItem=false;
 
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+        this.router.navigate(['/pages/factory-landing']);
 
       });
     }
@@ -96,7 +101,7 @@ lockSaveItem=false;
         this.toastr.success("تم تعديل البيانات المالية بنجاح");
         this.lockSaveItem=false;
 
-        this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId+'/'+this.approveStatusText]);
+        this.router.navigate(['/pages/factory-landing']);
 
       });
     }

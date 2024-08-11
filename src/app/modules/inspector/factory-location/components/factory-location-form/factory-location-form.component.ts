@@ -58,7 +58,11 @@ inspectorApproved=false;
     this.inspectorApproved=paramService.getInspectorStatus()
   }
   ngOnInit() {
-  
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.createfactoryLocationForm();
     this.userId = this.shared.getUserId();
     this.getLocation();
