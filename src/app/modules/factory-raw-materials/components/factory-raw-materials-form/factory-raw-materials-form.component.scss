@@ -1,5 +1,12 @@
 
-:host ::ng-deep  .dropdown-list .item2{
+ ::ng-deep  .dropdown-list .item2{
   max-height: 200px !important;
   overflow-y: auto !important;
+}
+:host ::ng-deep .dropdown-list {
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+:host ::ng-deep .row {
+  overflow-y: visible !important;
 }
