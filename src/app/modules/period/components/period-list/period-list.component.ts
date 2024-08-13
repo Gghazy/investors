@@ -69,10 +69,21 @@ this.InspectorRole =this.router.url.includes('Inspector')
   }
   navigateToDetails(periodId: number,status: string) {
     let completeStatus=false;
+    let AddedStatus=false;
+    let reviewStatus=false;
+
     if(status=='3')
        completeStatus=true;
+    if(status=='2')
+      reviewStatus=true
+      if(status=='1')
+        AddedStatus=true
+
     this.paramService.setperiodId(periodId);
     this.paramService.setstatus(completeStatus);
+    this.paramService.setReviewerStatus(reviewStatus);
+   this.paramService.setAddedStatus(AddedStatus);
+
    
     if(this.router.url.includes('Investor')){
     

@@ -8,8 +8,10 @@ export class ParamService {
   private readonly factoryId = 'factoryId';
   private readonly periodId = 'periodId';
   private readonly status = 'status';
+  private readonly addedStatus = 'addedStatus';
+  private readonly reviewerStatus = 'reviewerStatus';
   private readonly InspectorStatus = 'InspectorStatus';
-
+  
 
 
   setfactoryId(factoryId: any) {
@@ -34,6 +36,28 @@ export class ParamService {
 
   getstatus(): any {
     let value= sessionStorage.getItem(this.status)?.toString().toLowerCase();
+    if(value === 'true')
+      return true
+    else
+    return false
+  }
+  setReviewerStatus(status: any) {
+    sessionStorage.setItem(this.reviewerStatus, status);
+  }
+
+  getReviewerStatus(): any {
+    let value= sessionStorage.getItem(this.reviewerStatus)?.toString().toLowerCase();
+    if(value === 'true')
+      return true
+    else
+    return false
+  }
+  setAddedStatus(status: any) {
+    sessionStorage.setItem(this.addedStatus, status);
+  }
+
+  getAddedStatus(): any {
+    let value= sessionStorage.getItem(this.addedStatus)?.toString().toLowerCase();
     if(value === 'true')
       return true
     else

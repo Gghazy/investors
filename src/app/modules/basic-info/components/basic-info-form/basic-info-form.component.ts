@@ -26,6 +26,9 @@ export class BasicInfoFormComponent implements OnInit {
   periodId: any;
   approveStatusNumber:any;
   approveStatus=false;
+  addedStatus=false;
+  reviewStatus=false;
+
   approveStatusText:any;
 
   request = new FactoryModel();
@@ -57,6 +60,8 @@ export class BasicInfoFormComponent implements OnInit {
     this.factoryId = paramService.getfactoryId();
     this.periodId = paramService.getperiodId();
     this.approveStatus=paramService.getstatus()
+    this.addedStatus=paramService.getAddedStatus()
+    this.reviewStatus=paramService.getReviewerStatus()
 
    /* this.approveStatusText=completeStatus;
     let completeStatus = this.route.snapshot.paramMap.get('isApproveStatus');
@@ -75,10 +80,12 @@ export class BasicInfoFormComponent implements OnInit {
 
   }
   createBasicInfoForm(): void {
-   
+   let addedStatus=this.approveStatus||this.addedStatus||this.reviewStatus;
+   let reviewStatus=this.approveStatus||this.reviewStatus;
+
     this.BasicInfoForm = this.formBuilder.group({
-      dataEntryId: [{value:'',disabled: this.approveStatus}, Validators.compose([Validators.required, Validators.pattern("^[1-2][0-9]{9}$")])],
-      dataReviewerId: [{value:'',disabled: this.approveStatus}, Validators.compose([Validators.required, Validators.pattern("^[1-2][0-9]{9}$")])],
+      dataEntryId: [{value:'',disabled: addedStatus}, Validators.compose([Validators.required, Validators.pattern("^[1-2][0-9]{9}$")])],
+      dataReviewerId: [{value:'',disabled:reviewStatus}, Validators.compose([Validators.required, Validators.pattern("^[1-2][0-9]{9}$")])],
       dataApproverId: [{value:'',disabled: this.approveStatus}, Validators.compose([Validators.required, Validators.pattern("^[1-2][0-9]{9}$")])],
 
     });
@@ -88,6 +95,7 @@ export class BasicInfoFormComponent implements OnInit {
       .getOne(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.request = res.Data;
+    
         console.log(this.request)
       });
   }
@@ -136,22 +144,22 @@ export class BasicInfoFormComponent implements OnInit {
     {
       this.request.DataEntry=this.BasicInfoForm.value.dataEntryId;
     }
-    else
-    this.request.DataEntry='';
+   // else
+   // this.request.DataEntry='';
 
     if (this.BasicInfoForm.value.dataReviewerId)
       {
         this.request.DataReviewer=this.BasicInfoForm.value.dataReviewerId;
       }
-      else
-      this.request.DataReviewer='';
+    //  else
+   //   this.request.DataReviewer='';
 
       if (this.BasicInfoForm.value.dataApproverId)
         {
           this.request.DataApprover=this.BasicInfoForm.value.dataApproverId;
         }
-        else
-        this.request.DataApprover='';
+        //else
+       // this.request.DataApprover='';
 
  
     this.lockSaveItem=true;
