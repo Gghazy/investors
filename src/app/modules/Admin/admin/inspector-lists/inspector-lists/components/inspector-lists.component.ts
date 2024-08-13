@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FactoryService } from 'src/app/modules/factory/factory.service';
 import { InspectorListsService } from '../inspector-lists.service';
 import { InspectorModel } from '../models/inspector-lists.model';
+import { InspectorFactory } from '../models/inspector-lists.model';
+
 import { LookUpService } from 'src/app/core/service/look-up.service';
 import { LookUpModel } from 'src/app/core/models/look-up-model';
 import { ToastrService } from 'ngx-toastr';
@@ -22,23 +24,45 @@ export class InspectorListsComponent implements OnInit {
   inspectors!: InspectorModel[];
   inspector = new InspectorModel();
   factoryEntities: LookUpModel[] = [];
-  InspectorFactories:any
+  removeFactoryList:any=[]
+  InspectorFactories:any[] = [];
     constructor(private route: ActivatedRoute,
     private factoryService: FactoryService,
     private inspectorService: InspectorListsService,
     private lookUpService: LookUpService,
+    private router: Router,
+
     private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getInspectors()
     this.getFactory()
   }
+  DeleteFactory(FactoryId: any) {
+    let index= this.InspectorFactories.findIndex(x=>x.FactoryId== FactoryId.FactoryId)
+  
+    if (index !== -1) {
+      this.InspectorFactories.splice(index, 1);
+    }
+ 
+    const index2 =  this.inspector.FactoryIds.indexOf(FactoryId.FactoryId);   
+    if (index2 !== -1) {
+   
+      this.inspector.FactoryIds.splice(index2, 1);
+    }
+  }
   addFactory(FactoryId: number) {
     console.log(FactoryId)
-    //  let factory= this.Allfactories.find(x=>x.Id== FactoryId)
-    //    this.factories.push(FactoryId)
+      let factory= this.Allfactories.find(x=>x.Id== FactoryId)
+      let fact=new InspectorFactory()
+      fact.CommerialNumber=factory.CommercialRegister;
+      fact.FactoryName=factory.NameAr;
+      fact.Id=FactoryId;
+      this.inspector.FactoryIds.push(FactoryId)
+      this.InspectorFactories.push(fact)
 
-    //    this.factoriesAssigned.push(factory)
+        //this.factoriesAssigned.push(factory)
+        this.inspector
     //   console.log(this.factories)
     //   console.log(this.factoriesAssigned)
   }
@@ -56,13 +80,17 @@ export class InspectorListsComponent implements OnInit {
       .getOne(id)
       .subscribe((res: any) => {
         this.inspector = res.Data;
+       
+        this.getInspectorFactories(this.inspector.OwnerIdentity)
+        this.getFactoryEntities()
         console.log(this.inspector)
       });
-      this.getInspectorFactories(id)
-    this.getFactoryEntities()
+      
+
   }
 
-  getInspectorFactories(id: number) {
+  getInspectorFactories(id: string) {
+   
     this.inspectorService
       .getInspectorFactories(id)
       .subscribe((res: any) => {
@@ -79,7 +107,9 @@ this.InspectorFactories = res.Data
       })
   }
   closePopUp() {
-    this.Modal.nativeElement.click()
+    const modalElement = this.Modal.nativeElement;
+    modalElement.click();
+   // this.Modal.nativeElement.click()
     this.getInspectors()
   }
   applyFilter(event: Event): void {
@@ -90,12 +120,16 @@ this.InspectorFactories = res.Data
   }
 
   Update() {
+    
     this.inspectorService
       .update(this.inspector)
       .subscribe((res: any) => {
         console.log(this.inspector)
+        this.toastr.success("تم تعديل بيانات المدقق بنجاح");
         this.closePopUp()
-        this.toastr.success("تم التعديل");
+        this.router.navigate(['/pages/Admin/inspectors-list']);
+
+
 
       });
   }

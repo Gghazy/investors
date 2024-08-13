@@ -35,10 +35,10 @@ export class InspectorFormComponent {
     this.getFactory()
   }
   addFactory(FactoryId:number){
-    console.log(FactoryId)
-   let factory= this.Allfactories.find(x=>x.Id== FactoryId)
+     console.log(FactoryId)
+     let factory= this.Allfactories.find(x=>x.Id== FactoryId)
      this.factories.push(FactoryId)
-     
+  
      this.factoriesAssigned.push(factory)
     console.log(this.factories)
     console.log(this.factoriesAssigned)
@@ -56,6 +56,7 @@ deleteFactory(i: number,Factory: any){
       .getAllFactoryEntities()
       .subscribe((res: any) => {
         this.factoryEntities = res.Data;
+     
         console.log(this.factoryEntities)
       });
   }
@@ -66,6 +67,7 @@ deleteFactory(i: number,Factory: any){
     .getAllPagination(this.search)
     .subscribe((res:any)=>{
       this.Allfactories=res.Data.Items
+     
       console.log(res)
     })
   }

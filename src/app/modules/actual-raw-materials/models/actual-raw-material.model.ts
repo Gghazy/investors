@@ -14,3 +14,7 @@ export class ActualRawMaterial {
     IncreasedUsageReason !:string;
     AverageWeightKG !:number;
 }
+export class ActualRawMaterialstatus {
+    Id !:number;
+    Valid!:boolean
+}

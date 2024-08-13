@@ -49,6 +49,7 @@
          عرض ورقة البيانات <i>؟</i></span>
         </th>
         <th> </th>
+        <th> </th>
       </ng-template>
       <ng-template #body>
         <tr *ngFor="let product of productsAdded let i=index">
@@ -100,6 +101,11 @@
               (click)="edit(product.Id,product.ProductId)">
               تعديل
             </button>
+
+          </td>
+          <td>
+            <button [disabled]="approveStatus" class="btn btn-danger"  
+                            (click)="delete(product.Id)">حذف  </button>
           </td>
         </tr>
         

@@ -73,6 +73,9 @@ export class FactoryProductService {
   create(request: ProductModel): Observable<any> {
     return this.http.post<any>('Products', request);
   }
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>('Products?id='+ id);
+  }
   update(request: ProductModel): Observable<any> {
     return this.http.put<any>('Products', request);
   }

@@ -26,7 +26,8 @@ export class InspectorListsService {
       return this.http.delete<any>('Inspectors/'+id);
     }
 
-    getInspectorFactories(id:number): Observable<any> {
-      return this.http.get<any>('Inspectors/GetInspectorFactories?id='+id);
+    getInspectorFactories(id:string): Observable<any> {
+     
+      return this.http.get<any>(`Inspectors/GetInspectorFactories?inspectorId=${id}`);
     }
 }

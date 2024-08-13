@@ -28,6 +28,7 @@ export class ProductListComponent implements OnInit {
   modalLable!: string;
   approveStatus:boolean;
   approveStatusText:any;
+  productlDeletedList:any[]=[]
   @ViewChild('closeModal') Modal!: ElementRef;
  
   constructor(
@@ -47,11 +48,13 @@ export class ProductListComponent implements OnInit {
   }
   ngOnInit(): void {
    // this.getProducts();
+   
    if( this.factoryId==null||this.periodId==null)
     {
       this.router.navigate(['error']);
       return
     }
+    
     this.getAddedProducts();
     this.getperiod()
   }
@@ -83,7 +86,14 @@ export class ProductListComponent implements OnInit {
         console.log(this.products)
       });
   }
+  delete(id: number) {
 
+    this.productlDeletedList.push(id);
+    let index= this.productsAdded.findIndex(x=>x.Id== id)
+    if (index !== -1) {
+      this.productsAdded.splice(index, 1);
+    }
+  }
   getAddedProducts() {
 
     
@@ -95,7 +105,7 @@ export class ProductListComponent implements OnInit {
       .subscribe((res: any) => {
       
         this.productsAdded = res.Data;
-      
+        this.DeleteAll();
         console.log(this.productsAdded)
       });
   }
@@ -123,7 +133,20 @@ export class ProductListComponent implements OnInit {
     this.pId = undefined;
     this.Modal.nativeElement.click()
     this.getAddedProducts();
+   
+    
   }
+  DeleteAll()
+  {
+    this.productlDeletedList.forEach((element:any) => {
+    let index= this.productsAdded.findIndex(x=>x.Id== element)
+    if (index !== -1) {
+    
+      this.productsAdded.splice(index, 1);
+    }
+  });
+  }
+  
 
   getFile(attachmentId: number) {
     if (attachmentId == null || attachmentId == 0) {
@@ -142,8 +165,32 @@ export class ProductListComponent implements OnInit {
     window.open(url);
   }
   save() {
-    this.toastr.success("تم الحفظ");
+    let length=this.productlDeletedList.length;
+    let count=0;
+    if(length>0)
+    {
+      this.productlDeletedList.forEach((element:any) => {
+       
+        this.factoryProductService
+        .delete(element)
+        .subscribe((res: any) => {
+          count++;
+          if(count==length)
+          {
+          
+            this.toastr.success("تم حفظ المنتجات بنجاح");
+            this.router.navigate(['/pages/factory-landing']);
+          }
+         
+        });
+  
+      });
+    }
+    else
+    {
+    this.toastr.success("تم حفظ المنتجات بنجاح");
     this.router.navigate(['/pages/factory-landing']);
+    }
 
   }
 }

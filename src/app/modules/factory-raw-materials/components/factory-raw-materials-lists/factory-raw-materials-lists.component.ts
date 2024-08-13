@@ -44,7 +44,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   selectedItem!: any;
   ProductName: any;
   ss: any = [];
-  data: any = [];
+  data: any []= [];
   products12: any = [];
   ProductNameList: any = [];
   products  !: ProductModel[];
@@ -56,6 +56,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   PeriodName!: string;
   year!:number;
   modalLabel!: string;
+  rawMaterialDeletedList:number[]=[]
   constructor(private rawMaterialService: FactoryRawMaterialService,
     private productService: FactoryProductService,
     private lookUpService: LookUpService,
@@ -108,18 +109,23 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     this.isClosed=false;
   }
 
-
+  deleteAll()
+  {
+    this.rawMaterialDeletedList.forEach((element:any) => {
+    let index= this.data.findIndex(x=>x.Id== element)
+    if (index !== -1) {
+    
+      this.data.splice(index, 1);
+    }
+  });
+  }
   delete(id: number) {
 
-    this.rawMaterialService
-      .delete(id)
-      .subscribe((res: any) => {
-        this.toastr.success("تم الحذف");
-        this.getRawMaterial()
-      });
-
-
-
+    this.rawMaterialDeletedList.push(id);
+    let index= this.data.findIndex(x=>x.Id== id)
+    if (index !== -1) {
+      this.data.splice(index, 1);
+    }
   }
 
 
@@ -143,6 +149,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
         if (res) {
 
           this.data = res.Data;
+          this.deleteAll();
         //  this.materialsList=res.Data.items;
        
           console.log(this.data)
@@ -235,9 +242,33 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
 
 
   save() {
-
-    this.toastr.success("تم الحفظ");
-    this.router.navigate(['/pages/factory-landing']);
+    let length=this.rawMaterialDeletedList.length;
+    let count=0;
+    if(length>0)
+    {
+      this.rawMaterialDeletedList.forEach((element:any) => {
+       
+        this.rawMaterialService
+        .delete(element)
+        .subscribe((res: any) => {
+          count++;
+          if(count==length)
+          {
+          
+            this.toastr.success("تم حفظ المواد الأولية بنجاح");
+            this.router.navigate(['/pages/factory-landing']);
+          }
+         
+        });
+  
+      });
+    }
+    else
+    {
+      this.toastr.success("تم الحفظ");
+      this.router.navigate(['/pages/factory-landing']);
+    }
+  
 
   }
 

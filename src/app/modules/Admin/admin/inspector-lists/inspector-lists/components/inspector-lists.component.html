@@ -206,7 +206,7 @@
                 <td hidden>{{item.Id}}</td>
                 <td>{{item.FactoryName}}</td>
                 <td>{{item.CommerialNumber}}</td>
-                <td><button href="" class="btn btn-danger">حذف</button></td>
+                <td><button type="button" (click)="DeleteFactory(item)"  class="btn btn-danger">حذف</button></td>
               </tr>
               
             </tbody>
@@ -215,7 +215,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="Update()"  >حفظ</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-secondary" (click)="closePopUp()" data-bs-dismiss="modal">
           اغلاق
         </button>
       </div>

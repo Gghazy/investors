@@ -10,3 +10,9 @@ export class InspectorModel {
     FactoryIds:number[]=[];
     FactoryInfo:any[]=[];
 }
+export class InspectorFactory {
+    Id!:number;
+    CommerialNumber!:string;
+    FactoryName!:string;
+   
+}

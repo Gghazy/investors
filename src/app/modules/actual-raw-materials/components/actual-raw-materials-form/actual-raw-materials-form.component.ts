@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fade } from 'src/app/shared/animation/app.animation';
 import { ActualRawMaterialsService } from '../../actual-raw-materials.service';
 import { ActualRawMaterial } from '../../models/actual-raw-material.model';
+import { ActualRawMaterialstatus } from '../../models/actual-raw-material.model';
+
 import { ToastrService } from 'ngx-toastr';
 import { BasicFileModel } from 'src/app/modules/basic-info/models/basic-file-model';
 import { RawMaterialSearch } from 'src/app/modules/factory-raw-materials/models/raw-material-search.model';
@@ -56,6 +58,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   lockUploadfile=false;
   approveStatus:boolean;
   approveStatusText:any;
+  statusList:ActualRawMaterialstatus[]=[]
   reasonList: any[] = [
     { Id: "1", Name: ' شراء معدات جديدة' },
     { Id: "2", Name: 'زيادة خطوط الإنتاج'},
@@ -194,11 +197,34 @@ selectedReason:any = { Id: "1"}
    row.CurrentStockQuantity_KG = row.CurrentStockQuantity * row.AverageWeightKG;
    row.UsedQuantity_KG = row.UsedQuantity * row.AverageWeightKG;
     if (row.UsedQuantity_KG > row.CurrentStockQuantity_KG) {
+      let index= this.statusList.findIndex(x=>x.Id== row.Id)
+  
+      if (index !== -1) {
+        this.statusList.splice(index, 1);
+      }
+      else{
+      let actRaw=new ActualRawMaterialstatus()
+      actRaw.Id=row.Id;
+      actRaw.Valid=true;
+      this.statusList.push(actRaw)
+      }
       this.showInput = true
       this.request.IncreasedUsageReason="4"
      
     } else {
-      this.showInput = false
+      let index= this.statusList.findIndex(x=>x.Id== row.Id)
+  
+      if (index !== -1) {
+        this.statusList.splice(index, 1);
+      }
+      let st=false;
+      this.statusList.forEach(element => {
+        if(element.Valid)
+        {
+          st=element.Valid;
+        }
+      });
+      this.showInput = st
     }
   }
 
