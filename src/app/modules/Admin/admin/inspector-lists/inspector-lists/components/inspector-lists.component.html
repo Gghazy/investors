@@ -2,14 +2,14 @@
   <div class="form-header">
     <h2 class="form-title">قائمة المدققين</h2>
 
-    <a href="" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#newModal">
+    <a href="" class="btn btn-default" data-bs-toggle="modal"    (click)="EditData(-1)" data-bs-target="#newModal">
       إضافة مدقق جديد</a>
   </div>
   <div class="form-body">
     <div class="mt-2">
       <div class="d-flex justify-content-end">
         <div class="col col-xl-3 col-lg-4 col-md-4">
-          <div class="input-group mb-3">
+         <!-- <div class="input-group mb-3">
             <span class="input-group-text"><svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -22,7 +22,7 @@
               </svg></span>
 
             <input matInput (keyup)="applyFilter($event)" placeholder="بحث" class="form-control" />
-          </div>
+          </div>-->
         </div>
       </div>
 
@@ -46,10 +46,13 @@
             <td *ngIf="item.Status == 0">نشط</td>
             <td *ngIf="item.Status == 1">غير نشط</td>
             <td>
-              <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#detailsModal"
-                (click)="getData(item.Id)">تفاصيل</a>
-              <a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editModal"
-                (click)="getData(item.Id)">تعديل</a>
+              <button href="#" class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#detailsModal"
+                (click)="getData(item.Id)">تفاصيل</button>
+              <!--<a href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editModal"
+                (click)="getData(item.Id)">تعديل</a>-->
+                <button href="#" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#newModal"
+                (click)="EditData(item.Id)">تعديل</button>
+                
             </td>
           </tr>
         </tbody>
@@ -228,11 +231,12 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">إضافة مدقق جديد</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  #closeModal></button>
+        <h5 class="modal-title" id="exampleModalLabel">{{modalLabel}} </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" 
+         #closeModal (click)="closePopUp()"></button>
       </div>
       <div class="modal-body">
-        <app-inspector-form  (close)="closePopUp()"></app-inspector-form>
+        <app-inspector-form  (close)="closePopUp()"  [closed]="isClosed" [inspectorId]="inspectorId"   (close)="closePopUp()"></app-inspector-form>
 
 
       </div>

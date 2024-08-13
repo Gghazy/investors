@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output,SimpleChanges, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FactoryService } from 'src/app/modules/factory/factory.service';
 import { InspectorListsService } from '../inspector-lists.service';
@@ -17,7 +17,6 @@ import { FactorySearch } from 'src/app/modules/factory/models/factory-search';
 })
 export class InspectorListsComponent implements OnInit {
 
-  @Output() close = new EventEmitter<boolean>();
   @ViewChild('closeModal') Modal!: ElementRef;
   Allfactories: any[] = [];
   search = new FactorySearch()
@@ -26,6 +25,10 @@ export class InspectorListsComponent implements OnInit {
   factoryEntities: LookUpModel[] = [];
   removeFactoryList:any=[]
   InspectorFactories:any[] = [];
+  inspectorId=-1;
+  modalLabel!: string;
+  isClosed=false;
+
     constructor(private route: ActivatedRoute,
     private factoryService: FactoryService,
     private inspectorService: InspectorListsService,
@@ -35,9 +38,11 @@ export class InspectorListsComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit() {
+  
     this.getInspectors()
     this.getFactory()
   }
+ 
   DeleteFactory(FactoryId: any) {
     let index= this.InspectorFactories.findIndex(x=>x.FactoryId== FactoryId.FactoryId)
   
@@ -62,7 +67,7 @@ export class InspectorListsComponent implements OnInit {
       this.InspectorFactories.push(fact)
 
         //this.factoriesAssigned.push(factory)
-        this.inspector
+       // this.inspector
     //   console.log(this.factories)
     //   console.log(this.factoriesAssigned)
   }
@@ -74,6 +79,17 @@ export class InspectorListsComponent implements OnInit {
       });
   }
 
+  EditData(id: number)
+  {
+    if (id == -1) {
+      this.modalLabel = 'إضافة مدقق '
+     
+    }
+    else {
+      this.modalLabel = 'تعديل  مدقق'
+    }
+    this.inspectorId=id
+  }
   getData(id: number) {
     console.log(id)
     this.inspectorService
@@ -107,9 +123,8 @@ this.InspectorFactories = res.Data
       })
   }
   closePopUp() {
-    const modalElement = this.Modal.nativeElement;
-    modalElement.click();
-   // this.Modal.nativeElement.click()
+    this.isClosed=true;
+    this.Modal.nativeElement.click()
     this.getInspectors()
   }
   applyFilter(event: Event): void {

@@ -1,37 +1,104 @@
 
+
+  <form [formGroup]="inspecterForm">
 <div class="col-md-12">
     <h3>بيانات المدقق</h3>
   </div>
   <div class="row">
     <div class="col-md-6">
       <label for="" class="form-label">الاسم</label>
-      <input type="text" class="form-control" [(ngModel)]="request.Name"  />
+      <input name="Name" 
+      formControlName="Name" 
+      type="text" class="form-control" [(ngModel)]="request.Name" />
+      <div class="text-danger" *ngIf="submitted && inspecterForm.get('Name')?.errors">
+        <div *ngIf="inspecterForm.get('Name')?.hasError('required')">الرجاء إدخال إسم المدقق  </div>
+      </div>
     </div>
     <div class="col-md-6">
       <label for="" class="form-label">رقم الهوية</label>
-      <input type="text" class="form-control" [(ngModel)]="request.OwnerIdentity" />
+      <input 
+      name="OwnerIdentity" 
+      formControlName="OwnerIdentity" 
+      (keyup)="IsNotExsistOwnerIdentity()"
+      type="text" class="form-control" [(ngModel)]="request.OwnerIdentity"  />
+      <div class="text-danger" *ngIf="submitted && inspecterForm.get('OwnerIdentity')?.errors">
+        <div *ngIf="inspecterForm.get('OwnerIdentity')?.hasError('required')">الرجاء إدخال رقم الهوية  </div>
+        <div *ngIf="inspecterForm.get('OwnerIdentity')?.hasError('pattern')">الرجاء إدخال  رقم هوية صحيح  </div>
+      </div>
+      <div class="text-danger" *ngIf="submitted && ExsistOwnerIdentity">
+        رقم هوية موجود مسبقا
+      </div>
     </div>
     <div class="col-md-6">
       <label for="" class="form-label"> البريد الإلكتروني</label>
-      <input type="email" class="form-control" [(ngModel)]="request.Email" />
+      <input 
+      name="email" 
+      formControlName="email" 
+      type="email" class="form-control" [(ngModel)]="request.Email" />
+      <div class="text-danger" *ngIf="submitted && inspecterForm.get('email')?.errors">
+        <div *ngIf="inspecterForm.get('email')?.hasError('required')">الرجاء إدخال البريد الإلكتروني</div>
+        <div *ngIf="inspecterForm.get('email')?.hasError('pattern')">الرجاء إدخال  بريد إلكتروني صحيح  </div>
+
+      </div>
     </div>
     <div class="col-md-6">
-      <label for="" class="form-label">رقم الهاتف</label>
-      <input type="text" class="form-control" [(ngModel)]="request.Phone" />
+    
+
+       <label class="form-label">  رقم الجوال  </label>
+           
+       <ngx-intl-tel-input
+       [cssClass]="'form-control'"
+       [onlyCountries]="[CountryISO.SaudiArabia]"
+       [enableAutoCountrySelect]="true"
+       [enablePlaceholder]="false"
+       [searchCountryFlag]="false"
+       [searchCountryField]="[
+         SearchCountryField.Iso2,
+         SearchCountryField.Name
+       ]"
+       [selectFirstCountry]="false"
+       [selectedCountryISO]="CountryISO.SaudiArabia"
+       [maxLength]="15"
+       [phoneValidation]="true"
+       [separateDialCode]="separateDialCode"
+       [numberFormat]="PhoneNumberFormat.National"
+       name="Phone"
+       formControlName="Phone"
+       [enablePlaceholder]="true"
+       required=""
+       
+     >
+     </ngx-intl-tel-input>
+   
+             <div class="text-danger" *ngIf="submitted && inspecterForm.get('Phone')?.errors">
+               <div *ngIf="inspecterForm.get('Phone')?.hasError('required')">الرجاء إدخال رقم الجوال  </div>
+               <div *ngIf="inspecterForm.get('Phone')?.hasError('saPhoneNumber')">الرجاء إدخال رقم جوال سعودي صالح</div>
+             </div>
+            
     </div>
     <div class="col-md-6">
       <label for="" class="form-label"> الجهة التابع لها المدقق</label>
-      <select class="form-select" #FactoryEntityId="ngModel" required 
-      name="FactoryEntityId" [(ngModel)]="request.FactoryEntityId" >
+      <select class="form-select"   
+      name="FactoryEntityId" 
+      formControlName="FactoryEntityId"
+       [(ngModel)]="request.FactoryEntityId" >
           <option *ngFor="let factoryEntity of factoryEntities" [ngValue]="factoryEntity.Id">{{factoryEntity.NameAr}} </option>
       </select>
+      <div class="text-danger" *ngIf="submitted && inspecterForm.get('FactoryEntityId')?.errors">
+        <div *ngIf="inspecterForm.get('FactoryEntityId')?.hasError('required')">الرجاء إختيار الجهة التابع لها المدقق  </div>
+      </div>
     </div>
     <div class="col-md-6">
       <label for="" class="form-label">حالة المدقق </label>
-      <select class="select" [(ngModel)]="request.Status">
+      <select class="select" [(ngModel)]="request.Status"
+      name="Status" 
+      formControlName="Status">
         <option [ngValue]="0">نشط</option>
         <option [ngValue]="1">غير نشط</option>
       </select>
+      <div class="text-danger" *ngIf="submitted && inspecterForm.get('Status')?.errors">
+        <div *ngIf="inspecterForm.get('Status')?.hasError('required')">الرجاء إختيار حالة المدقق  </div>
+      </div>
     </div>
   </div>
 
@@ -41,7 +108,10 @@
 <div class="row">
     <div class="col-md-10">
         <label for="" class="form-label">اسم المصنع</label>
-        <select class="form-select" [(ngModel)]="request.FactoryId" (scroll)="onScroll($event)">
+        <select class="form-select" 
+        name="FactoryId" 
+        formControlName="FactoryId"
+        [(ngModel)]="request.FactoryId" (scroll)="onScroll($event)">
           <option *ngFor="let factory of Allfactories" [ngValue]="factory.Id">{{factory.NameAr}} </option>
    
         </select>
@@ -68,16 +138,18 @@
     </thead>
     <tbody>
         <tr *ngFor="let factory of factoriesAssigned; let i=index">
-            <td>{{i+1}}</td>
-            <td>{{factory.NameAr}}</td>
-            <td>{{factory.CommercialRegister}}</td>
-            <td><button href="" class="btn btn-danger" (click)="deleteFactory(i,factory)">حذف</button></td>
+          <td>{{i+1}}</td>
+          <td hidden>{{factory.Id}}</td>
+          <td>{{factory.FactoryName}}</td>
+          <td>{{factory.CommerialNumber}}</td>
+            <td><button href="" class="btn btn-danger" (click)="deleteFactory(factory.FactoryId)">حذف</button></td>
         </tr>
     </tbody>
 </table> 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="save()">إضافة</button>
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+    <button type="button" class="btn btn-primary"  (click)="save()">حفظ</button>
+    <button type="button" class="btn btn-secondary"  (click)="closeModel()" data-bs-dismiss="modal">
       اغلاق
     </button>
   </div>
+</form>
