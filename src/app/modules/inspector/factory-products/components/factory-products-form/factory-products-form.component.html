@@ -33,7 +33,7 @@
                             <div data-bs-toggle="modal" data-bs-target="#photoModal">
                           
                                 <button  [disabled]="product.PhotoId<=0" class="btn btn-primary buttondisable"
-                                tooltip="  عرض صورة المنتج "
+                                tooltip="{{product.PhotoId<=0?'لا يوجد  صورة للمنتج    ':'عرض صورة المنتج    '}} "
 
                                  type="button" (click)="getImage(product.PhotoId)"
                                     data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
@@ -73,7 +73,8 @@
                            
                             <button [disabled]="product.PaperId<=0" class="btn btn-warning px-2 py-1 mx-1 buttondisable"
                              type="button" (click)="getFile(product.PaperId)"
-                             tooltip="  عرض ورقة بيانات المنتج "
+                             tooltip="{{product.PaperId<=0?'لا يوجد  ورقة بيانات للمنتج    ':'عرض ورقة بيانات المنتج    '}} "
+
                                 data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                 data-bs-original-title=" عرض الصورة الحالية للمنتج">
 
@@ -130,7 +131,8 @@
                                     accept=".png, .jpg, .jpeg"
                                      (change)="saveAttachment($event,i,'photo')" />
                                     <button  [disabled]="inspectorApproved" 
-                                    tooltip="  إرفاق صورة المنتج .png, .jpg, .jpeg"
+                                    tooltip="{{inspectorApproved?'   لا يمكن إرفاق صورة المنتج ':'إرفاق صورة المنتج .png, .jpg, .jpeg    '}} "
+
                                     class="btn btn-primary px-2 py-1 upload-btn buttondisable" (click)="fileInput2.click()"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                         data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
@@ -152,7 +154,8 @@
 
                                     <span data-bs-toggle="modal" data-bs-target="#photoModal">
                                         <button [disabled]="product.NewProductPhotoId<=0"
-                                        tooltip="  عرض صورة المنتج "
+                                        tooltip="{{product.NewProductPhotoId<=0?'لا يوجد  صورة للمنتج    ':'عرض صورة المنتج    '}} "
+
                                         class="btn btn-warning px-2 py-1 mx-1 buttondisable" type="button"
                                             data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                             data-bs-original-title=" عرض صورة  المادة"
@@ -183,7 +186,8 @@
 
                                     <button [disabled]="product.NewProductPhotoId<=0||inspectorApproved" class="btn btn-danger px-2 py-1 buttondisable" data-bs-toggle="tooltip"
                                         data-bs-placement="bottom" title=""
-                                        tooltip="  حذف صورة المنتج "
+                                        tooltip="{{product.NewProductPhotoId<=0?'لا يوجد  صورة للمنتج ':inspectorApproved?' لايمكن حذف صورة المنتج ':' حذف صورة المنتج '}}"
+
                                         data-bs-original-title=" حذف صورة المادة"
                                         (click)="deleteImage(product,i)"><i class="icon-delete"></i></button>
 
@@ -203,7 +207,8 @@
                                     accept=".pdf"
                                      (change)="saveAttachment($event,i,'paper')" />
                                         <button   [disabled]="inspectorApproved" 
-                                        tooltip="  إرفاق ورقة بيانات المنتج .pdf"
+                                        tooltip="{{inspectorApproved?'   لا يمكن إرفاق ورقة بيانات المنتج ':'إرفاق ورقة بيانات المنتج .pdf   '}} "
+
 
                                         class="btn btn-primary px-2 py-1 upload-btn buttondisable" (click)="fileInput.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" 
@@ -220,7 +225,7 @@
                                     class="btn btn-warning px-2 py-1 mx-1 buttondisable" type="button"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                         data-bs-original-title=" تحميل الملف "
-                                        tooltip="  عرض ورقة بيانات المنتج "
+                                        tooltip="{{product.NewProductPaperId<=0?'لا يوجد  ورقة بيانات للمنتج    ':'عرض ورقة بيانات المنتج    '}} "
 
                                         (click)="getFile(product.NewProductPaperId)">
 
@@ -244,7 +249,8 @@
 
                                     <button [disabled]="product.NewProductPaperId<=0 ||inspectorApproved" class="btn btn-danger px-2 py-1 buttondisable" data-bs-toggle="tooltip"
                                         data-bs-placement="bottom" title="" 
-                                        tooltip="  حذف ورقة بيانات المنتج "
+                                        tooltip="{{product.NewProductPaperId<=0?'لا يوجد  ورقة بيانات للمنتج ':inspectorApproved?' لايمكن حذف ورقة بيانات المنتج ':' حذف ورقة بيانات المنتج '}}"
+
                                         data-bs-original-title=" حذف صورة المادة"
                                         (click)="deleteFile(product,i)"><i class="icon-delete"></i></button>
 

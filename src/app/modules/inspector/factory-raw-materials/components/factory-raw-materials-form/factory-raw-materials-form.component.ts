@@ -65,6 +65,7 @@ console.log(this.materials)
 
   }
   getImage(attachmentId: number) {
+   
     this.src = ""
     console.log(attachmentId)
     if (attachmentId == 0) {

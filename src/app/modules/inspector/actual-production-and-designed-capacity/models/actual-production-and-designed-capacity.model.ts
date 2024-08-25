@@ -14,7 +14,7 @@ export class ActualProductionAndDesignedCapacityModel  {
         ActualProductionUintId!:number|undefined;
         ActualProductionUintName!:string;
         Comments !: number;
-        InspectAcuProductName!:string;
+        InspectAcutProdName!:string;
         IncreaseReasonId !: number;
         IncreaseReasonCorrect!:number;
         IncreaseReason!:string;
