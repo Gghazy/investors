@@ -12,6 +12,7 @@ import {FactoriesListModel}from '../../models/factories-list.model'
 export class FactoriesListFormComponent implements OnInit {
 factories: any=[]
 userId:any
+factoryDetialsId=0;
 factorysModel = new FactoriesListModel();
 
 InspectorFactory:any
@@ -51,7 +52,10 @@ InspectorFactory:any
 
   }
   getData(id: number) {
+  
  let x=  this.factories.find((x: any)=>x.Id == id);
+ this.factoryDetialsId=id;
+ 
  console.log(x)
   }
 }

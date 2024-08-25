@@ -20,6 +20,7 @@
         <ul class="list-review factory-lines p-0">
             <li *ngFor="let product of request let i=index">
                 <h4>المنتج رقم {{i+1}} ({{product.ProductName}})</h4>
+                <br />
 
 
                 <div class="row">
@@ -31,7 +32,10 @@
                             <input  type="text" class="form-control" [(ngModel)]="product.ProductName" disabled hidden>
                             <div data-bs-toggle="modal" data-bs-target="#photoModal">
                           
-                                <button  [disabled]="product.PhotoId<=0" class="btn btn-primary" type="button" (click)="getImage(product.PhotoId)"
+                                <button  [disabled]="product.PhotoId<=0" class="btn btn-primary buttondisable"
+                                tooltip="  عرض صورة المنتج "
+
+                                 type="button" (click)="getImage(product.PhotoId)"
                                     data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                     data-bs-original-title=" عرض الصورة الحالية للمنتج">
 
@@ -67,8 +71,9 @@
                             <input type="text" class="form-control" [(ngModel)]="product.ProductName"
                              disabled hidden>
                            
-                            <button [disabled]="product.PaperId<=0" class="btn btn-warning px-2 py-1 mx-1"
+                            <button [disabled]="product.PaperId<=0" class="btn btn-warning px-2 py-1 mx-1 buttondisable"
                              type="button" (click)="getFile(product.PaperId)"
+                             tooltip="  عرض ورقة بيانات المنتج "
                                 data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                 data-bs-original-title=" عرض الصورة الحالية للمنتج">
 
@@ -121,8 +126,12 @@
                                 </label>
                                
                                 <div class="input-group">
-                                    <input  type="file" #fileInput2 style="display: none;" (change)="saveAttachment($event,i,'photo')" />
-                                    <button  [disabled]="inspectorApproved" class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput2.click()"
+                                    <input  type="file" #fileInput2 style="display: none;"
+                                    accept=".png, .jpg, .jpeg"
+                                     (change)="saveAttachment($event,i,'photo')" />
+                                    <button  [disabled]="inspectorApproved" 
+                                    tooltip="  إرفاق صورة المنتج .png, .jpg, .jpeg"
+                                    class="btn btn-primary px-2 py-1 upload-btn buttondisable" (click)="fileInput2.click()"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                         data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
                                         <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
@@ -142,7 +151,9 @@
                                     </button>
 
                                     <span data-bs-toggle="modal" data-bs-target="#photoModal">
-                                        <button [disabled]="product.NewProductPhotoId<=0" class="btn btn-warning px-2 py-1 mx-1" type="button"
+                                        <button [disabled]="product.NewProductPhotoId<=0"
+                                        tooltip="  عرض صورة المنتج "
+                                        class="btn btn-warning px-2 py-1 mx-1 buttondisable" type="button"
                                             data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                             data-bs-original-title=" عرض صورة  المادة"
                                             (click)="getImage(product.NewProductPhotoId)">
@@ -170,8 +181,10 @@
                                         </button>
                                     </span>
 
-                                    <button [disabled]="product.NewProductPhotoId<=0||inspectorApproved" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
-                                        data-bs-placement="bottom" title="" data-bs-original-title=" حذف صورة المادة"
+                                    <button [disabled]="product.NewProductPhotoId<=0||inspectorApproved" class="btn btn-danger px-2 py-1 buttondisable" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title=""
+                                        tooltip="  حذف صورة المنتج "
+                                        data-bs-original-title=" حذف صورة المادة"
                                         (click)="deleteImage(product,i)"><i class="icon-delete"></i></button>
 
                                 </div>
@@ -186,8 +199,13 @@
                                 </label>
                                 <div class="input-group">
                                   
-                                    <input  type="file" #fileInput style="display: none;" (change)="saveAttachment($event,i,'paper')" />
-                                        <button   [disabled]="inspectorApproved" class="btn btn-primary px-2 py-1 upload-btn" (click)="fileInput.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
+                                    <input  type="file" #fileInput style="display: none;"
+                                    accept=".pdf"
+                                     (change)="saveAttachment($event,i,'paper')" />
+                                        <button   [disabled]="inspectorApproved" 
+                                        tooltip="  إرفاق ورقة بيانات المنتج .pdf"
+
+                                        class="btn btn-primary px-2 py-1 upload-btn buttondisable" (click)="fileInput.click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title=" رفع صورة للمادة" aria-describedby="tooltip468370">
                                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" 
                                             xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0">
                                             </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
@@ -199,9 +217,11 @@
                                         </button>
 
                                     <button [disabled]="product.NewProductPaperId<=0" 
-                                    class="btn btn-warning px-2 py-1 mx-1" type="button"
+                                    class="btn btn-warning px-2 py-1 mx-1 buttondisable" type="button"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                         data-bs-original-title=" تحميل الملف "
+                                        tooltip="  عرض ورقة بيانات المنتج "
+
                                         (click)="getFile(product.NewProductPaperId)">
 
                                         <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
@@ -222,8 +242,10 @@
 
                                     </button>
 
-                                    <button [disabled]="product.NewProductPaperId<=0 ||inspectorApproved" class="btn btn-danger px-2 py-1" data-bs-toggle="tooltip"
-                                        data-bs-placement="bottom" title="" data-bs-original-title=" حذف صورة المادة"
+                                    <button [disabled]="product.NewProductPaperId<=0 ||inspectorApproved" class="btn btn-danger px-2 py-1 buttondisable" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="" 
+                                        tooltip="  حذف ورقة بيانات المنتج "
+                                        data-bs-original-title=" حذف صورة المادة"
                                         (click)="deleteFile(product,i)"><i class="icon-delete"></i></button>
 
                                 </div>

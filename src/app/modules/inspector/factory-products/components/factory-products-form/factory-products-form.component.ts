@@ -96,8 +96,49 @@ export class FactoryProductsFormComponent implements OnInit {
     window.open(url);
   }
   saveAttachment(file: any, i :number,type: string) {
-console.log(type)
+  console.log(type)
     if (file.target.files.length > 0) {
+      const fileImage = file.target.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.toastr.error (' 5MB حجم الملف أكبر من');
+            console.error(' 5MB حجم الملف أكبر من');
+            
+    }
+    else {
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+       let validType=false;
+      if (type == 'photo')
+      {
+        if (!(fileType === 'image/png' || fileType === 'image/jpeg') )
+        {
+          this.toastr.error (' الرجاء رفع المستند بالصيغة jpeg , jpg , png ');
+          validType=false;
+        }
+        else
+        {
+          validType=true;
+        }
+      }
+      else
+      if (type == 'paper')
+      {
+      const validFileTypes = ['application/pdf'];
+      if (!validFileTypes.includes(fileType)) 
+      {
+        this.toastr.error (' الرجاء رفع المستند بالصيغة  pdf');
+          validType=false;
+        
+      }
+      else
+          validType=true;
+       }
+      if(validType)
+      {
+
+
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
@@ -113,6 +154,8 @@ console.log(type)
 
           this.Valid()
         });
+    }
+  }
     }
   }
 

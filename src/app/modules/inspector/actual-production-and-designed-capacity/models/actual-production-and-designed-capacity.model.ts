@@ -1,5 +1,6 @@
 export class ActualProductionAndDesignedCapacityModel  {
         Id !: number;
+
         FactoryproductId !: number;
         DesignedCapacity !: number;
         IsDesignedCapacityCorrect!:boolean;
@@ -8,8 +9,12 @@ export class ActualProductionAndDesignedCapacityModel  {
         ActualProductionWeight !: number;
         IsActualProductionCorrect!:boolean;
         CorrectActualProduction !: number;
+        DesignedCapacityUnitId!:number|undefined;
+        DesignedCapacityUnitName!:string;
+        ActualProductionUintId!:number|undefined;
+        ActualProductionUintName!:string;
         Comments !: number;
-        ProductName!:string;
+        InspectAcuProductName!:string;
         IncreaseReasonId !: number;
         IncreaseReasonCorrect!:number;
         IncreaseReason!:string;

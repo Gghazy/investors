@@ -114,6 +114,25 @@ console.log(this.materials)
   }
   savePhoto(file: any,i:number) {
     if (file.target.files.length > 0) {
+      const fileImage = file.target.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.toastr.error (' 5MB حجم الملف أكبر من');
+            console.error(' 5MB حجم الملف أكبر من');
+            
+    }
+    else {
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+      
+        if (!(fileType === 'image/png' || fileType === 'image/jpeg') )
+        {
+          this.toastr.error (' الرجاء رفع المستند بالصيغة jpeg , jpg , png  ');
+       
+        }
+        else
+        {
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
@@ -123,11 +142,32 @@ console.log(this.materials)
           console.log(this.materials)
           this.Valid()
         });
-    }
+    }}
+  }
   }
 
   saveFile(file: any,i:number) {
     if (file.target.files.length > 0) {
+      const fileImage = file.target.files[0];
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    if (fileImage.size > maxFileSize) {
+      // If the file is larger than 5 MB
+      this.toastr.error (' 5MB حجم الملف أكبر من');
+            console.error(' 5MB حجم الملف أكبر من');
+            
+    }
+    else {
+      const file1 = file.target.files[0];
+      const fileType = file1.type;
+      
+         const validFileTypes = ['application/pdf'];
+      if (!validFileTypes.includes(fileType)) 
+      {
+        this.toastr.error (' الرجاء رفع المستند بالصيغة  pdf');
+       
+        }
+        else
+        {
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
@@ -137,6 +177,8 @@ console.log(this.materials)
           this.Valid()
         });
     }
+  }
+}
   }
   NotValid()
   {

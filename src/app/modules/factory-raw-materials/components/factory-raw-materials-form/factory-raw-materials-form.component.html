@@ -162,11 +162,11 @@
 
     <div class="col-md-6">
         <label class="form-label" placement="left" title="" tooltip="شرح الحقل">إرفاق صورة المادة
-            الأولية بصيغة jpeg , jpg , png , pdf (ان وجدت)<br />
+            الأولية بصيغة jpeg , jpg , png  (ان وجدت)<br />
             <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
             </span> 
         </label>
-        <input type="file" #fileInputPhoto accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
+        <input type="file" #fileInputPhoto accept=".png, .jpg, .jpeg" class="form-control" placeholder="" value="" (change)="savePhoto($event)">
         <div *ngIf="fileErrorPhoto" class="validation-error">{{ fileErrorPhoto }}</div>
     </div>
     <div class="col-md-6">

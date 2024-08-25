@@ -2164,7 +2164,9 @@ li.short {
   cursor: not-allowed;
   opacity: 0.65;
 }
-
+.buttondisable {
+  pointer-events: auto !important;
+}
 .vsb-main .title {
   margin-right: 6px;
   user-select: none;
