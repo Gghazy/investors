@@ -174,6 +174,10 @@ export class ProductListComponent implements OnInit {
         this.factoryProductService
         .delete(element)
         .subscribe((res: any) => {
+          if(res.IsSuccess==false)
+            {
+                this.toastr.error("خطأ في عملية حذف بيانات المنتجات ")
+            }
           count++;
           if(count==length)
           {

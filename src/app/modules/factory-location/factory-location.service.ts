@@ -17,8 +17,8 @@ export class FactoryLocationService {
   createFile(request: LocationFileModel): Observable<any> {
     return this.http.post<any>('FactoryLocationAttachments', request);
   }
-  deleteFile(factoryId: number,periodId : number): Observable<any> {
-    return this.http.delete<any>(`FactoryLocationAttachments?factoryid=${factoryId}&periodId=${periodId}`);
+  deleteFile(id: number): Observable<any> {
+    return this.http.delete<any>(`FactoryLocationAttachments?id=${id}`);
   }
 
   getOne(id: number,periodId:number): Observable<any> {

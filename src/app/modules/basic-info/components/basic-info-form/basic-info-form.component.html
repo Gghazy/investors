@@ -79,11 +79,16 @@
        
         </div>
         
-        <app-basic-info-file  [factoryId]="factoryId" [periodId]="periodId" (fileStatus)="getFilestatus($event)" ></app-basic-info-file>
+        <app-basic-info-file  [factoryId]="factoryId" [periodId]="periodId"
+         (fileStatus)="getFilestatus($event)"
+          (DeletedfileIds)="DeleteFiles($event)"
+          (AddedfileIds)="AddFiles($event)"
+
+          ></app-basic-info-file>
         <div class="form-footer">
             <div class="col-12">
                 <button (click)="save()" [disabled]="approveStatus" class="btn btn-primary me-1" type="submit">حفظ</button>
-                <a [routerLink]="'/pages/factory-landing'"  class="btn btn-danger">الغاء</a>
+                <button (click)="cancel()"  class="btn btn-danger">الغاء</button>
             </div>
         </div>
     

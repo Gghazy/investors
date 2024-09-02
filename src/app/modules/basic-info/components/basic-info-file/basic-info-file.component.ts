@@ -17,6 +17,8 @@ export class BasicInfoFileComponent implements OnInit {
   selectedFirstItem: any = 0; 
 
   selectedFileForm!: FormGroup;
+  basicInfiFileDeletedList:number[]=[]
+  basicInfiFileAddedList:number[]=[]
 
   files:BasicFileModel[]=[];
   request=new BasicFileModel();
@@ -29,6 +31,9 @@ export class BasicInfoFileComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   @Output() fileStatus = new EventEmitter<any>();
+  @Output() DeletedfileIds = new EventEmitter<any>();
+  @Output() AddedfileIds = new EventEmitter<any>();
+
   constructor(
     private formBuilder: FormBuilder,
     private fileService:FileService,
@@ -52,6 +57,7 @@ export class BasicInfoFileComponent implements OnInit {
   }
   initValue(){
     this.request.Type=this.selectedFirstItem;
+    this.request.AttachmentId=0
     this.fileError = '';
    // this.approveStatus=this.approvedStatus!.toLocaleLowerCase()==="true"?true:false;
     //this.approveStatusText = this.route.snapshot.paramMap.get('isApproveStatus');
@@ -72,10 +78,20 @@ export class BasicInfoFileComponent implements OnInit {
       .getAll(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
+        this.deleteAll();
         this.fileStatus.emit(this.files.length);
       });
   }
-
+  deleteAll()
+  {
+  
+    this.basicInfiFileDeletedList.forEach((element:any) => {
+    let index= this.files.findIndex(x=>x.Id== element)
+    if (index !== -1) {
+      this.files.splice(index, 1);
+    }
+  });
+  }
   saveFile(file: any) {
   
     const input = file.target as HTMLInputElement;
@@ -103,6 +119,9 @@ export class BasicInfoFileComponent implements OnInit {
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
+          //
+         
+
          // this.toastr.success("تم حفظ الملف ");
 
         });
@@ -132,6 +151,11 @@ export class BasicInfoFileComponent implements OnInit {
         this.fileError = 'الحد الاقصى للمرفقات 10';
         return
       }
+      if(this.request.AttachmentId==0)
+      {
+       this.toastr.info ("الرجاء انتظار تحميل الملف");
+        return
+      }
     this.request.FactoryId=Number(this.factoryId);
     this.request.PeriodId=Number(this.periodId);
  
@@ -139,13 +163,24 @@ export class BasicInfoFileComponent implements OnInit {
       this.basicInfoService
       .create(this.request)
       .subscribe((res: any) => {
-        this.getFiles();
-        this.toastr.success("تم ارفاق الملف");
-        this.fileStatus.emit(this.files.length);
+        if(res.IsSuccess==false)
+        {
+          this.toastr.error("خطأ في  ارفاق الملف");
+        }
+        else
+        {
+          this.basicInfiFileAddedList.push(res.Data.Id)
+          this.AddedfileIds.emit( this.basicInfiFileAddedList);
+          this.getFiles();
+          this.toastr.success("تم ارفاق الملف");
+          this.fileStatus.emit(this.files.length);
+  
+          this.request=new BasicFileModel();
+          this.fileInput.nativeElement.value = '';
+          this.initValue();
 
-        this.request=new BasicFileModel();
-        this.fileInput.nativeElement.value = '';
-        this.initValue();
+        }
+      
   
       });
     }
@@ -154,12 +189,20 @@ export class BasicInfoFileComponent implements OnInit {
   }
 
   deleteFile(id:number){
-    
-    this.basicInfoService
+    this.basicInfiFileDeletedList.push(id);
+    this.DeletedfileIds.emit( this.basicInfiFileDeletedList);
+
+    let index= this.files.findIndex(x=>x.Id== id)
+    if (index !== -1) {
+      this.files.splice(index, 1);
+    }
+    this.fileStatus.emit(this.files.length);
+
+   /* this.basicInfoService
     .delete(id)
     .subscribe((res: any) => {
       this.getFiles();
-    });
+    });*/
   }
 
 }

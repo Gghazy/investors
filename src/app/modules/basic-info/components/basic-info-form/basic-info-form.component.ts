@@ -22,6 +22,9 @@ import {ParamService}from 'src/app/core/service/paramService'
 export class BasicInfoFormComponent implements OnInit {
   BasicInfoForm!: FormGroup;
  statusFile!:number;
+ fileDeletedList:number[]=[]
+ fileAddedList:number[]=[]
+
   factoryId: any;
   periodId: any;
   approveStatusNumber:any;
@@ -116,10 +119,88 @@ export class BasicInfoFormComponent implements OnInit {
   public getFilestatus(fileNo: any):void {
     this.statusFile=fileNo;
 }
+public DeleteFiles(fileIds: any):void {
+  this.fileDeletedList=fileIds;
+}
+public AddFiles(fileIds: any):void {
+  this.fileAddedList=fileIds;
+}
+deleteAddedFileList(){
+  let length=this.fileAddedList.length
+  let deletestat=true;
+  this.fileAddedList.forEach(element => {
+    this.basicInfoService
+    .delete(element)
+    .subscribe((res: any) => {
+      length--;
+      if(res.IsSuccess==false)
+        {
+         deletestat=false
+        }
+        if(length==0&&deletestat==false)
+          this.toastr.error("خطأ في  حذف الملف");
+      if(length==0)
+        this.router.navigate(['/pages/factory-landing']);
+
+    });
+  });
+ 
+}
+deleteFileList(){
+  let deletestat=true;
+  let length=this.fileDeletedList.length
+  this.fileDeletedList.forEach(element => {
+    this.basicInfoService
+    .delete(element)
+    .subscribe((res: any) => {
+      length--;
+      if(res.IsSuccess==false)
+        {
+         deletestat=false
+        }
+        if(length==0&&deletestat==false)
+          this.toastr.error("خطأ في  حذف الملف");
+
+      
+    });
+  });
+ 
+}/*
+AddFileList(){
+    
+      if (this.fileAddedList.length > 10){
+     //   this.fileError = 'الحد الاقصى للمرفقات 10';
+      //  return
+      }
+    this.request.FactoryId=Number(this.factoryId);
+    this.request.PeriodId=Number(this.periodId);
+    this.fileAddedList.forEach(element => {
+    this.basicInfoService
+      .create(this.request)
+      .subscribe((res: any) => {
+     
+  
+      });
+   });
+     
+    }*/
+   
+
+  
+   cancel() {
+   if(this.fileAddedList.length>0)
+    {
+      this.deleteAddedFileList();
+    }
+    else
+      this.router.navigate(['/pages/factory-landing']);
+  }
    save() {
 
     
     this.submitted = true;
+   
+    
     if (this.BasicInfoForm.invalid || this.statusFile<1) {
       if ((!this.BasicInfoForm.value.dataEntryId)||(!this.BasicInfoForm.value.dataReviewerId)||(!this.BasicInfoForm.value.dataApproverId))
         {
@@ -160,7 +241,12 @@ export class BasicInfoFormComponent implements OnInit {
         }
         //else
        // this.request.DataApprover='';
-
+      
+       if(this.fileDeletedList.length>0)
+       {
+         this.deleteFileList();
+   
+       }
  
     this.lockSaveItem=true;
     this.request.FactoryId = this.factoryId;
@@ -168,10 +254,16 @@ export class BasicInfoFormComponent implements OnInit {
      let res= this.basicInfoService
         .update(this.request)
         .subscribe((res: any) => {
-        
-          this.toastr.success("تم حفظ البيانات الأساسية بنجاح");
-          this.lockSaveItem=false;
-          this.router.navigate(['/pages/factory-landing']);
+          if(res.IsSuccess==false)
+            {
+                this.toastr.error("خطأ في عملية حفظ البيانات الأساسية")
+            }
+            else
+            {
+              this.toastr.success("تم حفظ البيانات الأساسية بنجاح");
+              this.router.navigate(['/pages/factory-landing']);
+            }
+            this.lockSaveItem=false;
         });
   }
  

@@ -84,11 +84,19 @@ lockSaveItem=false;
       this.monthlyFinancialService
       .create(this.request)
       .subscribe((res: any) => {
+        if(res.IsSuccess==false)
+          {
+              this.toastr.error("خطأ في عملية حفظ البيانات المالية")
+          }
+          else
+          {
         this.request=res.Data;
         this.toastr.success("تم حفظ البيانات المالية بنجاح");
-        this.lockSaveItem=false;
 
         this.router.navigate(['/pages/factory-landing']);
+          }
+          this.lockSaveItem=false;
+
 
       });
     }
@@ -98,10 +106,17 @@ lockSaveItem=false;
       this.monthlyFinancialService
       .update(this.request)
       .subscribe((res: any) => {
+        if(res.IsSuccess==false)
+          {
+              this.toastr.error("خطأ في عملية تعديل البيانات المالية")
+          }
+          else
+          {
         this.toastr.success("تم تعديل البيانات المالية بنجاح");
+
+        this.router.navigate(['/pages/factory-landing']);}
         this.lockSaveItem=false;
 
-        this.router.navigate(['/pages/factory-landing']);
 
       });
     }

@@ -346,14 +346,20 @@
 
 
 
-            <app-financial-file   [financialId]="request.Id" (fileStatusFin)="getFilestatus($event)" (fileStatusType)="getFilestatusType($event)"></app-financial-file>
+            <app-financial-file   [financialId]="request.Id" 
+            (fileStatusFin)="getFilestatus($event)" 
+            (fileStatusType)="getFilestatusType($event)"
+            (DeletedfileIds)="DeleteFiles($event)"
+            (AddedfileIds)="AddFiles($event)"
+            ></app-financial-file>
 
 
 
             <div class="form-footer">
                 <div class="col-12">
                     <button class="btn btn-primary me-1" [disabled]="myForm.invalid || approveStatus" type="submit">حفظ</button>
-                    <a [routerLink]="'/pages/factory-landing'" class="btn btn-danger">الغاء</a>
+                    <button type="button" (click)="cancel()" class="btn btn-danger">الغاء</button>
+
                 </div>
             </div>
         </form>

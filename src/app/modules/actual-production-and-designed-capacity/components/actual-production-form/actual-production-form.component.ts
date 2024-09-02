@@ -107,7 +107,14 @@ console.log(this.request)
       .update(this.request)
       .subscribe((res: any) => {
         this.close.emit(true);
+        if(res.IsSuccess==false)
+          {
+              this.toastr.error("خطأ في عملية تعديل كمية الإنتاج الفعلي والطاقة التصميمية")
+          }
+          else
+          {
         this.toastr.success("تم تعديل كمية الإنتاج الفعلي والطاقة التصميمية ");
+          }
         this.lockSaveItem=false
       });
     //}

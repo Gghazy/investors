@@ -363,8 +363,16 @@ export class ProductFormComponent implements OnInit {
           .create(this.request)
           .subscribe((res: any) => {
             this.close.emit(true);
+            if(res.IsSuccess==false)
+              {
+                  this.toastr.error("خطأ في عملية حفظ بيانات المنتج")
+              }
+              else
+              {
             this.toastr.success(" تم حفظ بيانات المنتج بنجاح");
-            this.lockSaveItem=false;
+              }
+              this.lockSaveItem=false;
+
            // this.request = new ProductModel();
             this.fileErrorPhoto = null
             this.fileError = null
@@ -379,7 +387,14 @@ export class ProductFormComponent implements OnInit {
           .subscribe((res: any) => {
             this.close.emit(true);
             this.lockSaveItem=false;
+            if(res.IsSuccess==false)
+              {
+                  this.toastr.error("خطأ في عملية تعديل بيانات المنتج")
+              }
+              else
+              {
             this.toastr.success("تم تعديل بيانات المنتج بنجاح");
+              }
              // this.request = new ProductModel();
             this.fileErrorPhoto = null
             this.fileError = null

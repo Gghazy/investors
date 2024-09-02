@@ -27,6 +27,8 @@ export class FinancialDetailFormComponent {
   statusFileType!:boolean;
   lockSaveItem=false;
   year!:number;
+  fileDeletedList:number[]=[]
+  fileAddedList:number[]=[]
    isDisabled!:boolean;
   factoryStatus!:number;
   request = new FinancialModel();
@@ -98,6 +100,62 @@ public getFilestatusType(item: any):void {
         console.log(this.factoryStatus)
       });
   }
+  public DeleteFiles(fileIds: any):void {
+    this.fileDeletedList=fileIds;
+  }
+  public AddFiles(fileIds: any):void {
+    this.fileAddedList=fileIds;
+  }
+  
+deleteAddedFileList(){
+  let length=this.fileAddedList.length
+  let deletestat=true;
+  this.fileAddedList.forEach(element => {
+    this.financialDetailService
+    .deleteFile(element)
+    .subscribe((res: any) => {
+      length--;
+      if(res.IsSuccess==false)
+        {
+         deletestat=false
+        }
+        if(length==0&&deletestat==false)
+          this.toastr.error("خطأ في  حذف الملف");
+      if(length==0)
+        this.router.navigate(['/pages/factory-landing']);
+
+    });
+  });
+ 
+}
+deleteFileList(){
+  let deletestat=true;
+  let length=this.fileDeletedList.length
+  this.fileDeletedList.forEach(element => {
+    this.financialDetailService
+    .deleteFile(element)
+    .subscribe((res: any) =>  {
+      length--;
+      if(res.IsSuccess==false)
+        {
+         deletestat=false
+        }
+        if(length==0&&deletestat==false)
+          this.toastr.error("خطأ في  حذف الملف");
+
+      
+    });
+  });
+ 
+}
+  cancel() {
+    if(this.fileAddedList.length>0)
+     {
+       this.deleteAddedFileList();
+     }
+     else
+       this.router.navigate(['/pages/factory-landing']);
+   }
   save(){
 
    if(!this.statusFileType)
@@ -110,19 +168,34 @@ public getFilestatusType(item: any):void {
             return
             
         }
+        if(this.fileDeletedList.length>0)
+          {
+            
+            this.deleteFileList();
+      
+          }
     this.request.FactoryId=this.factoryId;
     this.request.Year=this.year;
     this.request.TotalExpenses=this.getTotalExpenses();
+
     if (this.request.Id==0){
       this.lockSaveItem=true;
       this.financialDetailService
       .create(this.request)
       .subscribe((res: any) => {
         this.request=res.Data;
+        if(res.IsSuccess==false)
+          {
+              this.toastr.error("خطأ في عملية حفظ البيانات المالية")
+          }
+          else
+          {
         this.toastr.success("تم حفظ البيانات المالية بنجاح");
-        this.lockSaveItem=false;
 
         this.router.navigate(['/pages/factory-landing']);
+          }
+          this.lockSaveItem=false;
+
 
       });
     }
@@ -132,10 +205,18 @@ public getFilestatusType(item: any):void {
       this.financialDetailService
       .update(this.request)
       .subscribe((res: any) => {
+        if(res.IsSuccess==false)
+          {
+              this.toastr.error("خطأ في عملية تعديل البيانات المالية")
+          }
+          else
+          {
         this.toastr.success("تم تعديل البيانات المالية بنجاح");
-        this.lockSaveItem=false;
 
         this.router.navigate(['/pages/factory-landing']);
+          }
+          this.lockSaveItem=false;
+
 
       });
     }

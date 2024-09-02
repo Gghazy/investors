@@ -251,6 +251,10 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
         this.rawMaterialService
         .delete(element)
         .subscribe((res: any) => {
+          if(res.IsSuccess==false)
+            {
+                this.toastr.error("خطأ في عملية حذف بيانات المواد الخام الأولية")
+            }
           count++;
           if(count==length)
           {

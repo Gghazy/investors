@@ -830,8 +830,15 @@ this.getProducts();
             // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
             this.saveSuccessful = true;
             this.lockSaveItem=false;
+            if(res.IsSuccess==false)
+              {
+                  this.toastr.error("خطأ في عملية حفظ بيانات المواد الخام الأولية")
+              }
+              else
+              {
+                this.toastr.success("تمت إضافة مادة أولية بنجاح");
 
-            this.toastr.success("تمت إضافة مادة أولية بنجاح");
+              }
            // this.request = new RawMaterial();
           
             this.fileErrorPhoto = null
@@ -854,8 +861,15 @@ this.getProducts();
             // this.router.navigate(['/pages/factory-landing', this.factoryId, this.periodId]);
             this.saveSuccessful = true;
             this.lockSaveItem=false;
-         
-            this.toastr.success("تم تعديل مادة الأولية بنجاح");
+            if(res.IsSuccess==false)
+              {
+                  this.toastr.error("خطأ في عملية تعديل بيانات المواد الخام الأولية")
+              }
+              else
+              {
+                this.toastr.success("تم تعديل مادة الأولية بنجاح");
+
+              }
           
             this.fileErrorPhoto = null
             this.fileError = null

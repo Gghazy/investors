@@ -122,16 +122,16 @@ selectedReason:any = { Id: "1"}
     this.service
       .getAll(this.ActualRawMaterialsearch)
       .subscribe((res: any) => {
-        this.rawMaterials = res.Data.Items;
+        this.rawMaterials = res.Data;
         this.materials = res.Data;
         
         if (this.rawMaterials.length == 0) {
-          this.isNewData = true
+          this.toastr.warning("لم يتم إنشاء  المواد الأولية ")
+         /* this.isNewData = true
           this.service
             .getRawMaterial(this.search, this.factoryId)
             .subscribe((res: any) => {
-              this.rawMaterials = res.Data.Items;
-
+              this.rawMaterials = res.Data;
               this.materials = res.Data;
 
 
@@ -153,7 +153,9 @@ selectedReason:any = { Id: "1"}
                 })
               })
             });
-        }
+       */
+          }
+
 
         this.showInput = false;
         this.rawMaterials.forEach((item: any) => {
@@ -394,6 +396,10 @@ selectedReason:any = { Id: "1"}
         this.service
           .create(item)
           .subscribe((res: any) => {
+            if(res.IsSuccess==false)
+            {
+                this.toastr.error("خطأ في عملية تعديل بيانات المواد الخام الأولية")
+            }
             this.IsComplete=this.IsComplete+1;
             if(this.IsComplete==count)
               {
@@ -421,6 +427,12 @@ selectedReason:any = { Id: "1"}
         this.service
           .update(item)
           .subscribe((res: any) => {
+            if(res.IsSuccess==false)
+              {
+                  this.toastr.error("خطأ في عملية تعديل بيانات المواد الخام الأولية")
+                  this.lockSaveItem=false;
+
+              }
             this.IsComplete=this.IsComplete+1;
             if(this.IsComplete==count)
               {

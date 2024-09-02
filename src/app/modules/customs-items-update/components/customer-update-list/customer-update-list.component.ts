@@ -124,8 +124,15 @@ year!:number;
       .create(this.ProductPeriodActives)
       .subscribe((res: any) => {
         this.lockSaveItem=false
+        if(res.IsSuccess==false)
+          {
+              this.toastr.error("خطأ في عمليةتحديث البند الجمركي")
+          }
+          else
+          {
         this.toastr.success("تم تحديث البند الجمركي بنجاح");
         this.router.navigate(['/pages/factory-landing']);
+          }
 
       });
     

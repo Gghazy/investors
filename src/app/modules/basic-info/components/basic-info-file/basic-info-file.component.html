@@ -11,7 +11,7 @@
     </ul>
 </div>
 
-<form #myForm="ngForm" (ngSubmit)="save()">
+<form #myForm="ngForm" >
 
 <div class="row">
 
@@ -30,14 +30,14 @@
 </div>
 
 <div class="col-md-6">
-    <label class="form-label">رفع المستند بصيغة jpeg , jpg , png , pdf 
-        <span  class="file-size-span"> [  حجم المستند أقل من 5MB]
+    <label class="form-label">رفع المستند بصيغة jpeg, jpg, png, pdf 
+        <span  class="file-size-span"> [حجم المستند أقل من 5MB]
         </span> 
         <span class="required">*</span>   </label>
     <div class="input-group">
         <input  [disabled]="approveStatus"  type="file" #fileInput  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
        
-        <button  [disabled]="approveStatus" class="btn btn-primary" type="submit" >اضافة </button>
+        <button  [disabled]="approveStatus" class="btn btn-primary" (click)="save()" type="button" >اضافة </button>
     </div>
     <div *ngIf="fileError" class="validation-error text-center">{{ fileError }}</div>
 

@@ -38,7 +38,8 @@ export class FactoryLocationFormComponent {
   industrialAreas: LookUpModel[] = [];
   factoryEntities: LookUpModel[] = [];
   requiredRecipients: boolean | undefined;
-
+  fileDeletedList:number[]=[]
+  fileAddedList:number[]=[]
   constructor(
     private formBuilder: FormBuilder,
 
@@ -168,8 +169,64 @@ const combinedPattern = `${pattern1}|${pattern2}`;
   public getFilestatus(item: any):void {
     this.statusFileLoc=item;
 }
+public DeleteFiles(fileIds: any):void {
+  this.fileDeletedList=fileIds;
+}
+public AddFiles(fileIds: any):void {
+  this.fileAddedList=fileIds;
+}
+
+deleteAddedFileList(){
+  let length=this.fileAddedList.length
+  let deletestat=true;
+  this.fileAddedList.forEach(element => {
+    this.factoryLocationService
+      .deleteFile(element)
+      .subscribe((res: any) => {
+      length--;
+      if(res.IsSuccess==false)
+        {
+         deletestat=false
+        }
+        if(length==0&&deletestat==false)
+          this.toastr.error("خطأ في  حذف الملف");
+      if(length==0)
+        this.router.navigate(['/pages/factory-landing']);
+
+    });
+  });
+ 
+}
+deleteFileList(){
+  let deletestat=true;
+  let length=this.fileDeletedList.length
+  this.fileDeletedList.forEach(element => {
+    this.factoryLocationService
+    .deleteFile(element)
+    .subscribe((res: any) => {
+      length--;
+      if(res.IsSuccess==false)
+        {
+         deletestat=false
+        }
+        if(length==0&&deletestat==false)
+          this.toastr.error("خطأ في  حذف الملف");
+
+      
+    });
+  });
+ 
+}
+cancel() {
+  if(this.fileAddedList.length>0)
+   {
+     this.deleteAddedFileList();
+   }
+   else
+     this.router.navigate(['/pages/factory-landing']);
+ }
   save() {
-   
+    
     this.submitted = true;
     if (this.factoryLocForm.invalid) {
       this.toastr.error( 'رجاءا تاكد من صحة جميع الحقول المرسلة');
@@ -186,6 +243,12 @@ const combinedPattern = `${pattern1}|${pattern2}`;
             
         }
     debugger
+    if(this.fileDeletedList.length>0)
+      {
+        
+        this.deleteFileList();
+  
+      }
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     if (this.request.Id == 0) {
@@ -193,12 +256,18 @@ const combinedPattern = `${pattern1}|${pattern2}`;
       this.factoryLocationService
         .create(this.request)
         .subscribe((res: any) => {
+          if(res.IsSuccess==false)
+            {
+                this.toastr.error("خطأ في عملية حفظ موقع المصنع")
+            }
+            else
+            {
           this.toastr.success("تم حفظ موقع المصنع بنجاح");
-          this.lockSaveItem=false;
           this.getLocation();
           this.router.navigate(['/pages/factory-landing']);
+            }
+            this.lockSaveItem=false;
 
-        
         });
     }
     else {
@@ -206,9 +275,16 @@ const combinedPattern = `${pattern1}|${pattern2}`;
       this.factoryLocationService
         .update(this.request)
         .subscribe((res: any) => {
+          if(res.IsSuccess==false)
+            {
+                this.toastr.error("خطأ في عملية تعديل موقع المصنع")
+            }
+            else
+            {
           this.toastr.success("تم تعديل موقع المصنع بنجاح");
-          this.lockSaveItem=false;
           this.router.navigate(['/pages/factory-landing']);
+            }
+            this.lockSaveItem=false;
 
         });
     }

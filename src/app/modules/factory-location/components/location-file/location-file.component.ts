@@ -13,6 +13,10 @@ import {ParamService}from 'src/app/core/service/paramService'
 })
 export class LocationFileComponent implements OnInit {
   selectedFirstItem: any = 1; 
+  basicInfiFileDeletedList:number[]=[]
+  basicInfiFileAddedList:number[]=[]
+  @Output() DeletedfileIds = new EventEmitter<any>();
+  @Output() AddedfileIds = new EventEmitter<any>();
   fileSizeError = false;
 
   factoryId: any;
@@ -63,11 +67,21 @@ export class LocationFileComponent implements OnInit {
       .getAllFiles(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
+        this.deleteAll();
         this.fileStatusLoc.emit(this.files.length);
 
       });
   }
+  deleteAll()
+  {
   
+    this.basicInfiFileDeletedList.forEach((element:any) => {
+    let index= this.files.findIndex(x=>x.Id== element)
+    if (index !== -1) {
+      this.files.splice(index, 1);
+    }
+  });
+  }
     
   saveFile(file: any) {
     const input = file.target as HTMLInputElement;
@@ -134,23 +148,40 @@ export class LocationFileComponent implements OnInit {
     this.factoryLocationService
       .createFile(this.request)
       .subscribe((res: any) => {
+        if(res.IsSuccess==false)
+          {
+            this.toastr.error("خطأ في  ارفاق الملف");
+          }
+          else
+          {
+            this.basicInfiFileAddedList.push(res.Data.Id)
+            this.AddedfileIds.emit( this.basicInfiFileAddedList);
         this.getFiles();
         this.toastr.success("تم الحفظ");
         this.request = new LocationFileModel();
         this.fileInputLoc.nativeElement.value = '';
         this.initValue();
-
+          }
 
       });
     }
   }
 
   deleteFile(id: number){
-    this.factoryLocationService
-      .deleteFile(this.factoryId,this.periodId)
+    this.basicInfiFileDeletedList.push(id);
+    this.DeletedfileIds.emit( this.basicInfiFileDeletedList);
+
+    let index= this.files.findIndex(x=>x.Id== id)
+    if (index !== -1) {
+      this.files.splice(index, 1);
+    }
+    this.fileStatusLoc.emit(this.files.length);
+
+   /*this.factoryLocationService
+      .deleteFile(id)
       .subscribe((res: any) => {
         this.getFiles();
         this.toastr.success("تم الحذف");
-      });
+      });*/
   }
 }

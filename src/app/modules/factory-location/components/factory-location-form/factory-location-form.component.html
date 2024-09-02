@@ -20,7 +20,7 @@
             في حال كان المصنع خارج نطاق اي منطقة صناعية ، يتم تحديد خيار (أخرى) في كل من قائمة الجهة التي يتبع لها المصنع 
             وقائمة المدينة ومن ثم اختيار خيار (خارج نطاق المدن الصناعية ) من قائمة المنطقة الصناعية.    
             </div>
-            <form [formGroup]="factoryLocForm" (ngSubmit)="save()">
+            <form [formGroup]="factoryLocForm" >
                 
                 
                 <div class="row">
@@ -86,14 +86,18 @@
 
         </div>
 
-        <app-location-file   [factoryLocationId]="request.Id" (fileStatusLoc)="getFilestatus($event)"></app-location-file>
+        <app-location-file   [factoryLocationId]="request.Id"
+         (fileStatusLoc)="getFilestatus($event)"
+         (DeletedfileIds)="DeleteFiles($event)"
+         (AddedfileIds)="AddFiles($event)"
+         ></app-location-file>
 
     
     <div class="form-footer">
         <div class="col-12">
-            <button class="btn btn-primary me-1"[disabled]="approveStatus"  type="submit">حفظ</button>
+            <button class="btn btn-primary me-1"[disabled]="approveStatus" (click)="save()"  type="button">حفظ</button>
 
-            <a [routerLink]="'/pages/factory-landing'" class="btn btn-danger">الغاء</a>
+            <button type="button" (click)="cancel()" class="btn btn-danger">الغاء</button>
         </div>
     </div>
 </form>

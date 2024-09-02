@@ -22,7 +22,10 @@ export class FinancialFileComponent implements OnInit {
   src!:string;
   isDisabled:boolean=false;
   approveStatus!:boolean;
-
+  basicInfiFileDeletedList:number[]=[]
+  basicInfiFileAddedList:number[]=[]
+  @Output() DeletedfileIds = new EventEmitter<any>();
+  @Output() AddedfileIds = new EventEmitter<any>();
   @Input() financialId!:number;
   @ViewChild('fileInput') fileInput!: ElementRef;
   @Output() fileStatusFin = new EventEmitter<any>();
@@ -75,6 +78,7 @@ export class FinancialFileComponent implements OnInit {
       .getAllFiles(this.factoryId,this.periodId)
       .subscribe((res: any) => {
         this.files = res.Data;
+        this.deleteAll();
         this.fileStatusFin.emit(this.files.length);
         let type1=false;
         let type2=false;
@@ -100,7 +104,16 @@ export class FinancialFileComponent implements OnInit {
 
       });
   }
-
+  deleteAll()
+  {
+  
+    this.basicInfiFileDeletedList.forEach((element:any) => {
+    let index= this.files.findIndex(x=>x.Id== element)
+    if (index !== -1) {
+      this.files.splice(index, 1);
+    }
+  });
+  }
   saveFile(file: any) {
     if (file.target.files.length > 0) {
     
@@ -150,21 +163,56 @@ export class FinancialFileComponent implements OnInit {
     this.financialDetailService
     .createFile(this.request)
     .subscribe((res: any) => {
+      if(res.IsSuccess==false)
+        {
+          this.toastr.error("خطأ في  ارفاق الملف");
+        }
+        else
+        {
+          this.basicInfiFileAddedList.push(res.Data.Id)
+          this.AddedfileIds.emit( this.basicInfiFileAddedList);
       this.getFiles();
       this.fileStatusFin.emit(this.files.length);
       this.toastr.success("تم ارفاق الملف للبيانات المالية");
       this.request=new FinancialFileModel();
       this.fileInput.nativeElement.value = '';
-
+        }
     });
  }
   }
 
   deleteFile(id:number){
-    this.financialDetailService
+    this.basicInfiFileDeletedList.push(id);
+    this.DeletedfileIds.emit( this.basicInfiFileDeletedList);
+
+    let index= this.files.findIndex(x=>x.Id== id)
+    if (index !== -1) {
+      this.files.splice(index, 1);
+    }
+    let type1=false;
+    let type2=false;
+    this.files.forEach(element => {
+      if(element.Type=='zakat')
+        {
+         type1=true
+        }
+      if(element.Type=='FinancialStatement')
+        {
+          type2=true
+
+        }
+
+
+     });
+     if(type1&&type2)
+      this.fileStatusType.emit(true);
+    else
+    this.fileStatusType.emit(false);
+
+  /*  this.financialDetailService
     .deleteFile(id)
     .subscribe((res: any) => {
       this.getFiles();
-    });
+    });*/
   }
 }

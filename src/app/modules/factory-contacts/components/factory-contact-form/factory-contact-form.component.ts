@@ -176,10 +176,18 @@ createContactForm(): void {
       this.factoryContactService
         .create(this.request)
         .subscribe((res: any) => {
-          this.request = res.Data;
           this.lockSaveItem=false;
+          if(res.IsSuccess==false)
+            {
+                this.toastr.error("خطأ في عملية حفظ بيانات جهة الإتصال")
+            }
+            else
+            {
+              this.request = res.Data;
+
           this.toastr.success("تم حفظ بيانات جهة الإتصال بنجاح");
           this.router.navigate(['/pages/factory-landing']);
+            }
 
         });
     }
@@ -192,9 +200,17 @@ createContactForm(): void {
       this.factoryContactService
         .update(this.request)
         .subscribe((res: any) => {
+          if(res.IsSuccess==false)
+            {
+                this.toastr.error("خطأ في عملية تعديل بيانات جهة الإتصال")
+            }
+            else
+            {
           this.toastr.success("تم تعديل بيانات جهة الإتصال بنجاح");
-          this.lockSaveItem=false
           this.router.navigate(['/pages/factory-landing']);
+            }
+            this.lockSaveItem=false
+
 
         });
     }
