@@ -6,7 +6,7 @@ import { ErrorPageComponent } from './auth/login/errorComponent/errorPage.compon
 
 const routes: Routes = [
   
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'pages', pathMatch: 'full' },
   {
     path: 'pages',
     loadChildren: () =>
