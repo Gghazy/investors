@@ -18,7 +18,6 @@ import { ProductSearch } from 'src/app/modules/customs-items-update/models/produ
 import { SearchCriteria } from 'src/app/core/models/search-criteria';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {ParamService}from 'src/app/core/service/paramService'
-import { SelectItem, PrimeNGConfig } from "primeng/api"; 
 
 
 @Component({
@@ -43,7 +42,6 @@ export class FactoryRawMaterialsFormComponent implements OnInit ,AfterViewInit{
   products12  !: ProductModel[];
   products12All  !: ProductModel[];
   selectProductId!: any;
-  geeks!: SelectItem[]; 
   
   showInput: boolean = false
   units!: LookUpModel[];

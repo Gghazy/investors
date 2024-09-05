@@ -410,7 +410,7 @@ selectedReason:any = { Id: "1"}
               }
           });
       })
-      
+
       
         this.request = new ActualRawMaterial();
     }
@@ -422,7 +422,9 @@ selectedReason:any = { Id: "1"}
       this.x.forEach((item: any) => {
         item.IncreasedUsageReason = this.request.IncreasedUsageReason;
         if(item.AverageWeightKG==0)
+        {
           count--;
+        }
         else
         this.service
           .update(item)
@@ -443,8 +445,17 @@ selectedReason:any = { Id: "1"}
               }
 
           });
+
       })
-    
+      if(this.lockSaveItem&& count==0)
+      {
+        this.toastr.success(" تم حفظ المواد الخام الأولية بنجاح");
+        this.router.navigate(['/pages/factory-landing']);
+
+      }
+
+      
+
       this.request = new ActualRawMaterial();
     }
   }

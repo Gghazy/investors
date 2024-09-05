@@ -8,6 +8,9 @@ import { FileService } from 'src/app/core/service/file.service';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodService } from 'src/app/modules/period/period.service';
 import {ParamService}from 'src/app/core/service/paramService'
+import { ProductDeletesIds } from '../../models/productDeletesIds';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-product-list',
@@ -37,6 +40,8 @@ export class ProductListComponent implements OnInit {
 
     private factoryProductService: FactoryProductService,
     private fileService: FileService,
+    private spinner: NgxSpinnerService,
+
     private toastr: ToastrService,
     private periodService: PeriodService,
     private paramService: ParamService,
@@ -164,31 +169,40 @@ export class ProductListComponent implements OnInit {
     const url = window.URL.createObjectURL(blob);
     window.open(url);
   }
+  showSpinner() {
+    this.spinner.show("productsDelete");
+  }
+
+  hideSpinner() {
+    this.spinner.hide("productsDelete");
+  }
   save() {
     let length=this.productlDeletedList.length;
     let count=0;
+
     if(length>0)
     {
-      this.productlDeletedList.forEach((element:any) => {
-       
+        let IdsList=new ProductDeletesIds();
+        IdsList.ids=this.productlDeletedList
+        this.showSpinner()
         this.factoryProductService
-        .delete(element)
+        .delete(IdsList)
         .subscribe((res: any) => {
+          this.hideSpinner()  
           if(res.IsSuccess==false)
             {
                 this.toastr.error("خطأ في عملية حذف بيانات المنتجات ")
             }
-          count++;
-          if(count==length)
-          {
-          
+            else
+            {
             this.toastr.success("تم حفظ المنتجات بنجاح");
             this.router.navigate(['/pages/factory-landing']);
-          }
-         
+            }
+        
+                   
         });
   
-      });
+     
     }
     else
     {

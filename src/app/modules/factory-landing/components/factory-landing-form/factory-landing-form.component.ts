@@ -68,6 +68,11 @@ export class FactoryLandingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if( this.factoryId==null||this.periodId==null)
+      {
+        this.router.navigate(['error']);
+        return
+      }
     this.getBasicInfo()
     this.getPeriod()
     this.getScreenStatus()
@@ -182,25 +187,43 @@ export class FactoryLandingFormComponent implements OnInit {
         this.allScreenStatus =
           this.screenStatuse.BasicFactoryInfo &&
           this.screenStatuse.FinancialData &&
+          this.screenStatuse.MonthlyFinancialData &&
           this.screenStatuse.FactoryLocation &&
           this.screenStatuse.FactoryContact
-      }
+      }else
       if (this.sharedService.factoryStatus == 0 || this.sharedService.factoryStatus == 2) {
         this.allScreenStatus =
           this.screenStatuse.ProductData &&
           this.screenStatuse.BasicFactoryInfo &&
           this.screenStatuse.FinancialData &&
+          this.screenStatuse.MonthlyFinancialData &&
           this.screenStatuse.FactoryLocation &&
           this.screenStatuse.FactoryContact &&
           this.screenStatuse.CustomItemsUpdated &&
           //this.screenStatuse.CustomItemValidity&&
-          this.screenStatuse.ActualProduction
+          this.screenStatuse.ActualProduction &&
         this.screenStatuse.RawMaterial &&
           this.screenStatuse.ActualRawMaterila
+      }else
+      if (this.sharedService.factoryStatus == 3) {
+        this.allScreenStatus =
+          this.screenStatuse.ProductData &&
+          this.screenStatuse.BasicFactoryInfo &&
+          this.screenStatuse.FinancialData &&
+          this.screenStatuse.MonthlyFinancialData &&
+          this.screenStatuse.FactoryLocation &&
+          this.screenStatuse.FactoryContact &&
+          this.screenStatuse.CustomItemsUpdated &&
+          //this.screenStatuse.CustomItemValidity&&
+          this.screenStatuse.ActualProduction &&
+          this.screenStatuse.RawMaterial 
       }
+      else
       if (this.sharedService.factoryStatus == 4) {
         this.allScreenStatus =
-          this.screenStatuse.FinancialData
+          this.screenStatuse.FinancialData &&
+          this.screenStatuse.MonthlyFinancialData 
+
       }
 
     }
@@ -211,7 +234,7 @@ export class FactoryLandingFormComponent implements OnInit {
           this.screenStatuse.MonthlyFinancialData &&
           this.screenStatuse.FactoryLocation &&
           this.screenStatuse.FactoryContact
-      }
+      }else
       if (this.sharedService.factoryStatus == 0 || this.sharedService.factoryStatus == 2) {
         this.allScreenStatus =
           this.screenStatuse.ProductData &&
@@ -221,10 +244,23 @@ export class FactoryLandingFormComponent implements OnInit {
           this.screenStatuse.FactoryContact &&
           this.screenStatuse.CustomItemsUpdated &&
           //this.screenStatuse.CustomItemValidity&&
-          this.screenStatuse.ActualProduction
-        this.screenStatuse.RawMaterial &&
+          this.screenStatuse.ActualProduction &&
+          this.screenStatuse.RawMaterial &&
           this.screenStatuse.ActualRawMaterila
+      }else
+      if (this.sharedService.factoryStatus == 3) {
+        this.allScreenStatus =
+          this.screenStatuse.ProductData &&
+          this.screenStatuse.BasicFactoryInfo &&
+          this.screenStatuse.MonthlyFinancialData &&
+          this.screenStatuse.FactoryLocation &&
+          this.screenStatuse.FactoryContact &&
+          this.screenStatuse.CustomItemsUpdated &&
+          //this.screenStatuse.CustomItemValidity&&
+          this.screenStatuse.ActualProduction &&
+          this.screenStatuse.RawMaterial 
       }
+    else
       if (this.sharedService.factoryStatus == 4) {
         this.allScreenStatus =
           this.screenStatuse.MonthlyFinancialData

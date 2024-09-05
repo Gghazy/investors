@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RawMaterial } from './models/raw-material.model';
 import { RawMaterialSearch } from './models/raw-material-search.model';
+import { DeletesIds } from './models/raw-material.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,8 @@ export class FactoryRawMaterialService {
   create(material: RawMaterial): Observable<any> {
     return this.http.post<any>('RawMaterials', material);
   }
-  delete(id: number): Observable<any> {
-    return this.http.delete<any>('RawMaterials?id='+ id);
+  delete(idList: DeletesIds): Observable<any> {
+    return this.http.put<any>('RawMaterials/deleteList',idList);
   }
 
 //AttachmentService

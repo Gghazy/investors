@@ -33,3 +33,7 @@ export class ProductSearchModel
       SearchText!:string;
 
 }
+export class DeletesIds {
+      ids:number[]=[]
+
+}

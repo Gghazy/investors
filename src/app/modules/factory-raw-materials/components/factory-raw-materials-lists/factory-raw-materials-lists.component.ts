@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FactoryRawMaterialService } from '../../factory-raw-material.service';
 import { ResultResponse } from 'src/app/core/models/result-response';
 import { RawMaterial } from '../../models/raw-material.model';
+import { DeletesIds } from '../../models/raw-material.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 import { FactoryProductService } from 'src/app/modules/factory-products/factory-product.service';
 import { ProductModel } from 'src/app/modules/customs-items-update/models/product-model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -33,7 +36,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   materialCount!: number;
   materials = new ResultResponse<RawMaterial>();
   materialsList:RawMaterial[]=[];
-
+  openSpinner=false;
   rawMaterials: any = [];
   approveStatus:boolean;
   approveStatusText:any;
@@ -64,7 +67,9 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-    private paramService: ParamService,
+    private paramService: ParamService,   
+     private spinner: NgxSpinnerService,
+
     private periodService: PeriodService) 
     {
       this.factoryId = paramService.getfactoryId();
@@ -84,6 +89,7 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
     // this.getProducts()
     // this.getUnits();
      this.getperiod()
+     this.openSpinner=false
   }
 
 
@@ -244,9 +250,31 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
   save() {
     let length=this.rawMaterialDeletedList.length;
     let count=0;
+    
     if(length>0)
-    {
-      this.rawMaterialDeletedList.forEach((element:any) => {
+    {this.spinner.show("rawMatDelete");
+      this.openSpinner=true
+      let IdsList=new DeletesIds();
+      IdsList.ids=this.rawMaterialDeletedList
+      this.rawMaterialService
+        .delete(IdsList)
+        .subscribe((res: any) => {
+          this.spinner.hide("rawMatDelete");
+          if(res.IsSuccess==false)
+            {
+                this.toastr.error("خطأ في عملية حذف بيانات المواد الخام الأولية")
+            } 
+            else
+            {
+              this.toastr.success("تم تعديل المواد الخام");
+              this.router.navigate(['/pages/factory-landing']);
+            }
+            this.openSpinner=false
+          
+        });
+  
+      
+      /*this.rawMaterialDeletedList.forEach((element:any) => {
        
         this.rawMaterialService
         .delete(element)
@@ -265,11 +293,11 @@ export class FactoryRawMaterialsListsComponent implements OnInit {
          
         });
   
-      });
+      });*/
     }
     else
     {
-      this.toastr.success("تم الحفظ");
+      this.toastr.success("تم تعديل المواد الخام");
       this.router.navigate(['/pages/factory-landing']);
     }
   

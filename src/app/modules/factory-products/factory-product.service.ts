@@ -4,6 +4,7 @@ import { ProductSearch } from '../customs-items-update/models/product-search';
 import { Observable } from 'rxjs';
 import { ProductModel } from '../customs-items-update/models/product-model';
 import { NewProductModel } from '../customs-items-update/models/product-model';
+import { ProductDeletesIds } from './models/productDeletesIds';
 
 import { ProductsNotInFactorySearch } from './models/products-not-in-factory-search';
 import { SearchCriteria } from 'src/app/core/models/search-criteria';
@@ -73,8 +74,8 @@ export class FactoryProductService {
   create(request: ProductModel): Observable<any> {
     return this.http.post<any>('Products', request);
   }
-  delete(id: number): Observable<any> {
-    return this.http.delete<any>('Products?id='+ id);
+  delete(idList: ProductDeletesIds): Observable<any> {
+    return this.http.put<any>('Products/deleteProductList',idList);
   }
   update(request: ProductModel): Observable<any> {
     return this.http.put<any>('Products', request);

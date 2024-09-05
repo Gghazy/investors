@@ -210,11 +210,14 @@
         </div> -->
 
         <div class="form-footer">
+           
             <div class="col-12">
                 <button [disabled]="approveStatus" class="btn btn-primary me-1" type="submit" (click)="save()">حفظ</button>
                 <a [routerLink]="'/pages/factory-landing'"  class="btn btn-danger">الغاء</a>
             </div>
         </div>
+       
+      
     </div>
 
     <!-- Modal photos-->
@@ -252,5 +255,13 @@
         </div>
     </div>
 
-   
+    <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+    [fullScreen]="true"
+    name="rawMatDelete">
+    <p style="color: white" >  جاري حفط التعديلات  </p>
+    </ngx-spinner>   
 </section>
