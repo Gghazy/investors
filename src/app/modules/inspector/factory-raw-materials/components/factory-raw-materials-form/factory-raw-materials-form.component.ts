@@ -9,6 +9,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 import { PeriodService } from 'src/app/modules/period/period.service';
 import {ParamService}from 'src/app/core/service/paramService'
 
+import { FactoryRawMaterialsModel } from '../../models/factory-raw-materials.model';
 
 @Component({
   selector: 'app-factory-raw-materials-form',
@@ -19,6 +20,7 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
   userId: any;
+  factoryStatus:any;
   src!: any;
   materials: any[] = []
   searchRawmaterial = new RawMaterialSearch();
@@ -43,6 +45,8 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
     this.factoryId = paramService.getfactoryId();
     this.periodId = paramService.getperiodId();
     this.inspectorApproved=paramService.getInspectorStatus()
+    this.factoryStatus=this.paramService.getInspectorfactoryStatus()
+
   }
   ngOnInit() {
     if( this.factoryId==null||this.periodId==null)
@@ -60,6 +64,23 @@ export class FactoryRawMaterialsFormComponent implements OnInit {
       .subscribe((res: any) => {
 
         this.materials = res.Data;
+         let newrawMat=new FactoryRawMaterialsModel();
+      
+
+        if(this.factoryStatus==4 ||this.factoryStatus==1)
+       {
+      
+        newrawMat.FactoryId=this.factoryId;
+        
+        newrawMat.periodId=this.periodId;
+      
+        newrawMat.Id=this.materials.length==0?0:this.materials[0].Id
+        if(this.materials.length==0)
+        this.materials.push(newrawMat);
+       
+      }  
+    
+
 console.log(this.materials)
       })
 
@@ -197,8 +218,10 @@ console.log(this.materials)
       }
 
     let count=this.materials.length
+    
     this.materials.forEach(element => {
       console.log(element)
+      
 
        element.Comment=  this.materials[0].Comment 
        if(element.IsImageClear)
@@ -206,7 +229,6 @@ console.log(this.materials)
           element.CorrectPaperId=0
           element.CorrectPhotoId=0
         }
-
       if (element.Id == 0) {
         this.service
           .create(element)

@@ -21,6 +21,7 @@ import {ParamService}from 'src/app/core/service/paramService'
 })
 export class ActualProductionAndDesignedCapacityFormComponent {
   factoryId:any;
+  factoryStatus:any;
   periodId:any;
   userId: any;
   products:ActualProductionAndDesignedCapacityModel[]= [];
@@ -49,6 +50,8 @@ export class ActualProductionAndDesignedCapacityFormComponent {
    this.factoryId = paramService.getfactoryId();
     this.periodId = paramService.getperiodId();
     this.inspectorApproved=paramService.getInspectorStatus()
+    this.factoryStatus=this.paramService.getInspectorfactoryStatus()
+
   }
   ngOnInit(): void {
     if( this.factoryId==null||this.periodId==null)
@@ -67,8 +70,25 @@ export class ActualProductionAndDesignedCapacityFormComponent {
     .getProducts(this.factoryId, this.periodId,this.userId)
     .subscribe((res: any) => {
       this.products = res.Data;
+      let newProduct= new ActualProductionAndDesignedCapacityModel () 
+      
+      if(this.factoryStatus==4 ||this.factoryStatus==1)
+     {
+   
+
+      newProduct.Id=this.products.length==0?0:this.products[0].Id;
+      newProduct.Comments='';
+      newProduct.InspectAcutProdName='';
+      if(this.products.length==0)
+      this.products.push(newProduct);
+
+    }
+    else
+    {
       this.getOne()
       this.getAllReasons()
+    }
+       
       console.log(this.products)
     });
   }
@@ -145,6 +165,9 @@ export class ActualProductionAndDesignedCapacityFormComponent {
     console.log(this.request)
     let count=this.products.length;
     this.products.forEach(element => {
+      element.FactoryId=this.factoryId
+      element.PeriodId=this.periodId
+
       if(element.IsDesignedCapacityCorrect)
         {
           element.CorrectDesignedCapacity=0
@@ -159,11 +182,16 @@ export class ActualProductionAndDesignedCapacityFormComponent {
 
       if(element.Id ==0){
         console.log(element)
+        if(this.factoryStatus!=4&&this.factoryStatus!=1){
         element.Comments = this.products[0].Comments
         element.IncreaseReason = this.products[0].IncreaseReason
         element.IncreaseReasonCorrect = this.products[0].IncreaseReasonCorrect
         element.IncreaseReasonId = this.products[0].IncreaseReasonId
         element.IsIncreaseReasonCorrect= this.products[0].IsIncreaseReasonCorrect
+        }
+        else
+        element.Comments = this.products[0].Comments
+
         this.FormService
         .create(element)
         .subscribe((res: any) => {

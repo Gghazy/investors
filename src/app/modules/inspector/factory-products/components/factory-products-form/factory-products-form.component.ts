@@ -27,6 +27,7 @@ export class FactoryProductsFormComponent implements OnInit {
   request:FactoryProductsModel [] = []
   PeriodName!:string
   validProductList=true;
+  factoryStatus:any;
   inspectorApproved=false;
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +44,8 @@ export class FactoryProductsFormComponent implements OnInit {
       this.factoryId = paramService.getfactoryId();
       this.periodId = paramService.getperiodId();
       this.inspectorApproved=paramService.getInspectorStatus()
+      this.factoryStatus=this.paramService.getInspectorfactoryStatus()
+
   }
   ngOnInit() {
     if( this.factoryId==null||this.periodId==null)
@@ -53,6 +56,7 @@ export class FactoryProductsFormComponent implements OnInit {
     this.userId = this.shared.getUserId();
     this.getProducts()
     this.getperiod()
+   
   }
   getProducts() {
     
@@ -60,6 +64,18 @@ export class FactoryProductsFormComponent implements OnInit {
       .getProducts(this.factoryId,this.periodId,this.userId)
       .subscribe((res: any) => {
         this.request = res.Data;
+        let newProduct= new FactoryProductsModel () 
+
+        if(this.factoryStatus==4 ||this.factoryStatus==1)
+       {
+        newProduct.FactoryId=this.factoryId;
+        newProduct.PeriodId=this.periodId;
+      
+        newProduct.Id=this.request.length==0?0:this.request[0].Id
+        if(this.request.length==0)
+        this.request.push(newProduct);
+       
+      }  
         console.log(res)
       });
   }
@@ -205,9 +221,10 @@ this.request.forEach(element => {
     }
   console.log(this.request)
   let count=this.request.length;
- let newProduct:FactoryProductsModel [] = []
+ let newProduct= new FactoryProductsModel () 
  let UpdateProduct:FactoryProductsModel [] = []
 
+ 
 
   this.request.forEach(element => {
     

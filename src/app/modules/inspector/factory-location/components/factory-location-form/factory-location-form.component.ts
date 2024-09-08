@@ -21,6 +21,7 @@ export class FactoryLocationFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
   cityCode: any;
+  factoryStatus:any;
   userId: any;
   request = new FactoryLocationModel()
   requestFactory = new FactoryLocationModel()
@@ -56,6 +57,9 @@ inspectorApproved=false;
     this.factoryId = paramService.getfactoryId();
     this.periodId = paramService.getperiodId();
     this.inspectorApproved=paramService.getInspectorStatus()
+    this.factoryStatus=this.paramService.getInspectorfactoryStatus()
+
+    
   }
   ngOnInit() {
     if( this.factoryId==null||this.periodId==null)
@@ -362,13 +366,37 @@ inspectorApproved=false;
          }
         
  
-    this.requestFactory.FactoryId = this.factoryId;
-    this.requestFactory.PeriodId = this.periodId;
-    this.requestFactory.WebSite = this.requestFactory.WebSite;
-    this.requestFactory.FactoryEntityId = this.requestFactory.FactoryEntityId;
-    this.requestFactory.CityId = this.requestFactory.CityId;
-    this.requestFactory.IndustrialAreaId = this.requestFactory.IndustrialAreaId;
-    
+    if(this.factoryStatus!=4)
+      {
+        this.requestFactory.FactoryId = this.factoryId;
+        this.requestFactory.PeriodId = this.periodId;
+        this.requestFactory.WebSite = this.requestFactory.WebSite;
+        this.requestFactory.FactoryEntityId = this.requestFactory.FactoryEntityId;
+        this.requestFactory.CityId = this.requestFactory.CityId;
+        this.requestFactory.IndustrialAreaId = this.requestFactory.IndustrialAreaId;
+      }
+      else
+      {
+        this.requestFactory.FactoryId = this.factoryId;
+        this.requestFactory.PeriodId = this.periodId;
+        this.requestFactory.WebSite=''
+        this.requestFactory.NewWebSite=''
+        this.requestFactory.NewLocationLink=''
+
+        this.requestFactory.IsCityCorrect =true;
+        this.requestFactory.IsFactoryEntityCorrect =true;
+        this.requestFactory.IsIndustrialAreaCorrect =true;
+        this.requestFactory.IsWebSiteCorrect =true;
+        this.requestFactory.FactoryEntityId = -1;
+        this.requestFactory.CityId = -1;
+        this.requestFactory.IndustrialAreaId =-1;
+     
+
+
+       
+
+      }
+
 
     console.log(this.requestFactory)
     if (this.requestFactory.Id == 0) {

@@ -221,6 +221,7 @@ export class FactoryLandingFormComponent implements OnInit {
       else
       if (this.sharedService.factoryStatus == 4) {
         this.allScreenStatus =
+          this.screenStatuse.BasicFactoryInfo &&
           this.screenStatuse.FinancialData &&
           this.screenStatuse.MonthlyFinancialData 
 
@@ -263,7 +264,8 @@ export class FactoryLandingFormComponent implements OnInit {
     else
       if (this.sharedService.factoryStatus == 4) {
         this.allScreenStatus =
-          this.screenStatuse.MonthlyFinancialData
+        this.screenStatuse.BasicFactoryInfo &&
+        this.screenStatuse.MonthlyFinancialData
       }
     }
     console.log(this.allScreenStatus)

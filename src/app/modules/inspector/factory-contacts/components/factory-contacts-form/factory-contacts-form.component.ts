@@ -19,6 +19,7 @@ import {ParamService}from 'src/app/core/service/paramService'
 export class FactoryContactsFormComponent implements OnInit {
   factoryId: any;
   periodId: any;
+  factoryStatus:any;
   phoneForm!: FormGroup;
   request = new FactoryContactsModel()
   requestContact = new FactoryContactModel()
@@ -47,6 +48,7 @@ inspectorApproved=false
     this.factoryId = paramService.getfactoryId();
     this.periodId = paramService.getperiodId();
     this.inspectorApproved=paramService.getInspectorStatus()
+    this.factoryStatus=this.paramService.getInspectorfactoryStatus()
   
   }
   ngOnInit() {
@@ -58,11 +60,13 @@ inspectorApproved=false
     this.createContactForm()
     this.userId = this.shared.getUserId();
     this.getContact()
-this.getperiod()
+    this.getperiod()
 
   }
 
   getContact() {
+    this.request.IsOfficerPhoneCorrect=true;
+    this.request.IsOfficerMailCorrect=true;
     this.inspectorContactService
       .getOne(this.factoryId, this.periodId, this.userId)
       .subscribe((res: any) => {
@@ -163,7 +167,7 @@ this.getperiod()
 
     this.submitted=true
 
-    
+  
     if (this.phoneForm.invalid) {
       
         
@@ -171,18 +175,28 @@ this.getperiod()
      
       return;
     }
-  
-
+    if(this.factoryStatus!=4)
+    {
     this.newphone=this.phoneForm.get('NewOfficerPhoneId')?.value;
     if(this.newphone.number==undefined)
       this.request.NewOfficerPhoneId=''
     else
     this.request.NewOfficerPhoneId=this.newphone.number
- 
+    }else
+    {
+      this.request.OldOfficerEmail=''
+      this.request.OldOfficerPhoneId=''
+      this.request.NewOfficerEmail=''
+      this.request.NewOfficerPhoneId=''
+      this.request.IsOfficerMailCorrect=true
+      this.request.IsOfficerPhoneCorrect=true
+
+
+    }
+
     this.request.FactoryId = this.factoryId;
     this.request.PeriodId = this.periodId;
     console.log(this.request)
-
 
 
 

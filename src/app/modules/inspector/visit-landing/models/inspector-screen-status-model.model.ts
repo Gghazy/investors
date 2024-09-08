@@ -10,5 +10,7 @@ export class InspectorScreenStatusModel {
     InspectorProductData !:boolean;
     InspectorActualProduction !:boolean;
     InspectorRawMaterial !:boolean;
+    factorystatus!:number;
+
 
 }

@@ -22,12 +22,12 @@
     <form [formGroup]="phoneForm">
 
     <div class="form-body">
-      <div class="col-md-12">
+      <div *ngIf="factoryStatus!=4" class="col-md-12">
         <h3>التحقق من صحة معلومات جهة الاتصال​</h3>
       </div>
 
      
-        <div class="row">
+        <div *ngIf="factoryStatus!=4" class="row">
           <div class="col-md-5">
             <label class="form-label">
               البريد الإلكتروني لضابط الإتصال
@@ -93,7 +93,7 @@
           </div> -->
         </div>
 
-        <div class="row" >
+        <div *ngIf="factoryStatus!=4" class="row"  >
           <div class="col-md-5">
             <label class="form-label"> رقم جوال ضابط الإتصال </label>
             <input

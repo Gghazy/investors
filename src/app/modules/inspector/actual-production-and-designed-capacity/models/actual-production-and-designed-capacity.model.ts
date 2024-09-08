@@ -13,10 +13,12 @@ export class ActualProductionAndDesignedCapacityModel  {
         DesignedCapacityUnitName!:string;
         ActualProductionUintId!:number|undefined;
         ActualProductionUintName!:string;
-        Comments !: number;
+        Comments !: string;
         InspectAcutProdName!:string;
         IncreaseReasonId !: number;
         IncreaseReasonCorrect!:number;
         IncreaseReason!:string;
         IsIncreaseReasonCorrect!:boolean;
+        FactoryId!: number;
+        PeriodId!: number;
 }

@@ -11,13 +11,13 @@
                     </div>
                 </div>
                 <div class="form-body">
-                    <div class="col-md-12">
+                    <div *ngIf="factoryStatus!=4&&factoryStatus!=1" class="col-md-12">
                         <h3>  بيانات كمية الإنتاج الفعلي والطاقة التصميمية  للمصنع</h3>
                     </div>
 
                   
 
-                    <ul class="list-review factory-lines p-0">
+                    <ul *ngIf="factoryStatus!=4&&factoryStatus!=1" class="list-review factory-lines p-0">
                         <li *ngFor="let product of products let i=index">
                             
                             <h4>المنتج رقم {{i+1}} ({{product.InspectAcutProdName}})</h4>
@@ -69,7 +69,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div *ngIf="factoryStatus!=3" class="col-md-12">
                                     <div class="row">
 
                                         <div class="col-md-4">
@@ -118,7 +118,7 @@
                                  </div>
                                <div class="col-md-12">
                                <div class="row">
-                                <div class="col-md-4">
+                                <div *ngIf="factoryStatus!=3" class="col-md-4">
                                     <label class="form-label">الوزن الفعلي​</label>
                                     <div class="input-group">                                                  
                                         <input  type="number" name="ActualProductionWeight{{i+1}}"
@@ -154,11 +154,11 @@
            
 
                     
-                    <div *ngIf="this.reasonProduct!=0" class="row" class="col-md-12 mt-3">
+                    <div *ngIf="this.reasonProduct!=0&& factoryStatus!=4&&factoryStatus!=1" class="row" class="col-md-12 mt-3">
                         <h3> زيادة الإنتاج الفعلي عن الطاقة التصميمية </h3>
                     </div>
 
-                    <div *ngIf="this.reasonProduct!=0" class="row" >
+                    <div *ngIf="this.reasonProduct!=0&& factoryStatus!=4&&factoryStatus!=1" class="row" >
 
                         <div class="col-md-4">
                             <label class="form-label">   سبب زيادة الإنتاج الفعلي عن الطاقة التصميمية؟

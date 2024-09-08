@@ -13,11 +13,11 @@
         </div>
     </div>
     <div class="form-body">
-        <div class="col-md-12">
+        <div *ngIf="factoryStatus!=4 && factoryStatus!=1" class="col-md-12">
             <h3> التحقق من وضوح صور منتجات المصنع</h3>
         </div>
 
-        <ul class="list-review factory-lines p-0">
+        <ul  *ngIf="factoryStatus!=4 && factoryStatus!=1" class="list-review factory-lines p-0">
             <li *ngFor="let product of request let i=index">
                 <h4>المنتج رقم {{i+1}} ({{product.ProductName}})</h4>
                 <br />

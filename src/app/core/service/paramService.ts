@@ -11,8 +11,17 @@ export class ParamService {
   private readonly addedStatus = 'addedStatus';
   private readonly reviewerStatus = 'reviewerStatus';
   private readonly InspectorStatus = 'InspectorStatus';
-  
+  private readonly InspectorfactoryStatus = 'InspectorfactoryStatus';
 
+  
+  setInspectorfactoryStatus(inspectorfactoryStatus: any) {
+    sessionStorage.setItem(this.InspectorfactoryStatus, inspectorfactoryStatus);
+
+  }
+
+  getInspectorfactoryStatus(): any {
+    return sessionStorage.getItem(this.InspectorfactoryStatus);
+  }
 
   setfactoryId(factoryId: any) {
     sessionStorage.setItem(this.factoryId, factoryId);
@@ -75,6 +84,7 @@ export class ParamService {
     return false
     
   }
+
   clearAll() {
     sessionStorage.clear();
   }

@@ -42,6 +42,8 @@ export class VisitLandingFormComponent implements OnInit  {
       .subscribe((res: any) => {
         
         this.screenStatuse = res.Data
+       this.paramService.setInspectorfactoryStatus(this.screenStatuse.factorystatus)
+
         console.log(this.screenStatuse)
         this.checkAllScreenStatus();
         console.log(this.screenStatuse)
@@ -77,13 +79,33 @@ save(){
   checkAllScreenStatus(){
     // debugger
         
-        this.allScreenStatus=
+       /* this.allScreenStatus=
         this.screenStatuse.InspectorBasicFactoryInfo&&
         this.screenStatuse.InspectorFactoryContact&&
         this.screenStatuse.InspectorFactoryLocation&&
         this.screenStatuse.InspectorProductData&&
         this.screenStatuse.InspectorActualProduction&&
-        this.screenStatuse.InspectorRawMaterial
+        this.screenStatuse.InspectorRawMaterial*/
+        if (this.screenStatuse.factorystatus == 1) {
+          this.allScreenStatus =
+            this.screenStatuse.InspectorBasicFactoryInfo &&
+            this.screenStatuse.InspectorFactoryLocation &&
+            this.screenStatuse.InspectorFactoryContact
+        }else
+        if (this.screenStatuse.factorystatus == 0 || this.screenStatuse.factorystatus == 2 || this.screenStatuse.factorystatus == 3) {
+          this.allScreenStatus =
+            this.screenStatuse.InspectorProductData &&
+            this.screenStatuse.InspectorBasicFactoryInfo &&
+            this.screenStatuse.InspectorFactoryContact &&
+            this.screenStatuse.InspectorFactoryLocation &&
+            this.screenStatuse.InspectorActualProduction&&
+            this.screenStatuse.InspectorRawMaterial 
+        }
+      else
+        if (this.screenStatuse.factorystatus == 4) {
+          this.allScreenStatus =
+            this.screenStatuse.InspectorBasicFactoryInfo
+        }
        
       }
 }
