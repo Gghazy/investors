@@ -156,7 +156,7 @@
                 </label>
                 <div class="input-group">
                     <input [disabled]="approveStatus" type="file" class="form-control" accept=".pdf" placeholder="" value="" (change)="saveDocs($event)">
-                    <button [disabled]="approveStatus" class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+                    <button [disabled]="approveStatus||addFileButton" class="btn btn-primary" type="button" (click)="save()">اضافة </button>
                 </div>
                 <div *ngIf="fileError" class="validation-error text-center">{{ fileError }}</div>
             </div>

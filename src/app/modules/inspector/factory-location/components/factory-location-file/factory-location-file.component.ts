@@ -17,7 +17,7 @@ export class FactoryLocationFileComponent implements OnInit {
   files: any;
   InspectorsLocationfiles: any;
   fileError: string | null = null;
-  addFileButton: boolean = false
+  addFileButton: boolean = true
   @Input() factoryId!: string;
   @Input() periodId!: string;
   factoryLocationId!: number;
@@ -96,6 +96,8 @@ export class FactoryLocationFileComponent implements OnInit {
       .subscribe((res: any) => {
         this.getInspectorsFiles()
         this.toastr.success("تم ارفاق الملف");
+        this.addFileButton = true
+
         // this.fileStatus.emit(this.files.length);
          this.request=new FactoryLocationFileModel()
          this.fileInput.nativeElement.value = '';
@@ -133,8 +135,9 @@ export class FactoryLocationFileComponent implements OnInit {
           .addFile(file.target.files[0])
           .subscribe((res: any) => {
             this.request.AttachmentId = res.Data.Id
+            this.addFileButton = false
+
           });
-          this.addFileButton = true
       }
      else {
       this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';

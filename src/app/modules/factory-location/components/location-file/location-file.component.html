@@ -35,7 +35,7 @@
              <span class="required">*</span></label>
         <div class="input-group">
             <input [disabled]="approveStatus" type="file"  #fileInputLoc name="fileN"  accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
-            <button  [disabled]="fileError ||approveStatus"  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+            <button  [disabled]="approveStatus||addFileButton"  class="btn btn-primary" type="button" (click)="save()">اضافة </button>
         </div>
     
     <div *ngIf="fileError" class="text-center">

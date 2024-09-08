@@ -24,7 +24,7 @@ export class BasicInfoFileComponent implements OnInit {
   request=new BasicFileModel();
   src!:string;
   fileError: string | null = null;
-  addFileButton:boolean= false
+  addFileButton:boolean= true
   approveStatus:boolean=false;
   @Input() factoryId!:string;
   @Input() periodId!:string;
@@ -120,12 +120,12 @@ export class BasicInfoFileComponent implements OnInit {
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
           //
-         
+          this.addFileButton =false
+
 
          // this.toastr.success("تم حفظ الملف ");
 
         });
-        this.addFileButton =true
       } else {
         this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
         
@@ -174,7 +174,8 @@ export class BasicInfoFileComponent implements OnInit {
           this.getFiles();
           this.toastr.success("تم ارفاق الملف");
           this.fileStatus.emit(this.files.length);
-  
+          this.addFileButton =true
+
           this.request=new BasicFileModel();
           this.fileInput.nativeElement.value = '';
           this.initValue();

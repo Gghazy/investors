@@ -31,7 +31,7 @@ export class LocationFileComponent implements OnInit {
   @Output() fileStatusLoc = new EventEmitter<any>();
 
   fileError: string | null = null;
-  addFileButton:boolean= false
+  addFileButton:boolean= true
   constructor(
     private route: ActivatedRoute,
     private fileService: FileService,
@@ -109,9 +109,10 @@ export class LocationFileComponent implements OnInit {
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
+          this.addFileButton =false
+
          
         });
-        this.addFileButton =true
       } else {
         this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
         
@@ -156,6 +157,8 @@ export class LocationFileComponent implements OnInit {
           {
             this.basicInfiFileAddedList.push(res.Data.Id)
             this.AddedfileIds.emit( this.basicInfiFileAddedList);
+            this.addFileButton =true
+
         this.getFiles();
         this.toastr.success("تم الحفظ");
         this.request = new LocationFileModel();

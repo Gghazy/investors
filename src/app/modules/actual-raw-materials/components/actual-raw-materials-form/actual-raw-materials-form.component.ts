@@ -53,7 +53,7 @@ export class ActualRawMaterialsFormComponent implements OnInit {
   PeriodName!: string
   year!:number;
   fileError: string | null = null;
-  addFileButton: boolean = false
+  addFileButton: boolean = true
   fileSelected: boolean = false
   lockUploadfile=false;
   approveStatus:boolean;
@@ -287,8 +287,9 @@ selectedReason:any = { Id: "1"}
           .subscribe((res: any) => {
             this.requestFile.AttachmentId = res.Data.Id
             this.requestFile.Path = res.Data.Path
+            this.addFileButton = false
+
           });
-        this.addFileButton = true
       } else {
         this.fileError = 'الرجاء رفع المستند بالصيغة الموضحة';
 
@@ -320,6 +321,8 @@ selectedReason:any = { Id: "1"}
           this.getFiles();
           this.lockUploadfile=false;
           this.toastr.success("تم تحميل المستندات المرفقة");
+          this.addFileButton = true
+
           this.requestFile = new ActualRawMaterialFile();
           // this.router.navigate(['/pages/factory-landing/'+this.factoryId+'/'+this.periodId]);
 

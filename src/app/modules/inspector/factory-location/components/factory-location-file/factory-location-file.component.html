@@ -50,7 +50,7 @@
          </label>
         <div class="input-group">
             <input  [disabled]="inspectorApproved"  type="file"  #fileInput   accept=".png, .jpg, .jpeg, .pdf" class="form-control" placeholder="" value="" (change)="saveFile($event)">
-            <button  [disabled]="inspectorApproved" class="btn btn-primary" type="button" (click)="save()">اضافة </button>
+            <button  [disabled]="inspectorApproved ||addFileButton" class="btn btn-primary" type="button" (click)="save()">اضافة </button>
         </div>
         <div *ngIf="fileError" class="validation-error">{{ fileError }}</div>
     </div>

@@ -16,7 +16,7 @@ export class BasicInfoFileFormComponent implements OnInit {
   files:any;
   Inspectorsfiles:any;
   fileError: string | null = null;
-  addFileButton:boolean= false
+  addFileButton:boolean= true
   @Input() factoryId!:string;
   @Input() periodId!:string;
   request =new BasicInfoFileModel()
@@ -80,7 +80,6 @@ save(){
       this.fileError = 'الحد الاقصى للمرفقات 10';
       return
     }
-  
   console.log(this.request.AttachmentId)
   this.request.FactoryId= Number( this.factoryId)
   this.request.PeriodId=Number( this.periodId)
@@ -90,7 +89,9 @@ save(){
   .CreateFiles(this.request)
   .subscribe((res: any) => {
     this.getInspectorsFiles()
-    this.toastr.success("تم ارفاق الملف");
+    if(res.IsSuccess)
+    this.toastr.success(" تم ارفاق الملف للبيانات الأساسية");
+    this.addFileButton=true
    // this.fileStatus.emit(this.files.length);
     this.request=new BasicInfoFileModel();
     this.fileInput.nativeElement.value = '';
@@ -123,15 +124,17 @@ save(){
 
       if (fileType === 'image/png' || fileType === 'image/jpeg') {
         this.fileError = null;
+        this.addFileButton =true
+
       this.fileService
         .addFile(file.target.files[0])
         .subscribe((res: any) => {
           this.request.AttachmentId = res.Data.Id
-        //  this.toastr.success("تم حفظ الملف ");
+        // this.toastr.success("تم حفظ الملف ");
+         this.addFileButton =false
 
          console.log(this.request)
         });
-        this.addFileButton =true
 
     }
     else {
@@ -154,6 +157,7 @@ deleteFile(id:number){
     .delete(id)
     .subscribe((res: any) => {
       this.getInspectorsFiles();
+      if(res.IsSuccess)
       this.toastr.success("تم حذف الملف المرفق");
 
     });
