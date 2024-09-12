@@ -101,8 +101,8 @@ export class LocationFileComponent implements OnInit {
     else{
       const file1 = file.target.files[0];
       const fileType = file1.type;
-
-      if (fileType === 'image/png' || fileType === 'image/jpeg' ||fileType === 'application/pdf') {
+// ||fileType === 'application/pdf'
+      if (fileType === 'image/png' || fileType === 'image/jpeg') {
         this.fileError = null;
 
         this.fileService

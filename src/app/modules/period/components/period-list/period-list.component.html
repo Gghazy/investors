@@ -31,7 +31,7 @@
     <div class="form-body row">
         <app-list>
             <ng-template #header>
-                <th>#</th>
+                
                 <th> اسم الفترة </th>
                 <th>  تاريخ البدء </th>
                 <th> تاريخ الانتهاء</th>                                            
@@ -40,7 +40,6 @@
             </ng-template>
             <ng-template #body>
               <tr *ngFor="let period of periods.Items let i=index">
-                <td *ngIf="InspectorRole &&period.Status=='3' || !InspectorRole">{{i+1}}</td>
                 <td *ngIf="InspectorRole &&period.Status=='3' || !InspectorRole">  {{period.PeriodName}}</td>
                 <td *ngIf="InspectorRole &&period.Status=='3' || !InspectorRole">  {{period.PeriodStartDate}}</td>
                 <td *ngIf="InspectorRole &&period.Status=='3' || !InspectorRole">{{period.PeriodEndDate}}</td>
