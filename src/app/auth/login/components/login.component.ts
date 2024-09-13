@@ -25,9 +25,31 @@ locklogin=false;
 
               private loginService: LoginService,
   ) {
-
   }
+  login() {
+    if(this.locklogin)
+    {
+     this.toastr.info( 'عملية تسجيل الدخول قيد التنفيذ');
+    } 
+ else
+ {
+   this.locklogin=true
+   this.loginService
+     .Externallogin()
+     .subscribe((res: any) => {
+       this.locklogin=false
+       this.request = res.Data;
+ 
+       let externallogin='https://mim.gov.sa/sso/'+this.request.uuid+'/login?token='+this.request.token+'&signature='+this.request.signature;
+      window.location.href=externallogin;
 
+      //window.location.href="https://localhost:44372/api/Sso?url=test";
+       
+        });
+ }
+       
+ 
+   }
   Investor()
   {
     this.router.navigate(['/pages/factories-list']);
