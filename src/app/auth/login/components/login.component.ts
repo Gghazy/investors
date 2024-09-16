@@ -40,14 +40,19 @@ locklogin=false;
        this.locklogin=false
        this.request = res.Data;
  
-       let externallogin='https://mim.gov.sa/sso/'+this.request.uuid+'/login?token='+this.request.token+'&signature='+this.request.signature;
-      window.location.href=externallogin;
+      // let externallogin='https://mim.gov.sa/sso/'+this.request.uuid+'/login?token='+this.request.token+'&signature='+this.request.signature;
+      //window.location.href=externallogin;
 
-      //window.location.href="https://localhost:44372/api/Sso?url=test";
-       
+     // window.location.href="https://localhost:44372/api/Sso/redirectoUrl1?url=test";
+     this.loginService
+     .loginByNafath() 
+     .subscribe((res: any) => {
+      alert("Done")
+     }
+    );
         });
  }
-       
+ 
  
    }
   Investor()
