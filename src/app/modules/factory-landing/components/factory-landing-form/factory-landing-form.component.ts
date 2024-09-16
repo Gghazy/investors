@@ -128,7 +128,7 @@ export class FactoryLandingFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.periodStartDate = res.Data.PeriodStartDate
         this.periodEndDate = res.Data.PeriodEndDate
-        this.Year = res.Data.Year - 1
+        this.Year = res.Data.Year 
         this.periodMonth = res.Data.Month
         this.periodName = res.Data.PeriodName
       });
