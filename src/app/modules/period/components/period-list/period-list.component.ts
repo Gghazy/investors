@@ -46,6 +46,7 @@ this.InspectorRole =this.router.url.includes('Inspector')
     this.close.emit(true);
   }
   getPeriods() { 
+    this.search.PageSize=12
     this.search.FactoryId = this.factoryId
     this.periodService
       .getAll(this.search)
