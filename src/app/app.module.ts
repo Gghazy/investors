@@ -12,6 +12,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/interceptor/token.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 
@@ -19,10 +20,12 @@ export let InjectorInstance: Injector;
 
 
 @NgModule({
+  
   declarations: [
     AppComponent,
     LoginComponent,
     RecoverPasswordComponent,
+    
   ],
   imports: [
     AppRoutingModule,
@@ -30,6 +33,7 @@ export let InjectorInstance: Injector;
     BrowserModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
+    GoogleMapsModule,
 
     //NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }) // optional global configuration
 

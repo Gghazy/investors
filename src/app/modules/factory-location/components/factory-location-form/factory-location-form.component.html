@@ -12,20 +12,15 @@
             </a>
         </div>
     </div>
-    <div class="form-body">
-       
-            
+    <div class="form-body">           
         <div class="mb-4 alert alert-fui  alert-dismissible fade show" role="alert">
             <P>
             في حال كان المصنع خارج نطاق اي منطقة صناعية ، يتم تحديد خيار (أخرى) في كل من قائمة الجهة التي يتبع لها المصنع 
             وقائمة المدينة ومن ثم اختيار خيار (خارج نطاق المدن الصناعية ) من قائمة المنطقة الصناعية.    
             </div>
-            <form [formGroup]="factoryLocForm" >
-                
-                
+            <form [formGroup]="factoryLocForm">        
                 <div class="row">
-
-            <div class="col-md-6" for="factoryEntityId">
+                <div class="col-md-6" for="factoryEntityId">
                 <label class="form-label"> الجهة التي يتبع لها المصنع​<span class="required">*</span></label>
               
                 <select class="form-select"  
@@ -70,18 +65,56 @@
 
             <div class="col-md-6">
                
-                <label class="form-label" placement="left" title="" tooltip=" يتم نسخ رابط موقع المصنع من تطبيقGoogle maps ولصقه في الحقل"> رابط موقع المصنع
+                <label class="form-label" placement="left" title="" tooltip="اضغط على الموقع لعرضه في الخريطة أو لإختيار موقع جديد ">  
+                     موقع المصنع <span  class="file-size-span"> اضغط في الموقع لإختياره أوعرضه على الخريطة
+                </span> 
                     <span class="required">*</span>
                     <i>؟</i>
                 </label>
-                <input type="url" id="webSiteUrl"  formControlName="webSiteUrl" name="WebSite"   class="form-control " [(ngModel)]="request.WebSite" placeholder="https://www.google.com/maps"    >
+                <input type="text"  id="webSiteUrl" formControlName="webSiteUrl" name="WebSite" 
+                class="form-control btn-primary" data-bs-toggle="modal" data-bs-target="#mapModal" 
+                 [(ngModel)]="SelectedLocation"  placeholder="إضغط هنا لإختيار الموقع">
+              <!-- Button to trigger the modal -->
+
+  
+  <!-- Modal structure -->
+  <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mapModalLabel">خريطة المملكة العربية السعودية</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            
+            <div #mapContainer class="map-container" ></div>
+            
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+          <button type="button"  (click)="selectLocation()" data-bs-dismiss="modal" class="btn btn-primary">حفظ</button>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <span  class="text-danger" *ngIf="submitted && SelectedLocation==''">
+
+الرجاء  إختيار موقع المصنع 
+
+</span>
+                
+                <!--<input type="url" id="webSiteUrl"  formControlName="webSiteUrl" name="WebSite"   class="form-control " [(ngModel)]="request.WebSite" placeholder="https://www.google.com/maps"    >
                 <span  class="text-danger" *ngIf="submitted && (factoryLocForm.get('webSiteUrl')?.errors?.['pattern'] || factoryLocForm.get('webSiteUrl')?.errors?.['required'])">
 
                     رابط موقع المصنع يبدأ ب https://www.google.com/maps <br>
                      أو  /https://maps.app.goo.gl 
 
-                </span>
+                </span>-->
+               
+                   
             </div>
+           
 
 
         </div>
