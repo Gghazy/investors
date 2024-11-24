@@ -51,9 +51,9 @@ export class FactoryLocationFormComponent {
   geocoder!: google.maps.Geocoder;
   latLng!: google.maps.LatLng;
    center: google.maps.LatLngLiteral = { lat: 23.8859, lng: 45.0792 }; // Center of Saudi Arabia
-    zoom = 12;
+    zoom = 15;
     options: google.maps.MapOptions = {
-    maxZoom: 15,
+    maxZoom: 30,
     minZoom: 5,
     restriction: {
       latLngBounds: {
@@ -460,7 +460,7 @@ cancel() {
           let lng = position.coords.longitude;
           const newCenter = { lat, lng };
           this.map.setCenter(newCenter);
-          this.map.setZoom(15); // Adjust zoom level as needed
+          this.map.setZoom(20); // Adjust zoom level as needed
           return true
          // this.mapInitializer();
         },
@@ -489,7 +489,7 @@ cancel() {
     const [lat, lng] = location.split(',').map(Number);  
     const newCenter = { lat, lng };
     this.map.setCenter(newCenter);
-    this.map.setZoom(15); // Adjust zoom level as needed
+    this.map.setZoom(30); // Adjust zoom level as needed
   }
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.center = event.latLng.toJSON();

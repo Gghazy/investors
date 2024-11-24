@@ -68,7 +68,7 @@ export class FinancialDetailFormComponent {
     .getOne(this.periodId)
     .subscribe((res: any) => {
       
-      this.year = res.Data.Year -1;
+      this.year = res.Data.Year;
       this.getFinancial()
     });
   }
