@@ -75,7 +75,7 @@ export class ProductListComponent implements OnInit {
     this.periodService
       .getOne(this.periodId)
       .subscribe((res: any) => {
-        this.year = res.Data.Year -1;
+        this.year = res.Data.Year;
         this.PeriodName = res.Data.PeriodName;
       });
   }
