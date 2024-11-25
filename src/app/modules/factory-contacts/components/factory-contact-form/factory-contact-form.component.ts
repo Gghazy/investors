@@ -220,7 +220,11 @@ createContactForm(): void {
     this.periodService
     .getOne(this.periodId)
     .subscribe((res: any) => {
+<<<<<<< HEAD
       this.year = res.Data.Year;
+=======
+      this.year = res.Data.Year ;
+>>>>>>> a631583d2d3fe86f5715039ced32843a062d4f0c
       this.PeriodName= res.Data.PeriodName;
     });
   }
