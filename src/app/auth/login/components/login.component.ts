@@ -38,7 +38,7 @@ locklogin=false;
   }
   handleAuthCallback() {
     this.http.get(`account`).subscribe((response: any) => {
-      alert(response.token)
+     // alert(response.token)
       localStorage.setItem('token', response.token);
       this.router.navigate(['/pages/factories-list']);
     });
@@ -47,7 +47,7 @@ locklogin=false;
   {
     this.http.get(`Account/login`).subscribe({
       next: (response: any) => {
-        alert("Login next");
+       // alert("Login next");
      /*   const redirectUrl = response?.RedirectUrl;
         //alert("redirect");
         if (redirectUrl) {
@@ -68,11 +68,11 @@ locklogin=false;
         }*/
       },
       error: (error) => {
-        alert("Login failed");
+       // alert("Login failed");
         console.error('Login failed', error);
       },
       complete: () => {
-        alert("Login completed");
+     //   alert("Login completed");
         console.log('Login request completed');
       }
     });

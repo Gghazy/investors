@@ -46,12 +46,20 @@ export class FactoryLocationFormComponent {
   lng!: number;
   showMap = false;
   location!: string;
+//marker
+  marker!: google.maps.Marker; 
+  placesService!: google.maps.places.PlacesService;
+  infoWindow!: google.maps.InfoWindow;
+
   SelectedLocation: string="";
   display: any;
+  FactoryEntityNotSelected=true;
+  cityNotSelected=true;
   geocoder!: google.maps.Geocoder;
   latLng!: google.maps.LatLng;
-   center: google.maps.LatLngLiteral = { lat: 23.8859, lng: 45.0792 }; // Center of Saudi Arabia
-    zoom = 15;
+   //center: google.maps.LatLngLiteral = { lat: 23.8859, lng: 45.0792 }; // Center of Saudi Arabia
+   center: google.maps.LatLngLiteral = { lat: 24.7113, lng: 46.6744 }; // Center of Riyadh 
+   zoom = 15;
     options: google.maps.MapOptions = {
     maxZoom: 30,
     minZoom: 5,
@@ -128,6 +136,16 @@ export class FactoryLocationFormComponent {
       .getOne(this.factoryId, this.periodId)
       .subscribe((res: any) => {
         this.request = res.Data;
+      
+
+        if(this.request.CityId>0)
+        {
+        this.factoryLocForm.get('cityId')?.enable();
+        }
+        if(this.request.IndustrialAreaId>0)
+        {
+        this.factoryLocForm.get('industrialAreaId')?.enable();
+        }
         if(this.request.WebSite!="")
         {
           this.SelectedLocation=this.request.WebSite
@@ -168,6 +186,13 @@ export class FactoryLocationFormComponent {
       .subscribe((res: any) => {
 
         this.cities = res.Data;
+        this.FactoryEntityNotSelected=false;
+        this.cityNotSelected=true;
+        this.factoryLocForm.get('cityId')?.enable();
+        this.factoryLocForm.get('industrialAreaId')?.setValue('');
+        this.factoryLocForm.get('industrialAreaId')?.disable();
+
+        
       });
   }
   getFactoryEntities() {
@@ -186,6 +211,17 @@ export class FactoryLocationFormComponent {
       .getAreaByCity(this.cityCode)
       .subscribe((res: any) => {
         this.industrialAreas = res.Data;
+        if( this.industrialAreas.length>0)
+        {
+        this.cityNotSelected=false;
+        this.factoryLocForm.get('industrialAreaId')?.enable();
+        }
+        else 
+        {
+          this.factoryLocForm.get('industrialAreaId')?.disable();
+          this.toastr.warning("لا يوجد مناطق صناعية داخل هذه المدينة، الرجاء مراجعة البيانات");
+
+        }
         console.log(this.industrialAreas)
       });
   }
@@ -198,8 +234,8 @@ const combinedPattern = `${pattern1}|${pattern2}`;
 //"https://www.google.com/maps.+"
     this.factoryLocForm = this.formBuilder.group({
       factoryEntityId: [{value:'',disabled: this.approveStatus}, [Validators.required]],
-      cityId: [{value:'',disabled: this.approveStatus}, [Validators.required]],
-      industrialAreaId: [{value:'',disabled: this.approveStatus}, [Validators.required]],
+      cityId: [{value:'',disabled: this.approveStatus||this.FactoryEntityNotSelected}, [Validators.required]],
+      industrialAreaId: [{value:'',disabled: this.approveStatus||this.cityNotSelected}, [Validators.required]],
     //  webSiteUrl:  [{value:'https://www.google.com/maps',disabled: this.approveStatus}, Validators.compose([Validators.required,Validators.pattern(combinedPattern)])],
     webSiteUrl:[{value:'',disabled: this.approveStatus}],
     });
@@ -348,6 +384,11 @@ cancel() {
       zoom: this.zoom,
       ...this.options,
     });
+     // Ensure the map is fully initialized before creating the PlacesService 
+     //  google.maps.event.addListenerOnce(this.map, 'idle', () => {
+      this.placesService = new google.maps.places.PlacesService(this.map);
+      this.geocoder = new google.maps.Geocoder();
+    // Initialize marker if location has value 
 
      this.map.addListener('click', (event: google.maps.MapMouseEvent) => {
       const latLng = event.latLng;
@@ -359,6 +400,95 @@ cancel() {
             if (latLng && this.isWithinBounds(latLng)) {
         
               this.location = `${latLng.lat()}, ${latLng.lng()}`;
+              const lats = latLng.lat();
+              const lngs = latLng.lng();
+              const locations = latLng;
+              const request: google.maps.places.PlaceSearchRequest =
+               {
+                 location: locations, radius: 50 
+
+                }; 
+                
+                this.placesService.nearbySearch(request, (results, status) => 
+                  {
+                     if (status === google.maps.places.PlacesServiceStatus.OK && results!.length > 0) 
+                      {
+                        const placeTypes = results![0].types;                         
+                        if (placeTypes && (placeTypes.includes('cafe') 
+                          || placeTypes.includes('restaurant')
+                        || placeTypes.includes('factory') 
+                        || placeTypes.includes('industrial') 
+                         || placeTypes.includes('establishment')
+                          || placeTypes.includes('point_of_interest'))) 
+                         {   
+                          this.marker.setMap(null);
+  
+                          console.log('Known place, no marker displayed.'); 
+                          }
+                        } 
+                      this.geocoder.geocode({ location: locations },
+                       (geocodeResults, geocodeStatus) => 
+                       {
+                        if (geocodeStatus === google.maps.GeocoderStatus.OK &&
+                           geocodeResults!.length > 0) 
+                           { 
+
+                            const geocodeTypes = geocodeResults![0].types;
+
+                            if (geocodeTypes && (geocodeTypes.includes('cafe') 
+                               || geocodeTypes.includes('restaurant') 
+                               || geocodeTypes.includes('establishment')
+                               || geocodeTypes.includes('factory') 
+                               || geocodeTypes.includes('industrial') 
+                                || geocodeTypes.includes('point_of_interest'))) 
+                               
+                               { 
+                                this.marker.setMap(null);
+
+                                        console.log('Known place, no marker displayed.'); 
+                               }
+                              else
+                               { 
+                               this.addMarker(locations, lats, lngs);
+                               } 
+                               } 
+                               else 
+                                { 
+                                        this.addMarker(locations, lats, lngs); 
+                                 } 
+                                }); 
+                                    
+                                  
+                                     
+                        /*  else { 
+                            console.log(`Latitude: ${lats}, Longitude: ${lngs}`);
+                           if (this.marker) {
+                             this.marker.setMap(null); 
+
+                           } 
+                           this.marker = new google.maps.Marker({
+                             position: event.latLng,
+                             map: this.map, 
+                             title: `Latitude: ${lats}, Longitude: ${lngs}` // Disable the default info window 
+                             }); 
+                             if (this.infoWindow) 
+                              {
+                                 this.infoWindow.close();
+                              }
+                               this.infoWindow = new google.maps.InfoWindow({ 
+                                content: `Latitude: ${lats}, Longitude: ${lngs}` 
+                              }); 
+                              this.infoWindow.open(this.map, this.marker); 
+
+
+
+
+                            } */
+                          });
+
+
+
+
             } else {
               this.location =""
               this.toastr.error('  الرجاء مراجعة موقع المصنع ,خطأ في الموقع');
@@ -392,8 +522,35 @@ cancel() {
       alert(this.location+"111")*/
 
     });
-    
+  //});
+ this.map.addListener('zoom_changed', () => {
+           if (this.marker) { 
+     
+      this.marker.setMap(this.map);
+     } });
+         
   }
+  addMarker(locations: google.maps.LatLng, lat: number, lng: number)
+   { 
+    console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+    if (this.marker)
+       {
+       this.marker.setMap(null);
+       } 
+       this.marker = new google.maps.Marker({ 
+        position: locations, 
+        map: this.map, 
+        title: ''
+         // Disable the default info window 
+         });
+          if (this.infoWindow) {
+             this.infoWindow.close(); 
+            } 
+            this.infoWindow = new google.maps.InfoWindow({ content: `Latitude: ${lat},
+               Longitude: ${lng}` }); 
+               this.infoWindow.open(this.map, this.marker); 
+            } 
+            
   /*getCurrentLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -460,7 +617,9 @@ cancel() {
           let lng = position.coords.longitude;
           const newCenter = { lat, lng };
           this.map.setCenter(newCenter);
-          this.map.setZoom(20); // Adjust zoom level as needed
+          this.map.setZoom(this.zoom); // Adjust zoom level as needed
+          const initialLocation = new google.maps.LatLng(lat, lng); 
+          this.addMarker(initialLocation, lat, lng);
           return true
          // this.mapInitializer();
         },
@@ -489,7 +648,10 @@ cancel() {
     const [lat, lng] = location.split(',').map(Number);  
     const newCenter = { lat, lng };
     this.map.setCenter(newCenter);
-    this.map.setZoom(30); // Adjust zoom level as needed
+    this.map.setZoom(this.zoom); // Adjust zoom level as needed
+    const initialLocation = new google.maps.LatLng(lat, lng); 
+   this.addMarker(initialLocation, lat, lng);
+
   }
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.center = event.latLng.toJSON();
