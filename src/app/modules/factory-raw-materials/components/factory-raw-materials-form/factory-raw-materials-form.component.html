@@ -83,10 +83,11 @@
             <span class="required">*</span>
             <i>؟</i>
         </label>
-        <input type="number" name="MaximumMonthlyConsump" #MaximumMonthlyConsump="ngModel"  min="1" max="1000000000000" pattern="[0-9]+([\.,][0-9]{1,5})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"    class="form-control" noMinus [(ngModel)]="request.MaximumMonthlyConsumption" required>
+        <input type="number" name="MaximumMonthlyConsump" #MaximumMonthlyConsump="ngModel"  min="0.001" max="1000000000000" pattern="[0-9]+([\.,][0-9]{1,5})?" step="0.01" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))"    class="form-control" noMinus [(ngModel)]="request.MaximumMonthlyConsumption" required>
         <div *ngIf="MaximumMonthlyConsump.invalid && (MaximumMonthlyConsump.dirty && MaximumMonthlyConsump.touched)"
         class="validation-error">
         <div *ngIf="MaximumMonthlyConsump.errors?.['required']"> الرجاء إدخال قيمة أقصى إستهلاك شهري </div>
+        <div *ngIf="MaximumMonthlyConsump.errors?.['min']" >الرجاء إدخال رقم أكبر من 0   </div>
         <div *ngIf="MaximumMonthlyConsump.errors?.['max']" >الرجاء إدخال رقم أقل من 1000000000000   </div>
         <div *ngIf="MaximumMonthlyConsump.errors?.['pattern']" >الرجاء إدخال رقم  صحيح   </div>
         
@@ -114,7 +115,7 @@
             <i>؟</i>
         </label>
         <div class="input-group">
-            <input type="number"  name="AverageWeightKG"  #AverageWeightKG="ngModel" min="1" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,5})?" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))" step="1" class="form-control" [(ngModel)]="request.AverageWeightKG" noMinus
+            <input type="number"  name="AverageWeightKG"  #AverageWeightKG="ngModel" min="0.001" max="10000000000" pattern="[0-9]+([\.,][0-9]{1,5})?" onkeypress="return (!(event.charCode !=46 && event.charCode >31 && (event.charCode < 48 || event.charCode > 57)))" step="1" class="form-control" [(ngModel)]="request.AverageWeightKG" noMinus
                 [disabled]="showInput" required >
             <input type="text" class="form-control px-1 text-center" value="كغ" disabled="" style="max-width: 40px;">
         </div>
@@ -122,7 +123,9 @@
             class="validation-error">
             <br/>
             <div *ngIf="AverageWeightKG.errors?.['required']">الرجاء إدخال قيمة الوزن بالكيلوجرام</div>        
-            </div>
+            <div *ngIf="AverageWeightKG.errors?.['min']" >الرجاء إدخال رقم أكبر من 0   </div>
+  
+        </div>
         
         
     </div>
